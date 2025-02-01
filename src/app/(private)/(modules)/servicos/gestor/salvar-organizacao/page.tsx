@@ -1,0 +1,22 @@
+import { type ReactNode } from 'react'
+import { LuBuilding2 } from 'react-icons/lu'
+
+import OrganizacaoForm from '@/app/(private)/(modules)/components/OrganizacaoForm'
+import { CardDefault } from '../../../../../../../../teste/src/components/Cards/CardDefault'
+import { getAllStates } from '@/lib/getAllStates'
+
+const salvarOrganizacao = async (): Promise<ReactNode> => {
+  const states = await getAllStates()
+  return (
+    <>
+      <CardDefault
+        title="Salvar Organização"
+        description="Salvar/Atualizar Organização"
+        icon={<LuBuilding2 size={28} />}
+      >
+        <OrganizacaoForm states={states} />
+      </CardDefault>
+    </>
+  )
+}
+export default salvarOrganizacao

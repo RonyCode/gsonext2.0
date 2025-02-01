@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Seat Mapping</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+          background-color: #f4f4f4;
+      }
+
+      .car-container {
+          position: relative;
+          width: 600px;
+          height: 600px;
+          background-color: #fff;
+          border: 1px solid #ccc;
+          border-radius: 10px;
+      }
+
+      .seat {
+          position: absolute;
+          width: 50px;
+          height: 50px;
+          border: 2px solid #333;
+          background-color: rgba(0, 128, 255, 0.6);
+          border-radius: 5px;
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 14px;
+          color: white;
+          font-weight: bold;
+      }
+
+      .seat:hover {
+          background-color: rgba(0, 255, 128, 0.6);
+      }
+  </style>
+</head>
+<body>
+<div class="car-container">
+  <!-- Driver Seat -->
+  <div class="seat" style="top: 50px; left: 100px;" onclick="seatClicked('Driver')">D</div>
+
+  <!-- Passenger Seat -->
+  <div class="seat" style="top: 50px; right: 100px;" onclick="seatClicked('Passenger')">P</div>
+
+  <!-- Row 1 Left -->
+  <div class="seat" style="top: 200px; left: 100px;" onclick="seatClicked('Row 1 Left')">1L</div>
+
+  <!-- Row 1 Right -->
+  <div class="seat" style="top: 200px; right: 100px;" onclick="seatClicked('Row 1 Right')">1R</div>
+
+  <!-- Row 2 Left -->
+  <div class="seat" style="top: 350px; left: 100px;" onclick="seatClicked('Row 2 Left')">2L</div>
+
+  <!-- Row 2 Right -->
+  <div class="seat" style="top: 350px; right: 100px;" onclick="seatClicked('Row 2 Right')">2R</div>
+</div>
+
+<script>
+  function seatClicked(seat) {
+    alert(`You clicked on: ${seat}`);
+  }
+</script>
+</body>
+</html>
