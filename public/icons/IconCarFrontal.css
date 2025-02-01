@@ -1,0 +1,27 @@
+#carFrontal {
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+    fill-rule: evenodd;
+    fill: none;
+    stroke-dasharray: 4490;
+    transform: scaleY(140%);
+    animation: write 2.5s forwards  linear;}
+
+
+svg:hover  #carFrontal, #cardModule:hover #carFrontal, svg.animate path {
+    animation: write 2.5s forwards infinite linear;
+}
+
+
+@keyframes write {
+    0% {
+        stroke-dashoffset: 4490;
+        stroke: #a40101;
+
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}

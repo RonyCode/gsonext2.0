@@ -1,0 +1,12 @@
+
+#motorista:hover, #passageiroFrente:hover, #assentoMeioEsq:hover,#assentoMeioDir:hover, #assentoUltimoEsq:hover,#assentoUltimoDir:hover {
+    fill: #e11d48;
+}
+
+
+
+path{
+    pointer-events:all;
+    stroke-width: 2px;
+    -webkit-text-stroke: 1px #e11d48;
+}

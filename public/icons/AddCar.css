@@ -1,0 +1,21 @@
+#plus {
+    animation: spinPlus 2s ease-in-out;
+    -webkit-animation: spinPlus 2s ease-in-out;
+    -o-animation: spinPlus 2s ease-in-out;
+    transform: translate(0) !important;
+}
+
+svg:hover #plus {
+    fill: #e11d48;
+    animation: spinPlus 2s infinite;
+    -webkit-animation: spinPlus 2s infinite;
+    -o-animation: spinPlus 2s infinite;
+    transform: translate(0) !important;
+
+}
+
+@keyframes spinPlus {
+    50% {
+        transform: scale(1.3)!important;
+    }
+}

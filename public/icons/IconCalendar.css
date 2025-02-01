@@ -1,0 +1,26 @@
+#dias {
+  transform-origin: center center;
+  animation: rotateDias 2s forwards;
+}
+#calendario{
+  stroke-width: .5;
+  stroke-dasharray: none;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  stroke-miterlimit: 10;
+  fill-rule: nonzero;
+
+}
+
+#cardModule:hover #dias {
+  animation: rotateDias 2s infinite;
+}
+@keyframes rotateDias {
+  to {
+    transform: translate(25%);
+  }
+    from {
+        fill: #e11d48;
+
+    }
+}
