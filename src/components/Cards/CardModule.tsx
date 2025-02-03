@@ -44,14 +44,14 @@ export function CardModule({
             <div className="flex h-full w-full flex-col items-center justify-center p-0  xl:flex-row xl:justify-between">
               {/* <span className=" md h-2 w-2 translate-y-1 rounded-full bg-sky-500"></span> */}
               <div>
-                <CardTitle>{title}</CardTitle>
-                <CardDescription className=" mt-1 hidden  flex-col lg:flex">
+                <CardTitle className='text-md'>{title}</CardTitle>
+                <CardDescription className=" mt-1 hidden  flex-col xl:flex">
                   {subtitle}
                 </CardDescription>
               </div>
-              <span className="right-2 mt-2 fill-foreground/60 stroke-foreground/60 text-foreground/60 xl:mt-0">
+              <div className="right-2 mt-2 fill-foreground/60 stroke-foreground/60 text-foreground/60 xl:mt-0">
                 {icon}
-              </span>
+              </div>
             </div>
           </CardHeader>
         </Link>

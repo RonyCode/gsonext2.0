@@ -2,7 +2,7 @@ import { cookies } from 'next/headers'
 
 import { type UserType } from '../../../teste/types/index'
 
-import { fetchWrapper } from '../../../teste/src/functions/fetch'
+import { fetchWrapper } from '@/functions/fetch'
 
 export const getProfile = async (
   idUser: string | null | undefined,

@@ -23,12 +23,12 @@ import {
 } from 'react-icons/lu'
 
 import { saveUnidadeAction } from '@/app/(private)/(modules)/servicos/gestor/actions/saveUnidadeAction'
-import { EditPhoto } from '../../../../../../teste/src/components/EditPhoto/EditPhoto'
-import { MyInputMask } from '../../../../../../teste/src/components/Form/Input/myInputMask'
-import LoadingPage from '../../../../../../teste/src/components/Loadings/LoadingPage'
-import { maskCpfCnpj } from '../../../../../../teste/src/functions/masks/maskCpfCnpj'
-import { maskPhone } from '../../../../../../teste/src/functions/masks/maskphone'
-import { maskZipcode } from '../../../../../../teste/src/functions/masks/maskZipcode'
+import { EditPhoto } from '@/components/EditPhoto/EditPhoto'
+import { MyInputMask } from '@/components/Form/Input/myInputMask'
+import LoadingPage from '@/components/Loadings/LoadingPage'
+import { maskCpfCnpj } from '@/functions/masks/maskCpfCnpj'
+import { maskPhone } from '@/functions/masks/maskphone'
+import { maskZipcode } from '@/functions/masks/maskZipcode'
 import { getAllCitiesByState } from '@/lib/getAllCitiesByState'
 import { getCep } from '@/lib/getCep'
 import { cn } from '@/lib/utils'
@@ -288,7 +288,7 @@ export const TabUnidadeDetails = ({
                           <Button
                             className="ml-2"
                             type="button"
-                            /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+                             
                             onClick={form.handleSubmit(async (data) => {
                               await handleDeleteAction(data)
                             })}
@@ -324,7 +324,7 @@ export const TabUnidadeDetails = ({
           <Form {...form}>
             <LoadingPage pending={pending} />
             <form
-              /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+               
               onSubmit={form.handleSubmit(async (data) => {
                 handleSubmit(data)
               })}
@@ -408,7 +408,7 @@ export const TabUnidadeDetails = ({
                                       disabled={disabled}
                                       value={corp?.id?.toString()}
                                       key={index}
-                                      /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+                                       
                                       onSelect={async () => {
                                         form.setValue(
                                           'id_corporation',
@@ -656,7 +656,7 @@ export const TabUnidadeDetails = ({
                   control={form.control}
                   name="zipcode"
                   render={({ field }) => (
-                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                     
                     <FormItem onChange={handleCep}>
                       <FormLabel
                         htmlFor="zipcode"
@@ -804,7 +804,7 @@ export const TabUnidadeDetails = ({
                                     disabled={disabled}
                                     value={state.sigla}
                                     key={index}
-                                    /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+                                     
                                     onSelect={async () => {
                                       await handleCity(state?.sigla)
                                       form.setValue('short_name', state?.sigla)

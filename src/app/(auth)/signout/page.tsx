@@ -1,4 +1,4 @@
-import SignOutButtonDefault from '../../../../../teste/src/components/Buttoms/SignOutButton/SignOutButtonDefault'
+import SignOutButtonDefault from '@/components/Buttoms/SignOutButton/SignOutButtonDefault'
 import {
   AlertDialog,
   AlertDialogContent,

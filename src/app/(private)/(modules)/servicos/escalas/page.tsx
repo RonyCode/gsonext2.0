@@ -4,7 +4,7 @@ import React from 'react'
 import { LuCalendarDays } from 'react-icons/lu'
 
 import SelectCompanySchedule from '@/app/(private)/(modules)/components/SelectCompanySchedule'
-import { CardDefault } from '../../../../../../../teste/src/components/Cards/CardDefault'
+import { CardDefault } from '@/components/Cards/CardDefault'
 import { authOptions } from '@/lib/auth'
 import { getAllOrganizacoes } from '@/lib/GetAllOrganizacoes'
 

@@ -1,4 +1,4 @@
-import { fetchWrapper } from '../../../teste/src/functions/fetch'
+import { fetchWrapper } from '@/functions/fetch'
 import { useUserStore } from '@/stores/user/userStore'
 import { type UserType } from '../../../teste/types/index'
 

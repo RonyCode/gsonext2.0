@@ -5,9 +5,9 @@ import React, { useEffect, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { LuCheck, LuChevronsUpDown, LuLandmark } from 'react-icons/lu'
 
-import { columnsMembers } from '../../../../../../teste/src/components/DataTables/DataTableMembers/columnsMembers'
-import { DataTableMembers } from '../../../../../../teste/src/components/DataTables/DataTableMembers/data-table-members'
-import LoadingPage from '../../../../../../teste/src/components/Loadings/LoadingPage'
+import { columnsMembers } from '@/components/DataTables/DataTableMembers/columnsMembers'
+import { DataTableMembers } from '@/components/DataTables/DataTableMembers/data-table-members'
+import LoadingPage from '@/components/Loadings/LoadingPage'
 import { cn } from '@/lib/utils'
 import { type IOrganizacaoSchema } from '@/schemas/OrganizacaoSchema'
 import {

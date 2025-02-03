@@ -2,9 +2,9 @@
 
 import { revalidateTag } from 'next/cache'
 
-import { fetchWrapper } from '../../../../../../../../teste/src/functions/fetch'
+import { fetchWrapper } from '@/functions/fetch'
 import { type IOrganizacaoSchema } from '@/schemas/OrganizacaoSchema'
-import { type ResponseApi } from '../../../../../../../../teste/types/index'
+import { type ResponseApi } from '@/types/index'
 
 export async function saveCorporationAction(
   formData?: Partial<IOrganizacaoSchema>,

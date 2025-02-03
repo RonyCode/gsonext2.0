@@ -43,7 +43,7 @@ export async function CardDefault({
       )}
       {...props}
     >
-      <div className="grid h-32 w-full grid-cols-12 rounded-[8px] rounded-b-none border border-b-0 border-foreground/30 p-0 ">
+      <div className="grid h-36 w-full grid-cols-12 rounded-[8px]  border  border-foreground/30 p-0 ">
         <div className=" text-md col-start-1  col-end-7 md:col-start-1  md:col-end-5  md:text-xl ">
           <CardTitle>
             <div className="flex flex-col items-start p-3 md:p-6 ">
@@ -91,7 +91,7 @@ export async function CardDefault({
           )}
         </div>
       </div>
-      <BreadcrumbGso />
+      {/*<BreadcrumbGso />*/}
       <Separator />
       <CardContent className=" mt-4 grid h-auto  w-full rounded-[5px] p-0 md:min-h-[calc(100vh-18rem)] md:border md:border-foreground/30">
         {children}

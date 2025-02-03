@@ -21,7 +21,6 @@ interface DaysMonthProps {
 
 const CalendarGsoV2 = ({
   unidade,
-  functions,
 }: {
   unidade: IUnidadeSchema
   functions?: FunctionsMembers[]
@@ -75,7 +74,7 @@ const CalendarGsoV2 = ({
       dayEvent: [] as IScheduleSchema[],
     },
   ]
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+   
   const handleCountDaysInMonth = (numberMonth: number) => {
     const lastDigiteYear = year.toString().slice(-2)
 
@@ -246,7 +245,12 @@ const CalendarGsoV2 = ({
     }
     setDayWeek(escalaObj[escalaObj.length - 1].dayWeek * -1)
   }
-  escalaObj.shift()
+  if (daysInMonth !== null &&
+      (daysInMonth?.dias == 31)
+     ){
+    escalaObj.shift()
+  }
+
   const eventsList: IScheduleSchema[] = []
   escalaObj.forEach((item) => {
     item?.dayEvent?.forEach((event) => {

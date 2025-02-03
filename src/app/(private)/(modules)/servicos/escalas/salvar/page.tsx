@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth'
 import React from 'react'
 import { LuCalendarDays } from 'react-icons/lu'
 
-import { CardDefault } from '../../../../../../../../teste/src/components/Cards/CardDefault'
+import { CardDefault } from '@/components/Cards/CardDefault'
 import { authOptions } from '@/lib/auth'
 import { getAllFunctions } from '@/lib/GetAllFunctions'
 import { getAllUnidades } from '@/lib/GetAllUnidades'

@@ -1,8 +1,8 @@
 import { type AddressProps, type CepProps } from '../../../teste/types/index'
 
-import { fetchWrapper } from '../../../teste/src/functions/fetch'
-import { cityStore } from '../../../teste/src/stores/Address/CityByStateStore'
-import { stateStore } from '../../../teste/src/stores/Address/stateStore'
+import { fetchWrapper } from '@/functions/fetch'
+import { cityStore } from '@/stores/Address/CityByStateStore'
+import { stateStore } from '@/stores/Address/stateStore'
 import { toast } from '@/hooks/use-toast'
 
 export const useEndereco = (): {

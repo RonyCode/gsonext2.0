@@ -1,4 +1,4 @@
-import { fetchWrapper } from '../../../teste/src/functions/fetch'
+import { fetchWrapper } from '@/functions/fetch'
 import type { IVehicleSchema } from '@/schemas/CarsSchema'
 
 export const getAllVehicles = async (query = ''): Promise<IVehicleSchema> => {

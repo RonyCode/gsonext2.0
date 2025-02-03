@@ -18,13 +18,13 @@ import {
   LuUser,
 } from 'react-icons/lu'
 
-import { saveUserAction } from '../../../../../../teste/src/actions/saveUserAction'
-import { EditPhoto } from '../../../../../../teste/src/components/EditPhoto/EditPhoto'
-import { MyInputMask } from '../../../../../../teste/src/components/Form/Input/myInputMask'
-import LoadingPage from '../../../../../../teste/src/components/Loadings/LoadingPage'
-import { maskCpfCnpj } from '../../../../../../teste/src/functions/masks/maskCpfCnpj'
-import { maskPhone } from '../../../../../../teste/src/functions/masks/maskphone'
-import { maskZipcode } from '../../../../../../teste/src/functions/masks/maskZipcode'
+import { saveUserAction } from '@/actions/saveUserAction'
+import { EditPhoto } from '@/components/EditPhoto/EditPhoto'
+import { MyInputMask } from '@/components/Form/Input/myInputMask'
+import LoadingPage from '@/components/Loadings/LoadingPage'
+import { maskCpfCnpj } from '@/functions/masks/maskCpfCnpj'
+import { maskPhone } from '@/functions/masks/maskphone'
+import { maskZipcode } from '@/functions/masks/maskZipcode'
 import { getAllCitiesByState } from '@/lib/getAllCitiesByState'
 import { getCep } from '@/lib/getCep'
 import { cn } from '@/lib/utils'
@@ -203,7 +203,7 @@ export const EditProfileForm = ({
           <LoadingPage pending={pending} />
           <Form {...form}>
             <form
-              /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+               
               onSubmit={form.handleSubmit(async (data) => {
                 handleSubmit(data)
               })}
@@ -387,7 +387,7 @@ export const EditProfileForm = ({
                   control={form.control}
                   name="cep"
                   render={({ field }) => (
-                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                     
                     <FormItem onChange={handleCep}>
                       <FormLabel
                         htmlFor="cep"
@@ -483,7 +483,7 @@ export const EditProfileForm = ({
                                   <CommandItem
                                     value={state.sigla}
                                     key={index + 1}
-                                    /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+                                     
                                     onSelect={async () => {
                                       await handleCity(state.sigla)
                                       form.setValue('estado', state.sigla)

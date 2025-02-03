@@ -2,7 +2,7 @@ import React, { use } from 'react'
 
 import TabUnidadeDetails from './TabUnidadeDetails'
 
-import { ImageExist } from '../../../../../../teste/src/functions/ImageExist'
+import { ImageExist } from '@/functions/ImageExist'
 import { getAllStates } from '@/lib/getAllStates'
 import { getUnidadeById } from '@/lib/GetUnidadeById'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/ui/tabs'

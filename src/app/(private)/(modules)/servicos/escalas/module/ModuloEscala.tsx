@@ -1,6 +1,6 @@
-import { CardModule } from '../../../../../../../../teste/src/components/Cards/CardModule'
-import IconCalendar from '../../../../../../../../teste/public/icons/IconCalendar'
-import IconEditSave from '../../../../../../../../teste/public/icons/IconEditSave'
+import { CardModule } from '@/components/Cards/CardModule'
+import IconCalendar from '@/icons/IconCalendar'
+import IconEditSave from '@/icons/IconEditSave'
 
 const ModuloEscala = async ({
   params,

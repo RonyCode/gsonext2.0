@@ -4,10 +4,10 @@ import React, { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { LuBuilding2, LuLoaderCircle, LuSearch } from 'react-icons/lu'
 
-import { saveMemberIntoCompanyAction } from '../../../../../../teste/src/actions/saveMemberIntoCompanyAction'
-import { columnsWithCheckboxMembers } from '../../../../../../teste/src/components/DataTables/DataTableMembers/columnsWithCheckboxMembers'
-import { DataTableMembers } from '../../../../../../teste/src/components/DataTables/DataTableMembers/data-table-members'
-import LoadingPage from '../../../../../../teste/src/components/Loadings/LoadingPage'
+import { saveMemberIntoCompanyAction } from '@/actions/saveMemberIntoCompanyAction'
+import { columnsWithCheckboxMembers } from '@/components/DataTables/DataTableMembers/columnsWithCheckboxMembers'
+import { DataTableMembers } from '@/components/DataTables/DataTableMembers/data-table-members'
+import LoadingPage from '@/components/Loadings/LoadingPage'
 import { searchUsersWithoutCompany } from '@/lib/searchUsersWithoutCompany'
 import { cn } from '@/lib/utils'
 import { type IMemberSchema } from '@/schemas/MemberSchema'
@@ -128,7 +128,7 @@ export const MemberCompanyForm = ({
           <Form {...form}>
             <LoadingPage pending={pending} />
             <form
-              /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+               
               onSubmit={form.handleSubmit((data) => {
                 handleSubmit(data)
               })}

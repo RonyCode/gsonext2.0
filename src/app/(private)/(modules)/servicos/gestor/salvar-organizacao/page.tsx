@@ -2,7 +2,7 @@ import { type ReactNode } from 'react'
 import { LuBuilding2 } from 'react-icons/lu'
 
 import OrganizacaoForm from '@/app/(private)/(modules)/components/OrganizacaoForm'
-import { CardDefault } from '../../../../../../../../teste/src/components/Cards/CardDefault'
+import { CardDefault } from '@/components/Cards/CardDefault'
 import { getAllStates } from '@/lib/getAllStates'
 
 const salvarOrganizacao = async (): Promise<ReactNode> => {

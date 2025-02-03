@@ -3,7 +3,7 @@ import React, { type ReactNode } from 'react'
 import { LuBuilding2 } from 'react-icons/lu'
 
 import OrganizacaoForm from '@/app/(private)/(modules)/components/OrganizacaoForm'
-import { CardDefault } from '../../../../../../teste/src/components/Cards/CardDefault'
+import { CardDefault } from '@/components/Cards/CardDefault'
 import { authOptions } from '@/lib/auth'
 import { getAllOrganizacoes } from '@/lib/GetAllOrganizacoes'
 import { getAllStates } from '@/lib/getAllStates'
@@ -17,7 +17,7 @@ const MinhaOrganizacao = async ({
   const state = await getAllStates()
   const session = await getServerSession(authOptions)
 
-  // eslint-disable-next-line array-callback-return
+   
   const organizacaoFound = data?.find((item) => {
     if (item.id !== undefined && item.id !== null) {
       return item.id === session?.id_corporation

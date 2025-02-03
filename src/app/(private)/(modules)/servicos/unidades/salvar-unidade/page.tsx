@@ -5,8 +5,8 @@ import { MdOutlineSupervisorAccount } from 'react-icons/md'
 
 import TabUnidadeDetails from '../../../components/TabUnidadeDetails'
 
-import { CardDefault } from '../../../../../../../../teste/src/components/Cards/CardDefault'
-import { ImageExist } from '../../../../../../../../teste/src/functions/ImageExist'
+import { CardDefault } from '@/components/Cards/CardDefault'
+import { ImageExist } from '@/functions/ImageExist'
 import { authOptions } from '@/lib/auth'
 import { getAllOrganizacoes } from '@/lib/GetAllOrganizacoes'
 import { getAllStates } from '@/lib/getAllStates'

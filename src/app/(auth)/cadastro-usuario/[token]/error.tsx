@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 
-import PageNotFound from '../../../../../../teste/src/components/Pages/PageNotFound'
+import PageNotFound from '@/components/Pages/PageNotFound'
 
 export default function Error({
   error,

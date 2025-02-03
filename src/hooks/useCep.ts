@@ -1,6 +1,6 @@
 import { type CepProps } from '../../../teste/types/index'
 
-import { fetchWrapper } from '../../../teste/src/functions/fetch'
+import { fetchWrapper } from '@/functions/fetch'
 import { toast } from '@/hooks/use-toast'
 
 

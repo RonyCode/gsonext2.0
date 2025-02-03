@@ -3,9 +3,9 @@ import React from 'react'
 import { LuBuilding, LuSearchX } from 'react-icons/lu'
 import { MdOutlineSupervisorAccount } from 'react-icons/md'
 
-import { CardDefault } from '../../../../../../../../../teste/src/components/Cards/CardDefault'
-import { columnsMembers } from '../../../../../../../../../teste/src/components/DataTables/DataTableMembers/columnsMembers'
-import { DataTableMembers } from '../../../../../../../../../teste/src/components/DataTables/DataTableMembers/data-table-members'
+import { CardDefault } from '@/components/Cards/CardDefault'
+import { columnsMembers } from '@/components/DataTables/DataTableMembers/columnsMembers'
+import { DataTableMembers } from '@/components/DataTables/DataTableMembers/data-table-members'
 import { authOptions } from '@/lib/auth'
 import { getAllOrganizacoes } from '@/lib/GetAllOrganizacoes'
 
@@ -27,7 +27,7 @@ const MembrosUnidade = async ({
     return null
   })
 
-  // eslint-disable-next-line array-callback-return
+   
   const diretor = companyFound?.members?.find((member) => {
     if (member?.id === companyFound?.director) {
       return member

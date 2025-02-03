@@ -3,7 +3,7 @@ import React from 'react'
 import { LuUserCheck } from 'react-icons/lu'
 
 import { EditProfileForm } from '@/app/(private)/conta/component/EditProfileForm'
-import { CardDefault } from '../../../../../teste/src/components/Cards/CardDefault'
+import { CardDefault } from '@/components/Cards/CardDefault'
 import { authOptions } from '@/lib/auth'
 import { getAllStates } from '@/lib/getAllStates'
 import { GetUserById } from '@/lib/GetUserById'

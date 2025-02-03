@@ -4,9 +4,9 @@ import React, { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { LuLoaderCircle } from 'react-icons/lu'
 
-import { columnsWithCheckboxVehicles } from '../../../../../../teste/src/components/DataTables/DataTableVehicles/columnsWithCheckboxVehicles'
-import { DataTableVehicle } from '../../../../../../teste/src/components/DataTables/DataTableVehicles/data-table-vehicle'
-import LoadingPage from '../../../../../../teste/src/components/Loadings/LoadingPage'
+import { columnsWithCheckboxVehicles } from '@/components/DataTables/DataTableVehicles/columnsWithCheckboxVehicles'
+import { DataTableVehicle } from '@/components/DataTables/DataTableVehicles/data-table-vehicle'
+import LoadingPage from '@/components/Loadings/LoadingPage'
 import { saveVehicleIntoCompany } from '@/lib/saveVehicleIntoCompany'
 import { cn } from '@/lib/utils'
 import { type IVehicleSchema } from '@/schemas/CarsSchema'
@@ -102,7 +102,7 @@ export const VehicleCompanyForm = ({
           <Form {...form}>
             <LoadingPage pending={pending} />
             <form
-              /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+               
               onSubmit={form.handleSubmit((data) => {
                 handleSubmit(data)
               })}

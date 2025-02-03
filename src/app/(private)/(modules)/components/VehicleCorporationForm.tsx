@@ -17,10 +17,10 @@ import {
   LuSpellCheck2,
 } from 'react-icons/lu'
 
-import { saveVehicleIntoCorporationAction } from '../../../../../../teste/src/actions/saveVehicleIntoCorporationAction'
-import { EditPhoto } from '../../../../../../teste/src/components/EditPhoto/EditPhoto'
-import LoadingPage from '../../../../../../teste/src/components/Loadings/LoadingPage'
-import { GetUserNotification } from '../../../../../../teste/src/functions/GetNotificationUser'
+import { saveVehicleIntoCorporationAction } from '@/actions/saveVehicleIntoCorporationAction'
+import { EditPhoto } from '@/components/EditPhoto/EditPhoto'
+import LoadingPage from '@/components/Loadings/LoadingPage'
+import { GetUserNotification } from '@/functions/GetNotificationUser'
 import { getAllVehicles } from '@/lib/GetAllVehicles'
 import { cn } from '@/lib/utils'
 import { VehicleSchema, type IVehicleSchema } from '@/schemas/CarsSchema'
@@ -229,7 +229,7 @@ export const VehicleCorporationForm = ({
           <Form {...form}>
             <LoadingPage pending={pending} />
             <form
-              /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+               
               onSubmit={form.handleSubmit(async (data) => {
                 handleSubmit(data)
               })}
@@ -321,7 +321,7 @@ export const VehicleCorporationForm = ({
                                                 vehicleItem?.type ?? undefined
                                               }
                                               key={index}
-                                              /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+                                               
                                               onSelect={() => {
                                                 handleSelectTypeVehicle()
                                                 form.setValue(
@@ -400,7 +400,7 @@ export const VehicleCorporationForm = ({
                                           <CommandItem
                                             value={car?.codigo ?? undefined}
                                             key={index}
-                                            /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+                                             
                                             onSelect={() => {
                                               handleSelectModel()
                                               form.setValue(
@@ -475,7 +475,7 @@ export const VehicleCorporationForm = ({
                                           <CommandItem
                                             value={corp?.id ?? undefined}
                                             key={index}
-                                            /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+                                             
                                             onSelect={() => {
                                               form.setValue(
                                                 'id_corporation',
@@ -591,7 +591,7 @@ export const VehicleCorporationForm = ({
                                           <CommandItem
                                             value={car?.id_condition}
                                             key={index}
-                                            /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+                                             
                                             onSelect={() => {
                                               handleSelectYearVehicle()
                                               form.setValue(
@@ -668,7 +668,7 @@ export const VehicleCorporationForm = ({
                                           <CommandItem
                                             value={car?.id_brand ?? undefined}
                                             key={index}
-                                            /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+                                             
                                             onSelect={() => {
                                               handleSelectBrandVehicle()
                                               form.setValue(
@@ -742,7 +742,7 @@ export const VehicleCorporationForm = ({
                                           <CommandItem
                                             value={car?.codigo ?? undefined}
                                             key={index}
-                                            /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+                                             
                                             onSelect={() => {
                                               handleSelectYearVehicle()
                                               form.setValue(
@@ -899,7 +899,7 @@ export const VehicleCorporationForm = ({
                                           <CommandItem
                                             value={car?.id_status ?? undefined}
                                             key={index}
-                                            /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+                                             
                                             onSelect={() => {
                                               handleSelectYearVehicle()
                                               form.setValue(

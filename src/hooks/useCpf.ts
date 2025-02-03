@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify'
 
-import { fetchWrapper } from '../../../teste/src/functions/fetch'
+import { fetchWrapper } from '@/functions/fetch'
 import { z } from 'zod'
 
 export const useCpf = (): {
@@ -9,7 +9,7 @@ export const useCpf = (): {
     dataNascimento: string,
   ) => Promise<z.ZodError | Error | undefined>
 } => {
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+   
   const findPersonByCpf = async (cpf: string, dataNascimento: string) => {
     try {
       await fetchWrapper(`${process.env.NEXT_PUBLIC_NEXT_URL}/api/cpf`, {

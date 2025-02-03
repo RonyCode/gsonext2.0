@@ -3,7 +3,7 @@ import React, { type ReactNode } from 'react'
 import { LuBuilding2 } from 'react-icons/lu'
 
 import OrganizacaoForm from '@/app/(private)/(modules)/components/OrganizacaoForm'
-import { CardDefault } from '../../../../../../../teste/src/components/Cards/CardDefault'
+import { CardDefault } from '@/components/Cards/CardDefault'
 import { authOptions } from '@/lib/auth'
 import { getAllOrganizacoes } from '@/lib/GetAllOrganizacoes'
 import { getAllStates } from '@/lib/getAllStates'

@@ -2,8 +2,8 @@
 import React, { useState, useTransition } from 'react'
 import { LuCheck, LuChevronsUpDown } from 'react-icons/lu'
 
-import CalendarGso from '../../../../../../teste/src/components/CalendarGso/CalendarGso'
-import LoadingPage from '../../../../../../teste/src/components/Loadings/LoadingPage'
+import CalendarGso from '@/components/CalendarGso/CalendarGso'
+import LoadingPage from '@/components/Loadings/LoadingPage'
 import { cn } from '@/lib/utils'
 import { type IUnidadeSchema } from '@/schemas/UnidadeSchema'
 import type { FunctionsMembers } from '../../../../../../teste/types/index'

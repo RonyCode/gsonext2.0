@@ -5,7 +5,7 @@ import { LuSaveAll } from 'react-icons/lu'
 
 import { MemberCompanyForm } from '@/app/(private)/(modules)/components/MemberCompanyForm'
 import MemberForm from '@/app/(private)/(modules)/components/MemberForm'
-import { CardDefault } from '../../../../../../../../../../teste/src/components/Cards/CardDefault'
+import { CardDefault } from '@/components/Cards/CardDefault'
 import { authOptions } from '@/lib/auth'
 import { getAllOrganizacoes } from '@/lib/GetAllOrganizacoes'
 

@@ -4,8 +4,8 @@ import React, { type ReactNode } from 'react'
 import { LuSaveAll } from 'react-icons/lu'
 
 import MemberForm from '@/app/(private)/(modules)/components/MemberForm'
-import { CardDefault } from '../../../../../../../../teste/src/components/Cards/CardDefault'
-import { CardWithLogo } from '../../../../../../../../teste/src/components/Cards/CardWithLogo'
+import { CardDefault } from '@/components/Cards/CardDefault'
+import { CardWithLogo } from '@/components/Cards/CardWithLogo'
 import { getAllOrganizacoes } from '@/lib/GetAllOrganizacoes'
 import { Button } from '@/ui/button'
 

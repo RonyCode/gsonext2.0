@@ -9,23 +9,22 @@ import {
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbSeparator,
-} from '../ui/breadcrumb'
+} from '@/ui/breadcrumb'
+import {usePathname} from "next/navigation";
+
+
 
 const BreadcrumbGso = (): ReactElement => {
-  const [currentUrl, setCurrentUrl] = useState<string | null>(null)
-  useEffect(() => {
-    setCurrentUrl(window.location.href)
-  }, [])
-  const arrayPathname = currentUrl?.split('/')
-
-  arrayPathname?.splice(0, 3)
-
+  const pathname = usePathname()
+  const arrayPathname = pathname?.split('/')
+  arrayPathname?.shift()
+  let link =  ''
   const arrayLink: string[] = []
-  let link = ''
 
   return (
     <Breadcrumb>
-      <BreadcrumbList className="rounded-b-[8px] border border-t-0  border-foreground/30 bg-secondary p-2">
+      <BreadcrumbList
+        >
         <BreadcrumbItem className="hover:text-foreground">
           <Link href="/public">
             {' '}
@@ -34,6 +33,7 @@ const BreadcrumbGso = (): ReactElement => {
         </BreadcrumbItem>
 
         {arrayPathname?.map((path, index) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
           index === 0 ? arrayLink.push('/' + path) : arrayLink.push(path)
           link = arrayLink.join('/')
           // setCurrentUrl(link)

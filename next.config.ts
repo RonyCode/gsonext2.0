@@ -59,7 +59,6 @@ const nextConfig = {
 }
 
 module.exports = () => {
-  // if (phase === PHASE_DEVELOPMENT_SERVER || phase === PHASE_PRODUCTION_BUILD) {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const withPWA = require('@ducanh2912/next-pwa').default({
     dest: 'public',

@@ -1,4 +1,4 @@
-import { fetchWrapper } from '../../../teste/src/functions/fetch'
+import { fetchWrapper } from '@/functions/fetch'
 import { stateStore } from '@/stores/Address/stateStore'
 import { type AddressProps } from '../../../teste/types/index'
 

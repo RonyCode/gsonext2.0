@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { CardModule } from '../../../../../../../../teste/src/components/Cards/CardModule'
-import IconBuild from '../../../../../../../../teste/public/icons/IconBuild'
-import IconBuildPlus from '../../../../../../../../teste/public/icons/IconBuildPlus'
-import IconCarFrontal from '../../../../../../../../teste/public/icons/IconCarFrontal'
-import IconEditSave from '../../../../../../../../teste/public/icons/IconEditSave'
-import IconList from '../../../../../../../../teste/public/icons/IconList'
-import IconMembers from '../../../../../../../../teste/public/icons/IconMembers'
+import { CardModule } from '@/components/Cards/CardModule'
+import IconBuild from '@/icons/IconBuild'
+import IconBuildPlus from '@/icons/IconBuildPlus'
+import IconCarFrontal from '@/icons/IconCarFrontal'
+import IconEditSave from '@/icons/IconEditSave'
+import IconList from '@/icons/IconList'
+import IconMembers from '@/icons/IconMembers'
 import { type IUnidadeSchema } from '@/schemas/UnidadeSchema'
 
 const ModuleUnidades = ({

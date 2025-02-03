@@ -12,10 +12,10 @@ import {
   LuSearch,
 } from 'react-icons/lu'
 
-import { saveMemberIntoCorporationAction } from '../../../../../../teste/src/actions/saveMemberIntoCorporationAction'
-import { columnsUsersArray } from '../../../../../../teste/src/components/DataTables/DataTableUsers/columnsUsers'
-import { DataTableUsers } from '../../../../../../teste/src/components/DataTables/DataTableUsers/data-table-users'
-import LoadingPage from '../../../../../../teste/src/components/Loadings/LoadingPage'
+import { saveMemberIntoCorporationAction } from '@/actions/saveMemberIntoCorporationAction'
+import { columnsUsersArray } from '@/components/DataTables/DataTableUsers/columnsUsers'
+import { DataTableUsers } from '@/components/DataTables/DataTableUsers/data-table-users'
+import LoadingPage from '@/components/Loadings/LoadingPage'
 import { searchUsersWithoutCorporation } from '@/lib/searchUsersWithoutCorporation'
 import { cn } from '@/lib/utils'
 import { type IOrganizacaoSchema } from '@/schemas/OrganizacaoSchema'
@@ -173,7 +173,7 @@ export const MemberForm = ({
           <Form {...form}>
             <LoadingPage pending={pending} />
             <form
-              /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+               
               onSubmit={form.handleSubmit((data) => {
                 handleSubmit(data)
               })}
@@ -222,7 +222,7 @@ export const MemberForm = ({
                                   <CommandItem
                                     value={corp?.id ?? ''}
                                     key={index}
-                                    /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+                                     
                                     onSelect={() => {
                                       form.setValue(
                                         'id_corporation',

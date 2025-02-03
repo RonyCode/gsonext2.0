@@ -1,14 +1,13 @@
 import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
-import { revalidatePath } from 'next/cache'
 import Link from 'next/link'
 import React from 'react'
 import { LuBuilding, LuBuilding2 } from 'react-icons/lu'
 
-import { CardDefault } from '../../../../../../../teste/src/components/Cards/CardDefault'
-import { CardWithLogo } from '../../../../../../../teste/src/components/Cards/CardWithLogo'
-import { columnsUnidades } from '../../../../../../../teste/src/components/DataTables/DataTableUnidades/columnsUnidades'
-import { DataTableUnidades } from '../../../../../../../teste/src/components/DataTables/DataTableUnidades/data-table-unidades'
+import { CardDefault } from '@/components/Cards/CardDefault'
+import { CardWithLogo } from '@/components/Cards/CardWithLogo'
+import { columnsUnidades } from '@/components/DataTables/DataTableUnidades/columnsUnidades'
+import { DataTableUnidades } from '@/components/DataTables/DataTableUnidades/data-table-unidades'
 import { authOptions } from '@/lib/auth'
 import { getAllOrganizacoes } from '@/lib/GetAllOrganizacoes'
 import { Button } from '@/ui/button'
@@ -25,7 +24,7 @@ const listaUnidades = async () => {
     return corp?.id === session?.id_corporation
   })
 
-  revalidatePath('/')
+
   return (
     <>
       <CardDefault

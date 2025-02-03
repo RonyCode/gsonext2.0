@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { CardModule } from '../../../../../../../teste/src/components/Cards/CardModule'
-import IconBuild from '../../../../../../../teste/public/icons/IconBuild'
-import IconCarFrontal from '../../../../../../../teste/public/icons/IconCarFrontal'
-import IconCog from '../../../../../../../teste/public/icons/IconCog'
-import IconList from '../../../../../../../teste/public/icons/IconList'
-import IconMembers from '../../../../../../../teste/public/icons/IconMembers'
+import { CardModule } from '@/components/Cards/CardModule'
+import IconBuild from '@/icons/IconBuild'
+import IconCarFrontal from '@/icons/IconCarFrontal'
+import IconCog from '@/icons/IconCog'
+import IconList from '@/icons/IconList'
+import IconMembers from '@/icons/IconMembers'
 
 const ModuleMinhaUnidade = ({
   params,

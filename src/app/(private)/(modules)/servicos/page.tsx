@@ -1,16 +1,14 @@
-import { revalidatePath } from 'next/cache'
 import React from 'react'
 import { LuFolderCog } from 'react-icons/lu'
 
 import Modules from '@/app/(private)/(modules)/components/module/Modules'
-import { CardDefault } from '../../../../../../teste/src/components/Cards/CardDefault'
+import { CardDefault } from '@/components/Cards/CardDefault'
 
 const Page = async ({
   params,
 }: {
   params: { sigla: string; id_corporation: string }
 }) => {
-  revalidatePath('/')
   return (
     <>
       <CardDefault

@@ -1,10 +1,10 @@
-import { CardModule } from '../../../../../../../teste/src/components/Cards/CardModule'
-import IconBuildPlus from '../../../../../../../teste/public/icons/IconBuildPlus'
-import IconCarFrontal from '../../../../../../../teste/public/icons/IconCarFrontal'
-import IconMembers from '../../../../../../../teste/public/icons/IconMembers'
-import IconOpenBook from '../../../../../../../teste/public/icons/IconOpenBook'
-import IconPrivileges from '../../../../../../../teste/public/icons/IconPrivileges'
-import IconPuzzle from '../../../../../../../teste/public/icons/IconPuzzle'
+import { CardModule } from '@/components/Cards/CardModule'
+import IconBuildPlus from '@/icons/IconBuildPlus'
+import IconCarFrontal from '@/icons/IconCarFrontal'
+import IconMembers from '@/icons/IconMembers'
+import IconOpenBook from '@/icons/IconOpenBook'
+import IconPrivileges from '@/icons/IconPrivileges'
+import IconPuzzle from '@/icons/IconPuzzle'
 
 const ModuloGestor = async ({
   params,

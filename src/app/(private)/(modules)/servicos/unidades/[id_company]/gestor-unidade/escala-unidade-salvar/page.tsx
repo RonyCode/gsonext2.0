@@ -4,7 +4,7 @@ import React, { type ReactNode } from 'react'
 import { LuSaveAll } from 'react-icons/lu'
 
 import TabScheduleSave from '@/app/(private)/(modules)/components/TabScheduleSave'
-import { CardDefault } from '../../../../../../../../../../teste/src/components/Cards/CardDefault'
+import { CardDefault } from '@/components/Cards/CardDefault'
 import { authOptions } from '@/lib/auth'
 import { getAllOrganizacoes } from '@/lib/GetAllOrganizacoes'
 

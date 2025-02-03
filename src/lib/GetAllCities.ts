@@ -1,6 +1,6 @@
 import { type AddressProps } from '../../../teste/types'
 
-import { fetchWrapper } from '../../../teste/src/functions/fetch'
+import { fetchWrapper } from '@/functions/fetch'
 import { cityStore } from '@/stores/Address/CityByStateStore'
 
 export const getAllCities = async (): Promise<AddressProps[]> => {

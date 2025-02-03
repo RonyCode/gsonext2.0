@@ -1,7 +1,7 @@
 'use client'
 import React, { type ReactElement, useEffect, useState } from 'react'
 
-import Logo from '../../../../public/images/Logo'
+import Logo from '@/img/Logo'
 
 const BannerHome1 = (): ReactElement => {
   const [showNavBar, setShowNavBar] = useState(false)
@@ -24,7 +24,6 @@ const BannerHome1 = (): ReactElement => {
   }, [showNavBar])
 
   return (
-    <div>
       <div
         className={`${disapear}  fixed grid h-full  w-full bg-no-repeat brightness-75 md:w-[80vw] md:grid-cols-2
         md:place-items-center md:bg-cover`}
@@ -32,14 +31,14 @@ const BannerHome1 = (): ReactElement => {
           backgroundImage: 'url(/images/banner.jpg)',
         }}
       >
-        <div
-          className={
-            showNavBar
-              ? 'min-w-screen fixed h-screen min-h-screen w-screen brightness-[30%]  backdrop-blur-sm ' +
-                'transition duration-200 ease-in-out'
-              : 'min-w-screen fixed h-screen  min-h-screen  w-screen transition duration-200 ease-in-out'
-          }
-        ></div>
+        {/*<div*/}
+        {/*  className={*/}
+        {/*    showNavBar*/}
+        {/*      ? 'min-w-screen fixed h-screen min-h-screen w-screen brightness-[30%]  backdrop-blur-sm ' +*/}
+        {/*        'transition duration-200 ease-in-out'*/}
+        {/*      : 'min-w-screen fixed h-screen  min-h-screen  w-screen transition duration-200 ease-in-out'*/}
+        {/*  }*/}
+        {/*></div>*/}
         <div
           className="flex
           flex-col place-content-center items-center justify-center gap-y-3 rounded-md p-4
@@ -59,7 +58,6 @@ const BannerHome1 = (): ReactElement => {
           </p>
         </div>
       </div>
-    </div>
   )
 }
 

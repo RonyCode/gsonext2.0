@@ -80,6 +80,7 @@ export const columnsUnidades: Array<ColumnDef<IUnidadeSchema>> = [
                   {' '}
                   <LuBuilding2 size={16} className="mr-2" />{' '}
                   {row.getValue('name')}
+
                 </div>
               </div>
               <div>

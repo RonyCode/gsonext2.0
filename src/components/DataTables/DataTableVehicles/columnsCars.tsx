@@ -10,7 +10,7 @@ import {
   statusVehicle,
 } from './data/data'
 import { Checkbox } from '../../ui/checkbox'
-import { type IVehicleSchema } from '../../@/schemas/CarsSchema'
+import { type IVehicleSchema } from '@/schemas/CarsSchema'
 import { Badge } from '../../ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import { type ColumnDef } from '@tanstack/react-table'

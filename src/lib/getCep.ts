@@ -1,4 +1,4 @@
-import { fetchWrapper } from '../../../teste/src/functions/fetch'
+import { fetchWrapper } from '@/functions/fetch'
 import { type CepProps } from '../../../teste/types/index'
 
 export const getCep = async (cep: string): Promise<CepProps> => {

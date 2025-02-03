@@ -1,4 +1,4 @@
-import { fetchWrapper } from '../../../teste/src/functions/fetch'
+import { fetchWrapper } from '@/functions/fetch'
 import { type FunctionsMembers, type ResponseApi } from '../../../teste/types/index'
 
 export const getAllFunctions = async (): Promise<

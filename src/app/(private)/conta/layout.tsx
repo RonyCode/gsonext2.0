@@ -10,7 +10,8 @@ import {
   LuCalendarDays,
 } from 'react-icons/lu'
 
-import { Sidebar } from '../../../../../teste/src/components/Sidebar/sidebar'
+import {SidebarProvider, SidebarTrigger} from "@/ui/sidebar";
+import {AppSidebar} from "@/components/Sidebar/app-sidebar";
 
 export const metadata: Metadata = {
   title: 'GSO | Perfil',
@@ -83,11 +84,13 @@ export default function ProfileLayout({
       <div className="min-h-screen border-t">
         <div className="bg-background">
           <div className="grid grid-cols-1 lg:grid-cols-5">
-            <Sidebar items={sidebarNavItems} className="lg:block" />
             <div className="col-span-3 lg:col-span-4 lg:border-l">
-              <div>{children}</div>
+                <main>
+                  <SidebarTrigger />
+                  {children}
+                </main>
             </div>
-          </div>
+            </div>
         </div>
       </div>
     </>

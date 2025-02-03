@@ -5,11 +5,12 @@ import React, { type ReactNode } from 'react'
 import { LuSaveAll } from 'react-icons/lu'
 
 import TabScheduleSave from '@/app/(private)/(modules)/components/TabScheduleSave'
-import { CardDefault } from '../../../../../../../../teste/src/components/Cards/CardDefault'
-import { CardWithLogo } from '../../../../../../../../teste/src/components/Cards/CardWithLogo'
+import { CardDefault } from '@/components/Cards/CardDefault'
+import { CardWithLogo } from '@/components/Cards/CardWithLogo'
 import { authOptions } from '@/lib/auth'
 import { getAllOrganizacoes } from '@/lib/GetAllOrganizacoes'
 import { Button } from '@/ui/button'
+import type {IOrganizacaoSchema} from "@/schemas/OrganizacaoSchema";
 
 export const metadata: Metadata = {
   title: 'GSO | unidades',
@@ -23,7 +24,7 @@ const SalvarEscala = async ({
 }): Promise<ReactNode> => {
   const { data } = await getAllOrganizacoes()
   const session = await getServerSession(authOptions)
-  const corpFound = data?.find((corp) => {
+  const corpFound = data?.find((corp:IOrganizacaoSchema) => {
     return corp?.id === session?.id_corporation
   })
   const companyFound = corpFound?.companies?.find(

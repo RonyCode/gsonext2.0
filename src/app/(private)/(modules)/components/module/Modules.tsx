@@ -1,15 +1,15 @@
 import type { Metadata } from 'next'
 import React from 'react'
 
-import { CardModule } from '../../../../../../../teste/src/components/Cards/CardModule'
-import IconBuild from '../../../../../../../teste/public/icons/IconBuild'
-import IconCalendar from '../../../../../../../teste/public/icons/IconCalendar'
-import IconCarFrontal from '../../../../../../../teste/public/icons/IconCarFrontal'
-import IconCelular from '../../../../../../../teste/public/icons/IconCelular'
-import IconCog from '../../../../../../../teste/public/icons/IconCog'
-import IconGrafico from '../../../../../../../teste/public/icons/IconGrafico'
-import IconMembers from '../../../../../../../teste/public/icons/IconMembers'
-import IconSirene from '../../../../../../../teste/public/icons/IconSirene'
+import { CardModule } from '@/components/Cards/CardModule'
+import IconBuild from '@/icons/IconBuild'
+import IconCalendar from '@/icons/IconCalendar'
+import IconCarFrontal from '@/icons/IconCarFrontal'
+import IconCelular from '@/icons/IconCelular'
+import IconCog from '@/icons/IconCog'
+import IconGrafico from '@/icons/IconGrafico'
+import IconMembers from '@/icons/IconMembers'
+import IconSirene from '@/icons/IconSirene'
 
 export const metadata: Metadata = {
   title: 'GSO | Gestor unidade',
@@ -49,11 +49,13 @@ const Modules = () => {
           <CardModule
             title="Dashboard"
             subtitle="Estatítiscas gerais"
+            link={`/servicos/dashboard`}
             icon={<IconGrafico width={58} />}
           />{' '}
           <CardModule
             title="Aplicativo"
             subtitle="Novidades do nosso App"
+            link={`/servicos/app`}
             icon={<IconCelular width={60} />}
           />{' '}
           <CardModule

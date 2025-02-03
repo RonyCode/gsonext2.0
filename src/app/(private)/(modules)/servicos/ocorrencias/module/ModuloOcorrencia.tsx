@@ -1,8 +1,8 @@
-import { CardModule } from '../../../../../../../../teste/src/components/Cards/CardModule'
+import { CardModule } from '@/components/Cards/CardModule'
 
-import IconList from '../../../../../../../../teste/public/icons/IconList'
+import IconList from '@/icons/IconList'
 
-import IconEditSave from '../../../../../../../../teste/public/icons/IconEditSave'
+import IconEditSave from '@/icons/IconEditSave'
 
 const ModuloOcorrencia = async ({
   params,

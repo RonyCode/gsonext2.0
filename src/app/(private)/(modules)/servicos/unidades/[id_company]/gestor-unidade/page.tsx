@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 
 import ModuloGestorUnidade from '@/app/(private)/(modules)/components/module/ModuloGestorUnidade'
-import { CardDefault } from '../../../../../../../../../teste/src/components/Cards/CardDefault'
-import IconBuildPlus from '../../../../../../../../../teste/public/icons/IconBuildPlus'
+import { CardDefault } from '@/components/Cards/CardDefault'
+import IconBuildPlus from '@/icons/IconBuildPlus'
 import { authOptions } from '@/lib/auth'
 import { getAllOrganizacoes } from '@/lib/GetAllOrganizacoes'
 export const metadata: Metadata = {

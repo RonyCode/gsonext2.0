@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { CardModule } from '../../../../../../../teste/src/components/Cards/CardModule'
-import IconBuild from '../../../../../../../teste/public/icons/IconBuild'
+import { CardModule } from '@/components/Cards/CardModule'
+import IconBuild from '@/icons/IconBuild'
 import { type IOrganizacaoSchema } from '@/schemas/OrganizacaoSchema'
 
 const ModulesOrganizacao = ({

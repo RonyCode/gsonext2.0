@@ -20,13 +20,13 @@ import {
 } from 'react-icons/lu'
 
 import { saveUnidadeAction } from '@/app/(private)/(modules)/servicos/gestor/actions/saveUnidadeAction'
-import { AddVehicleSchedule } from '../../../../../../teste/src/components/Buttoms/AddVehicleSchedule'
-import { CardModule } from '../../../../../../teste/src/components/Cards/CardModule'
-import LoadingPage from '../../../../../../teste/src/components/Loadings/LoadingPage'
-import { checkMobile } from '../../../../../../teste/src/functions/IsMobile'
-import AddCar from '../../../../../../teste/public/icons/AddCar'
-import IconCarFrontal from '../../../../../../teste/public/icons/IconCarFrontal'
-import IconManager from '../../../../../../teste/public/icons/IconManager'
+import { AddVehicleSchedule } from '@/components/Buttoms/AddVehicleSchedule'
+import { CardModule } from '@/components/Cards/CardModule'
+import LoadingPage from '@/components/Loadings/LoadingPage'
+import { checkMobile } from '@/functions/IsMobile'
+import AddCar from '@/icons/AddCar'
+import IconCarFrontal from '@/icons/IconCarFrontal'
+import IconManager from '@/icons/IconManager'
 import { cn } from '@/lib/utils'
 import type { IVehicleSchema } from '@/schemas/CarsSchema'
 import type { IMemberSchema } from '@/schemas/MemberSchema'
@@ -448,7 +448,7 @@ export const TabScheduleSave = ({
                               <Button
                                 className="ml-2"
                                 type="button"
-                                /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+                                 
                                 onClick={form.handleSubmit(async (data) => {
                                   data?.id != null &&
                                     true &&
@@ -485,7 +485,7 @@ export const TabScheduleSave = ({
         <Form {...form}>
           <LoadingPage pending={pending} />
           <form
-            /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+             
             onSubmit={form.handleSubmit(async (data) => {
               await handleSubmit(data)
             })}

@@ -1,6 +1,6 @@
 import './globals.css'
 import { type Metadata, type Viewport } from 'next'
-import { Suspense } from 'react'
+import React, { Suspense } from 'react'
 
 import LoadingPage from '@/components/Loadings/LoadingPage'
 import { NavbarMain } from '@/components/Nav/NavbarMain'
@@ -8,6 +8,17 @@ import { fontSans } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
 import { Providers } from '@/providers'
 import { ThemeProvider } from '@/providers/ThemeProvider/ThemeProvider'
+import {SidebarInset, SidebarProvider, SidebarTrigger} from "@/ui/sidebar";
+import {AppSidebar} from "@/components/Sidebar/app-sidebar";
+import {Separator} from "@/ui/separator";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator
+} from "@/ui/breadcrumb";
 
 const APP_NAME = 'GSO'
 const APP_DEFAULT_TITLE = 'GSO'
@@ -75,9 +86,8 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Providers>
-              <NavbarMain />
-              <div className="flex min-h-screen w-full  flex-col bg-gradient-to-t from-background to-secondary pt-[68px]">
-                <div className="h-[calc(100vh_-_68px)] w-full">{children}</div>
+              <div className="flex min-h-screen w-full  flex-col bg-gradient-to-t from-background to-secondary">
+                <div className="h-full w-full">{children}</div>
               </div>
             </Providers>{' '}
           </ThemeProvider>

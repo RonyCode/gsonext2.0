@@ -5,7 +5,7 @@ import { LuCrown } from 'react-icons/lu'
 
 import ModuloGestor from '../../components/module/ModuloGestor'
 
-import { CardDefault } from '../../../../../../../teste/src/components/Cards/CardDefault'
+import { CardDefault } from '@/components/Cards/CardDefault'
 import { authOptions } from '@/lib/auth'
 import { toast } from '@/hooks/use-toast'
 

@@ -1,10 +1,10 @@
-import type { Config } from "tailwindcss";
+import type {Config} from "tailwindcss";
 import tailwindcss_animate from "tailwindcss-animate"
 import {fontFamily} from 'tailwindcss/defaultTheme'
 
 export default {
-    darkMode: ["class"],
-    content: [
+  darkMode: ["class"],
+  content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -73,6 +73,97 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
+  		},
+  		transformOrigin: {
+  			'top-left': '0% 25%'
+  		},
+  		zIndex: {
+  			'100': '100'
+  		},
+  		keyframes: {
+  			'accordion-down': {
+  				from: {
+  					height: '0'
+  				},
+  				to: {
+  					height: 'var(--radix-accordion-content-height)'
+  				}
+  			},
+  			'accordion-up': {
+  				from: {
+  					height: 'var(--radix-accordion-content-height)'
+  				},
+  				to: {
+  					height: '0'
+  				}
+  			},
+  			sliceLogin: {
+  				from: {
+  					transform: 'translateX(0%)'
+  				},
+  				to: {
+  					transform: 'translateX(100%)'
+  				}
+  			},
+  			sliceRegister: {
+  				from: {
+  					transform: 'translateX(100%)'
+  				},
+  				to: {
+  					transform: 'translateX(0)'
+  				}
+  			},
+  			sliceCalendar: {
+  				from: {
+  					transform: 'translateX(100%)'
+  				},
+  				to: {
+  					transform: 'translateX(0)'
+  				}
+  			},
+  			fadeIn: {
+  				'0%': {
+  					opacity: '0'
+  				},
+  				'100%': {
+  					opacity: '1'
+  				}
+  			},
+  			wiggle: {
+  				from: {
+  					transform: 'translateX(var(--slide-distance)) skew(20deg)'
+  				},
+  				to: {
+  					transform: 'translateX(var(--position-initial)) skew(20deg)'
+  				}
+  			},
+  			flipSirene: {
+  				'50%': {
+  					transform: 'rotateY(180deg)'
+  				}
+  			},
+  			flipBrilho: {
+  				'50%': {
+  					transform: 'rotateX(180deg)'
+  				}
+  			},
+  			calendarRotate: {
+  				to: {
+  					transform: 'translate(25%)'
+  				}
+  			}
+  		},
+  		animation: {
+  			calendarRotate: 'calendarRotate 2s infinite',
+  			flipSirene: 'flipSirene 2.5s forwards',
+  			flipBrilho: 'flipBrilho 2.5s forwards',
+  			wiggle: 'wiggle 1.5s ease-in-out forwards',
+  			'accordion-down': 'accordion-down 0.2s ease-out',
+  			'accordion-up': 'accord      },0.2s ease-out',
+  			fadeIn: 'fadeIn .5s ease-in-out',
+  			sliceLogin: 'sliceLogin 1s  ease-in-out forwards ',
+  			sliceCalendar: 'sliceCalendar 1.5s  ease-in-out alternate forwards ',
+  			sliceRegister: 'sliceRegister 1s ease-in-out forwards '
   		}
   	}
   },

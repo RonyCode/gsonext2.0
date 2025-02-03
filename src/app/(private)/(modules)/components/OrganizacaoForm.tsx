@@ -20,12 +20,12 @@ import {
 } from 'react-icons/lu'
 
 import { saveCorporationAction } from '@/app/(private)/(modules)/servicos/gestor/actions/saveCorporationAction'
-import { EditPhoto } from '../../../../../../teste/src/components/EditPhoto/EditPhoto'
-import { MyInputMask } from '../../../../../../teste/src/components/Form/Input/myInputMask'
-import LoadingPage from '../../../../../../teste/src/components/Loadings/LoadingPage'
-import { maskCpfCnpj } from '../../../../../../teste/src/functions/masks/maskCpfCnpj'
-import { maskPhone } from '../../../../../../teste/src/functions/masks/maskphone'
-import { maskZipcode } from '../../../../../../teste/src/functions/masks/maskZipcode'
+import { EditPhoto } from '@/components/EditPhoto/EditPhoto'
+import { MyInputMask } from '@/components/Form/Input/myInputMask'
+import LoadingPage from '@/components/Loadings/LoadingPage'
+import { maskCpfCnpj } from '@/functions/masks/maskCpfCnpj'
+import { maskPhone } from '@/functions/masks/maskphone'
+import { maskZipcode } from '@/functions/masks/maskZipcode'
 import { getAllCitiesByState } from '@/lib/getAllCitiesByState'
 import { getCep } from '@/lib/getCep'
 import { cn } from '@/lib/utils'
@@ -259,7 +259,7 @@ export const OrganizacaoForm = ({
                           <Button
                             className="ml-2"
                             type="button"
-                            /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+                             
                             onClick={form.handleSubmit(async (data) => {
                               await handleDeleteAction(data)
                             })}
@@ -295,7 +295,7 @@ export const OrganizacaoForm = ({
           <Form {...form}>
             <LoadingPage pending={pending} />
             <form
-              /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+               
               onSubmit={form.handleSubmit(async (data) => {
                 handleSubmit(data)
               })}
@@ -453,7 +453,7 @@ export const OrganizacaoForm = ({
                   control={form.control}
                   name="address.zipcode"
                   render={({ field }) => (
-                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                     
                     <FormItem onChange={handleCep}>
                       <FormLabel
                         htmlFor="address.zipcode"
@@ -601,7 +601,7 @@ export const OrganizacaoForm = ({
                                     disabled={disabled}
                                     value={state.sigla}
                                     key={index}
-                                    /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+                                     
                                     onSelect={async () => {
                                       await handleCity(state.sigla)
                                       form.setValue('address.short_name', state.sigla)

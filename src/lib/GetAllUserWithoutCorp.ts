@@ -1,4 +1,4 @@
-import { fetchWrapper } from '../../../teste/src/functions/fetch'
+import { fetchWrapper } from '@/functions/fetch'
 import { type ResponseApi, type UserType } from '../../../teste/types/index'
 
 export const getAllUserWithoutCorp = async (): Promise<

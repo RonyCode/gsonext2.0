@@ -1,7 +1,7 @@
-import { CardModule } from '../../../../../../../teste/src/components/Cards/CardModule'
-import IconCalendar from '../../../../../../../teste/public/icons/IconCalendar'
-import IconCarFrontal from '../../../../../../../teste/public/icons/IconCarFrontal'
-import IconMembers from '../../../../../../../teste/public/icons/IconMembers'
+import { CardModule } from '@/components/Cards/CardModule'
+import IconCalendar from '@/icons/IconCalendar'
+import IconCarFrontal from '@/icons/IconCarFrontal'
+import IconMembers from '@/icons/IconMembers'
 
 const ModuloGestorUnidade = async ({
   params,

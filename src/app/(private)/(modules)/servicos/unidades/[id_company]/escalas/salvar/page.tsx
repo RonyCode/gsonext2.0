@@ -1,8 +1,8 @@
 import { LuCalendarDays } from 'react-icons/lu'
 
 import TabScheduleSave from '@/app/(private)/(modules)/components/TabScheduleSave'
-import { CardDefault } from '../../../../../../../../../../teste/src/components/Cards/CardDefault'
-import { ImageExist } from '../../../../../../../../../../teste/src/functions/ImageExist'
+import { CardDefault } from '@/components/Cards/CardDefault'
+import { ImageExist } from '@/functions/ImageExist'
 import { getUnidadeById } from '@/lib/GetUnidadeById'
 
 const SalvarEscala = async ({

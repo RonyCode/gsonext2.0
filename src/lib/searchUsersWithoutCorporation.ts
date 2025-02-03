@@ -1,6 +1,6 @@
 import { type ResponseApi } from '../../../teste/types'
 
-import { fetchWrapper } from '../../../teste/src/functions/fetch'
+import { fetchWrapper } from '@/functions/fetch'
 
 export const searchUsersWithoutCorporation = async (
   idCorporation: string | undefined | null,

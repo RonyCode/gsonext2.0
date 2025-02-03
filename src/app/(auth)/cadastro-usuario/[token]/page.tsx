@@ -1,9 +1,9 @@
 import { type Metadata } from 'next'
 
 import { UserRegisterForm } from '@/app/(auth)/cadastro-usuario/[token]/components/UserRegisterForm'
-import { CardWithLogo } from '../../../../../../teste/src/components/Cards/CardWithLogo'
-import MaxWidthWrapper from '../../../../../../teste/src/components/Pages/MaxWidthWrapper'
-import { TokenVerify } from '../../../../../../teste/src/functions/TokenVerify'
+import { CardWithLogo } from '@/components/Cards/CardWithLogo'
+import MaxWidthWrapper from '@/components/Pages/MaxWidthWrapper'
+import { TokenVerify } from '@/functions/TokenVerify'
 import { getAllStates } from '@/lib/getAllStates'
 
 export const metadata: Metadata = {

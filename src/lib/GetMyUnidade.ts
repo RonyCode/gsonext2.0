@@ -1,4 +1,4 @@
-import { fetchWrapper } from '../../../teste/src/functions/fetch'
+import { fetchWrapper } from '@/functions/fetch'
 import { type IUnidadeSchema } from '@/schemas/UnidadeSchema'
 import { type ResponseApi } from '../../../teste/types/index'
 

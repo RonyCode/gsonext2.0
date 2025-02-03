@@ -1,7 +1,7 @@
 import React, { type ReactNode } from 'react'
 import { LuCalendarDays, LuSiren } from 'react-icons/lu'
 
-import { CardDefault } from '../../../../../../../teste/src/components/Cards/CardDefault'
+import { CardDefault } from '@/components/Cards/CardDefault'
 import ModuloEscala from '@/app/(private)/(modules)/servicos/escalas/module/ModuloEscala'
 import ModuloOcorrencia from '@/app/(private)/(modules)/servicos/ocorrencias/module/ModuloOcorrencia'
 

@@ -17,14 +17,14 @@ import {
 } from 'react-icons/fa6'
 import { LuCheck, LuChevronsUpDown } from 'react-icons/lu'
 
-import { saveUserAction } from '../../../../../../../teste/src/actions/saveUserAction'
-import { MyInputMask } from '../../../../../../../teste/src/components/Form/Input/myInputMask'
-import LoadingPage from '../../../../../../../teste/src/components/Loadings/LoadingPage'
+import { saveUserAction } from '@/actions/saveUserAction'
+import { MyInputMask } from '@/components/Form/Input/myInputMask'
+import LoadingPage from '@/components/Loadings/LoadingPage'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '../../../../../../../teste/src/components/ui/popover'
+} from '@/components/ui/popover'
 import { getAllCitiesByState } from '@/lib/getAllCitiesByState'
 import { getCep } from '@/lib/getCep'
 import { cn } from '@/lib/utils'
@@ -33,7 +33,7 @@ import {
   RegisterUserSchema,
 } from '@/schemas/RegisterUserSchema'
 import { cityStore } from '@/stores/Address/CityByStateStore'
-import { type AddressProps, type ResultUserRegistered } from '../../../../../../../teste/types/index'
+import { type AddressProps, type ResultUserRegistered } from '@/types/index'
 import { Button, buttonVariants } from '@/ui/button'
 import { Calendar } from '@/ui/calendar'
 import {
@@ -82,7 +82,7 @@ type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
 export const UserRegisterForm = ({
   params,
   states,
-  // eslint-disable-next-line react/prop-types
+   
   className,
   ...props
 }: UserRegisterFormProps): React.ReactElement => {
@@ -198,7 +198,7 @@ export const UserRegisterForm = ({
           <LoadingPage pending={pending} />
           <Form {...form}>
             <form
-              /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+               
               onSubmit={form.handleSubmit(async (data) => {
                 handleSubmit(data)
               })}
@@ -374,7 +374,7 @@ export const UserRegisterForm = ({
                   control={form.control}
                   name="cep"
                   render={({ field }) => (
-                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                     
                     <FormItem onChange={handleCep}>
                       <FormLabel
                         htmlFor="cep"
@@ -521,7 +521,7 @@ export const UserRegisterForm = ({
                                   <CommandItem
                                     value={state.sigla}
                                     key={index}
-                                    /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+                                     
                                     onSelect={async () => {
                                       await handleCity(state.sigla)
                                       form.setValue('estado', state.sigla)

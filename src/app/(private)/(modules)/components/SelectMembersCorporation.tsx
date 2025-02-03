@@ -1,7 +1,7 @@
 'use client'
 
-import { columnsMembers } from '../../../../../../teste/src/components/DataTables/DataTableMembers/columnsMembers'
-import { DataTableMembers } from '../../../../../../teste/src/components/DataTables/DataTableMembers/data-table-members'
+import { columnsMembers } from '@/components/DataTables/DataTableMembers/columnsMembers'
+import { DataTableMembers } from '@/components/DataTables/DataTableMembers/data-table-members'
 import { type IOrganizacaoSchema } from '@/schemas/OrganizacaoSchema'
 import { Card } from '@/ui/card'
 

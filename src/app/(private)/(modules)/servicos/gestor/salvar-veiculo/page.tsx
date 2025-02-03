@@ -3,9 +3,9 @@ import React, { type ReactNode, Suspense } from 'react'
 import { LuCar } from 'react-icons/lu'
 
 import VehicleCorporationForm from '@/app/(private)/(modules)/components/VehicleCorporationForm'
-import { CardDefault } from '../../../../../../../../teste/src/components/Cards/CardDefault'
-import { CardWithLogo } from '../../../../../../../../teste/src/components/Cards/CardWithLogo'
-import LoadingPage from '../../../../../../../../teste/src/components/Loadings/LoadingPage'
+import { CardDefault } from '@/components/Cards/CardDefault'
+import { CardWithLogo } from '@/components/Cards/CardWithLogo'
+import LoadingPage from '@/components/Loadings/LoadingPage'
 import { getAllOrganizacoes } from '@/lib/GetAllOrganizacoes'
 import { Button } from '@/ui/button'
 

@@ -1,4 +1,4 @@
-import LoadingPage from '../../../../../../teste/src/components/Loadings/LoadingPage'
+import LoadingPage from '@/components/Loadings/LoadingPage'
 
 export default function Loading() {
   // You can add any UI inside Loading, including a Skeleton.

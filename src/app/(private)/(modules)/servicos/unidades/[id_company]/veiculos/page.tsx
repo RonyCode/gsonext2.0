@@ -5,7 +5,7 @@ import { LuBuilding, LuSearchX } from 'react-icons/lu'
 import { MdOutlineSupervisorAccount } from 'react-icons/md'
 
 import TabCarsDetails from '@/app/(private)/(modules)/components/TabCarsDetails'
-import { CardDefault } from '../../../../../../../../../teste/src/components/Cards/CardDefault'
+import { CardDefault } from '@/components/Cards/CardDefault'
 import { authOptions } from '@/lib/auth'
 import { getAllOrganizacoes } from '@/lib/GetAllOrganizacoes'
 import { type IUnidadeSchema } from '@/schemas/UnidadeSchema'

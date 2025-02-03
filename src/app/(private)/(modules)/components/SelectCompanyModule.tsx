@@ -4,7 +4,7 @@ import React, { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { LuCheck, LuChevronsUpDown, LuLandmark } from 'react-icons/lu'
 
-import LoadingPage from '../../../../../../teste/src/components/Loadings/LoadingPage'
+import LoadingPage from '@/components/Loadings/LoadingPage'
 import { cn } from '@/lib/utils'
 import {
   type ISelectCorporationModuleSchema,
