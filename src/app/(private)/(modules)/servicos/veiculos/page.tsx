@@ -21,7 +21,6 @@ const CarsUnidade = async ({
   const corpFound = data?.find((corp) => {
     return corp?.id === session?.id_corporation
   })
-  revalidatePath('/')
   return (
     <div>
       {

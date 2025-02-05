@@ -15,7 +15,7 @@ import {
   type ISaveMemberCompanySchema,
   SaveMemberCompanySchema,
 } from '@/schemas/SaveMemberCompanySchema'
-import type { AddressProps } from '../../../../../../teste/types/index'
+import type { AddressProps } from '@/types/index'
 import { Button, buttonVariants } from '@/ui/button'
 import { Card } from '@/ui/card'
 import {

@@ -24,6 +24,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -31,12 +32,12 @@ import {
 } from "@/components/ui/sidebar"
 import {GetFirstLettersNameUser} from "@/functions/GetFirstLettersNameUser";
 
-export function NavUser({
-                          user,
+export function NavCorp({
+                          corp,
                         }: {
-  user?: {
-    name: string | null | undefined
-    email: string| null | undefined
+  corp?: {
+    short_name_corp: string | null | undefined
+    name: string| null | undefined
     image: string| null | undefined
   }
 }) {
@@ -54,15 +55,15 @@ export function NavUser({
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={
                     process.env.NEXT_PUBLIC_API_GSO !== undefined &&
-                    user?.image !== undefined ?
-                        process.env.NEXT_PUBLIC_API_GSO + user?.image :
+                    corp?.image !== undefined ?
+                        process.env.NEXT_PUBLIC_API_GSO + corp?.image :
                         process.env.NEXT_PUBLIC_API_GSO + "/images/avatar.svg"
                   } alt={'img user'}/>
                   <AvatarFallback className="rounded-lg">{nameUser}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user?.name}</span>
-                  <span className="truncate text-xs">{user?.email}</span>
+                  <span className="truncate font-semibold">{corp?.name}</span>
+                  <span className="truncate text-xs">{corp?.short_name_corp}</span>
                 </div>
                 <ChevronsUpDown className="ml-auto size-4"/>
               </SidebarMenuButton>
@@ -78,15 +79,15 @@ export function NavUser({
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage src={
                       process.env.NEXT_PUBLIC_API_GSO !== undefined &&
-                      user?.image !== undefined ?
-                          process.env.NEXT_PUBLIC_API_GSO + user?.image :
+                      corp?.image !== undefined ?
+                          process.env.NEXT_PUBLIC_API_GSO + corp?.image :
                           process.env.NEXT_PUBLIC_API_GSO + "/images/avatar.svg"
                     } alt={'img user'}/>
                     <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">{user?.name}</span>
-                    <span className="truncate text-xs">{user?.email}</span>
+                    <span className="truncate font-semibold">{corp?.name}</span>
+                    <span className="truncate text-xs">{corp?.short_name_corp}</span>
                   </div>
                 </div>
               </DropdownMenuLabel>

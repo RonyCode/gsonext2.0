@@ -162,7 +162,7 @@ export function NavbarMain({
         )}
       >
         <div className=" flex items-center justify-between py-3 md:block md:py-5">
-          <Link href="/public" className="hidden md:block">
+          <Link href="/" className="hidden md:block">
             <Logo width={100} />
           </Link>
           <div className={`md:hidden  ${state ? 'hidden  ' : 'block '}`}>
@@ -320,7 +320,7 @@ export function NavbarMain({
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
 
-                {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+                { }
                 <DropdownMenuItem onClick={handleClick}>
                   Sair
                   <DropdownMenuShortcut>
@@ -350,7 +350,7 @@ export function NavbarMain({
 const ListItem = React.forwardRef<
   React.ElementRef<'a'>,
   React.ComponentPropsWithoutRef<'a'>
-  // eslint-disable-next-line react/prop-types
+   
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>

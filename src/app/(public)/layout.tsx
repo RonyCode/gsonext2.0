@@ -12,10 +12,11 @@ export default function PublicLayout({
   return (
     <>
       <NavbarMain />
-      <div className="flex min-h-screen w-full  flex-col bg-gradient-to-t from-background to-secondary pt-[68px]">
+      <div className="relative flex min-h-screen w-full  flex-col bg-gradient-to-t from-background to-secondary pt-[68px]">
         <div className="h-[calc(100vh_-_68px)] w-full">{children}</div>
+        <FooterLayout className=" absolute z-100 bottom-0!important" />
+
       </div>
-      <FooterLayout className="z-100" />
     </>
   )
 }

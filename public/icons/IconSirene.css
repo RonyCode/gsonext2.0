@@ -1,8 +1,4 @@
 
-#sirene {
-    fill: var(--foreground);
-}
-
 #domo {
     animation: flipSirene 2.5s forwards;
     transform-origin: center center;

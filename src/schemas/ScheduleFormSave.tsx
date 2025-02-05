@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 export const ScheduleFormSave = z.object({
   id: z.string().nullable().optional(),
-  _id: z.object({ $oid: z.string() }).nullable().optional(),
+  _id: z.object({ $oid: z.string().nullable().optional()}).nullable().optional(),
   id_period: z.string().nullable().optional(),
   id_company: z.string().min(1, {
     message: 'id_company inválido deve conter no mínimo 1 caracteres',

@@ -30,7 +30,6 @@ const CarsUnidade = async ({
     },
   )
 
-  revalidatePath('/')
   return (
     <div>
       {

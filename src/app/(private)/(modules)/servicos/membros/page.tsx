@@ -19,7 +19,6 @@ const MembrosUnidade = async ()=> {
   const organizacaoFound = data?.find((organizacao) => {
     return organizacao?.id === session?.id_corporation
   })
-  revalidatePath('/')
   return (
     <div>
       {

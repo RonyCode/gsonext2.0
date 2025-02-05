@@ -24,7 +24,6 @@ const Page = async ({
     })
     // redirect('/')
   }
-  revalidatePath('/')
   return (
     <>
       <CardDefault

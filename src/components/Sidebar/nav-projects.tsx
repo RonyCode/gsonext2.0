@@ -19,7 +19,7 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
+  SidebarMenuAction, SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
@@ -42,6 +42,7 @@ export function NavProjects({
         <SidebarMenu>
           {projects.map((item) => (
               <SidebarMenuItem key={item.name}>
+
                 <SidebarMenuButton asChild>
                   <a href={item.url}>
                     <item.icon />

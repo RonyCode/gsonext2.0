@@ -26,7 +26,7 @@ const BreadcrumbGso = (): ReactElement => {
       <BreadcrumbList
         >
         <BreadcrumbItem className="hover:text-foreground">
-          <Link href="/public">
+          <Link href="/">
             {' '}
             <LuHouse />
           </Link>

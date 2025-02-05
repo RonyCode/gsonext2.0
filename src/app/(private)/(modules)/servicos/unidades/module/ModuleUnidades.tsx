@@ -1,15 +1,12 @@
 import React from 'react'
 
 import { CardModule } from '@/components/Cards/CardModule'
-import IconBuild from '@/icons/IconBuild'
-import IconBuildPlus from '@/icons/IconBuildPlus'
 import IconCarFrontal from '@/icons/IconCarFrontal'
 import IconEditSave from '@/icons/IconEditSave'
 import IconList from '@/icons/IconList'
-import IconMembers from '@/icons/IconMembers'
 import { type IUnidadeSchema } from '@/schemas/UnidadeSchema'
 
-const ModuleUnidades = ({
+const ModuleUnidades = async ({
   params,
 }: {
   params?: { sigla: string; name_unidade: string }

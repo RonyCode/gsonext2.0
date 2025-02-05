@@ -29,7 +29,6 @@ const MembrosUnidade = async ({
   })
   console.log(result)
 
-  revalidatePath('/')
 
   return (
     <div>
