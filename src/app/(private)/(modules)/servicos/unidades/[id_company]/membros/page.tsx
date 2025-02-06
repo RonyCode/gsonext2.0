@@ -56,6 +56,7 @@ const MembrosUnidade = async ({
           icon={<LuBuilding size={28} />}
           iconDescription={<MdOutlineSupervisorAccount size={18} />}
         >
+
           {companyFound?.members != null ? (
             <DataTableMembers
               columns={columnsMembers}

@@ -2,11 +2,29 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  experimental: {
+    turbo: {
+      resolve: {
+        alias: {
+          '@': './',
+          '@/components': './components',
+        },
+      },
+    },
+  },
+  env: {
+    BASE_URL: process.env.BASE_URL,
+    NEXT_PUBLIC_API_GSO: process.env.NEXT_PUBLIC_API_GSO,
+    NEXT_PUBLIC_NEXT_URL: process.env.NEXT_PUBLIC_NEXT_URL,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+
+  },
+
   images: {
+    formats: ['image/avif', 'image/webp'],  // Optimize images with Next.js
     remotePatterns: [
       {
-        protocol: 'https',
+        protocol: "https",
         hostname: 'www.designi.com.br',
       },
       {
@@ -56,6 +74,8 @@ const nextConfig = {
       },
     ],
   },
+
+  reactStrictMode: true,
 }
 
 module.exports = () => {

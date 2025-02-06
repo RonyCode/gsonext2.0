@@ -22,19 +22,18 @@ import {
 import {Avatar, AvatarImage} from "@/ui/avatar";
 import Link from "next/link";
 import {IUnidadeSchema} from "@/schemas/UnidadeSchema";
-import {usePathname, useRouter, useSearchParams} from "next/navigation";
+import {useRouter} from "next/navigation";
 
 type SwitcherComp = {
   companies: Partial<IUnidadeSchema[]>
   setCompSelected: (company: IUnidadeSchema) => void
 }
 
-export function CompanySwitcher({
-                               companies,
-                                  setCompSelected
-                             }:SwitcherComp) {
+export function CompanySwitcher({companies, setCompSelected}:SwitcherComp) {
   const { isMobile } = useSidebar()
+  const router = useRouter()
   const [activeTeam, setActiveTeam] = React.useState(companies[0])
+
 
 
   return (
@@ -82,8 +81,9 @@ export function CompanySwitcher({
                   <DropdownMenuItem
                       key={team?.name}
                       onClick={() => {
-                        setCompSelected(team)
+                        setCompSelected(team ?? {})
                         setActiveTeam(team)
+                        router.push('/servicos')
                       }}
                       className="gap-2 p-2"
                   >

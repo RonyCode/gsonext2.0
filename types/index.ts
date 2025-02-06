@@ -4,9 +4,9 @@ import type { Session, User, DefaultSession } from 'next-auth'
 import NextAuth from 'next-auth'
 import type React from 'react'
 
-import { type IMemberSchema } from '../../next-gso-v2/src/schemas/MemberSchema'
-import { type IScheduleSchema } from '../../next-gso-v2/src/schemas/ScheduleSchema'
-import { type DialogContent } from '../../next-gso-v2/src/components/ui/dialog'
+import { type IMemberSchema } from '@/schemas/MemberSchema'
+import { type IScheduleSchema } from '@/schemas/ScheduleSchema'
+import { type DialogContent } from '@/components/ui/dialog'
 
 export interface UserAuth {
   email: string
@@ -19,6 +19,8 @@ export type ModalProps = {
   title?: string
   description?: string
   icon?: React.ReactNode
+  openModal?: boolean,
+  setOpenModal?: React.Dispatch<React.SetStateAction<boolean>>,
   iconButton?: React.ReactNode
   nameButton?: string
   open?: boolean

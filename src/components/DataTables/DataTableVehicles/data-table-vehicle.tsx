@@ -12,7 +12,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../ui/table'
+} from '@/ui/table'
 import {
   type ColumnDef,
   type ColumnFiltersState,

@@ -14,6 +14,8 @@ import { Checkbox } from '@/ui/checkbox'
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import { type ColumnDef } from '@tanstack/react-table'
 
+const apiUrl = process.env.NEXT_PUBLIC_API_GSO
+
 export const columnsUsersArray = (onCheckboxChange: (id: string) => void) => {
   const columnsUsers: Array<ColumnDef<IUserSchema>> = [
     {
@@ -65,16 +67,15 @@ export const columnsUsersArray = (onCheckboxChange: (id: string) => void) => {
         const accountName = row.original.account?.name
         const accountEmail = row.original.auth?.email
         const accountPhone = row.original.account?.phone
-        const path = process?.env?.NEXT_PUBLIC_API_GSO ?? ''
         return (
           <>
             <div className="flex min-w-64 items-center space-x-2 text-[0.8500rem] text-muted-foreground">
               <Avatar className="flex h-14 w-14 items-center justify-center  rounded-full">
                 <AvatarImage
                   className="aspect-square rounded-full object-cover"
-                  src={
-                    path + row?.original?.account?.image ??
-                    path + '/public/images/avatar.svg'
+                  src={apiUrl ?
+                      apiUrl + row?.original?.account?.image :
+                      apiUrl + '/public/images/avatar.svg'
                   }
                 />
                 <AvatarFallback>{<LuBuilding2 size={36} />}</AvatarFallback>

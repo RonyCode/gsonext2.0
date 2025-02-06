@@ -86,7 +86,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Providers>
-              <div className="flex min-h-screen w-full  flex-col bg-gradient-to-t from-background to-secondary">
+              <div className="flex min-h-screen w-screen flex-col bg-gradient-to-t from-background to-secondary">
                 <div className="h-full w-full">{children}</div>
               </div>
             </Providers>{' '}

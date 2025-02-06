@@ -30,8 +30,7 @@ const EscalasUnidade = async ({
   const functions = await getAllFunctions()
 
   return (
-    <div>
-      {
+    <>
         <CardDefault
           title={
             companyFound?.name + ' / ' + companyFound?.companyAddress?.city
@@ -52,19 +51,16 @@ const EscalasUnidade = async ({
           icon={<LuBuilding size={28} />}
           iconDescription={<MdOutlineSupervisorAccount size={18} />}
         >
-          <div>
             {companyFound?.schedules != null && (
-              <div className="p-6">
+              <div className=" p-0 m-0  md:p-6 w-full">
                 <CalendarGsoV2
                   unidade={companyFound}
                   functions={functions?.data}
                 />
               </div>
             )}
-          </div>
         </CardDefault>
-      }
-    </div>
+    </>
   )
 }
 export default EscalasUnidade

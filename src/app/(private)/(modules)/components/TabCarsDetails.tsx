@@ -41,7 +41,7 @@ export const TabCarsDetails = ({
             </Link>
           </div>
         </div>
-        <div className="  md:p-6">
+        <div className=" md:p-6">
           {cars !== null && cars !== undefined && (
             <DataTableVehicle columns={columnsCars} data={cars} />
           )}

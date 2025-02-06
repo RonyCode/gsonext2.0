@@ -11,6 +11,7 @@ import { type IMemberSchema } from '@/schemas/MemberSchema'
 import { Checkbox } from '@/ui/checkbox'
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import { type ColumnDef } from '@tanstack/react-table'
+const apiUrl = process.env.NEXT_PUBLIC_API_GSO
 
 export const columnsMembers: Array<ColumnDef<IMemberSchema>> = [
   {
@@ -60,21 +61,22 @@ export const columnsMembers: Array<ColumnDef<IMemberSchema>> = [
     cell: ({ row }) => {
       const accountName = row.original?.name
       const accountPhone = row.original?.phone
-      const path = process?.env?.NEXT_PUBLIC_API_GSO ?? ''
       return (
         <>
           <div className="flex min-w-64 items-center space-x-2 text-[0.8500rem] text-muted-foreground">
-            <Avatar className="flex h-14 w-14 items-center justify-center  rounded-full">
-              <AvatarImage
-                className="aspect-square rounded-full object-cover"
+            <Avatar
+                className="flex h-12 w-12 items-center justify-center  rounded-lg shadow-sm shadow-foreground transition-all
+                        duration-300 hover:scale-[200%] md:h-14 md:w-14"
+            >              <AvatarImage
+                className="aspect-square rounded-lg object-cover"
                 src={
-                path != null &&
+                  apiUrl != null &&
                     row?.original?.image != null ?
-                  path + row?.original?.image :
-                  path + '/public/images/avatar.svg'
+                      apiUrl + row?.original?.image :
+                      '/images/avatar.svg'
                 }
               />
-              <AvatarFallback>{<LuBuilding2 size={36} />}</AvatarFallback>
+              <AvatarFallback>{<LuUser size={36} />}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col justify-center ">
               <div>

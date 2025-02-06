@@ -24,10 +24,9 @@ const corpFound = data?.find((corp) => {
   return corp?.id === session?.id_corporation
 })
   return (
-    <>
+    <div className='w-screen'>
       <SidebarProvider defaultOpen={defaultOpen}>
         <AppSidebar corp={corpFound}/>
-        <main>
           <SidebarInset>
             <header className="w-full z-10 bg-background fixed flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
               <div className="flex items-center gap-2 px-4">
@@ -37,17 +36,12 @@ const corpFound = data?.find((corp) => {
                 <BreadcrumbGso />
               </div>
             </header>
-
-            <div className="flex  flex-col gap-4 p-4 pt-16">
-              <div className="grid auto-rows-min gap-4 grid-cols-1 ">
+              <div className="pt-16 p-4  w-full h-full ">
                 {children}
               </div>
-            </div>
-
           </SidebarInset>
-        </main>
       </SidebarProvider>
       <FooterNormal />
-    </>
+    </div>
   )
 }

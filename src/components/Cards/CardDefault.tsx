@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
 
-import BreadcrumbGso from '../BreadCrumbGso/BreadcrumbGso'
 import getBase64 from "@/lib/getLocalBase64";
 import {Card, CardContent, CardDescription, CardTitle} from '@/ui/card';
 import { cn } from '@/lib/utils';
@@ -38,7 +37,7 @@ export async function CardDefault({
   return (
     <Card
       className={cn(
-        '   m-0 mx-auto min-h-screen w-screen bg-background p-0 md:min-h-[calc(100vh-4rem)] md:w-[80vw] md:p-6',
+        '   m-0 mx-auto min-h-screen  bg-background p-0 md:min-h-[calc(100vh-4rem)] w-full md:p-6',
         className,
       )}
       {...props}
@@ -93,7 +92,7 @@ export async function CardDefault({
       </div>
       {/*<BreadcrumbGso />*/}
       <Separator />
-      <CardContent className=" mt-4 grid h-auto  w-full rounded-[5px] p-0 md:min-h-[calc(100vh-18rem)] md:border md:border-foreground/30">
+      <CardContent className="flex-1 mt-4 grid h-auto  w-full rounded-[5px] p-0 md:min-h-[calc(100vh-18rem)] md:border md:border-foreground/30">
         {children}
       </CardContent>
     </Card>

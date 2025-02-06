@@ -29,7 +29,7 @@ const CalendarGsoGrid = ({
       {day != null && day > 0 && (
         <div
           className={cn(
-            `  relative flex h-full w-full cursor-pointer flex-col items-center justify-start  
+            `flex h-full w-full cursor-pointer flex-col items-start  justify-start  
                               rounded-[3px] 
                               border border-foreground/10 hover:border
                               hover:border-primary/60 md:min-h-full  
@@ -53,7 +53,7 @@ const CalendarGsoGrid = ({
               variant="outline"
               className="border-foreground/10 px-[6px] text-[.5rem]  text-muted-foreground md:block md:text-[.625rem]"
             >
-              <span className="flex items-center gap-1">
+              <span className="flex items-center gap-2">
                 <LuBadgeX className="text-primary" />
                 <p>escala</p>
               </span>

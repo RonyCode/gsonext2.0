@@ -12,7 +12,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../ui/table'
+} from '@/ui/table'
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -67,7 +67,7 @@ export function DataTableUnidades<TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-4 over">
       <DataTableToolbar table={table} />
       <div className="rounded-md border">
         <Table>

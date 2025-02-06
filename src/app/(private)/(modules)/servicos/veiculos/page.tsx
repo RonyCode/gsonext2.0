@@ -22,8 +22,6 @@ const CarsUnidade = async ({
     return corp?.id === session?.id_corporation
   })
   return (
-    <div>
-      {
         <CardDefault
           title={corpFound?.name + ' / ' + corpFound?.address?.city}
           description={'CMD '}
@@ -54,8 +52,6 @@ const CarsUnidade = async ({
             )}
           </div>
         </CardDefault>
-      }
-    </div>
   )
 }
 export default CarsUnidade

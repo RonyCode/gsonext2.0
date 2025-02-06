@@ -19,9 +19,6 @@ export function ModalGso({
   title,
   description,
   icon,
-  iconButton,
-  nameButton,
-  open,
   className,
   classNameButton,
   children,
@@ -30,7 +27,7 @@ export function ModalGso({
   ...props
 }: ModalProps): ReactElement {
   return (
-    <Dialog open={open}>
+    <Dialog>
       <DialogTrigger disabled={disabled}>
         <div className={cn(' h-full w-full', classNameButton)}>
           {childrenButton}

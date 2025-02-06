@@ -15,7 +15,7 @@ import { Badge } from '@/ui/badge'
 import { Checkbox } from '@/ui/checkbox'
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import { type ColumnDef } from '@tanstack/react-table'
-
+const apiUrl = process.env.NEXT_PUBLIC_API_GSO
 export const columnsUnidades: Array<ColumnDef<IUnidadeSchema>> = [
   {
     id: 'id',
@@ -56,33 +56,36 @@ export const columnsUnidades: Array<ColumnDef<IUnidadeSchema>> = [
     ),
     cell: ({ row }) => {
       return (
-        <>
-          <div className="flex w-52 items-center space-x-2 text-[.750rem] text-muted-foreground  xl:text-[0.8500rem]">
-            <Avatar
-              className="flex h-12 w-12 items-center justify-center  rounded-full shadow-sm shadow-foreground transition-all
+          <>
+            <div
+                className="flex min-w-60 w-full justify-evenly items-center space-x-2 text-[.750rem] text-muted-foreground  xl:text-[0.8500rem]">
+              <Avatar
+                  className="flex h-12 w-12 items-center justify-center  rounded-lg shadow-sm shadow-foreground transition-all
                         duration-300 hover:scale-[200%] md:h-14 md:w-14"
-            >
-              <AvatarImage
-                className="aspect-square rounded-full object-cover"
-                src={
-                  process.env.NEXT_PUBLIC_API_GSO != null &&
-                  row.original.image != null
-                    ? process?.env?.NEXT_PUBLIC_API_GSO + row.original.image
-                    : process?.env?.NEXT_PUBLIC_API_GSO +
-                      '/public/images/img.jpg'
-                }
-              />
-              <AvatarFallback>{<LuBuilding2 size={36} />}</AvatarFallback>
-            </Avatar>
-            <div className="flex flex-col justify-center ">
-              <div>
-                <div className="flex items-center  p-1">
+              >
+
+                <AvatarImage
+                    className="aspect-square rounded-lg object-cover"
+                    src={
+                      row.original.image != null
+                          ? apiUrl
+                          + row.original.image
+                          : apiUrl+
+                          '/public/images/img.jpg'
+                    }
+                    alt={row.original.name}
+                    width={100}
+                    height={100}
+                />
+                <AvatarFallback>{<LuBuilding2 size={36}/>}</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col justify-center ">
+
+                <div className="flex items-center">
                   {' '}
                   <LuBuilding2 size={16} className="mr-2" />{' '}
                   {row.getValue('name')}
-
                 </div>
-              </div>
               <div>
                 {' '}
                 <div className="flex items-center  ">

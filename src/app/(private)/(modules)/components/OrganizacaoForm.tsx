@@ -34,7 +34,7 @@ import {
   OrganizacaoSchema,
 } from '@/schemas/OrganizacaoSchema'
 import { cityStore } from '@/stores/Address/CityByStateStore'
-import type { AddressProps } from '../../../../../../teste/types/index'
+import type { AddressProps } from '@/types/index'
 import { Button, buttonVariants } from '@/ui/button'
 import { Card } from '@/ui/card'
 import {
