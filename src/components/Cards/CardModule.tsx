@@ -45,7 +45,7 @@ export function CardModule({
               {/* <span className=" md h-2 w-2 translate-y-1 rounded-full bg-sky-500"></span> */}
               <div>
                 <CardTitle className='text-md'>{title}</CardTitle>
-                <CardDescription className=" mt-1 hidden  flex-col xl:flex">
+                <CardDescription className="text-sm mt-1 hidden  flex-col xl:flex">
                   {subtitle}
                 </CardDescription>
               </div>
@@ -60,8 +60,8 @@ export function CardModule({
           <div className="flex h-full w-full flex-col items-center justify-center p-0  xl:flex-row xl:justify-between">
             {/* <span className=" md h-2 w-2 translate-y-1 rounded-full bg-sky-500"></span> */}
             <div>
-              <CardTitle>{title}</CardTitle>
-              <CardDescription className=" mt-1 hidden  flex-col lg:flex">
+              <CardTitle className='text-md'>{title}</CardTitle>
+              <CardDescription className=" text-sm mt-1 hidden  flex-col lg:flex">
                 {subtitle}
               </CardDescription>
             </div>

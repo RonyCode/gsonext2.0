@@ -87,7 +87,7 @@ export default function RootLayout({
           >
             <Providers>
               <div className="flex min-h-screen w-screen flex-col bg-gradient-to-t from-background to-secondary">
-                <div className="h-full w-full">{children}</div>
+                <div className="h-full w-full m-auto">{children}</div>
               </div>
             </Providers>{' '}
           </ThemeProvider>

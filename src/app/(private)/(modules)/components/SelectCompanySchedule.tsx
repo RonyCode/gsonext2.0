@@ -6,7 +6,6 @@ import CalendarGso from '@/components/CalendarGso/CalendarGso'
 import LoadingPage from '@/components/Loadings/LoadingPage'
 import { cn } from '@/lib/utils'
 import { type IUnidadeSchema } from '@/schemas/UnidadeSchema'
-import type { FunctionsMembers } from '../../../../../../teste/types/index'
 import { Button } from '@/ui/button'
 import { Card } from '@/ui/card'
 import {
@@ -18,15 +17,14 @@ import {
   CommandList,
 } from '@/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover'
+import CalendarGsoV2 from "@/components/CalendarGso/CalendarGsoV2";
 
 type SelectCompanyModuleProps = React.HTMLAttributes<HTMLDivElement> & {
   unidades?: IUnidadeSchema[]
-  functions?: FunctionsMembers[]
 }
 
 export const SelectCompanySchedule = ({
   unidades,
-  functions,
 }: SelectCompanyModuleProps) => {
   const disabled = false
   const [dataUnidade, setDataUnidade] = useState<IUnidadeSchema | null>(null)
@@ -107,7 +105,7 @@ export const SelectCompanySchedule = ({
       <div>
         {dataUnidade?.schedules != null && (
           <div>
-            <CalendarGso unidade={dataUnidade} functions={functions} />
+            <CalendarGsoV2 unidade={dataUnidade}/>
           </div>
         )}
       </div>

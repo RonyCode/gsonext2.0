@@ -8,15 +8,14 @@ import {
   LuCar,
   LuCheck,
   LuChevronsUpDown,
-  LuSpeech,
+  LuClipboardPen,
   LuClock1,
+  LuCrown,
+  LuLoaderCircle,
   LuMegaphone,
   LuSave,
   LuTrash2,
-  LuLoaderCircle,
-  LuClipboardPen,
   LuUsers,
-  LuCrown,
 } from 'react-icons/lu'
 
 import {saveUnidadeAction} from '@/app/(private)/(modules)/servicos/gestor/actions/saveUnidadeAction'
@@ -26,28 +25,17 @@ import LoadingPage from '@/components/Loadings/LoadingPage'
 import {checkMobile} from '@/functions/IsMobile'
 import AddCar from '@/icons/AddCar'
 import IconCarFrontal from '@/icons/IconCarFrontal'
-import IconManager from '@/icons/IconManager'
 import {cn} from '@/lib/utils'
 import type {IVehicleSchema} from '@/schemas/CarsSchema'
 import type {IMemberSchema} from '@/schemas/MemberSchema'
-import {
-  type IScheduleFormSave,
-  ScheduleFormSave,
-} from '@/schemas/ScheduleFormSave'
+import {type IScheduleFormSave, ScheduleFormSave,} from '@/schemas/ScheduleFormSave'
 import {type IUnidadeSchema} from '@/schemas/UnidadeSchema'
 import type {AddressProps} from '@/types/index'
 import {Badge} from '@/ui/badge'
 import {Button} from '@/ui/button'
 import {Calendar} from '@/ui/calendar'
 import {Card} from '@/ui/card'
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '@/ui/command'
+import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList,} from '@/ui/command'
 import {
   Dialog,
   DialogClose,
@@ -58,14 +46,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/ui/dialog'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/ui/form'
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from '@/ui/form'
 import {Input} from '@/ui/input'
 import {Popover, PopoverContent, PopoverTrigger} from '@/ui/popover'
 import {Textarea} from '@/ui/textarea'
@@ -77,7 +58,7 @@ import {ptBR} from 'date-fns/locale/pt-BR'
 import moment from 'moment'
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
-  unidade: IUnidadeSchema
+  unidade?: IUnidadeSchema
   dateSchedule?: string
   schedule?: IScheduleFormSave
   className?: string
@@ -104,9 +85,7 @@ export const TabScheduleSave = (
   )
   const [dateFinish, setDateFinish] = React.useState<string>()
   const [listVehicles, setListVehicles] = React.useState([] as IVehicleSchema[])
-  const [listMembersAvailable, setListMembersAvailable] = React.useState(
-      unidade.members ?? ([] as IMemberSchema[]),
-  )
+  const [listMembersAvailable, setListMembersAvailable] = React.useState([] as IMemberSchema[])
 
   const router = useRouter()
   const form = useForm<IScheduleFormSave>({
@@ -193,6 +172,7 @@ export const TabScheduleSave = (
     formData.excluded = 1
     startTransition(async () => {
       const result = await saveUnidadeAction(formData)
+
       if (result?.code !== 202) {
         toast({
           variant: 'danger',
@@ -200,6 +180,7 @@ export const TabScheduleSave = (
           description: result?.message,
         })
       }
+
       if (result?.code === 202) {
         toast({
           variant: 'success',
@@ -210,6 +191,7 @@ export const TabScheduleSave = (
             `/${params?.sigla.toLowerCase()}/unidades/${params?.name_unidade.toLowerCase()}`,
         )
       }
+
     })
   }
 
@@ -298,6 +280,7 @@ export const TabScheduleSave = (
     if (listVehicles) {
       form.setValue('vehicles', listVehicles)
     }
+
   }, [form, listVehicles])
 
   const handleCalculeDateFinal = (value: string) => {
@@ -325,24 +308,55 @@ export const TabScheduleSave = (
     setDateFinish(dateFinish)
   }
 
-  const handlerCalculateMemberAvailable = (member: IMemberSchema) => {
-    return form?.getValues('id_member_comunication') !== null ||
-    form?.getValues('id_cmt_sos') !== null
-        ? listVehicles?.some((vehicle) =>
-            vehicle?.members?.some(
-                (itemForm) =>
-                    member?.id === itemForm?.member?.id ||
-                    member?.id === form?.getValues('id_member_comunication') ||
-                    member?.id === form?.getValues('id_cmt_sos'),
+  const handlerCalculateMemberAvailable = () => {
+    const arrayMember = unidade?.members?.filter(
+        (memberUnidade) =>
+            memberUnidade?.id !== form?.getValues('id_member_comunication') ||
+            memberUnidade?.id !== form?.getValues('id_cmt_sos')
+
+    )
+
+    const arrayMembersVeicles: IMemberSchema[] = []
+    form?.getValues('vehicles')?.forEach(
+        (vehicle) => {
+          arrayMember?.forEach(
+              (memberUnidade) => {
+                if (vehicle?.members?.some(
+                    (memberVehicle) =>
+                        memberUnidade?.id === memberVehicle?.member?.id,
+                )) {
+                  arrayMembersVeicles.push(memberUnidade)
+                }
+              })
+        }
+    )
+
+    const membersAvailable = arrayMember?.filter(
+        (memberUnidade) =>
+            !arrayMembersVeicles?.some(
+                (memberVehicle) =>
+                    memberUnidade?.id === memberVehicle?.id,
             ),
-        )
-        : listVehicles?.some((vehicle) =>
-            vehicle?.members?.some(
-                (itemForm) => member?.id === itemForm?.member?.id,
-            ),
-        )
+    )
+
+    setListMembersAvailable(membersAvailable ?? [])
   }
 
+  const disableItem = (member : IMemberSchema) =>{
+    if (listVehicles.length) {
+      return listVehicles?.some((vehicle) =>
+          vehicle?.members?.some(
+              (itemForm) =>
+                  member?.id === itemForm?.member?.id ||
+                  member?.id === form?.getValues('id_member_comunication') ||
+                  member?.id === form?.getValues('id_cmt_sos'),
+          ),
+      )
+
+    }
+
+    return (member?.id === form?.getValues('id_member_comunication') || member?.id === form?.getValues('id_cmt_sos'))
+  }
   return (
       <>
         <Card
@@ -487,15 +501,15 @@ export const TabScheduleSave = (
               </div>
             </div>
           </div>
+
           <Form {...form}>
             <LoadingPage pending={pending}/>
-            <form
 
-                onSubmit={form.handleSubmit(async (data) => {
-                  await handleSubmit(data)
-                })}
-                className="w-full md:space-y-4  "
-            >
+            <form onSubmit={
+              form.handleSubmit(async (data) => {
+                await handleSubmit(data)
+              })} className="w-full md:space-y-4  ">
+
               <div className="flex w-full flex-col gap-4">
                 <div className="flex h-full w-full flex-col gap-4 md:flex-row ">
                   <FormField
@@ -850,6 +864,7 @@ export const TabScheduleSave = (
                   />
                 </div>
               </div>
+
               <div className="  w-full  gap-4 md:flex-row">
                 <FormField
                     disabled={disabled}
@@ -874,22 +889,26 @@ export const TabScheduleSave = (
                 />
               </div>
 
-              <div className="flex  items-center gap-1 text-muted-foreground">
-                <LuCrown className="cursor-pointer "/>
-                CMT Socorro
-              </div>
-              <div
-                  className="w-full rounded-sm border border-foreground/10"
-                  style={{marginTop: '4px'}}
-              >
-                <div className="m-0 flex flex-col items-center justify-between gap-2 p-2  md:flex-row">
+              <div className="flex flex-col  w-full text-sm  ">
+
+                <div className='flex items-center gap-1 text-muted-foreground'>
+                  <LuCrown className="cursor-pointer"/>
+                  CMT Socorro
+                </div>
+
+
+
+
+                <div className="m-0 flex flex-col items-center justify-between  md:flex-row">
                   <FormField
                       control={form.control}
                       name="id_cmt_sos"
                       render={({field}) => (
-                          <FormItem className="m-0 flex w-full flex-col md:w-11/12 ">
+                          <FormItem className="m-0 flex w-full flex-col">
                             <Popover>
-                              <PopoverTrigger asChild>
+                              <PopoverTrigger asChild
+                                              onClick={handlerCalculateMemberAvailable}
+                              >
                                 <FormControl>
                                   <Button
                                       variant="outline"
@@ -900,7 +919,7 @@ export const TabScheduleSave = (
                                       )}
                                   >
                                     {field?.value != null
-                                        ? listMembersAvailable?.find(
+                                        ? unidade?.members?.find(
                                             (itemSeat) => itemSeat?.id === field?.value,
                                         )?.name
                                         : 'Selecione um membro'}
@@ -914,13 +933,11 @@ export const TabScheduleSave = (
                                   <CommandEmpty>Membro não encontrado.</CommandEmpty>
                                   <CommandGroup>
                                     <CommandList>
-                                      {listMembersAvailable?.map((member, index) => (
+                                      {unidade?.members?.map((member, index) => (
                                           <CommandItem
                                               key={index}
                                               value={String(member?.id)}
-                                              disabled={handlerCalculateMemberAvailable(
-                                                  member,
-                                              )}
+                                              disabled={disableItem(member)}
                                               onSelect={() => {
                                                 form?.setValue(
                                                     'id_cmt_sos',
@@ -938,6 +955,14 @@ export const TabScheduleSave = (
                                             />
 
                                             {member?.name}
+                                            <LuCar
+                                                className={cn(
+                                                    'mr-2 h-4 w-4',
+                                                    disableItem(member)
+                                                        ? 'opacity-100'
+                                                        : 'opacity-0',
+                                                )}
+                                            />
                                           </CommandItem>
                                       ))}
                                     </CommandList>
@@ -949,36 +974,24 @@ export const TabScheduleSave = (
                           </FormItem>
                       )}
                   />
-                  <Button
-                      asChild
-                      className=" w-full p-1 md:w-1/12"
-                      type="button"
-                      variant="secondary"
-                  >
-                    <IconManager
-                        width={50}
-                        className="fill-foreground hover:fill-foreground/60"
-                    />
-                  </Button>
                 </div>
               </div>
-
-              <div className="flex  items-center gap-1 text-muted-foreground">
+              <div className="flex  flex-col w-full text-sm">
+                <div className='flex  items-center gap-1 text-muted-foreground'>
                 <LuMegaphone className="cursor-pointer "/>
                 Comunicação
-              </div>
-              <div
-                  className="w-full rounded-sm border border-foreground/10"
-                  style={{marginTop: '4px'}}
-              >
-                <div className="m-0 flex flex-col items-center justify-between gap-2 p-2  md:flex-row">
+                </div>
+
+                <div className="m-0 flex flex-col items-center justify-between gap-2  md:flex-row">
                   <FormField
                       control={form.control}
                       name="id_member_comunication"
                       render={({field}) => (
-                          <FormItem className="m-0 flex w-full flex-col md:w-11/12 ">
+                          <FormItem className="m-0 flex w-full flex-col">
                             <Popover>
-                              <PopoverTrigger asChild>
+                              <PopoverTrigger
+                                  asChild
+                                  onClick={handlerCalculateMemberAvailable}>
                                 <FormControl>
                                   <Button
                                       variant="outline"
@@ -989,7 +1002,7 @@ export const TabScheduleSave = (
                                       )}
                                   >
                                     {field?.value != null
-                                        ? listMembersAvailable?.find(
+                                        ? unidade?.members?.find(
                                             (itemSeat) => itemSeat?.id === field?.value,
                                         )?.name
                                         : 'Selecione um membro'}
@@ -1003,13 +1016,11 @@ export const TabScheduleSave = (
                                   <CommandEmpty>Membro não encontrado.</CommandEmpty>
                                   <CommandGroup>
                                     <CommandList>
-                                      {listMembersAvailable?.map((member, index) => (
+                                      {unidade?.members?.map((member, index) => (
                                           <CommandItem
                                               key={index}
+                                              disabled={disableItem(member)}
                                               value={String(member?.id)}
-                                              disabled={handlerCalculateMemberAvailable(
-                                                  member,
-                                              )}
                                               onSelect={() => {
                                                 form?.setValue(
                                                     'id_member_comunication',
@@ -1027,6 +1038,14 @@ export const TabScheduleSave = (
                                             />
 
                                             {member?.name}
+                                            <LuCar
+                                                className={cn(
+                                                    'mr-2 h-4 w-4',
+                                                    disableItem(member)
+                                                        ? 'opacity-100'
+                                                        : 'opacity-0',
+                                                )}
+                                            />
                                           </CommandItem>
                                       ))}
                                     </CommandList>
@@ -1038,25 +1057,20 @@ export const TabScheduleSave = (
                           </FormItem>
                       )}
                   />
-                  <Button
-                      asChild
-                      className=" w-full p-1 md:w-1/12"
-                      type="button"
-                      onClick={handleAddListVehicle}
-                      variant="secondary"
-                  >
-                    <LuSpeech size={28} className="hover:text-foreground/60"/>
-                  </Button>
                 </div>
               </div>
 
-              <div className=" flex  items-center  gap-1 text-muted-foreground">
+
+              {/*VEÍCULOS TITULO*/}
+
+              <div className=" flex  items-center  gap-1 text-muted-foreground text-sm">
                 <LuCar className=" m-0 cursor-pointer "/>
                 Veículos
               </div>
-              <div
-                  style={{marginTop: '4px'}}
-                  className="m-0 w-full rounded-sm border border-foreground/10 p-0"
+
+              {/*VEÍCULOS*/}
+              <div style={{marginTop: '4px'}}
+                   className="m-0 w-full rounded-sm border border-foreground/10 p-0"
               >
                 <div className="flex flex-col items-center justify-between gap-2  p-2  md:flex-row">
                   <FormField
@@ -1139,6 +1153,7 @@ export const TabScheduleSave = (
                     />
                   </Button>
                 </div>
+
                 <div className="flex w-full flex-row flex-wrap justify-evenly ">
                   {listVehicles?.map((vehicle, index) => (
                       <div key={index} className="pb-2">
@@ -1174,9 +1189,8 @@ export const TabScheduleSave = (
                               <Card className={cn('', className)} {...props}>
                                 <AddVehicleSchedule
                                     vehicle={vehicle}
-                                    vehicles={listVehicles}
                                     setListVehiclesAction={setListVehicles}
-                                    membersCompany={unidade.members}
+                                    membersCompany={listMembersAvailable}
                                     form={form}
                                 />
                               </Card>
@@ -1211,6 +1225,7 @@ export const TabScheduleSave = (
               </div>
             </form>
           </Form>
+
         </Card>
       </>
   )

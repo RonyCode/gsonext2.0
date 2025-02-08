@@ -7,7 +7,7 @@ export default function AuthLayout({
 }){
   return (
     <>
-      <section className=" flex h-full place-content-center place-items-center  ">
+      <section className=" flex h-full w-full items-center justify-center  ">
         {children}
       </section>
     </>

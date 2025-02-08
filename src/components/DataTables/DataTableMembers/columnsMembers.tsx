@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { LuBuilding2, LuPhone, LuUser } from 'react-icons/lu'
+import { LuPhone, LuUser } from 'react-icons/lu'
 
 import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'

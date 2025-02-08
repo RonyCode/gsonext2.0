@@ -35,7 +35,6 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover'
 type AddVehicleScheduleProps = {
   width?: number
   vehicle?: IVehicleSchema
-  vehicles?: IVehicleSchema[]
   setListVehiclesAction: React.Dispatch<React.SetStateAction<IVehicleSchema[]>>
   form?: UseFormReturn<IScheduleFormSave>
   membersCompany?: IMemberSchema[]
@@ -43,11 +42,11 @@ type AddVehicleScheduleProps = {
   React.HTMLAttributes<HTMLDivElement>
 export const AddVehicleSchedule = ({
   vehicle,
-  vehicles,
-                                     setListVehiclesAction,
+  setListVehiclesAction,
   form,
   membersCompany,
 }: AddVehicleScheduleProps) => {
+  const [memberAvailable, setMemberAvailable] = React.useState([] as IMemberSchema[])
   const [memberVehicleSelect, setMemberVehicleSelect] = React.useState(
     vehicle?.members?.some((item) => item?.member !== null) == true,
   )
@@ -113,23 +112,44 @@ export const AddVehicleSchedule = ({
     setMemberVehicleSelect(true)
   }
 
-  const handlerCalculateMemberAvailable = (member: IMemberSchema) => {
-    return form?.getValues('id_member_comunication') !== null ||
-      form?.getValues('id_cmt_sos') !== null
-      ? vehicles?.some((vehicle) =>
-          vehicle?.members?.some(
-            (itemForm) =>
-              member?.id === itemForm?.member?.id ||
-              member?.id === form?.getValues('id_member_comunication') ||
-              member?.id === form?.getValues('id_cmt_sos'),
-          ),
-        )
-      : vehicles?.some((vehicle) =>
-          vehicle?.members?.some(
-            (itemForm) => member?.id === itemForm?.member?.id,
-          ),
-        )
+  const handlerCalculateMemberAvailable = () => {
+    console.log('teste')
+    let arrayMember = membersCompany?.filter(
+        (memberUnidade) =>
+            memberUnidade?.id !== form?.getValues('id_member_comunication')
+    )
+    arrayMember = arrayMember?.filter(
+        (memberUnidade) =>
+            memberUnidade?.id !== form?.getValues('id_cmt_sos')
+    )
+
+    const arrayMembersVeicles: IMemberSchema[] =  []
+    form?.getValues('vehicles')?.forEach(
+        (vehicle) => {
+          arrayMember?.forEach(
+              (memberUnidade) => {
+                if (vehicle?.members?.some(
+                    (memberVehicle) =>
+                        memberUnidade?.id === memberVehicle?.member?.id,
+                )) {
+                  arrayMembersVeicles.push(memberUnidade)
+                }
+              })
+        }
+    )
+
+    const membersAvailable = arrayMember?.filter(
+        (memberUnidade) =>
+            !arrayMembersVeicles?.some(
+                (memberVehicle) =>
+                    memberUnidade?.id === memberVehicle?.id,
+            ),
+    )
+
+    setMemberAvailable(membersAvailable ? membersAvailable : [])
   }
+
+
 
   return (
     <div
@@ -153,7 +173,9 @@ export const AddVehicleSchedule = ({
               <div key={index} className="z-50  h-full  md:w-[97%]">
                 <ModalGso
                   childrenButton={
-                    <div className=" z-50 m-0 w-[85%]  p-0  md:w-[97%]">
+                    <div className=" z-50 m-0 w-[85%]  p-0  md:w-[97%]"
+                         onClick={handlerCalculateMemberAvailable}
+                    >
                       <div className="hover:stroker-primary relative">
                         <IconSeat className="w-full fill-foreground hover:fill-primary" />
                         {item?.member?.image !== undefined && (
@@ -196,7 +218,8 @@ export const AddVehicleSchedule = ({
                                 : 'Componente'}
                           </FormLabel>{' '}
                           <Popover>
-                            <PopoverTrigger asChild>
+                            <PopoverTrigger asChild
+                            onClick={handlerCalculateMemberAvailable}>
                               <FormControl>
                                 <Button
                                   variant="outline"
@@ -206,7 +229,7 @@ export const AddVehicleSchedule = ({
                                     'text-muted-foreground',
                                   )}
                                 >
-                                  {membersCompany?.find(
+                                  {memberAvailable?.find(
                                     (itemMember: IMemberSchema) =>
                                       itemMember?.id === field.value?.id,
                                   )?.name ?? 'Selecione um membro'}
@@ -222,13 +245,11 @@ export const AddVehicleSchedule = ({
                                 </CommandEmpty>
                                 <CommandGroup>
                                   <CommandList>
-                                    {membersCompany?.map(
+                                    {memberAvailable?.map(
                                       (member: IMemberSchema, index) => (
                                         <CommandItem
                                           key={index}
-                                          disabled={handlerCalculateMemberAvailable(
-                                            member,
-                                          )}
+
                                           onSelect={() => {
                                             handleClick({
                                               position: item?.position ?? 0,

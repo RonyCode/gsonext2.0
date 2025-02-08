@@ -17,7 +17,7 @@ const SalvarEscala = async ({
     params.name_unidade?.split('-')[1],
   )
   const scheduleFound = data?.schedules?.find(
-    (schedule) =>
+    (schedule: { id: { toString: () => string | string[] } }) =>
       schedule?.id?.toString() === searchParams?.id_schedule,
   )
   const imgValided = await ImageExist(data?.image)
@@ -40,8 +40,6 @@ const SalvarEscala = async ({
         }
       >
         {scheduleFound !== null && true && (
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-expect-error
           <TabScheduleSave unidade={data} schedule={scheduleFound} />
         )}
       </CardDefault>

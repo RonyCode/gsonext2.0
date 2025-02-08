@@ -25,13 +25,15 @@ const SalvarEscala = async ({
   const corpFound = data?.find((corp) => {
     return corp?.id === session?.id_corporation
   })
+  const idPramas = (await params)?.id_company?.split('-')[1]
+  const dateParams = (await searchParams)?.date_schedule
+
   const companyFound = corpFound?.companies?.find((comp) => {
-    if (comp?.id === params?.id_company?.split('-')[1]) {
+    if (comp?.id === idPramas) {
       return comp
     }
   })
 
-  console.log(searchParams?.date_schedule)
   return (
     <>
       <CardDefault
@@ -45,7 +47,7 @@ const SalvarEscala = async ({
         <div className="overflow-scroll lg:overflow-hidden">
           {companyFound !== null && companyFound !== undefined && (
             <TabScheduleSave
-              dateSchedule={searchParams?.date_schedule}
+              dateSchedule={dateParams}
               unidade={companyFound}
             />
           )}

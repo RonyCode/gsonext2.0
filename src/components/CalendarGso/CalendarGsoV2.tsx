@@ -79,7 +79,6 @@ const CalendarGsoV2 = ({
 
     if (numberMonth === -1) numberMonth = 11
     // Dias do mês com ano bissexto
-    console.log(dayweekLaastYear)
     switch (numberMonth) {
       case 0: {
         return {
@@ -244,8 +243,9 @@ const CalendarGsoV2 = ({
     }
     setDayWeek(escalaObj[escalaObj.length - 1].dayWeek * -1)
   }
+
   if (daysInMonth !== null &&
-      (daysInMonth?.dias == 31)
+      (handleCountDaysInMonth(month )?.dias == 31)
   ) {
     escalaObj.shift()
   }
@@ -335,7 +335,7 @@ const CalendarGsoV2 = ({
                                   ) < new Date().setHours(0, 0, 0, 0) &&
                                   day?.dayEvent?.length === 0
                               }
-                              className={` overflow-auto  ${day?.dayEvent?.length > 0 ? 'h-[85vh] w-[80vw]' : 'md:h-[35vh] md:w-[30vw]'} xl:px-4 `}
+                              className={` overflow-auto  ${day?.dayEvent?.length > 0 ? 'h-[85vh] w-[80vw]' : '  w-[100vw]  h-[35vh] md:w-[30vw]'} xl:px-4 `}
                               title="Detalhes Escala"
                               childrenButton={
                                 <div className='w-full h-full'>
@@ -354,7 +354,7 @@ const CalendarGsoV2 = ({
                                 </div>
                               }
                           >
-                                <div className="flex h-1/2 w-1/2 flex-col items-center justify-center gap-2 p-2 "
+                                <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-2 "
                                 >
                                   <Link
                                       className="flex h-full w-full flex-col items-center justify-between gap-2 p-2 "
