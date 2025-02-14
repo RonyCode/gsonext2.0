@@ -12,14 +12,23 @@ import {
 } from "react-icons/lu";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { DataTableDetalheEscala } from "@/components/DataTables/DataTableDetalheEscala/data-table-detalhe-escala";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale/pt-BR";
+import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
+import { columnsDetailsSchedule } from "@/components/DataTables/DataTableDetalheEscala/columnsDetailsSchedule";
 
 type CalendarGsoV1Props = {
   dayEvent?: Partial<IScheduleSchema>[];
+  company?: Partial<IUnidadeSchema>;
 };
 
-const CalendarGsoV1 = ({ dayEvent }: CalendarGsoV1Props) => {
+const CalendarGsoV1 = ({ dayEvent, company }: CalendarGsoV1Props) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [eventsOnDay, setEventsOnDay] = useState<Partial<IScheduleSchema[]>>(
+    [] as Partial<IScheduleSchema[]>,
+  );
   const [selectedDay, setSelectedDay] = useState<{
     day: number;
     month: number;
@@ -71,8 +80,14 @@ const CalendarGsoV1 = ({ dayEvent }: CalendarGsoV1Props) => {
       setSelectedDay({ day, month, year, isMuted });
       setIsModalOpen(true);
     }
-  };
 
+    const eventSeted = dayEvent?.filter(
+      (event) =>
+        event?.day === day && event?.month === month && event?.year === year,
+    );
+
+    setEventsOnDay(eventSeted ?? []);
+  };
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedDay(null);
@@ -81,8 +96,8 @@ const CalendarGsoV1 = ({ dayEvent }: CalendarGsoV1Props) => {
   const calendarDays = getCalendarDays(currentDate);
 
   return (
-    <div className="calendar-container mx-auto max-w-3xl rounded-lg shadow-lg">
-      <div className="calendar-header mb-4 flex items-center justify-between">
+    <div className="calendar-container m-auto h-full w-full rounded-lg border-foreground/15 shadow-lg md:max-w-4xl md:border md:p-4">
+      <div className="calendar-header mb-2 flex items-center justify-between">
         <Button variant="default" onClick={() => changeMonth(-1)}>
           {isMobile ? <LuArrowBigLeft /> : "Anterior"}
         </Button>
@@ -98,7 +113,7 @@ const CalendarGsoV1 = ({ dayEvent }: CalendarGsoV1Props) => {
         {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map((day) => (
           <div
             key={day}
-            className="rounded-[3px] border border-foreground/30 text-center"
+            className="rounded-[3px] border border-foreground/15 text-center"
           >
             {day}
           </div>
@@ -142,7 +157,7 @@ const CalendarGsoV1 = ({ dayEvent }: CalendarGsoV1Props) => {
             dayEvent?.some((item) => selectedDay.month === item.month) &&
             dayEvent?.some((item) => selectedDay.year === item.year))) && (
           <div className="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="modal-content h-1/3 w-full rounded-lg border border-foreground/15 bg-background p-4 md:w-1/3">
+            <div className="modal-content m-auto h-full w-full rounded-lg border border-foreground/15 bg-background p-4 md:h-auto md:max-w-4xl">
               {dayEvent?.some(
                 (event) =>
                   event?.day === selectedDay.day &&
@@ -152,25 +167,37 @@ const CalendarGsoV1 = ({ dayEvent }: CalendarGsoV1Props) => {
                 <div className="flex h-full w-full flex-col">
                   <h2 className="mb-4 border-b border-foreground/15 p-1 text-xl font-semibold">
                     Detalhes escala do dia{" "}
-                    {new Date(
-                      selectedDay.year,
-                      selectedDay.month,
-                      selectedDay.day,
-                    ).toLocaleDateString("pt-BR")}
+                    {format(
+                      new Date(
+                        selectedDay.year,
+                        selectedDay.month,
+                        selectedDay.day,
+                      ),
+                      "dd/MM",
+                      {
+                        locale: ptBR,
+                      },
+                    ) +
+                      " - " +
+                      format(
+                        new Date(
+                          selectedDay.year,
+                          selectedDay.month,
+                          selectedDay.day,
+                        ),
+                        "eee",
+                        {
+                          locale: ptBR,
+                        },
+                      )}
                   </h2>
-                  <div className="relative flex h-full w-full flex-col justify-evenly">
-                    {dayEvent.map((event, index) =>
-                      event?.day === selectedDay.day &&
-                      event?.month === selectedDay.month &&
-                      event?.year === selectedDay.year ? (
-                        <div key={index} className="mb-2">
-                          <h3 className="font-medium">{event.team}</h3>
-                          <p>{event?.description}</p>
-                        </div>
-                      ) : null,
-                    )}
+                  <div className="flex h-auto w-full justify-evenly">
+                    <DataTableDetalheEscala
+                      columns={columnsDetailsSchedule(company)}
+                      data={eventsOnDay}
+                    />
                   </div>
-                  <Button className="self-end" onClick={closeModal}>
+                  <Button className="mt-2 self-end" onClick={closeModal}>
                     Fechar
                   </Button>
                 </div>

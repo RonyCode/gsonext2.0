@@ -31,7 +31,7 @@ const CalendarGsoGridV1 = ({
       {day != null && day > 0 && (
         <div
           className={cn(
-            `relative flex h-full w-full cursor-pointer flex-col items-start justify-start rounded-[3px] border border-foreground/10 px-1 pt-1 hover:border hover:border-primary/60 md:min-h-full`,
+            `relative flex h-full w-full cursor-pointer flex-col items-start justify-start rounded-[3px] border border-foreground/10 pt-1 hover:border hover:border-primary/60 md:min-h-full md:px-1`,
             {
               "hidden text-gray-400": isMuted, // Aplica a classe "muted" para os dias anteriores e posteriores
               "border-primary/60":

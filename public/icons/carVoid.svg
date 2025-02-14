@@ -1,8 +1,20 @@
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+     y="0px"
+     width="100%" viewBox="0 0 478 554" enable-background="new 0 0 478 554" xml:space="preserve">
 
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="100%" viewBox="0 0 478 554" enable-background="new 0 0 478 554" xml:space="preserve">
-<path fill="none" opacity="1.000000" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="5.000000"
-	d="
+          <style>
+        path {
+            stroke: black;
+        }
+        @media (prefers-color-scheme: dark) {
+            path { stroke: white; }
+        }
+
+    </style>
+
+    <path fill="none" opacity="1.000000" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+          stroke-width="5.000000"
+          d="
 M77.000000,181.500000 
 	C79.454437,183.523270 78.995850,186.330734 78.995987,189.000000 
 	C79.000778,283.500000 79.040161,378.000031 78.964867,472.499969 
@@ -23,8 +35,9 @@ M77.000000,181.500000
 	C79.002480,106.666664 78.806030,133.835678 79.135551,160.998352 
 	C79.218559,167.841522 77.232079,174.289871 77.000000,181.000000 
 "/>
-<path fill="none" opacity="1.000000" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="5.000000"
-	d="
+    <path fill="none" opacity="1.000000" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+          stroke-width="5.000000"
+          d="
 M145.000000,157.500000 
 	C137.901337,159.613678 132.434036,164.253387 126.987473,168.985580 
 	C111.322830,182.595657 101.563072,199.439850 97.839577,219.970901 
@@ -42,8 +55,9 @@ M145.000000,157.500000
 	C312.471558,149.048172 306.841614,147.925766 300.999786,147.952408 
 	C276.333649,148.064819 251.666672,148.000000 227.000000,148.000000 
 "/>
-<path fill="none" opacity="1.000000" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.000000"
-	d="
+    <path fill="none" opacity="1.000000" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+          stroke-width="4.000000"
+          d="
 M76.000000,173.500000 
 	C72.725288,170.593582 71.269257,166.077484 67.027428,163.945435 
 	C61.687916,161.261658 54.861301,161.674164 50.506977,165.507919 
@@ -54,8 +68,9 @@ M76.000000,173.500000
 	C48.916008,208.596756 60.166691,198.500015 71.499985,188.499969 
 	C73.414345,186.810806 73.787468,183.965607 76.000000,182.500000 
 "/>
-<path fill="none" opacity="1.000000" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="5.000000"
-	d="
+    <path fill="none" opacity="1.000000" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+          stroke-width="5.000000"
+          d="
 M226.750000,148.000000 
 	C225.440369,142.903046 225.693329,137.590256 224.084778,132.473343 
 	C219.419876,117.633896 202.995285,105.087349 187.502853,104.828705 
@@ -64,8 +79,9 @@ M226.750000,148.000000
 	C199.619751,190.817413 220.873566,176.433380 225.025177,153.504562 
 	C225.333252,151.803131 226.000000,150.166672 226.500000,148.500000 
 "/>
-<path fill="none" opacity="1.000000" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.000000"
-	d="
+    <path fill="none" opacity="1.000000" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+          stroke-width="3.000000"
+          d="
 M179.500000,112.500000 
 	C171.460098,114.687897 164.224777,118.268661 159.016556,125.012794 
 	C145.745178,142.197983 151.341980,170.394882 176.034454,177.378174 
@@ -73,8 +89,9 @@ M179.500000,112.500000
 	C220.821808,135.252930 213.239563,119.689667 193.024033,113.422478 
 	C188.645752,112.065125 184.331970,112.851135 180.000000,112.500000 
 "/>
-<path fill="none" opacity="1.000000" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.000000"
-	d="
+    <path fill="none" opacity="1.000000" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+          stroke-width="4.000000"
+          d="
 M418.500000,162.000015 
 	C416.333344,162.666687 414.066498,163.111633 412.017029,164.037689 
 	C402.140930,168.500092 401.285309,184.235641 409.826477,190.246552 

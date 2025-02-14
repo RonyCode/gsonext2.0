@@ -1,13 +1,13 @@
-import './IconCarFrontal.css'
-import * as React from 'react'
+import "./IconCarFrontal.css";
+import * as React from "react";
 
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils";
 
 type SVGProps = {
-  width?: number
-  className?: string
+  width?: number;
+  className?: string;
 } & React.SVGProps<SVGSVGElement> &
-  React.HTMLAttributes<HTMLDivElement>
+  React.HTMLAttributes<HTMLDivElement>;
 
 export default function IconCarFrontal({
   width,
@@ -16,9 +16,9 @@ export default function IconCarFrontal({
 }: SVGProps) {
   return (
     <svg
-      className={cn(' ', className)}
+      className={cn("w-full", className)}
       {...props}
-      width={width ?? 512}
+      width={width}
       version="1.1"
       x="0px"
       y="0px"
@@ -41,5 +41,5 @@ export default function IconCarFrontal({
         </g>
       </g>
     </svg>
-  )
+  );
 }
