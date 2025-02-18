@@ -6,17 +6,53 @@ import { type IVehicleSchema } from "@/schemas/CarsSchema";
 import { Avatar, AvatarImage } from "@/ui/avatar";
 
 import { Label } from "@/ui/label";
+import { IMemberSchema } from "@/schemas/MemberSchema";
 
 type DetailsVehicleScheduleProps = {
-  vehicle?: IVehicleSchema;
+  vehicle?: IVehicleSchema & {
+    members: [{ position: number; member?: IMemberSchema }];
+  };
 } & React.SVGProps<SVGSVGElement> &
   React.HTMLAttributes<HTMLDivElement>;
 export const DetailsVehicleSchedule = ({
   vehicle,
 }: DetailsVehicleScheduleProps) => {
+  function rearrangeMembers(
+    members: [{ position: number; member?: IMemberSchema }],
+  ) {
+    const rearranged = [...members];
+    const driverIndex = rearranged.findIndex((member) => member.position === 1);
+    const frontPassengerIndex = rearranged.findIndex(
+      (member) => member.position === 2,
+    );
+
+    const driver =
+      driverIndex !== -1 ? rearranged.splice(driverIndex, 1)[0] : null;
+
+    const frontPassenger =
+      frontPassengerIndex !== -1
+        ? rearranged.splice(
+            frontPassengerIndex > driverIndex
+              ? frontPassengerIndex - 1
+              : frontPassengerIndex,
+            1,
+          )[0]
+        : null;
+
+    if (driver) {
+      rearranged.splice(2, 0, driver);
+    }
+    if (frontPassenger) {
+      rearranged.splice(5, 0, frontPassenger);
+    }
+    return rearranged;
+  }
+  let rearrangedSeats: { position: number; member?: IMemberSchema }[] = [];
+
+  rearrangedSeats = vehicle?.members ? rearrangeMembers(vehicle.members) : [];
   return (
     <div
-      className={`grid h-full w-full grid-cols-1 rounded-sm p-2 hover:z-0 hover:cursor-pointer md:w-[400px]`}
+      className={`z-100 grid h-full w-full grid-cols-1 rounded-sm p-2 hover:z-0 hover:cursor-pointer md:w-[400px]`}
     >
       <div className={`m-auto my-2 rounded-sm border border-foreground px-2`}>
         {vehicle?.prefix}
@@ -24,11 +60,11 @@ export const DetailsVehicleSchedule = ({
       <div className="col-start-1 grid h-[160px] w-full grid-cols-12 place-items-center bg-[url(/icons/carVoid2.svg)] bg-center bg-no-repeat md:h-[200px]">
         <div className="col-span-5 col-start-4 -ml-2 grid grid-cols-3 gap-1 p-5 md:mr-4 md:p-1">
           {" "}
-          {vehicle?.members?.map((item, index) => (
-            <div key={index} className="col-span-1 h-full w-full">
-              <IconSeat className="w-full rotate-90 fill-foreground hover:fill-primary" />
+          {rearrangedSeats?.map((item, index) => (
+            <div key={index} className="relative col-span-1 h-full w-full">
+              <IconSeat className="h-full w-full rotate-90 fill-foreground hover:fill-primary" />
               {item?.member?.image !== undefined && (
-                <Avatar className="top-0 h-full w-full border-[3px] p-[2px] hover:border-primary">
+                <Avatar className="absolute top-0 h-full w-full border hover:border-primary">
                   <AvatarImage
                     src={
                       process.env.NEXT_PUBLIC_API_GSO != null &&
@@ -45,7 +81,7 @@ export const DetailsVehicleSchedule = ({
           ))}
         </div>
       </div>
-      {vehicle?.members! && (
+      {vehicle?.members && (
         <div
           className={`z-0 grid w-full grid-cols-2 border-l border-foreground/10`}
         >

@@ -98,7 +98,7 @@ export function DataTableDetalheEscala<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="h-16 p-2">
+                    <TableCell key={cell.id} className="h-16 py-2">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),

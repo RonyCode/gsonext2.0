@@ -139,7 +139,6 @@ const CalendarGsoV1 = ({ dayEvent, company }: CalendarGsoV1Props) => {
           </div>
         ))}
       </div>
-
       {isModalOpen &&
         selectedDay &&
         !selectedDay.isMuted &&
@@ -156,15 +155,15 @@ const CalendarGsoV1 = ({ dayEvent, company }: CalendarGsoV1Props) => {
             dayEvent?.some((item) => selectedDay.day === item.day) &&
             dayEvent?.some((item) => selectedDay.month === item.month) &&
             dayEvent?.some((item) => selectedDay.year === item.year))) && (
-          <div className="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="modal-content m-auto h-full w-full rounded-lg border border-foreground/15 bg-background p-4 md:h-auto md:max-w-4xl">
-              {dayEvent?.some(
-                (event) =>
-                  event?.day === selectedDay.day &&
-                  event?.month === selectedDay.month &&
-                  event?.year === selectedDay.year,
-              ) ? (
-                <div className="flex h-full w-full flex-col">
+          <div className="flex items-center justify-center">
+            {dayEvent?.some(
+              (event) =>
+                event?.day === selectedDay.day &&
+                event?.month === selectedDay.month &&
+                event?.year === selectedDay.year,
+            ) ? (
+              <div className="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="modal-content m-auto flex h-full w-full flex-col rounded-lg border border-foreground/15 bg-background p-4 md:h-auto md:max-w-4xl">
                   <h2 className="mb-4 border-b border-foreground/15 p-1 text-xl font-semibold">
                     Detalhes escala do dia{" "}
                     {format(
@@ -201,9 +200,11 @@ const CalendarGsoV1 = ({ dayEvent, company }: CalendarGsoV1Props) => {
                     Fechar
                   </Button>
                 </div>
-              ) : (
-                <div className="flex h-full w-full flex-col justify-evenly">
-                  <h2 className="mb-4 border-b border-foreground/15 p-1 text-xl font-semibold">
+              </div>
+            ) : (
+              <div className="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="modal-content m-auto flex h-full w-full flex-col rounded-lg border border-foreground/15 bg-background p-4 md:h-1/3 md:w-1/3">
+                  <h2 className="border-b border-foreground/15 p-1 text-xl font-semibold">
                     Nova escala
                   </h2>
                   <Link
@@ -221,12 +222,11 @@ const CalendarGsoV1 = ({ dayEvent, company }: CalendarGsoV1Props) => {
                     Fechar
                   </Button>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         )}
     </div>
   );
 };
-
 export default CalendarGsoV1;

@@ -18,11 +18,13 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Card } from "@/ui/card";
 import { DetailsVehicleSchedule } from "@/components/Buttoms/DetailsVehicleSchedule";
 import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
+import Image from "next/image";
+import { useCheckMobile } from "@/functions/IsMobile";
 
 export function columnsDetailsSchedule(
-  company: any,
+  company: IUnidadeSchema,
 ): ColumnDef<{ id?: string | null | undefined } | undefined, unknown>[] {
-  const columnsDetalheEscala: Array<ColumnDef<IScheduleSchema>> = [
+  const columnsDetalheEscala: Array<ColumnDef<Partial<IScheduleSchema>>> = [
     {
       accessorKey: "id_period",
       header: ({ column }) => (
@@ -103,9 +105,25 @@ export function columnsDetailsSchedule(
                   <PopoverTrigger className="m-0 p-0">
                     <CardModule
                       // title={vehicle.prefix}
-                      className={"m-0 h-12 w-16 space-x-0 space-y-0 p-0"}
+                      className={"m-0 h-full w-full space-x-0 space-y-0 p-0"}
                       icon={
-                        <IconCarFrontal className="m-0 space-x-0 space-y-0 fill-foreground stroke-foreground p-0" />
+                        vehicle.image ? (
+                          <Image
+                            width={50}
+                            height={50}
+                            src={
+                              process.env.NEXT_PUBLIC_API_GSO + vehicle.image
+                            }
+                            className="aspect-square rounded-sm border border-foreground bg-background object-contain transition-all duration-300 ease-in-out hover:z-100 hover:scale-[250%]"
+                            sizes="100"
+                            alt="image icone"
+                          />
+                        ) : (
+                          <IconCarFrontal
+                            className="fill-foreground stroke-foreground"
+                            width={useCheckMobile() ? 30 : 40}
+                          />
+                        )
                       }
                     />
                   </PopoverTrigger>
@@ -180,5 +198,7 @@ export function columnsDetailsSchedule(
       cell: ({ row }) => <DataTableRowActions row={row} />,
     },
   ];
-  return columnsDetalheEscala as Array<ColumnDef<IScheduleSchema>>;
+  return columnsDetalheEscala as Array<
+    ColumnDef<{ id?: string | null | undefined } | undefined, unknown>
+  >;
 }
