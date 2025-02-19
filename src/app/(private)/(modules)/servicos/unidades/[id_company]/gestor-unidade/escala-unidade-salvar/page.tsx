@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 import { getServerSession } from "next-auth";
-import React, { type ReactNode, Suspense } from "react";
+import React, { type ReactNode } from "react";
 import { LuSaveAll } from "react-icons/lu";
 
 import TabScheduleSave from "@/app/(private)/(modules)/components/TabScheduleSave";
@@ -17,16 +17,20 @@ const SalvarEscala = async ({
   params,
   searchParams,
 }: {
-  params: { id_company: string };
-  searchParams: { cod_unidade: string; date_schedule: string };
+  params: Promise<{ id_company: string }>;
+  searchParams: Promise<{ cod_unidade: string; date_schedule: string }>;
 }): Promise<ReactNode> => {
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
+  const { date_schedule } = resolvedSearchParams;
+  const { id_company } = resolvedParams;
   const { data } = await getAllOrganizacoes();
   const session = await getServerSession(authOptions);
   const corpFound = data?.find((corp) => {
     return corp?.id === session?.id_corporation;
   });
-  const idPramas = (await params)?.id_company?.split("-")[1];
-  const dateParams = (await searchParams)?.date_schedule;
+  const idPramas = id_company?.split("-")[1];
+  const dateParams = date_schedule;
 
   const companyFound = corpFound?.companies?.find((comp) => {
     if (comp?.id === idPramas) {

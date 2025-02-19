@@ -1,5 +1,5 @@
-import { fetchWrapper } from '@/functions/fetch'
-import { type ResponseApi, type UserType } from '../../../teste/types/index'
+import { fetchWrapper } from "@/functions/fetch";
+import { type ResponseApi, type UserType } from "@/types/index";
 
 export const getAllUserWithoutCorp = async (): Promise<
   ResponseApi<UserType[]>
@@ -7,11 +7,11 @@ export const getAllUserWithoutCorp = async (): Promise<
   return await fetchWrapper<ResponseApi<UserType[]>>(
     `${process.env.NEXT_PUBLIC_NEXT_URL}/api/users-without-corp`,
     {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      next: { revalidate: 1, tags: ['userFetch'] },
+      next: { revalidate: 1, tags: ["userFetch"] },
     },
-  )
-}
+  );
+};

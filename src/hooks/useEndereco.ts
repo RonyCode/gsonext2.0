@@ -1,95 +1,96 @@
-import { type AddressProps, type CepProps } from '../../../teste/types/index'
+import { type AddressProps, type CepProps } from "@/types/index";
 
-import { fetchWrapper } from '@/functions/fetch'
-import { cityStore } from '@/stores/Address/CityByStateStore'
-import { stateStore } from '@/stores/Address/stateStore'
-import { toast } from '@/hooks/use-toast'
+import { fetchWrapper } from "@/functions/fetch";
+import { cityStore } from "@/stores/Address/CityByStateStore";
+import { stateStore } from "@/stores/Address/stateStore";
+import { toast } from "@/hooks/use-toast";
 
 export const useEndereco = (): {
-  getCep: (cep: string) => Promise<CepProps>
-  getCidadeByState: (state: string) => Promise<AddressProps[]>
-  getEstados: () => Promise<AddressProps[]>
+  getCep: (cep: string) => Promise<CepProps>;
+  getCidadeByState: (state: string) => Promise<AddressProps[]>;
+  getEstados: () => Promise<AddressProps[]>;
 } => {
   const getCep = async (cep: string): Promise<CepProps> => {
     try {
       return await fetchWrapper<CepProps>(
         `${process.env.NEXT_PUBLIC_NEXT_URL}/api/cep?cep=${cep?.replace(
           /\D/g,
-          '',
+          "",
         )}`,
 
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         },
-      )
+      );
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast({
-        variant: 'danger',
-        title: 'Cep Incorreto! 🤯 ',
-        description: 'Cep não encontrado',
-      })
+        variant: "danger",
+        title: "Cep Incorreto! 🤯 ",
+        description: "Cep não encontrado",
+      });
       return {
-        city: '',
-        cityId: '',
-        complement: '',
-        district: '',
-        cep: '',
-        logradouro: '',
-        complemento: '',
-        bairro: '',
-        localidade: '',
-        uf: '',
+        city: "",
+        cityId: "",
+        complement: "",
+        district: "",
+        cep: "",
+        logradouro: "",
+        complemento: "",
+        bairro: "",
+        localidade: "",
+        uf: "",
         ibge: 0,
-        gia: '',
+        gia: "",
         ddd: 0,
         siafi: 0,
-        districtId: '',
-        ibgeId: '',
-        state: '',
-        stateShortname: '',
-        street: '',
-        zipcode: '',
+        districtId: "",
+        ibgeId: "",
+        state: "",
+        stateShortname: "",
+        street: "",
+        zipcode: "",
         code: 0,
         error: false,
-        message: '',
-        unknown: '',
-      } satisfies CepProps
+        message: "",
+        unknown: "",
+      } satisfies CepProps;
     }
-  }
+  };
   const getEstados = async (): Promise<AddressProps[]> => {
     const res = await fetchWrapper<AddressProps[]>(
       `${process.env.NEXT_PUBLIC_NEXT_URL}/api/estados`,
       {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       },
-    )
-    stateStore.setState({ states: res })
-    return res
-  }
+    );
+    stateStore.setState({ states: res });
+    return res;
+  };
 
   const getCidadeByState = async (state: string): Promise<AddressProps[]> => {
     const res = await fetchWrapper<AddressProps[]>(
       `${process.env.NEXT_PUBLIC_NEXT_URL}/api/cidades/${state}`,
       {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       },
-    )
-    cityStore.setState({ cities: res })
-    return res
-  }
+    );
+    cityStore.setState({ cities: res });
+    return res;
+  };
 
   return {
     getCep,
     getEstados,
     getCidadeByState,
-  }
-}
+  };
+};

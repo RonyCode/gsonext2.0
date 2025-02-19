@@ -1,18 +1,18 @@
-import { Icons } from '../../next-gso-v2/src/components/ui/icons'
+import { Icons } from "@/components/ui/icons";
 
 export interface NavItem {
-  title: string
-  href?: string
-  disabled?: boolean
-  external?: boolean
-  icon?: keyof typeof Icons
-  label?: string
+  title: string;
+  href?: string;
+  disabled?: boolean;
+  external?: boolean;
+  icon?: keyof typeof Icons;
+  label?: string;
 }
 
 export interface NavItemWithChildren extends NavItem {
-  items: NavItemWithChildren[]
+  items: NavItemWithChildren[];
 }
 
-export type MainNavItem = NavItem
+export type MainNavItem = NavItem;
 
-export type SidebarNavItem = NavItemWithChildren
+export type SidebarNavItem = NavItemWithChildren;

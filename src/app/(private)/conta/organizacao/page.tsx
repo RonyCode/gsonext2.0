@@ -1,35 +1,30 @@
-import { getServerSession } from 'next-auth'
-import React, { type ReactNode } from 'react'
-import { LuBuilding2 } from 'react-icons/lu'
+import { getServerSession } from "next-auth";
+import React, { type ReactNode } from "react";
+import { LuBuilding2 } from "react-icons/lu";
 
-import OrganizacaoForm from '@/app/(private)/(modules)/components/OrganizacaoForm'
-import { CardDefault } from '@/components/Cards/CardDefault'
-import { authOptions } from '@/lib/auth'
-import { getAllOrganizacoes } from '@/lib/GetAllOrganizacoes'
-import { getAllStates } from '@/lib/getAllStates'
+import OrganizacaoForm from "@/app/(private)/(modules)/components/OrganizacaoForm";
+import { CardDefault } from "@/components/Cards/CardDefault";
+import { authOptions } from "@/lib/auth";
+import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
+import { getAllStates } from "@/lib/getAllStates";
 
-const MinhaOrganizacao = async ({
-  params,
-}: {
-  params: { sigla: string }
-}): Promise<ReactNode> => {
-  const { data } = await getAllOrganizacoes()
-  const state = await getAllStates()
-  const session = await getServerSession(authOptions)
+const MinhaOrganizacao = async (): Promise<ReactNode> => {
+  const { data } = await getAllOrganizacoes();
+  const state = await getAllStates();
+  const session = await getServerSession(authOptions);
 
-   
   const organizacaoFound = data?.find((item) => {
     if (item.id !== undefined && item.id !== null) {
-      return item.id === session?.id_corporation
+      return item.id === session?.id_corporation;
     }
-  })
+  });
   return (
     <>
       {organizacaoFound !== undefined && organizacaoFound !== null && (
         <CardDefault
           title={organizacaoFound?.name}
           description={
-            organizacaoFound?.short_name_corp + ' - ' + organizacaoFound?.phone
+            organizacaoFound?.short_name_corp + " - " + organizacaoFound?.phone
           }
           icon={<LuBuilding2 />}
         >
@@ -37,6 +32,6 @@ const MinhaOrganizacao = async ({
         </CardDefault>
       )}
     </>
-  )
-}
-export default MinhaOrganizacao
+  );
+};
+export default MinhaOrganizacao;

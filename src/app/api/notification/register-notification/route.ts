@@ -1,5 +1,5 @@
-import { type NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from "next/server";
 
-export async function POST(request: NextRequest): Promise<NextResponse> {
-  return NextResponse.json('OK')
+export async function POST(): Promise<NextResponse> {
+  return NextResponse.json("OK");
 }

@@ -9,9 +9,7 @@ import { Label } from "@/ui/label";
 import { IMemberSchema } from "@/schemas/MemberSchema";
 
 type DetailsVehicleScheduleProps = {
-  vehicle?: IVehicleSchema & {
-    members: [{ position: number; member?: IMemberSchema }];
-  };
+  vehicle?: IVehicleSchema;
 } & React.SVGProps<SVGSVGElement> &
   React.HTMLAttributes<HTMLDivElement>;
 export const DetailsVehicleSchedule = ({
@@ -49,6 +47,8 @@ export const DetailsVehicleSchedule = ({
   }
   let rearrangedSeats: { position: number; member?: IMemberSchema }[] = [];
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   rearrangedSeats = vehicle?.members ? rearrangeMembers(vehicle.members) : [];
   return (
     <div

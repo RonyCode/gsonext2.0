@@ -1,6 +1,6 @@
-import { type ResponseApi } from '../../../teste/types'
+import { type ResponseApi } from "@/types/index";
 
-import { fetchWrapper } from '@/functions/fetch'
+import { fetchWrapper } from "@/functions/fetch";
 
 export const searchUsersWithoutCorporation = async (
   idCorporation: string | undefined | null,
@@ -9,11 +9,11 @@ export const searchUsersWithoutCorporation = async (
   return await fetchWrapper<ResponseApi>(
     `${process.env.NEXT_PUBLIC_NEXT_URL}/api/users-without-corp?id_corporation=${idCorporation}&criteria=${criteria}`,
     {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      cache: 'no-cache',
+      cache: "no-cache",
     },
-  )
-}
+  );
+};

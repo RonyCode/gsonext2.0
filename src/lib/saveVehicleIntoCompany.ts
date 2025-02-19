@@ -1,6 +1,6 @@
-import { type ResponseApi } from '../../../teste/types'
+import { type ResponseApi } from "@/types/index";
 
-import { fetchWrapper } from '@/functions/fetch'
+import { fetchWrapper } from "@/functions/fetch";
 
 export const saveVehicleIntoCompany = async (
   idCorporation: string | undefined | null,
@@ -10,16 +10,16 @@ export const saveVehicleIntoCompany = async (
   return await fetchWrapper<ResponseApi>(
     `${process.env.NEXT_PUBLIC_NEXT_URL}/api/vehicles-save-company`,
     {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         id_corporation: idCorporation,
         id_company: idCompany,
         id_vehicle: idVehicle,
       }),
-      cache: 'no-cache',
+      cache: "no-cache",
     },
-  )
-}
+  );
+};

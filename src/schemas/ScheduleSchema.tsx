@@ -1,5 +1,4 @@
 import { VehicleSchema } from "./CarsSchema";
-import { MemberSchema } from "./MemberSchema";
 import { z } from "zod";
 
 export const ScheduleSchema = z.object({

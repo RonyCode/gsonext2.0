@@ -1,7 +1,6 @@
-import { type AddressProps } from '../../../teste/types'
-
-import { fetchWrapper } from '@/functions/fetch'
-import { cityStore } from '@/stores/Address/CityByStateStore'
+import { fetchWrapper } from "@/functions/fetch";
+import { cityStore } from "@/stores/Address/CityByStateStore";
+import { AddressProps } from "@/types/index";
 
 export const getAllCitiesByState = async (
   state: string,
@@ -9,12 +8,12 @@ export const getAllCitiesByState = async (
   const res = await fetchWrapper<AddressProps[]>(
     `${process.env.NEXT_PUBLIC_NEXT_URL}/api/cidades/${state}`,
     {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     },
-  )
-  cityStore.setState({ cities: res })
-  return res
-}
+  );
+  cityStore.setState({ cities: res });
+  return res;
+};

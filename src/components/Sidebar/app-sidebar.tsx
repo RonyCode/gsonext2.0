@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
 import {
   Building,
@@ -9,43 +9,46 @@ import {
   Frame,
   Map,
   PieChart,
-  Settings2, Siren,
-} from "lucide-react"
+  Settings2,
+  Siren,
+} from "lucide-react";
 
-import {NavMain} from "./nav-main"
-import {NavProjects} from "./nav-projects"
-import {NavUser} from "./nav-user"
-import {TeamSwitcher} from "./team-switcher"
+import { NavMain } from "./nav-main";
+import { NavProjects } from "./nav-projects";
+import { NavUser } from "./nav-user";
+import { TeamSwitcher } from "./team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import {useSession} from "next-auth/react";
-import {IOrganizacaoSchema} from "@/schemas/OrganizacaoSchema";
+} from "@/components/ui/sidebar";
+import { useSession } from "next-auth/react";
+import { IOrganizacaoSchema } from "@/schemas/OrganizacaoSchema";
 import IconCalendar from "@/icons/IconCalendar";
 import IconBuild from "@/icons/IconBuild";
 import IconMembers from "@/icons/IconMembers";
 import IconCarFrontal from "@/icons/IconCarFrontal";
 import IconSirene from "@/icons/IconSirene";
 import IconEditSave from "@/icons/IconEditSave";
-import {CompanySwitcher} from "@/components/Sidebar/company-switcher";
-import {IUnidadeSchema} from "@/schemas/UnidadeSchema";
-
+import { CompanySwitcher } from "@/components/Sidebar/company-switcher";
+import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
 
 interface AppSidebarProps {
-  corp?: IOrganizacaoSchema
+  corp?: IOrganizacaoSchema;
 }
 
-export function AppSidebar(
-    {
-      corp,
-      ...props
-    }: AppSidebarProps & React.ComponentProps<typeof Sidebar>) {
-  const {data: session} = useSession()
-  const [compSelected, setCompSelected] = React.useState(corp?.companies ? corp?.companies[0] as IUnidadeSchema : {} as IUnidadeSchema)
+export function AppSidebar({
+  corp,
+  ...props
+}: AppSidebarProps & React.ComponentProps<typeof Sidebar>) {
+  const { data: session } = useSession();
+  const [compSelected, setCompSelected] = React.useState(
+    corp?.companies
+      ? (corp?.companies[0] as IUnidadeSchema)
+      : ({} as IUnidadeSchema),
+  );
   const data = {
     navMain: [
       {
@@ -55,14 +58,19 @@ export function AppSidebar(
         items: [
           {
             title: "Minhas Ocorrências",
-            icon: <IconSirene width={32} className='text-foreground/60 stroke-foreground/60 fill-foreground/60'/>,
+            icon: (
+              <IconSirene
+                width={32}
+                className="fill-foreground/60 stroke-foreground/60 text-foreground/60"
+              />
+            ),
             url: "/servicos/corporacao",
           },
           {
             title: "Novas Ocorrências",
-            icon: <IconEditSave width={32} className='fill-foreground/60'/>,
+            icon: <IconEditSave width={32} className="fill-foreground/60" />,
             url: "/servicos/membros",
-          }
+          },
         ],
       },
       {
@@ -72,22 +80,24 @@ export function AppSidebar(
         items: [
           {
             title: "Minha Corporação",
-            icon: <IconBuild width={32} className='fill-foreground/60'/>,
+            icon: <IconBuild width={32} className="fill-foreground/60" />,
             url: "/servicos/corporacao",
           },
           {
             title: "Membros Corporação",
-            icon: <IconMembers width={32} className='fill-foreground/60'/>,
+            icon: <IconMembers width={32} className="fill-foreground/60" />,
             url: "/servicos/membros",
           },
           {
             title: "Veículos Corporação",
-            icon: <IconCarFrontal width={32} className='stroke-foreground/60'/>,
+            icon: (
+              <IconCarFrontal width={32} className="stroke-foreground/60" />
+            ),
             url: "/servicos/veiculos",
           },
           {
             title: "Unidades Corporação",
-            icon: <IconBuild width={32} className='fill-foreground/60'/>,
+            icon: <IconBuild width={32} className="fill-foreground/60" />,
             url: "/servicos/unidades",
           },
         ],
@@ -99,22 +109,24 @@ export function AppSidebar(
         items: [
           {
             title: "Minha Unidade",
-            icon: <IconBuild width={32} className='fill-foreground/60'/>,
+            icon: <IconBuild width={32} className="fill-foreground/60" />,
             url: `/servicos/unidades/${compSelected.name}-${compSelected.id}`,
           },
           {
             title: "Membros Unidade",
-            icon: <IconMembers width={32} className='fill-foreground/60'/>,
+            icon: <IconMembers width={32} className="fill-foreground/60" />,
             url: `/servicos/unidades/${compSelected.name}-${compSelected.id}/membros`,
           },
           {
             title: "Veículos Unidade",
-            icon: <IconCarFrontal width={32} className='stroke-foreground/60'/>,
+            icon: (
+              <IconCarFrontal width={32} className="stroke-foreground/60" />
+            ),
             url: `/servicos/unidades/${compSelected.name}-${compSelected.id}/veiculos`,
           },
           {
             title: "Escalas Unidades",
-            icon: <IconCalendar width={32} className='fill-foreground/60'/>,
+            icon: <IconCalendar width={32} className="fill-foreground/60" />,
             url: `/servicos/unidades/${compSelected.name}-${compSelected.id}/escalas`,
           },
         ],
@@ -126,9 +138,9 @@ export function AppSidebar(
         items: [
           {
             title: "Escalas Unidades",
-            icon: <IconCalendar width={32} className='fill-foreground/60'/>,
+            icon: <IconCalendar width={32} className="fill-foreground/60" />,
             url: "/servicos/escalas",
-          }
+          },
         ],
       },
       {
@@ -172,37 +184,34 @@ export function AppSidebar(
         icon: Map,
       },
     ],
-  }
+  };
 
   return (
-      <Sidebar collapsible="icon" {...props}>
-        <SidebarHeader>
-          {corp && <TeamSwitcher corp={corp}/>}
-          {corp?.companies && <CompanySwitcher companies={corp?.companies} setCompSelected={setCompSelected}/>}
-        </SidebarHeader>
-        <SidebarContent>
-          <NavMain
-              items={
-                data.navMain
-              }
+    <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader>
+        {corp && <TeamSwitcher corp={corp} />}
+        {corp?.companies && (
+          <CompanySwitcher
+            companies={corp?.companies}
+            setCompSelectedAction={setCompSelected}
           />
-          <NavProjects projects={data.projects}/>
-        </SidebarContent>
-        <SidebarFooter>
-          <NavUser
-              user={
-                {
-                  ...session?.user,
-                  name: session?.user?.name ?? '',
-                  email: session?.user?.email ?? '',
-                  image: session?.user?.image ?? ''
-                }
-              }
-          />
-        </SidebarFooter>
-        <SidebarRail/>
-      </Sidebar>
-
-
-  )
+        )}
+      </SidebarHeader>
+      <SidebarContent>
+        <NavMain items={data.navMain} />
+        <NavProjects projects={data.projects} />
+      </SidebarContent>
+      <SidebarFooter>
+        <NavUser
+          user={{
+            ...session?.user,
+            name: session?.user?.name ?? "",
+            email: session?.user?.email ?? "",
+            image: session?.user?.image ?? "",
+          }}
+        />
+      </SidebarFooter>
+      <SidebarRail />
+    </Sidebar>
+  );
 }

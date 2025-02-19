@@ -1,28 +1,24 @@
-import React from 'react'
-import { LuFolderCog } from 'react-icons/lu'
+import React from "react";
+import { LuFolderCog } from "react-icons/lu";
 
-import Modules from '@/app/(private)/(modules)/components/module/Modules'
-import { CardDefault } from '@/components/Cards/CardDefault'
+import Modules from "@/app/(private)/(modules)/components/module/Modules";
+import { CardDefault } from "@/components/Cards/CardDefault";
 
-const Page = async ({
-  params,
-}: {
-  params: { sigla: string; id_corporation: string }
-}) => {
+const Page = async () => {
   return (
     <>
       <CardDefault
         title="Serviços"
         description="Serviços disponíveis por modules"
-        image={process.env.NEXT_PUBLIC_API_GSO + '/public/images/modules.png'}
+        image={process.env.NEXT_PUBLIC_API_GSO + "/public/images/modules.png"}
         imageMobile={
-          process.env.NEXT_PUBLIC_API_GSO + '/public/images/modules.png'
+          process.env.NEXT_PUBLIC_API_GSO + "/public/images/modules.png"
         }
         icon={<LuFolderCog size={28} />}
       >
         <Modules />
       </CardDefault>
     </>
-  )
-}
-export default Page
+  );
+};
+export default Page;

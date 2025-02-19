@@ -1,15 +1,11 @@
-import { CardModule } from '@/components/Cards/CardModule'
-import IconCalendar from '@/icons/IconCalendar'
-import IconEditSave from '@/icons/IconEditSave'
+import { CardModule } from "@/components/Cards/CardModule";
+import IconCalendar from "@/icons/IconCalendar";
+import IconEditSave from "@/icons/IconEditSave";
 
-const ModuloEscala = async ({
-  params,
-}: {
-  params?: { sigla: string; id_corporation: string }
-}) => {
+const ModuloEscala = async () => {
   return (
     <>
-      <div className=" grid grid-cols-2 gap-4 p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5">
         <div className="group">
           <CardModule
             title="Editar / Salvar"
@@ -26,6 +22,6 @@ const ModuloEscala = async ({
         />
       </div>
     </>
-  )
-}
-export default ModuloEscala
+  );
+};
+export default ModuloEscala;

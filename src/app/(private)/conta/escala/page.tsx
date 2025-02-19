@@ -1,22 +1,20 @@
-import { getServerSession } from 'next-auth'
-import React, { type ReactNode } from 'react'
-import { LuCalendarCheck } from 'react-icons/lu'
+import { getServerSession } from "next-auth";
+import React, { type ReactNode } from "react";
+import { LuCalendarCheck } from "react-icons/lu";
 
-import CalendarGso from '@/components/CalendarGso/CalendarGso'
-import { CardDefault } from '@/components/Cards/CardDefault'
-import { authOptions } from '@/lib/auth'
-import { getAllFunctions } from '@/lib/GetAllFunctions'
-import { getMyUnidade } from '@/lib/GetMyUnidade'
+import { CardDefault } from "@/components/Cards/CardDefault";
+import { authOptions } from "@/lib/auth";
+import { getMyUnidade } from "@/lib/GetMyUnidade";
+import CalendarGsoV1 from "@/components/CalendarGso/CalendarGsoV1";
 
 const MinhaEscala = async (): Promise<ReactNode> => {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
-  const functions = await getAllFunctions()
   const { data } = await getMyUnidade(
     session?.id_corporation,
     session?.id_company,
     session?.id,
-  )
+  );
   return (
     <>
       <CardDefault
@@ -27,12 +25,14 @@ const MinhaEscala = async (): Promise<ReactNode> => {
         icon={<LuCalendarCheck size={28} />}
       >
         <div>
-          {data !== null && data !== undefined && (
-            <CalendarGso unidade={data} functions={functions?.data} />
-          )}
-        </div>{' '}
+          {data?.schedules !== null &&
+            data?.schedules !== undefined &&
+            data !== null && (
+              <CalendarGsoV1 company={data} dayEvent={data.schedules} />
+            )}
+        </div>{" "}
       </CardDefault>
     </>
-  )
-}
-export default MinhaEscala
+  );
+};
+export default MinhaEscala;

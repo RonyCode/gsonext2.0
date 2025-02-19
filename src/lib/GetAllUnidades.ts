@@ -1,6 +1,6 @@
-import { fetchWrapper } from '@/functions/fetch'
-import { type IUnidadeSchema } from '@/schemas/UnidadeSchema'
-import { type ResponseApi } from '../../../teste/types/index'
+import { fetchWrapper } from "@/functions/fetch";
+import { type IUnidadeSchema } from "@/schemas/UnidadeSchema";
+import { type ResponseApi } from "@/types/index";
 
 export const getAllUnidades = async (
   idCorporation: string,
@@ -8,11 +8,11 @@ export const getAllUnidades = async (
   return await fetchWrapper<ResponseApi<IUnidadeSchema[]>>(
     `${process.env.NEXT_PUBLIC_NEXT_URL}/api/unidades?id-corporation=${idCorporation}`,
     {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      next: { revalidate: 1, tags: ['unidadesFetch'] },
+      next: { revalidate: 1, tags: ["unidadesFetch"] },
     },
-  )
-}
+  );
+};

@@ -1,17 +1,17 @@
-import Image from 'next/image'
-import React from 'react'
+import Image from "next/image";
+import React from "react";
 import {
   LuFile,
   LuListFilter,
   LuEllipsis,
   LuCirclePlus,
   LuSearch,
-} from 'react-icons/lu'
+} from "react-icons/lu";
 
-import { type Unidade } from '@/types/index'
+import { type Unidade } from "@/types/index";
 
-import { Badge } from '@/ui/badge'
-import { Button } from '@/ui/button'
+import { Badge } from "@/ui/badge";
+import { Button } from "@/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -20,8 +20,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/ui/dropdown-menu'
-import { Input } from '@/ui/input'
+} from "@/ui/dropdown-menu";
+import { Input } from "@/ui/input";
 import {
   Table,
   TableBody,
@@ -29,20 +29,22 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/ui/table'
-import { Tabs, TabsContent } from '@/ui/tabs'
-import { Card, CardContent, CardFooter } from '@/ui/card'
+} from "@/ui/table";
+import { Tabs, TabsContent } from "@/ui/tabs";
+import { Card, CardContent, CardFooter } from "@/ui/card";
 
 type CardProps = {
-  itemUnidade: Unidade[]
-  children?: React.ReactNode
-} & React.ComponentProps<typeof Card>
+  itemUnidade: Unidade[];
+  children?: React.ReactNode;
+} & React.ComponentProps<typeof Card>;
 
-export const CardListUnidade = ({
-  itemUnidade,
-  // className,
-  // ...props
-}: CardProps) => {
+export const CardListUnidade = (
+  {
+    // itemUnidade,
+    // className,
+    // ...props
+  }: CardProps,
+) => {
   return (
     <>
       <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -397,7 +399,7 @@ export const CardListUnidade = ({
                   </CardContent>
                   <CardFooter>
                     <div className="text-xs text-muted-foreground">
-                      Showing <strong>1-10</strong> of <strong>32</strong>{' '}
+                      Showing <strong>1-10</strong> of <strong>32</strong>{" "}
                       products
                     </div>
                   </CardFooter>
@@ -408,5 +410,5 @@ export const CardListUnidade = ({
         </div>
       </div>
     </>
-  )
-}
+  );
+};

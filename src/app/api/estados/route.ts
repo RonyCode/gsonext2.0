@@ -1,21 +1,21 @@
-import { type NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from "next/server";
 
-export async function GET(request: NextRequest): Promise<NextResponse> {
+export async function GET(): Promise<NextResponse> {
   const res = await fetch(
-    'https://servicodados.ibge.gov.br/api/v1/localidades/estados',
+    "https://servicodados.ibge.gov.br/api/v1/localidades/estados",
     {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     },
-  )
+  );
   if (!res.ok) {
     return NextResponse.json(
       { message: res.statusText },
       { status: res.status },
-    )
+    );
   }
-  const data = await res.json()
-  return NextResponse.json(data)
+  const data = await res.json();
+  return NextResponse.json(data);
 }

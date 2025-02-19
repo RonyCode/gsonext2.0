@@ -1,6 +1,6 @@
-import { fetchWrapper } from '@/functions/fetch'
-import { useUserStore } from '@/stores/user/userStore'
-import { type UserType } from '../../../teste/types/index'
+import { fetchWrapper } from "@/functions/fetch";
+import { useUserStore } from "@/stores/user/userStore";
+import { type UserType } from "@/types/index";
 
 export const GetUserById = async (
   id: string | null | undefined,
@@ -8,13 +8,13 @@ export const GetUserById = async (
   const response = await fetchWrapper<UserType>(
     `${process.env.NEXT_PUBLIC_NEXT_URL}/api/user-id?id=${id}`,
     {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     },
-  )
+  );
   if (response?.account?.cpf != null)
-    useUserStore.getState().actions.add(response)
-  return response
-}
+    useUserStore.getState().actions.add(response);
+  return response;
+};

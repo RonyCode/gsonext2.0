@@ -1,17 +1,13 @@
-import { CardModule } from '@/components/Cards/CardModule'
+import { CardModule } from "@/components/Cards/CardModule";
 
-import IconList from '@/icons/IconList'
+import IconList from "@/icons/IconList";
 
-import IconEditSave from '@/icons/IconEditSave'
+import IconEditSave from "@/icons/IconEditSave";
 
-const ModuloOcorrencia = async ({
-  params,
-}: {
-  params?: { sigla: string; id_corporation: string }
-}) => {
+const ModuloOcorrencia = async () => {
   return (
     <>
-      <div className=" grid grid-cols-2 gap-4 p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5">
         <div className="group">
           <CardModule
             title="Editar / Salvar"
@@ -28,6 +24,6 @@ const ModuloOcorrencia = async ({
         />
       </div>
     </>
-  )
-}
-export default ModuloOcorrencia
+  );
+};
+export default ModuloOcorrencia;

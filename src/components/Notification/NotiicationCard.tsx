@@ -1,11 +1,11 @@
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import React, { type ReactElement } from 'react'
-import { LuBell, LuBellRing, LuCheck } from 'react-icons/lu'
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { type ReactElement } from "react";
+import { LuBell, LuBellRing, LuCheck } from "react-icons/lu";
 
-import { cn } from '@/lib/utils'
-import { useNotificationStore } from '@/stores/user/useNotificationStore'
-import { Button } from '../ui/button'
+import { cn } from "@/lib/utils";
+import { useNotificationStore } from "@/stores/user/useNotificationStore";
+import { Button } from "../ui/button";
 import {
   Card,
   CardContent,
@@ -13,7 +13,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../ui/card'
+} from "@/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,19 +21,18 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '../ui/dropdown-menu'
-import { Switch } from '../ui/switch'
-import { setCookie } from 'cookies-next'
+} from "@/ui/dropdown-menu";
+import { Switch } from "@/ui/switch";
 
 type NotificationProps = {
-  className?: string
-} & React.ComponentProps<typeof Card>
+  className?: string;
+} & React.ComponentProps<typeof Card>;
 
 export const NotificationCard = ({
   className,
   ...props
 }: NotificationProps): ReactElement => {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <>
       <DropdownMenu>
@@ -42,15 +41,15 @@ export const NotificationCard = ({
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="relative mr-2 h-10 w-10  rounded-full border hover:border-foreground/20  md:flex lg:h-12 lg:w-12"
+            className="relative mr-2 h-10 w-10 rounded-full border hover:border-foreground/20 md:flex lg:h-12 lg:w-12"
           >
-            <div className="relative flex w-14 items-center justify-center ">
+            <div className="relative flex w-14 items-center justify-center">
               {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-expect-error
                 useNotificationStore.getState()?.state?.notification?.messages
                   ?.length > 0 && (
-                  <div className="absolute -right-1 -top-1 z-10  flex h-4 w-4 items-center justify-center  rounded-full bg-primary text-[.725rem] text-foreground md:h-[17px] md:w-[17px]">
+                  <div className="absolute -right-1 -top-1 z-10 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[.725rem] text-foreground md:h-[17px] md:w-[17px]">
                     {
                       useNotificationStore.getState().state.notification
                         ?.messages?.length
@@ -69,26 +68,23 @@ export const NotificationCard = ({
         >
           <DropdownMenuGroup>
             <DropdownMenuItem className="h-full">
-              <Card
-                className={cn(' w-full md:w-[380px] ', className)}
-                {...props}
-              >
+              <Card className={cn("w-full md:w-[380px]", className)} {...props}>
                 <CardHeader>
                   <CardTitle>Notificações</CardTitle>
                   <CardDescription>
-                    Você tem{' '}
-                    <strong className="font-extrabold text-foreground ">
-                      {' '}
+                    Você tem{" "}
+                    <strong className="font-extrabold text-foreground">
+                      {" "}
                       {
                         useNotificationStore.getState().state.notification
                           ?.messages?.length
                       }
-                    </strong>{' '}
+                    </strong>{" "}
                     notificações novas
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="grid max-h-[calc(100vh_-_15rem)] w-96 overflow-y-scroll ">
-                  <div className=" flex max-h-[100px] items-center space-x-4 rounded-md border p-4">
+                <CardContent className="grid max-h-[calc(100vh_-_15rem)] w-96 overflow-y-scroll">
+                  <div className="flex max-h-[100px] items-center space-x-4 rounded-md border p-4">
                     <LuBellRing />
                     <div className="flex-1 space-y-1">
                       <p className="text-sm font-medium leading-none">
@@ -99,11 +95,10 @@ export const NotificationCard = ({
                       </p>
                     </div>
                     <Switch
-                       
                       onClick={async () => {
-                        await Notification.requestPermission()
+                        await Notification.requestPermission();
                       }}
-                      checked={Notification.permission === 'granted'}
+                      checked={Notification.permission === "granted"}
                     />
                   </div>
                   <div>
@@ -115,8 +110,7 @@ export const NotificationCard = ({
                             passHref
                             key={indexNoti}
                             href={notification?.url}
-                            className="-mx-1 my-1 h-px bg-muted "
-                             
+                            className="-mx-1 my-1 h-px bg-muted"
                             onClick={async () => {
                               useNotificationStore
                                 .getState()
@@ -129,16 +123,16 @@ export const NotificationCard = ({
                                           .state?.notification?.messages.splice(
                                             index,
                                             1,
-                                          )
+                                          );
                                       }
                                     }
-                                    console.log(notification)
+                                    console.log(notification);
                                   },
-                                )
+                                );
                             }}
                           >
-                            <div className=" animate trasnsition group  grid grid-cols-[25px_1fr] items-center justify-center rounded-2xl  p-4  duration-300 last:mb-0 last:pb-0 hover:bg-background/90">
-                              <span className="flex h-2 w-2  rounded-full bg-primary  group-hover:bg-foreground" />
+                            <div className="animate trasnsition group grid grid-cols-[25px_1fr] items-center justify-center rounded-2xl p-4 duration-300 last:mb-0 last:pb-0 hover:bg-background/90">
+                              <span className="flex h-2 w-2 rounded-full bg-primary group-hover:bg-foreground" />
                               <div>
                                 <p className="mb-2 text-sm font-medium leading-none">
                                   {notification?.title}
@@ -165,14 +159,14 @@ export const NotificationCard = ({
                         onClick={() => {
                           useNotificationStore.getState().actions.add({
                             messages: [],
-                            id: '',
-                            status: '',
-                            title: '',
-                            type: '',
+                            id: "",
+                            status: "",
+                            title: "",
+                            type: "",
                             qtd: 0,
                             code: 0,
-                          })
-                          router.refresh()
+                          });
+                          router.refresh();
                         }}
                         className="w-full"
                       >
@@ -188,5 +182,5 @@ export const NotificationCard = ({
         </DropdownMenuContent>
       </DropdownMenu>
     </>
-  )
-}
+  );
+};

@@ -6,14 +6,15 @@ import { MdOutlineSupervisorAccount } from "react-icons/md";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
-import { IScheduleSchema } from "@/schemas/ScheduleSchema";
 import CalendarGsoV1 from "@/components/CalendarGso/CalendarGsoV1";
 
 const EscalasUnidade = async ({
   params,
 }: {
-  params: { id_company: string };
+  params: Promise<{ id_company: string }>;
 }) => {
+  const resolvedParams = await params;
+  const { id_company } = resolvedParams;
   const session = await getServerSession(authOptions);
   const { data } = await getAllOrganizacoes();
   const corpFound = data?.find((corp) => {
@@ -21,7 +22,7 @@ const EscalasUnidade = async ({
   });
 
   const companyFound = corpFound?.companies?.find((comp) => {
-    if (comp?.id === params?.id_company?.split("-")[1]) {
+    if (comp?.id === id_company?.split("-")[1]) {
       return comp.schedules;
     }
     return null;

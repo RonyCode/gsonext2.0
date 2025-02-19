@@ -22,7 +22,7 @@ import Image from "next/image";
 import { useCheckMobile } from "@/functions/IsMobile";
 
 export function columnsDetailsSchedule(
-  company: IUnidadeSchema,
+  company: Partial<IUnidadeSchema> | undefined,
 ): ColumnDef<{ id?: string | null | undefined } | undefined, unknown>[] {
   const columnsDetalheEscala: Array<ColumnDef<Partial<IScheduleSchema>>> = [
     {

@@ -1,33 +1,31 @@
-import { getServerSession } from 'next-auth'
-import { revalidatePath } from 'next/cache'
-import Link from 'next/link'
-import React from 'react'
-import { LuListChecks, LuUsers } from 'react-icons/lu'
+import { getServerSession } from "next-auth";
+import Link from "next/link";
+import React from "react";
+import { LuListChecks, LuUsers } from "react-icons/lu";
 
-import SelectMembersCorporation from '@/app/(private)/(modules)/components/SelectMembersCorporation'
-import { CardDefault } from '@/components/Cards/CardDefault'
-import { CardWithLogo } from '@/components/Cards/CardWithLogo'
-import { columnsMembers } from '@/components/DataTables/DataTableMembers/columnsMembers'
-import { DataTableMembers } from '@/components/DataTables/DataTableMembers/data-table-members'
-import { authOptions } from '@/lib/auth'
-import { getAllOrganizacoes } from '@/lib/GetAllOrganizacoes'
-import { Button } from '@/ui/button'
+import { CardDefault } from "@/components/Cards/CardDefault";
+import { CardWithLogo } from "@/components/Cards/CardWithLogo";
+import { columnsMembers } from "@/components/DataTables/DataTableMembers/columnsMembers";
+import { DataTableMembers } from "@/components/DataTables/DataTableMembers/data-table-members";
+import { authOptions } from "@/lib/auth";
+import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
+import { Button } from "@/ui/button";
 
-const MembrosUnidade = async ()=> {
-  const session = await getServerSession(authOptions)
-  const { data } = await getAllOrganizacoes()
+const MembrosUnidade = async () => {
+  const session = await getServerSession(authOptions);
+  const { data } = await getAllOrganizacoes();
   const organizacaoFound = data?.find((organizacao) => {
-    return organizacao?.id === session?.id_corporation
-  })
+    return organizacao?.id === session?.id_corporation;
+  });
   return (
     <div>
       {
         <CardDefault
-          title={'Efetivo de minha corporação'}
+          title={"Efetivo de minha corporação"}
           description="Membros"
-          image={process.env.NEXT_PUBLIC_API_GSO + '/public/images/members.jpg'}
+          image={process.env.NEXT_PUBLIC_API_GSO + "/public/images/members.jpg"}
           imageMobile={
-            process.env.NEXT_PUBLIC_API_GSO + '/public/images/members.jpg'
+            process.env.NEXT_PUBLIC_API_GSO + "/public/images/members.jpg"
           }
           icon={<LuUsers size={28} />}
           iconDescription={<LuListChecks size={18} />}
@@ -54,6 +52,6 @@ const MembrosUnidade = async ()=> {
         </CardDefault>
       }
     </div>
-  )
-}
-export default MembrosUnidade
+  );
+};
+export default MembrosUnidade;

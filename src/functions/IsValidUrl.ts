@@ -1,9 +1,9 @@
 export function isValidUrl(url: string): boolean {
   try {
-    // eslint-disable-next-line no-new
-    new URL(url)
-    return true
+    new URL(url);
+    return true;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
-    return false
+    return false;
   }
 }

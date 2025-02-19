@@ -1,26 +1,26 @@
-import Link from 'next/link'
-import { type ReactElement } from 'react'
-import { LuEye } from 'react-icons/lu'
+import Link from "next/link";
+import { type ReactElement } from "react";
+import { LuEye } from "react-icons/lu";
 
-import { Button } from '../../ui/button'
+import { Button } from "@/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '../../ui/dropdown-menu'
-import { UnidadeSchema } from '@/schemas/UnidadeSchema'
-import { DotsHorizontalIcon } from '@radix-ui/react-icons'
-import { type Row } from '@tanstack/react-table'
+} from "@/ui/dropdown-menu";
+import { UnidadeSchema } from "@/schemas/UnidadeSchema";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { type Row } from "@tanstack/react-table";
 
 interface DataTableRowActionsProps<TData> {
-  row: Row<TData>
+  row: Row<TData>;
 }
 
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>): ReactElement {
-  const task = UnidadeSchema.parse(row.original)
+  const task = UnidadeSchema.parse(row.original);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -35,12 +35,12 @@ export function DataTableRowActions<TData>({
       <DropdownMenuContent align="end" className="w-[160px]">
         <Link href={`/servicos/unidades/${task.name}-${task.id}`}>
           <DropdownMenuItem>
-            {' '}
+            {" "}
             <LuEye size={18} className="mr-1" />
             Detalhes
           </DropdownMenuItem>
         </Link>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

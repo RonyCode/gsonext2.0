@@ -1,17 +1,16 @@
-import { type NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from "next/server";
 
-import { type ISaveMemberCompanySchema } from '@/schemas/SaveMemberCompanySchema'
-import { type ISaveMemberSchema } from '@/schemas/SaveMemberSchema'
+import { type ISaveMemberCompanySchema } from "@/schemas/SaveMemberCompanySchema";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
-  const body: ISaveMemberCompanySchema = await request.json()
+  const body: ISaveMemberCompanySchema = await request.json();
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/company/member/save`,
     {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         id_corporation: body?.id_corporation,
@@ -19,11 +18,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         id_member: body?.id_member,
       }),
     },
-  )
+  );
   if (!res.ok) {
-    const { message } = await res.json()
-    return NextResponse.json({ message }, { status: 401 })
+    const { message } = await res.json();
+    return NextResponse.json({ message }, { status: 401 });
   }
-  const response = await res.json()
-  return NextResponse.json(response)
+  const response = await res.json();
+  return NextResponse.json(response);
 }

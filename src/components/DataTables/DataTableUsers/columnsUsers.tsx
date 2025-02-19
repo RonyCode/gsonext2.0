@@ -1,26 +1,27 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { LuBuilding2, LuMail, LuPhone, LuUser } from 'react-icons/lu'
+import React from "react";
+import { LuBuilding2, LuMail, LuPhone, LuUser } from "react-icons/lu";
 
-import { types } from '../DataTableUnidades/data/data'
-import { DataTableColumnHeader } from './data-table-column-header'
-import { DataTableRowActions } from './data-table-row-actions'
-import { maskPhone } from '@/functions/masks/maskphone'
-import { type IUserSchema } from '@/schemas/UsersSchema'
-import { type Unidade } from '@/types/index'
-import { Badge } from '@/ui/badge'
-import { Checkbox } from '@/ui/checkbox'
-import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
-import { type ColumnDef } from '@tanstack/react-table'
+import { types } from "../DataTableUnidades/data/data";
+import { DataTableColumnHeader } from "./data-table-column-header";
+import { DataTableRowActions } from "./data-table-row-actions";
+import { maskPhone } from "@/functions/masks/maskphone";
+import { type IUserSchema } from "@/schemas/UsersSchema";
+import { type Unidade } from "@/types/index";
+import { Badge } from "@/ui/badge";
+import { Checkbox } from "@/ui/checkbox";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { type ColumnDef } from "@tanstack/react-table";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_GSO
+const apiUrl = process.env.NEXT_PUBLIC_API_GSO;
 
 export const columnsUsersArray = (onCheckboxChange: (id: string) => void) => {
   const columnsUsers: Array<ColumnDef<IUserSchema>> = [
     {
-      id: 'select',
-      accessorKey: 'id',
+      id: "select",
+      accessorKey: "id",
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       header: ({ table }) => (
         <Checkbox
           checked={false} // Desativar a seleção global, já que só permitimos um por vez
@@ -32,25 +33,25 @@ export const columnsUsersArray = (onCheckboxChange: (id: string) => void) => {
         <Checkbox
           checked={row.getIsSelected()}
           name="id_user"
-          onCheckedChange={(value: boolean | 'indeterminate') => {
-            if (value === 'indeterminate') {
-              return
+          onCheckedChange={(value: boolean | "indeterminate") => {
+            if (value === "indeterminate") {
+              return;
             }
 
-            row.toggleSelected(value) // Marca ou desmarca a linha atual
+            row.toggleSelected(value); // Marca ou desmarca a linha atual
             if (value) {
               // Desmarca todas as outras linhas antes de marcar a atual
               table.getSelectedRowModel().rows.forEach((selectedRow) => {
-                selectedRow.toggleSelected(false)
-              })
-              onCheckboxChange(row.original.id ?? '') // Passa o ID selecionado para o formulário exterior
+                selectedRow.toggleSelected(false);
+              });
+              onCheckboxChange(row.original.id ?? ""); // Passa o ID selecionado para o formulário exterior
             } else {
-              onCheckboxChange('') // Reseta o valor se o checkbox for desmarcado
+              onCheckboxChange(""); // Reseta o valor se o checkbox for desmarcado
             }
-            row.toggleSelected(value) // Marca ou desmarca a linha atual
+            row.toggleSelected(value); // Marca ou desmarca a linha atual
           }}
           aria-label="Select row"
-          value={row.original.id ?? ''}
+          value={row.original.id ?? ""}
         />
       ),
       enableSorting: false,
@@ -58,56 +59,57 @@ export const columnsUsersArray = (onCheckboxChange: (id: string) => void) => {
     },
 
     {
-      accessorKey: 'nome',
+      accessorKey: "nome",
       accessorFn: (row) => row.account?.name, // Acessa o valor diretamente
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Dados Usuário" />
       ),
       cell: ({ row }) => {
-        const accountName = row.original.account?.name
-        const accountEmail = row.original.auth?.email
-        const accountPhone = row.original.account?.phone
+        const accountName = row.original.account?.name;
+        const accountEmail = row.original.auth?.email;
+        const accountPhone = row.original.account?.phone;
         return (
           <>
             <div className="flex min-w-64 items-center space-x-2 text-[0.8500rem] text-muted-foreground">
-              <Avatar className="flex h-14 w-14 items-center justify-center  rounded-full">
+              <Avatar className="flex h-14 w-14 items-center justify-center rounded-full">
                 <AvatarImage
                   className="aspect-square rounded-full object-cover"
-                  src={apiUrl ?
-                      apiUrl + row?.original?.account?.image :
-                      apiUrl + '/public/images/avatar.svg'
+                  src={
+                    apiUrl
+                      ? apiUrl + row?.original?.account?.image
+                      : apiUrl + "/public/images/avatar.svg"
                   }
                 />
                 <AvatarFallback>{<LuBuilding2 size={36} />}</AvatarFallback>
               </Avatar>
-              <div className="flex flex-col justify-center ">
+              <div className="flex flex-col justify-center">
                 <div>
-                  <div className="flex items-center  py-0.5">
+                  <div className="flex items-center py-0.5">
                     <LuUser size={16} className="mr-2" /> {accountName}
                   </div>
                 </div>
                 <div>
-                  {' '}
-                  <div className="flex items-center py-0.5 ">
+                  {" "}
+                  <div className="flex items-center py-0.5">
                     <LuMail size={16} className="mr-2" /> {accountEmail}
                   </div>
                 </div>
                 <div>
-                  {' '}
+                  {" "}
                   <div className="flex items-center py-0.5">
-                    <LuPhone size={16} className="mr-2" />{' '}
+                    <LuPhone size={16} className="mr-2" />{" "}
                     {maskPhone(accountPhone)}
                   </div>
                 </div>
               </div>
             </div>
           </>
-        )
+        );
       },
     },
 
     {
-      accessorKey: 'account.director',
+      accessorKey: "account.director",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Gestores" />
       ),
@@ -116,48 +118,48 @@ export const columnsUsersArray = (onCheckboxChange: (id: string) => void) => {
           <div className="flex w-full items-center">
             <div className="mr-2 flex flex-col space-y-1 text-muted-foreground">
               <span>
-                {row.original?.account?.name} - {row.original?.id} -{' '}
+                {row.original?.account?.name} - {row.original?.id} -{" "}
                 <Badge variant="secondary">CMD</Badge>
               </span>
             </div>
           </div>
-        )
+        );
       },
       filterFn: (row, id, value) => {
-        return value.includes(row.getValue(id))
+        return value.includes(row.getValue(id));
       },
     },
 
     {
-      accessorKey: 'manager_company',
+      accessorKey: "manager_company",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Unidade Gestora" />
       ),
       cell: ({ row }) => {
-        const $unidadeGerente: Unidade = row.getValue('manager_company')
+        const $unidadeGerente: Unidade = row.getValue("manager_company");
 
         return (
           <div className="flex w-full items-center">
             <div className="mr-2 text-muted-foreground">
-              {$unidadeGerente?.name ?? 'N/A'}
+              {$unidadeGerente?.name ?? "N/A"}
             </div>
           </div>
-        )
+        );
       },
       filterFn: (row, id, value) => {
-        return value.includes(row.getValue(id))
+        return value.includes(row.getValue(id));
       },
     },
 
     {
-      accessorKey: 'type',
+      accessorKey: "type",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Tipo" />
       ),
       cell: ({ row }) => {
-        const type = types.find((type) => type.value === row.getValue('type'))
+        const type = types.find((type) => type.value === row.getValue("type"));
         if (type == null) {
-          return null
+          return null;
         }
         return (
           <Badge
@@ -166,19 +168,19 @@ export const columnsUsersArray = (onCheckboxChange: (id: string) => void) => {
           >
             {type.label}
           </Badge>
-        )
+        );
       },
       filterFn: (row, id, value) => {
-        return value.includes(row.getValue(id))
+        return value.includes(row.getValue(id));
       },
     },
     {
-      id: 'actions',
+      id: "actions",
       cell: ({ row }) => <DataTableRowActions row={row} />,
       filterFn: (row, id, value) => {
-        return value.includes(row.getValue(id))
+        return value.includes(row.getValue(id));
       },
     },
-  ]
-  return columnsUsers
-}
+  ];
+  return columnsUsers;
+};

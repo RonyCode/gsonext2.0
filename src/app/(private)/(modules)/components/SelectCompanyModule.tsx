@@ -1,18 +1,18 @@
-'use client'
-import { useSession } from 'next-auth/react'
-import React, { useTransition } from 'react'
-import { useForm } from 'react-hook-form'
-import { LuCheck, LuChevronsUpDown, LuLandmark } from 'react-icons/lu'
+"use client";
+import { useSession } from "next-auth/react";
+import React, { useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { LuCheck, LuChevronsUpDown, LuLandmark } from "react-icons/lu";
 
-import LoadingPage from '@/components/Loadings/LoadingPage'
-import { cn } from '@/lib/utils'
+import LoadingPage from "@/components/Loadings/LoadingPage";
+import { cn } from "@/lib/utils";
 import {
   type ISelectCorporationModuleSchema,
   SelectCorporationModuleSchema,
-} from '@/schemas/SelectCorpoationModuleSchema'
-import { type IUnidadeSchema } from '@/schemas/UnidadeSchema'
-import { Button } from '@/ui/button'
-import { Card } from '@/ui/card'
+} from "@/schemas/SelectCorpoationModuleSchema";
+import { type IUnidadeSchema } from "@/schemas/UnidadeSchema";
+import { Button } from "@/ui/button";
+import { Card } from "@/ui/card";
 import {
   Command,
   CommandEmpty,
@@ -20,7 +20,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/ui/command'
+} from "@/ui/command";
 import {
   Form,
   FormControl,
@@ -28,42 +28,46 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/ui/form'
-import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover'
-import { zodResolver } from '@hookform/resolvers/zod'
+} from "@/ui/form";
+import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type SelectCompanyModuleProps = React.HTMLAttributes<HTMLDivElement> & {
-  unidades?: IUnidadeSchema[]
-  className?: string
-}
+  unidades?: IUnidadeSchema[];
+  className?: string;
+};
 
 export const SelectCompanyModule = ({
   unidades,
   className,
   ...props
 }: SelectCompanyModuleProps) => {
-  const [pending, startTransition] = useTransition()
-  const disabled = false
-  const { data: session } = useSession()
+  const [pending, startTransition] = useTransition();
+  const disabled = false;
+  const { data: session } = useSession();
 
   const form = useForm<ISelectCorporationModuleSchema>({
-    mode: 'all',
-    criteriaMode: 'all',
+    mode: "all",
+    criteriaMode: "all",
     resolver: zodResolver(SelectCorporationModuleSchema),
     defaultValues: {
-      id_company: session?.id_company ?? '',
-      name_unidade: '',
+      id_company: session?.id_company ?? "",
+      name_unidade: "",
     },
-  })
+  });
 
   const handleSubmit = (): void => {
-    startTransition(async () => {})
-  }
+    startTransition(async () => {});
+  };
   return (
     <>
-      <Card x-chunk="dashboard-06-chunk-0" className="bg-background  p-6">
+      <Card
+        x-chunk="dashboard-06-chunk-0"
+        className={cn("bg-background p-6", className)}
+        {...props}
+      >
         <div className="flex items-center">
-          <Card className="flex w-full flex-col items-center justify-between gap-2 p-4 ">
+          <Card className="flex w-full flex-col items-center justify-between gap-2 p-4">
             <h1 className="mr-auto pb-4 text-xl font-bold">Minhas unidades</h1>
             <Form {...form}>
               <LoadingPage pending={pending} />
@@ -78,7 +82,7 @@ export const SelectCompanyModule = ({
                         className="flex items-center gap-1 text-muted-foreground"
                       >
                         <LuLandmark /> Unidade
-                      </FormLabel>{' '}
+                      </FormLabel>{" "}
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -86,16 +90,16 @@ export const SelectCompanyModule = ({
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                'w-full justify-between',
-                                disabled && 'text-muted-foreground',
+                                "w-full justify-between",
+                                disabled && "text-muted-foreground",
                               )}
                             >
-                              {field?.value !== ''
+                              {field?.value !== ""
                                 ? unidades?.find(
                                     (state) =>
                                       state.id?.toString() === field.value,
                                   )?.name
-                                : 'Selecione uma unidade'}
+                                : "Selecione uma unidade"}
                               <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
@@ -112,19 +116,19 @@ export const SelectCompanyModule = ({
                                     value={state?.id?.toString()}
                                     key={index}
                                     onSelect={() => {
-                                      handleSubmit()
+                                      handleSubmit();
                                       form.setValue(
-                                        'id_company',
+                                        "id_company",
                                         state?.id?.toString(),
-                                      )
+                                      );
                                     }}
                                   >
                                     <LuCheck
                                       className={cn(
-                                        'mr-2 h-4 w-4',
+                                        "mr-2 h-4 w-4",
                                         state?.id?.toString() === field.value
-                                          ? 'opacity-100'
-                                          : 'opacity-0',
+                                          ? "opacity-100"
+                                          : "opacity-0",
                                       )}
                                     />
                                     {state.name}
@@ -145,6 +149,6 @@ export const SelectCompanyModule = ({
         </div>
       </Card>
     </>
-  )
-}
-export default SelectCompanyModule
+  );
+};
+export default SelectCompanyModule;

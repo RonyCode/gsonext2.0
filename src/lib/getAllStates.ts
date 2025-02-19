@@ -1,17 +1,17 @@
-import { fetchWrapper } from '@/functions/fetch'
-import { stateStore } from '@/stores/Address/stateStore'
-import { type AddressProps } from '../../../teste/types/index'
+import { fetchWrapper } from "@/functions/fetch";
+import { stateStore } from "@/stores/Address/stateStore";
+import { type AddressProps } from "@/types/index";
 
 export const getAllStates = async (): Promise<AddressProps[]> => {
   const res = await fetchWrapper<AddressProps[]>(
     `${process.env.NEXT_PUBLIC_NEXT_URL}/api/estados`,
     {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     },
-  )
-  stateStore.setState({ states: res })
-  return res
-}
+  );
+  stateStore.setState({ states: res });
+  return res;
+};
