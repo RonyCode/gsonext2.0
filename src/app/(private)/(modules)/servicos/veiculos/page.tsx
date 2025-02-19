@@ -3,11 +3,10 @@ import React from "react";
 import { LuBuilding, LuSearchX } from "react-icons/lu";
 import { MdOutlineSupervisorAccount } from "react-icons/md";
 
-import TabCarsDetails from "../../components/TabCarsDetails";
-
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
+import TabCarsDetails from "@/app/(private)/(modules)/components/TabCarsDetails";
 
 const CarsUnidade = async () => {
   const { data } = await getAllOrganizacoes();

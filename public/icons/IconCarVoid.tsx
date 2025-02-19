@@ -1,25 +1,21 @@
-import * as React from 'react'
+import * as React from "react";
 
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils";
 
 type SVGProps = {
-  width?: number
-  className?: string
+  width?: number;
+  className?: string;
 } & React.SVGProps<SVGSVGElement> &
-  React.HTMLAttributes<HTMLDivElement>
+  React.HTMLAttributes<HTMLDivElement>;
 
-export default function IconCarVoid({
-  width,
-  className,
-  ...props
-}: SVGProps){
+export default function IconCarVoid({ className, ...props }: SVGProps) {
   return (
     <svg
       version="1.0"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 478.000000 554.000000"
       preserveAspectRatio="xMidYMid meet"
-      className={cn(' ', className)}
+      className={cn(" ", className)}
       {...props}
     >
       <path
@@ -149,5 +145,5 @@ M418.500000,162.000015
 "
       />
     </svg>
-  )
+  );
 }
