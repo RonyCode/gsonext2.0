@@ -470,6 +470,15 @@ export const TabScheduleSave = ({
                             onSelect={(date) => {
                               if (date == null) return;
                               setDateStart(date);
+                              form.setValue("day", new Date(date)?.getDate());
+                              form.setValue(
+                                "month",
+                                new Date(date)?.getMonth(),
+                              );
+                              form.setValue(
+                                "year",
+                                new Date(date)?.getFullYear(),
+                              );
                               form.setValue(
                                 "date_start",
                                 new Date(date)?.toLocaleDateString("pt-BR"),
