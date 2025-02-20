@@ -310,11 +310,11 @@ export const EditProfileForm = ({
                                   variant={"outline"}
                                   className={cn(
                                     "min-w-[240px] pl-3 text-left font-normal",
-                                    field.value.toString() === "" &&
+                                    field.value?.toString() === "" &&
                                       "text-muted-foreground",
                                   )}
                                 >
-                                  {field.value.toString() !== "" ? (
+                                  {field.value?.toString() !== "" ? (
                                     field.value
                                   ) : (
                                     <span>Selecione uma data</span>

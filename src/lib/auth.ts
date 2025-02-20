@@ -34,6 +34,9 @@ export const confereLogado = async (payload: {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   })
+
+  // console.log(await res.json())
+
   if (res.ok) {
     return await res.json()
   } else {
@@ -151,7 +154,7 @@ export const authOptions: NextAuthOptions = {
             short_name_corp: userGoogle?.short_name_corp,
             email: userGoogle?.email,
             name: userGoogle?.name,
-            image: Boolean(userGoogle?.image) || userGoogle?.picture,
+            image: userGoogle?.image ?? userGoogle?.picture,
             senha: userGoogle?.senha,
             token: userGoogle?.token,
             access_token: userGoogle?.token,
@@ -189,7 +192,7 @@ export const authOptions: NextAuthOptions = {
             role: user?.role,
             short_name_corp: user?.short_name_corp,
             name: user?.name,
-            image: user?.image !== '' || user?.picture,
+            image: user?.image ?? user?.picture,
             senha: user?.senha,
             token: user?.token,
             access_token: user?.token,
