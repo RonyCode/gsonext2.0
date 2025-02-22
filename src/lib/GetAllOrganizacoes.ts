@@ -5,6 +5,7 @@ import { type ResponseApi } from '@/types/index'
 export const getAllOrganizacoes = async (): Promise<
   ResponseApi<IOrganizacaoSchema[]>
 > => {
+
   return await fetchWrapper<ResponseApi<IOrganizacaoSchema[]>>(
     `${process.env.NEXT_PUBLIC_NEXT_URL}/api/organizacoes`,
     {

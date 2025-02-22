@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getServerSession } from "next-auth";
 import React  from "react";
 import { LuBuilding, LuSearchX } from "react-icons/lu";
@@ -8,10 +10,9 @@ import { authOptions } from "@/lib/auth";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import TabCarsDetails from "@/app/(private)/(modules)/components/TabCarsDetails";
 
+
+
 const VehicleCompany = async () => {
-  if (process.env.NEXT_PHASE === "phase-production-build") {
-    return null;
-  }
   const { data } = await getAllOrganizacoes();
   const session = await getServerSession(authOptions);
 
@@ -38,7 +39,7 @@ const VehicleCompany = async () => {
       iconDescription={<MdOutlineSupervisorAccount size={18} />}
     >
       <div className="md:overflow-none overflow-scroll">
-        {corpFound !== null ? (
+        {corpFound?.vehicles !== null || true ? (
               <TabCarsDetails vehicles={corpFound?.vehicles} />
         ) : (
           <div className="flex h-full w-full items-center justify-center">

@@ -1,19 +1,18 @@
+export const dynamic = "force-dynamic";
 
 import { getServerSession } from "next-auth";
-import React, {type ReactNode, Suspense} from "react";
+import React, {type ReactNode} from "react";
 import { LuBuilding2 } from "react-icons/lu";
 
 import OrganizacaoForm from "@/app/(private)/(modules)/components/OrganizacaoForm";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
+
 import { getAllStates } from "@/lib/getAllStates";
 
 
 const Organizacao = async (): Promise<ReactNode> => {
-  if (process.env.NEXT_PHASE === "phase-production-build") {
-    return null;
-  }
   const { data } = await getAllOrganizacoes();
   const dataStates = await getAllStates();
   const session = await getServerSession(authOptions);
@@ -39,9 +38,10 @@ const Organizacao = async (): Promise<ReactNode> => {
               process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"        }
         icon={<LuBuilding2 size={28} />}
       >
-        <Suspense fallback={<div>Loading...</div>}>
-        <OrganizacaoForm organizacao={organizacaoFound} states={dataStates} />
-        </Suspense>
+        {organizacaoFound === undefined && dataStates !== undefined && (
+            <OrganizacaoForm organizacao={organizacaoFound} states={dataStates} />
+
+        )}
       </CardDefault>
     </>
   );
