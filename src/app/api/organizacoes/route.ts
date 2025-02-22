@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
 
 export async function GET(): Promise<NextResponse> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/get-all`,
-    {
+  const url =     `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/get-all`;
+
+      const res = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -17,7 +17,12 @@ export async function GET(): Promise<NextResponse> {
       { status: res.status },
     )
   }
-
+if (!res.ok) {
+  return NextResponse.json(
+    { message: res.statusText },
+    { status: res.status },
+  )
+}
   const result = await res.json()
   return NextResponse.json(result)
 }

@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import React from "react";
+import React  from "react";
 import { LuBuilding, LuSearchX } from "react-icons/lu";
 import { MdOutlineSupervisorAccount } from "react-icons/md";
 
@@ -8,7 +8,10 @@ import { authOptions } from "@/lib/auth";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import TabCarsDetails from "@/app/(private)/(modules)/components/TabCarsDetails";
 
-const CarsUnidade = async () => {
+const VehicleCompany = async () => {
+  if (process.env.NEXT_PHASE === "phase-production-build") {
+    return null;
+  }
   const { data } = await getAllOrganizacoes();
   const session = await getServerSession(authOptions);
 
@@ -20,11 +23,13 @@ const CarsUnidade = async () => {
       title={corpFound?.name + " / " + corpFound?.address?.city}
       description={"CMD "}
       image={
+        process.env.NEXT_PUBLIC_API_GSO !== null &&
         corpFound?.image != null
           ? process.env.NEXT_PUBLIC_API_GSO + corpFound?.image
           : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
       }
       imageMobile={
+        process.env.NEXT_PUBLIC_API_GSO !== null &&
         corpFound?.image != null
           ? process.env.NEXT_PUBLIC_API_GSO + corpFound?.image
           : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
@@ -34,7 +39,7 @@ const CarsUnidade = async () => {
     >
       <div className="md:overflow-none overflow-scroll">
         {corpFound !== null ? (
-          <TabCarsDetails cars={corpFound?.vehicles} />
+              <TabCarsDetails vehicles={corpFound?.vehicles} />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
             {" "}
@@ -48,4 +53,4 @@ const CarsUnidade = async () => {
     </CardDefault>
   );
 };
-export default CarsUnidade;
+export default VehicleCompany;

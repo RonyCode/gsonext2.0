@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 
 export async function GET(): Promise<NextResponse> {
-  const res = await fetch(
-    "https://servicodados.ibge.gov.br/api/v1/localidades/estados",
-    {
+  const url = process.env.NEXT_PUBLIC_API_ESTADOS ?? "";
+  const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

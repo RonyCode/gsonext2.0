@@ -12,7 +12,6 @@ export const getAllOrganizacoes = async (): Promise<
       headers: {
         'Content-Type': 'application/json',
       },
-      cache: 'no-cache',
     },
   )
 }

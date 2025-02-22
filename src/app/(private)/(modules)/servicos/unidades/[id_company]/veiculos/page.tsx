@@ -54,7 +54,7 @@ const CarsUnidade = async ({
         >
           <div className="md:overflow-none overflow-scroll">
             {companyFound?.vehicles !== null ? (
-              <TabCarsDetails cars={companyFound?.vehicles} />
+              <TabCarsDetails vehicles={companyFound?.vehicles} />
             ) : (
               <div className="flex h-full w-full items-center justify-center">
                 {" "}

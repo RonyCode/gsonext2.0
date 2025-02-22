@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import React from 'react'
+import React, {Suspense} from 'react'
 import { LuCirclePlus } from 'react-icons/lu'
 
 import { columnsCars } from '@/components/DataTables/DataTableVehicles/columnsCars'
@@ -11,12 +11,12 @@ import { Button, buttonVariants } from '@/ui/button'
 import { Card } from '@/ui/card'
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
-  cars?: IVehicleSchema[]
+  vehicles?: IVehicleSchema[]
   className?: string
 }
 
 export const TabCarsDetails = ({
-  cars,
+                                 vehicles,
   className,
   ...props
 }: UserRegisterFormProps)=> {
@@ -42,8 +42,10 @@ export const TabCarsDetails = ({
           </div>
         </div>
         <div className=" md:p-6">
-          {cars !== null && cars !== undefined && (
-            <DataTableVehicle columns={columnsCars} data={cars} />
+          {vehicles !== null && vehicles !== undefined && (
+              <Suspense fallback={<div>Loading...</div>}>
+            <DataTableVehicle columns={columnsCars} data={vehicles} />
+              </Suspense>
           )}
         </div>
       </Card>

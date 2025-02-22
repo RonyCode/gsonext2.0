@@ -5,7 +5,7 @@ export function getNotificationPermission() {
   return false;
 }
 
-export function setNotificationPermission(value) {
+export function setNotificationPermission(value: { toString: () => string; }) {
   if (typeof window !== 'undefined') {
     localStorage.setItem('notificationsEnabled', value.toString());
   }

@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getServerSession } from "next-auth";
 import React, { type ReactNode } from "react";
 import { LuBuilding2 } from "react-icons/lu";

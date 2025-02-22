@@ -14,7 +14,6 @@ import {
 import {Button} from "@/ui/button";
 import {LuBell, LuBellRing, LuCheck} from "react-icons/lu";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/ui/card";
-import {Switch} from "@/ui/switch";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {getNotificationPermission} from "@/functions/notificationSettings";
@@ -97,7 +96,7 @@ export default function NotificationsChecker() {
                       <LuBellRing />
                       <div className="flex-1 space-y-1">
                         <p className="text-sm font-medium leading-none">
-                          Alerta de notificatções
+                          Alerta de notificações
                         </p>
                         <p className="text-sm text-muted-foreground">
                           Aceitar notificações neste dispositivo.
