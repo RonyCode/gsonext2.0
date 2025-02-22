@@ -8,7 +8,6 @@ import { authOptions } from "@/lib/auth";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import { getAllStates } from "@/lib/getAllStates";
 
-
 const Organizacao = async (): Promise<ReactNode> => {
   const { data } = await getAllOrganizacoes();
   const dataStates = await getAllStates();
