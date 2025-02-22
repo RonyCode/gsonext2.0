@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { type ISignInSchema } from "@/app/(auth)/auth/schemas/SignInSchema";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
-  const origin: string | null = request.headers.get("origin");
+  // const origin: string | null = request.headers.get("origin");
   const body: ISignInSchema = await request.json();
   const {
     email,
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": origin ?? "*",
+      // "Access-Control-Allow-Origin": origin ?? "*",
     },
     body: JSON.stringify({
       email,

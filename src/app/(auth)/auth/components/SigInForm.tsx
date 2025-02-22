@@ -64,11 +64,7 @@ const SigInForm = ({ className, ...props }: UserAuthFormProps) => {
     })
   }
 
-  const handleSubmitLoginWithGoogle = async (): Promise<void> => {
-    startTransition(async (): Promise<void> => {
-      await signInWithGoogle()
-    })
-  }
+
 
   const handleClickLogin = async (): Promise<void> => {
     if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
@@ -89,6 +85,13 @@ const SigInForm = ({ className, ...props }: UserAuthFormProps) => {
     }
   }
 
+  const handleSubmitLoginWithGoogle = async (): Promise<void> => {
+    await handleClickLogin()
+
+    startTransition(async (): Promise<void> => {
+      await signInWithGoogle()
+    })
+  }
   const form = useForm<ISignInSchema>({
     resolver: zodResolver(SignInSchema),
     mode: 'all',
@@ -130,7 +133,6 @@ const SigInForm = ({ className, ...props }: UserAuthFormProps) => {
         <div className={cn('grid gap-6', className)} {...props}>
           <Form {...form}>
             <form
-              /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
               onSubmit={form.handleSubmit(async (data): Promise<void> => {
                 handleSubmitLogin(data)
               })}
@@ -193,7 +195,6 @@ const SigInForm = ({ className, ...props }: UserAuthFormProps) => {
                 )}
               />
               <Button
-                /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
                 onClick={handleClickLogin}
                 disabled={pending}
                 className="w-full"
@@ -223,7 +224,6 @@ const SigInForm = ({ className, ...props }: UserAuthFormProps) => {
             </div>
           </div>
           <Button
-            /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
             onClick={handleSubmitLoginWithGoogle}
             variant="outline"
             disabled={pending}

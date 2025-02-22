@@ -9,16 +9,19 @@ import BannerHome2 from '@/components/Headers/banner/BannerHome2'
 import MaxWidthWrapper from '@/components/Pages/MaxWidthWrapper'
 import IconCar from '@/icons/IconCar'
 import IconEditSave from '@/icons/IconEditSave'
+import NotificationsChecker from "@/components/Notification/NotificationsChecker";
 
 export const metadata: Metadata = {
   title: 'GSO | Home',
   description: 'Authentication forms built using the components.',
 }
 
+
 export default async function Home() {
   return (
     <>
       <MaxWidthWrapper>
+
         <main className="bg-gradient-to-t from-background to-secondary ">
           <header className="z-0 h-full  min-h-screen ">
             <BannerHome1 />
@@ -26,7 +29,6 @@ export default async function Home() {
           <BannerHome2 />
           <section className=" relative  min-h-screen bg-gradient-to-t from-background to-secondary ">
             <section className=" relative grid  min-h-screen w-full grid-cols-1  place-items-center md:grid-cols-2 ">
-
               <IconEditSave width={60}
                           className="ml-1 fill-foreground/60 stroke-foreground/60"
               />
@@ -34,6 +36,8 @@ export default async function Home() {
                 width={500}
                 className="ml-1 fill-foreground/60 stroke-foreground/60"
               />
+              <NotificationsChecker/>
+
               <CardsBanner />
               <CardsBanner />
               <CardsBanner />

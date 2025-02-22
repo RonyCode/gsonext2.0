@@ -5,6 +5,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   const nameQueue = searchParams.get('namequeue')
   const exchangeName = searchParams.get('exchangename')
   const routingKey = searchParams.get('routingkey')
+
+  console.log(    `${process.env.NEXT_PUBLIC_API_GSO}/services/amqp/consume?queue_name=${nameQueue}&exchange_name=${exchangeName}&routing_key=${routingKey}`,
+  )
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_GSO}/services/amqp/consume?queue_name=${nameQueue}&exchange_name=${exchangeName}&routing_key=${routingKey}`,
     {

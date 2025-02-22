@@ -52,7 +52,6 @@ export const authOptions: NextAuthOptions = {
       authorization: {
         params: {
           access_type: 'offline',
-          prompt: 'consent',
         },
       },
     }),
@@ -122,11 +121,14 @@ export const authOptions: NextAuthOptions = {
 
           const userGoogle = await confereLogado(payload)
 
+          console.log('Resultado de confereLogado:', userGoogle)
 
+          if (userGoogle == null) {
+            console.log('confereLogado retornou null')
+            return token
+          }
 
-          if (userGoogle == null) return token
           // Save the access token and refresh token in the JWT on the initial login
-
           cookieStore.set({
             name: 'token',
             value: userGoogle?.token,
