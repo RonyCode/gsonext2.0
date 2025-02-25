@@ -29,7 +29,7 @@ import {
   FormMessage,
 } from "@/ui/form";
 import { Label } from "@/ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
+import { Popover, PopoverTrigger } from "@/ui/popover";
 
 type AddVehicleScheduleProps = {
   width?: number;

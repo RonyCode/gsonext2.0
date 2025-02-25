@@ -4,14 +4,12 @@ import { IScheduleSchema } from "@/schemas/ScheduleSchema";
 import CalendarGsoGridV1 from "./CalendarGsoGridV1";
 import { useState } from "react";
 import { Button } from "@/ui/button";
-import { useIsMobile } from "@/hooks/use-mobile";
 import {
   LuArrowBigLeft,
   LuArrowBigRight,
   LuCalendarPlus,
 } from "react-icons/lu";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { DataTableDetalheEscala } from "@/components/DataTables/DataTableDetalheEscala/data-table-detalhe-escala";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
