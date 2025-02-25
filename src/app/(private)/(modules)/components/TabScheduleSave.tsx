@@ -2,7 +2,6 @@
 import { redirect, useParams } from "next/navigation";
 import React, { useEffect, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { GrGroup } from "react-icons/gr";
 import {
   LuCalendarDays,
   LuCar,
@@ -31,8 +30,6 @@ import {
   ScheduleFormSave,
 } from "@/schemas/ScheduleFormSave";
 import { type IUnidadeSchema } from "@/schemas/UnidadeSchema";
-import type { AddressProps } from "@/types/index";
-import { Badge } from "@/ui/badge";
 import { Button } from "@/ui/button";
 import { Calendar } from "@/ui/calendar";
 import { Card } from "@/ui/card";
@@ -69,23 +66,17 @@ import { saveScheduleAction } from "@/actions/saveScheduleAction";
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
   unidade?: IUnidadeSchema;
   dateSchedule?: string;
-  schedule?: IScheduleFormSave;
   className?: string;
-  states?: AddressProps[] | null;
-  searchParams?: Record<string, string | string[]>;
 };
 
 export const TabScheduleSave = ({
   unidade,
   dateSchedule,
-  schedule,
   className,
-  searchParams,
   ...props
 }: UserRegisterFormProps) => {
   const [pending, startTransition] = useTransition();
   const [dayWeekPrint, setDayWeekPrint] = React.useState("");
-  const [disabled, setDisabled] = React.useState(false);
   const params = useParams();
   const { data: session } = useSession();
   const isMobile = useIsMobile();
@@ -97,7 +88,7 @@ export const TabScheduleSave = ({
     [] as IVehicleSchema[],
   );
   const [listMembersAvailable, setListMembersAvailable] = React.useState(
-    [] as IMemberSchema[],
+    unidade?.members ?? ([] as IMemberSchema[]),
   );
 
   const form = useForm<IScheduleFormSave>({
@@ -105,50 +96,38 @@ export const TabScheduleSave = ({
     criteriaMode: "all",
     resolver: zodResolver(ScheduleFormSave),
     defaultValues: {
-      day:
-        schedule?.day ??
-        (dateSchedule ? new Date(dateSchedule).getDate() : undefined),
-      month:
-        schedule?.month ??
-        (dateSchedule ? new Date(dateSchedule).getMonth() : undefined),
-      year:
-        schedule?.year ??
-        (dateSchedule ? new Date(dateSchedule).getFullYear() : undefined),
-      id: schedule?.id ?? null,
-      id_company: schedule?.id_company ?? unidade?.id,
-      id_corporation: schedule?.id_corporation ?? session?.id_corporation,
-      id_period: schedule?.id_period ?? undefined,
-      id_member_creator: schedule?.id_member_creator ?? session?.id,
-      id_cmt_sos: schedule?.id_cmt_sos ?? undefined,
-      id_member_comunication: schedule?.id_member_creator ?? undefined,
-      hour_start: schedule?.hour_start ?? "",
-      team: schedule?.team ?? undefined,
-      date_creation:
-        schedule?.date_creation ?? new Date().toLocaleDateString("pt-BR"),
+      day: dateSchedule ? new Date(dateSchedule).getDate() : undefined,
+      month: dateSchedule ? new Date(dateSchedule).getMonth() : undefined,
+      year: dateSchedule ? new Date(dateSchedule).getFullYear() : undefined,
+      id: null,
+      id_company: unidade?.id,
+      id_corporation: unidade?.id_corporation,
+      id_period: undefined,
+      id_member_creator: session?.id,
+      id_cmt_sos: undefined,
+      id_member_comunication: undefined,
+      hour_start: "",
+      team: undefined,
+      date_creation: new Date().toLocaleDateString("pt-BR"),
       date_start:
-        schedule?.date_start ??
-        (dateSchedule != null
+        dateSchedule != null
           ? new Date(dateSchedule).toLocaleDateString("pt-BR")
-          : new Date().toLocaleDateString("pt-BR")),
-      date_finish: schedule?.date_finish ?? "",
+          : new Date().toLocaleDateString("pt-BR"),
+      date_finish: "",
       obs:
-        schedule?.obs ??
         "escala de serviço do dia " +
-          (dateSchedule !== undefined
-            ? new Date(dateSchedule).toLocaleDateString("pt-BR")
-            : new Date().toLocaleDateString("pt-BR")) +
-          " para o dia " +
-          dateFinish,
+        (dateSchedule !== undefined
+          ? new Date(dateSchedule).toLocaleDateString("pt-BR")
+          : new Date().toLocaleDateString("pt-BR")) +
+        " para o dia " +
+        dateFinish,
       vehicle: undefined,
-      vehicles: schedule?.vehicles ?? [],
-      excluded: schedule?.excluded ?? 0,
+      vehicles: [],
+      excluded: 0,
     },
   });
 
   useEffect(() => {
-    if (searchParams?.id_schedule !== null) {
-      setDisabled(false);
-    }
     setDayWeekPrint(
       format(new Date(dateStart), "eeeeee", {
         locale: ptBR,
@@ -158,9 +137,11 @@ export const TabScheduleSave = ({
           locale: ptBR,
         }),
     );
-  }, [dateStart, searchParams?.id_schedule]);
+  }, [dateStart]);
 
   const handleSubmit = async (formData: IScheduleFormSave): Promise<void> => {
+    console.log(session?.id);
+    console.log(formData);
     startTransition(async () => {
       const result = await saveScheduleAction(formData);
       if (result?.code !== 202) {
@@ -180,7 +161,6 @@ export const TabScheduleSave = ({
       }
     });
   };
-  console.log(params?.id_company);
 
   const horarios = [
     "06:00",
@@ -266,6 +246,7 @@ export const TabScheduleSave = ({
 
   useEffect(() => {
     if (listVehicles) {
+      form.setValue("id_member_creator", session?.id);
       form.setValue("vehicles", listVehicles);
     }
   }, [form, listVehicles]);
@@ -342,6 +323,7 @@ export const TabScheduleSave = ({
       member?.id === form?.getValues("id_cmt_sos")
     );
   };
+
   return (
     <>
       <Card
@@ -359,63 +341,6 @@ export const TabScheduleSave = ({
                   <h1 className="text-xl font-bold">{dayWeekPrint}</h1>
                 </div>
               </div>
-              {schedule?.id != null && (
-                <div className="flex items-center gap-2">
-                  <div className="text-md font-bold">
-                    <Badge
-                      className={`block ${
-                        schedule?.team === 1
-                          ? "border-primary/85 text-primary/85"
-                          : schedule?.team === 2
-                            ? "border-blue-500/85 text-blue-500/85"
-                            : schedule?.team === 3
-                              ? "border-yellow-400/85 text-yellow-400/85"
-                              : schedule?.team === 4
-                                ? "border-green-500/85 text-green-500/85"
-                                : schedule?.team === 5
-                                  ? "border-[#9400d3]/85 text-[#9400d3]/85"
-                                  : ""
-                      }`}
-                      variant="outline"
-                    >
-                      <span className="flex items-center gap-1">
-                        {" "}
-                        <GrGroup />
-                        <p>
-                          {schedule?.team === 1
-                            ? "ALFA"
-                            : schedule?.team === 2
-                              ? "BRAVO"
-                              : schedule?.team === 3
-                                ? "CHARLIE"
-                                : schedule?.team === 4
-                                  ? "DELTA"
-                                  : schedule?.team === 5
-                                    ? "EXTRA"
-                                    : ""}
-                        </p>
-                      </span>
-                    </Badge>{" "}
-                  </div>
-                  <span className="flex items-center gap-1">
-                    <i>
-                      <LuCalendarDays />
-                    </i>
-                    {schedule?.date_start !== undefined && (
-                      <div className="font-bold text-muted-foreground">
-                        {" "}
-                        {format(new Date(schedule?.date_start), "eeeeee", {
-                          locale: ptBR,
-                        }) +
-                          "  | " +
-                          format(new Date(schedule?.date_start), "dd/MM", {
-                            locale: ptBR,
-                          })}
-                      </div>
-                    )}
-                  </span>
-                </div>
-              )}
             </div>
           </div>
         </div>
@@ -444,7 +369,6 @@ export const TabScheduleSave = ({
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
-                              disabled={disabled}
                               variant={"outline"}
                               className={cn(
                                 "min-w-[240px] pl-3 text-left font-normal",
@@ -516,10 +440,7 @@ export const TabScheduleSave = ({
                             <Button
                               variant="outline"
                               role="combobox"
-                              className={cn(
-                                "w-full justify-between",
-                                disabled && "text-muted-foreground",
-                              )}
+                              className={cn("w-full justify-between")}
                             >
                               {field.value !== ""
                                 ? form.getValues("date_start") +
@@ -538,7 +459,6 @@ export const TabScheduleSave = ({
                               <CommandList>
                                 {horarios?.map((horaInicio, index) => (
                                   <CommandItem
-                                    disabled={disabled}
                                     value={String(horaInicio)}
                                     key={index}
                                     onSelect={() => {
@@ -587,10 +507,7 @@ export const TabScheduleSave = ({
                             <Button
                               variant="outline"
                               role="combobox"
-                              className={cn(
-                                "w-full justify-between",
-                                disabled && "text-muted-foreground",
-                              )}
+                              className={cn("w-full justify-between")}
                             >
                               {intervaloHorarios.find(
                                 (horarioItem) =>
@@ -658,10 +575,7 @@ export const TabScheduleSave = ({
                             <Button
                               variant="outline"
                               role="combobox"
-                              className={cn(
-                                "w-full justify-between",
-                                disabled && "text-muted-foreground",
-                              )}
+                              className={cn("w-full justify-between")}
                             >
                               {tipos?.find((tipo) => tipo?.id === field?.value)
                                 ?.name ?? "Selecione um horário"}
@@ -677,7 +591,6 @@ export const TabScheduleSave = ({
                               <CommandList>
                                 {tipos?.map((tipo, index) => (
                                   <CommandItem
-                                    disabled={disabled}
                                     value={String(tipo.id)}
                                     key={index}
                                     onSelect={() => {
@@ -723,10 +636,7 @@ export const TabScheduleSave = ({
                             <Button
                               variant="outline"
                               role="combobox"
-                              className={cn(
-                                "w-full justify-between",
-                                disabled && "text-muted-foreground",
-                              )}
+                              className={cn("w-full justify-between")}
                             >
                               {team?.find((tipo) => tipo?.id === field?.value)
                                 ?.name ?? "Selecione uma equipe"}
@@ -742,7 +652,6 @@ export const TabScheduleSave = ({
                               <CommandList>
                                 {team?.map((tipo, index) => (
                                   <CommandItem
-                                    disabled={disabled}
                                     value={String(tipo.id)}
                                     key={index}
                                     onSelect={() => {
@@ -785,7 +694,6 @@ export const TabScheduleSave = ({
                         type="text"
                         readOnly={true}
                         {...field}
-                        disabled={disabled}
                         placeholder="Data de Encerramento"
                       />
                     </FormItem>
@@ -796,7 +704,6 @@ export const TabScheduleSave = ({
 
             <div className="w-full gap-4 md:flex-row">
               <FormField
-                disabled={disabled}
                 control={form.control}
                 name="obs"
                 render={({ field }) => (
@@ -839,10 +746,7 @@ export const TabScheduleSave = ({
                             <Button
                               variant="outline"
                               role="combobox"
-                              className={cn(
-                                "w-full justify-between",
-                                disabled && "text-muted-foreground",
-                              )}
+                              className={cn("w-full justify-between")}
                             >
                               {field?.value != null
                                 ? unidade?.members?.find(
@@ -923,10 +827,7 @@ export const TabScheduleSave = ({
                             <Button
                               variant="outline"
                               role="combobox"
-                              className={cn(
-                                "w-full justify-between",
-                                disabled && "text-muted-foreground",
-                              )}
+                              className={cn("w-full justify-between")}
                             >
                               {field?.value != null
                                 ? unidade?.members?.find(
@@ -1011,10 +912,7 @@ export const TabScheduleSave = ({
                             <Button
                               variant="outline"
                               role="combobox"
-                              className={cn(
-                                "w-full justify-between",
-                                disabled && "text-muted-foreground",
-                              )}
+                              className={cn("w-full justify-between")}
                             >
                               {field.value !== undefined
                                 ? field.value?.prefix
@@ -1031,7 +929,6 @@ export const TabScheduleSave = ({
                               <CommandList>
                                 {unidade?.vehicles?.map((veihcle, index) => (
                                   <CommandItem
-                                    disabled={disabled}
                                     key={index}
                                     onSelect={() => {
                                       form?.setValue(
@@ -1111,8 +1008,12 @@ export const TabScheduleSave = ({
                                   width={isMobile ? 70 : 80}
                                   height={isMobile ? 70 : 80}
                                   src={
-                                    process.env.NEXT_PUBLIC_API_GSO +
+                                    process.env.NEXT_PUBLIC_API_GSO &&
                                     vehicle.image
+                                      ? process.env.NEXT_PUBLIC_API_GSO +
+                                        vehicle.image
+                                      : process.env.NEXT_PUBLIC_API_GSO +
+                                        "/public/images/img.png"
                                   }
                                   className="m-2 aspect-square rounded-sm border border-foreground bg-background object-contain transition-all duration-300 ease-in-out hover:scale-[250%] xl:mt-4"
                                   sizes="100"
@@ -1145,25 +1046,19 @@ export const TabScheduleSave = ({
             </div>
 
             <div className="flex w-full flex-col justify-end md:flex-row">
-              {!disabled && (
-                <Button
-                  onClick={() => {
-                    console.log(form.getValues());
-                    console.log(JSON.stringify(form.formState.errors, null, 2));
-                  }}
-                  size="sm"
-                  variant="default"
-                  disabled={pending}
-                  className={cn("animate-fadeIn gap-1 md:mr-4")}
-                  type="submit"
-                >
-                  {pending && (
-                    <LuLoaderCircle className="mr-2 h-4 w-4 animate-spin" />
-                  )}
-                  <LuSave size={20} />
-                  Salvar
-                </Button>
-              )}{" "}
+              <Button
+                size="sm"
+                variant="default"
+                disabled={pending}
+                className={cn("animate-fadeIn gap-1 md:mr-4")}
+                type="submit"
+              >
+                {pending && (
+                  <LuLoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                <LuSave size={20} />
+                Salvar
+              </Button>
             </div>
           </form>
         </Form>

@@ -236,46 +236,46 @@ export const AddVehicleSchedule = ({
                                 </Button>
                               </FormControl>
                             </PopoverTrigger>
-                            <PopoverContent className="w-[200px] p-0">
-                              <Command>
-                                <CommandInput placeholder="procurando membro ..." />
-                                <CommandEmpty>
-                                  Membro não encontrado.
-                                </CommandEmpty>
-                                <CommandGroup>
-                                  <CommandList>
-                                    {memberAvailable?.map(
-                                      (member: IMemberSchema, index) => (
-                                        <CommandItem
-                                          key={index}
-                                          onSelect={() => {
-                                            handleClick({
-                                              position: item?.position ?? 0,
-                                              member,
-                                            });
-                                          }}
-                                        >
-                                          <LuCheck
-                                            className={cn(
-                                              "mr-2 h-4 w-4",
-                                              member?.id ===
-                                                vehicle?.members?.find(
-                                                  (itemSeat) =>
-                                                    itemSeat?.member?.id ===
-                                                    member?.id,
-                                                )?.member?.id
-                                                ? "opacity-100"
-                                                : "opacity-0",
-                                            )}
-                                          />
-                                          {member?.name}
-                                        </CommandItem>
-                                      ),
-                                    )}
-                                  </CommandList>
-                                </CommandGroup>
-                              </Command>
-                            </PopoverContent>
+                            {/*<PopoverContent className="w-[200px] p-0">*/}
+                            <Command>
+                              <CommandInput placeholder="procurando membro ..." />
+                              <CommandEmpty>
+                                Membro não encontrado.
+                              </CommandEmpty>
+                              <CommandGroup>
+                                <CommandList>
+                                  {memberAvailable?.map(
+                                    (member: IMemberSchema, index) => (
+                                      <CommandItem
+                                        key={index}
+                                        onSelect={() => {
+                                          handleClick({
+                                            position: item?.position ?? 0,
+                                            member,
+                                          });
+                                        }}
+                                      >
+                                        <LuCheck
+                                          className={cn(
+                                            "mr-2 h-4 w-4",
+                                            member?.id ===
+                                              vehicle?.members?.find(
+                                                (itemSeat) =>
+                                                  itemSeat?.member?.id ===
+                                                  member?.id,
+                                              )?.member?.id
+                                              ? "opacity-100"
+                                              : "opacity-0",
+                                          )}
+                                        />
+                                        {member?.name}
+                                      </CommandItem>
+                                    ),
+                                  )}
+                                </CommandList>
+                              </CommandGroup>
+                            </Command>
+                            {/*</PopoverContent>*/}
                           </Popover>
                           <FormMessage />
                         </FormItem>

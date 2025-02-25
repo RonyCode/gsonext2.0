@@ -17,6 +17,7 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
 import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
 import { columnsDetailsSchedule } from "@/components/DataTables/DataTableDetalheEscala/columnsDetailsSchedule";
+import { useCheckMobile } from "@/functions/IsMobile";
 
 type CalendarGsoV1Props = {
   dayEvent?: Partial<IScheduleSchema>[];
@@ -35,8 +36,7 @@ const CalendarGsoV1 = ({ dayEvent, company }: CalendarGsoV1Props) => {
     year: number;
     isMuted: boolean;
   } | null>(null);
-  const params = useParams();
-  const isMobile = useIsMobile();
+  const isMobile = useCheckMobile();
 
   const getCalendarDays = (date: Date) => {
     const year = date.getFullYear();
@@ -163,7 +163,7 @@ const CalendarGsoV1 = ({ dayEvent, company }: CalendarGsoV1Props) => {
                 event?.year === selectedDay.year,
             ) ? (
               <div className="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                <div className="modal-content m-auto flex h-full w-full flex-col rounded-lg border border-foreground/15 bg-background p-4 md:h-auto md:max-w-4xl">
+                <div className="modal-content flex h-full w-full flex-col rounded-lg border border-foreground/15 bg-background p-4 md:h-[70vh] md:max-w-4xl">
                   <h2 className="mb-4 border-b border-foreground/15 p-1 text-xl font-semibold">
                     Detalhes escala do dia{" "}
                     {format(
@@ -190,7 +190,7 @@ const CalendarGsoV1 = ({ dayEvent, company }: CalendarGsoV1Props) => {
                         },
                       )}
                   </h2>
-                  <div className="flex h-auto w-full justify-evenly">
+                  <div className="flex h-full w-full overflow-scroll">
                     <DataTableDetalheEscala
                       columns={columnsDetailsSchedule(company)}
                       data={eventsOnDay}
@@ -209,7 +209,7 @@ const CalendarGsoV1 = ({ dayEvent, company }: CalendarGsoV1Props) => {
                   </h2>
                   <Link
                     className="flex h-full w-full flex-col justify-evenly text-center"
-                    href={`/servicos/unidades/${params.id_company}/gestor-unidade/escala-unidade-salvar?date_schedule=${selectedDay.year}-${selectedDay.month + 1}-${selectedDay.day}`}
+                    href={`/servicos/unidades/${company?.name}-${company?.id}/gestor-unidade/escala-unidade-salvar?date_schedule=${selectedDay.year}-${selectedDay.month + 1}-${selectedDay.day}`}
                   >
                     <p>
                       Não existe escala para esta data. Deseja criar escala?
