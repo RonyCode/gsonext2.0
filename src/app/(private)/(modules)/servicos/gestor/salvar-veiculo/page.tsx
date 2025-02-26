@@ -31,10 +31,14 @@ const SalvarUnidade = async ({
         title="Veículos"
         description="Gerenciar Veículos"
         image={
-          process.env.NEXT_PUBLIC_API_GSO + "/public/images/frota-cars.jpg"
+          process.env.NEXT_PUBLIC_API_GSO != null
+            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/frota-cars.jpg"
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
         }
         imageMobile={
-          process.env.NEXT_PUBLIC_API_GSO + "/public/images/frota-cars.jpg"
+          process.env.NEXT_PUBLIC_API_GSO != null
+            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/frota-cars.jpg"
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
         }
         icon={<LuCar size={28} />}
       >

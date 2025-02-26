@@ -74,7 +74,7 @@ export async function CardDefault({
           )}
         </div>
 
-        <div className="relative col-start-7 col-end-13 h-32 p-0 md:col-start-4 md:hidden">
+        <div className="relative col-start-7 col-end-13 h-full p-0 md:col-start-4 md:hidden">
           {imageMobile != null && (
             <Image
               src={imageMobile}

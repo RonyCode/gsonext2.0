@@ -14,19 +14,6 @@ const NovaUnidade = async ({
   params: Promise<{ sigla: string; id_company: string }>;
 }) => {
   const resolvedParams = await params;
-  // const { data } = await getAllOrganizacoes();
-  // const session = await getServerSession(authOptions);
-  // const corpFound = data?.find((corp) => {
-  //   return corp?._id?.$oid === session?.id_corporation;
-  // });
-
-  // const companyFound = corpFound?.companies?.find((comp) => {
-  //   if (comp?._id?.$oid === params?.id_company?.split('-')[1]) {
-  //     return comp
-  //   }
-  //   return null
-  // })
-
   return (
     <>
       <CardDefault

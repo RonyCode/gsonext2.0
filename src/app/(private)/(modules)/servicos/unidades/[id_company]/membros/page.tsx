@@ -35,7 +35,6 @@ const MembrosUnidade = async ({
     }
   });
 
-  console.log(companyFound);
   return (
     <div>
       {

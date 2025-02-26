@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import React from "react";
+import React, { Suspense } from "react";
 import { LuBuilding } from "react-icons/lu";
 import { MdOutlineSupervisorAccount } from "react-icons/md";
 
@@ -7,6 +7,8 @@ import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import CalendarGsoV1 from "@/components/CalendarGso/CalendarGsoV1";
+import LoadingPage from "@/components/Loadings/LoadingPage";
+import { Calendar } from "lucide-react";
 
 const EscalasUnidade = async ({
   params,
@@ -23,7 +25,7 @@ const EscalasUnidade = async ({
 
   const companyFound = corpFound?.companies?.find((comp) => {
     if (comp?.id === id_company?.split("-")[1]) {
-      return comp.schedules;
+      return comp;
     }
     return null;
   });
@@ -32,9 +34,7 @@ const EscalasUnidade = async ({
     <>
       <CardDefault
         title={companyFound?.name + " / " + companyFound?.companyAddress?.city}
-        description={
-          "CMD : " + companyFound?.director + " - " + companyFound?.director
-        }
+        description={"Escalas da minha Unidade"}
         image={
           process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
             ? process.env.NEXT_PUBLIC_API_GSO + companyFound?.image
@@ -46,14 +46,16 @@ const EscalasUnidade = async ({
             : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
         }
         icon={<LuBuilding size={28} />}
-        iconDescription={<MdOutlineSupervisorAccount size={18} />}
+        iconDescription={<Calendar size={18} />}
       >
         {companyFound?.schedules != null && (
           <div className="m-0 min-h-screen w-full md:p-6">
-            <CalendarGsoV1
-              company={companyFound}
-              dayEvent={companyFound.schedules}
-            />
+            <Suspense fallback={<LoadingPage pending={true} />}>
+              <CalendarGsoV1
+                company={companyFound}
+                dayEvent={companyFound.schedules}
+              />
+            </Suspense>
           </div>
         )}
       </CardDefault>

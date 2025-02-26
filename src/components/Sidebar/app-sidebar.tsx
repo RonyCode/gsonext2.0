@@ -6,15 +6,15 @@ import {
   Building,
   Building2Icon,
   Calendar1Icon,
-  Frame,
-  Map,
-  PieChart,
-  Settings2,
+  CogIcon,
   Siren,
+  UserCog,
+  UserCog2,
+  UserCog2Icon,
+  UserCogIcon,
 } from "lucide-react";
 
 import { NavMain } from "./nav-main";
-import { NavProjects } from "./nav-projects";
 import { NavUser } from "./nav-user";
 import { TeamSwitcher } from "./team-switcher";
 import {
@@ -34,6 +34,10 @@ import IconSirene from "@/icons/IconSirene";
 import IconEditSave from "@/icons/IconEditSave";
 import { CompanySwitcher } from "@/components/Sidebar/company-switcher";
 import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
+import { NavAdmin } from "@/components/Sidebar/nav-admin";
+import IconBuildPlus from "@/icons/IconBuildPlus";
+import { LuUserCog } from "react-icons/lu";
+import IconPrivileges from "@/icons/IconPrivileges";
 
 interface AppSidebarProps {
   corp?: IOrganizacaoSchema;
@@ -143,45 +147,80 @@ export function AppSidebar({
           },
         ],
       },
+    ],
+    admin: [
       {
-        title: "Settings",
+        title: "Gestão Corporação",
         url: "#",
-        icon: Settings2,
+        icon: Building2Icon,
         items: [
           {
-            title: "General",
-            url: "#",
+            title: "Add Corporação",
+            icon: <IconBuildPlus width={32} className="fill-foreground/60" />,
+            url: "/servicos/gestor/salvar-organizacao",
           },
           {
-            title: "Team",
-            url: "#",
+            title: "Add Unidade Corporação",
+            icon: <IconBuildPlus width={32} className="fill-foreground/60" />,
+            url: "/servicos/gestor/salvar-unidade",
           },
           {
-            title: "Billing",
-            url: "#",
+            title: "Add Membro Corporação",
+            icon: <IconMembers width={32} className="fill-foreground/60" />,
+            url: "/servicos/gestor/salvar-membro",
           },
           {
-            title: "Limits",
-            url: "#",
+            title: "Add Veículos Corporação",
+            icon: (
+              <IconCarFrontal width={32} className="stroke-foreground/60" />
+            ),
+            url: "/servicos/gestor/salvar-veiculo",
           },
         ],
       },
-    ],
-    projects: [
       {
-        name: "Design Engineering",
+        title: "Gestão Unidade",
         url: "#",
-        icon: Frame,
+        icon: Building,
+        items: [
+          {
+            title: "Adicionar Membro Unidade",
+            icon: <IconMembers width={32} className="fill-foreground/60" />,
+            url: `/servicos/unidades/${compSelected.name}-${compSelected.id}/gestor-unidade/membro-unidade-salvar`,
+          },
+          {
+            title: "Adicionar Veículos Unidade",
+            icon: <IconBuildPlus width={32} className="fill-foreground/60" />,
+            url: `/servicos/unidades/${compSelected.name}-${compSelected.id}/gestor-unidade/veiculo-unidade-salvar`,
+          },
+          {
+            title: "Adicionar Escala Unidade",
+            icon: <IconCalendar width={32} className="fill-foreground/60" />,
+            url: `/servicos/unidades/${compSelected.name}-${compSelected.id}/gestor-unidade/escala-unidade-salvar`,
+          },
+        ],
       },
       {
-        name: "Sales & Marketing",
+        title: "Gestão Usuários",
         url: "#",
-        icon: PieChart,
-      },
-      {
-        name: "Travel",
-        url: "#",
-        icon: Map,
+        icon: UserCog2,
+        items: [
+          {
+            title: "Usuários",
+            icon: <IconBuildPlus width={32} className="fill-foreground/60" />,
+            url: "/servicos/gestor/salvar-organizacao",
+          },
+          {
+            title: "Privilégios",
+            icon: <IconPrivileges width={32} className="fill-foreground/60" />,
+            url: "/servicos/gestor/salvar-organizacao",
+          },
+          {
+            title: "Adicionar Corporação",
+            icon: <IconBuildPlus width={32} className="fill-foreground/60" />,
+            url: "/servicos/gestor/salvar-organizacao",
+          },
+        ],
       },
     ],
   };
@@ -199,7 +238,9 @@ export function AppSidebar({
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavAdmin items={data.admin} />
+
+        {/*<NavProjects projects={data.admin} />*/}
       </SidebarContent>
       <SidebarFooter>
         <NavUser

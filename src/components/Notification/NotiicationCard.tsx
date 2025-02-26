@@ -33,8 +33,7 @@ export const NotificationCard = ({
   ...props
 }: NotificationProps): ReactElement => {
   const router = useRouter();
-  const notifications =  useNotificationStore.getState()?.state?.notification
-  console.log(notifications)
+  const notifications = useNotificationStore.getState()?.state?.notification;
   return (
     <>
       <DropdownMenu>
@@ -49,11 +48,9 @@ export const NotificationCard = ({
               {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-expect-error
-                  notifications?.messages?.length > 0 && (
+                notifications?.messages?.length > 0 && (
                   <div className="absolute -right-1 -top-1 z-10 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[.725rem] text-foreground md:h-[17px] md:w-[17px]">
-                    {
-                      notifications?.messages?.length
-                    }
+                    {notifications?.messages?.length}
                   </div>
                 )
               }
@@ -126,7 +123,6 @@ export const NotificationCard = ({
                                           );
                                       }
                                     }
-                                    console.log(notification);
                                   },
                                 );
                             }}

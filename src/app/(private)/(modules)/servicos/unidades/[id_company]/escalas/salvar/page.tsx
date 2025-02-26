@@ -45,8 +45,6 @@ const SalvarEscala = async ({
         }
       >
         {scheduleFound !== null && true && (
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-expect-error
           <TabScheduleSave unidade={data} schedule={scheduleFound} />
         )}
       </CardDefault>

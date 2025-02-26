@@ -32,7 +32,6 @@ import { Label } from "@/ui/label";
 import { Popover, PopoverTrigger } from "@/ui/popover";
 
 type AddVehicleScheduleProps = {
-  width?: number;
   vehicle?: IVehicleSchema;
   setListVehiclesAction?: React.Dispatch<
     React.SetStateAction<IVehicleSchema[]>

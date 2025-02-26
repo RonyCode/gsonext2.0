@@ -1,6 +1,5 @@
-export const dynamic = "force-dynamic";
 import { getServerSession } from "next-auth";
-import React, {type ReactNode} from "react";
+import React, { type ReactNode } from "react";
 import { LuBuilding2 } from "react-icons/lu";
 import OrganizacaoForm from "@/app/(private)/(modules)/components/OrganizacaoForm";
 import { CardDefault } from "@/components/Cards/CardDefault";
@@ -22,21 +21,21 @@ const Organizacao = async (): Promise<ReactNode> => {
         title="Minha Corporação"
         description="Gerenciar Corporação"
         image={
-        process.env.NEXT_PUBLIC_API_GSO !== null &&
-            organizacaoFound?.image != null ?
-          process.env.NEXT_PUBLIC_API_GSO + "/public/images/bannerCorp.jpg":
-          process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+          process.env.NEXT_PUBLIC_API_GSO !== null &&
+          organizacaoFound?.image != null
+            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/bannerCorp.jpg"
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
         }
         imageMobile={
           process.env.NEXT_PUBLIC_API_GSO !== null &&
-          organizacaoFound?.image != null ?
-              process.env.NEXT_PUBLIC_API_GSO + "/public/images/bannerCorp.jpg":
-              process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"        }
+          organizacaoFound?.image != null
+            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/bannerCorp.jpg"
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+        }
         icon={<LuBuilding2 size={28} />}
       >
-        {organizacaoFound === undefined && dataStates !== undefined && (
-            <OrganizacaoForm organizacao={organizacaoFound} states={dataStates} />
-
+        {organizacaoFound !== undefined && dataStates !== undefined && (
+          <OrganizacaoForm organizacao={organizacaoFound} states={dataStates} />
         )}
       </CardDefault>
     </>

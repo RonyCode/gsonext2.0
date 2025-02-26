@@ -1,11 +1,13 @@
 import { type Metadata } from "next";
 import { getServerSession } from "next-auth";
 import React from "react";
-import { LuSaveAll } from "react-icons/lu";
+import { LuSaveAll, LuUsers } from "react-icons/lu";
 
 import { MemberCompanyForm } from "@/app/(private)/(modules)/components/MemberCompanyForm";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
+import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
+import { Building } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "GSO | unidades",
@@ -19,24 +21,40 @@ const SalvarMembro = async ({
 }) => {
   const resolvedParams = await params;
   const { id_company } = resolvedParams;
+  const { data } = await getAllOrganizacoes();
+
   const session = await getServerSession(authOptions);
+  const corpFound = data?.find((corp) => {
+    return corp?.id === session?.id_corporation;
+  });
+
+  const idPramas = id_company?.split("-")[1];
+
+  const companyFound = corpFound?.companies?.find(
+    (comp) => comp?.id === idPramas,
+  );
 
   return (
     <>
       <CardDefault
-        title="Salvar Membro Unidade"
-        description="Gerenciar Membros"
+        title={
+          companyFound?.name && companyFound?.companyAddress?.city
+            ? companyFound?.name + " / " + companyFound?.companyAddress?.city
+            : "Salvar Membro Unidade"
+        }
+        description={"Salvar Membro Unidade"}
         image={
-          process.env.NEXT_PUBLIC_API_GSO
-            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/members.jpg"
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+          process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
+            ? process.env.NEXT_PUBLIC_API_GSO + companyFound?.image
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/escala.png"
         }
         imageMobile={
-          process.env.NEXT_PUBLIC_API_GSO
-            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/members.jpg"
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+          process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
+            ? process.env.NEXT_PUBLIC_API_GSO + companyFound?.image
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/escala.png"
         }
-        icon={<LuSaveAll size={28} />}
+        icon={<Building size={28} />}
+        iconDescription={<LuUsers />}
       >
         <div className="overflow-scroll lg:overflow-hidden">
           <MemberCompanyForm

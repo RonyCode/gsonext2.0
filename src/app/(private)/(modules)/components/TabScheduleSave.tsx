@@ -62,15 +62,18 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { saveScheduleAction } from "@/actions/saveScheduleAction";
+import { IScheduleSchema } from "@/schemas/ScheduleSchema";
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
   unidade?: IUnidadeSchema;
+  schedule?: IScheduleSchema;
   dateSchedule?: string;
   className?: string;
 };
 
 export const TabScheduleSave = ({
   unidade,
+  schedule,
   dateSchedule,
   className,
   ...props
@@ -85,7 +88,7 @@ export const TabScheduleSave = ({
   );
   const [dateFinish, setDateFinish] = React.useState<string>();
   const [listVehicles, setListVehicles] = React.useState(
-    [] as IVehicleSchema[],
+    schedule?.vehicles ?? ([] as IVehicleSchema[]),
   );
   const [listMembersAvailable, setListMembersAvailable] = React.useState(
     unidade?.members ?? ([] as IMemberSchema[]),
@@ -96,34 +99,43 @@ export const TabScheduleSave = ({
     criteriaMode: "all",
     resolver: zodResolver(ScheduleFormSave),
     defaultValues: {
-      day: dateSchedule ? new Date(dateSchedule).getDate() : undefined,
-      month: dateSchedule ? new Date(dateSchedule).getMonth() : undefined,
-      year: dateSchedule ? new Date(dateSchedule).getFullYear() : undefined,
-      id: null,
-      id_company: unidade?.id,
-      id_corporation: unidade?.id_corporation,
-      id_period: undefined,
-      id_member_creator: session?.id,
-      id_cmt_sos: undefined,
-      id_member_comunication: undefined,
-      hour_start: "",
-      team: undefined,
-      date_creation: new Date().toLocaleDateString("pt-BR"),
+      day:
+        schedule?.day ??
+        (dateSchedule != null ? new Date(dateSchedule).getDate() : undefined),
+      month:
+        schedule?.month ??
+        (dateSchedule ? new Date(dateSchedule).getMonth() : undefined),
+      year:
+        schedule?.year ??
+        (dateSchedule ? new Date(dateSchedule).getFullYear() : undefined),
+      id: schedule?.id ?? null,
+      id_company: schedule?.id_company ?? unidade?.id,
+      id_corporation: schedule?.id_corporation ?? unidade?.id_corporation,
+      id_period: schedule?.id_period ?? undefined,
+      id_member_creator: schedule?.id_member_creator ?? session?.id,
+      id_cmt_sos: schedule?.id_cmt_sos ?? undefined,
+      id_member_comunication: schedule?.id_member_comunication ?? undefined,
+      hour_start: schedule?.hour_start ?? undefined,
+      team: schedule?.team ?? undefined,
+      date_creation:
+        schedule?.date_creation ?? new Date().toLocaleDateString("pt-BR"),
       date_start:
-        dateSchedule != null
+        schedule?.date_start ??
+        (dateSchedule != null
           ? new Date(dateSchedule).toLocaleDateString("pt-BR")
-          : new Date().toLocaleDateString("pt-BR"),
-      date_finish: "",
+          : new Date().toLocaleDateString("pt-BR")),
+      date_finish: schedule?.date_finish ?? "",
       obs:
+        schedule?.obs ??
         "escala de serviço do dia " +
-        (dateSchedule !== undefined
-          ? new Date(dateSchedule).toLocaleDateString("pt-BR")
-          : new Date().toLocaleDateString("pt-BR")) +
-        " para o dia " +
-        dateFinish,
-      vehicle: undefined,
-      vehicles: [],
-      excluded: 0,
+          (dateSchedule !== undefined
+            ? new Date(dateSchedule).toLocaleDateString("pt-BR")
+            : new Date().toLocaleDateString("pt-BR")) +
+          " para o dia " +
+          dateFinish,
+      vehicle: schedule?.vehicle ?? undefined,
+      vehicles: schedule?.vehicles ?? [],
+      excluded: schedule?.excluded ?? 0,
     },
   });
 
@@ -140,8 +152,9 @@ export const TabScheduleSave = ({
   }, [dateStart]);
 
   const handleSubmit = async (formData: IScheduleFormSave): Promise<void> => {
-    console.log(session?.id);
-    console.log(formData);
+    console.log(JSON.stringify(form.getValues()));
+    console.log(form.formState.errors);
+
     startTransition(async () => {
       const result = await saveScheduleAction(formData);
       if (result?.code !== 202) {
@@ -245,13 +258,16 @@ export const TabScheduleSave = ({
   };
 
   useEffect(() => {
+    if (schedule?.id_period) {
+      handleCalculeDateFinal(schedule?.id_period?.toString() ?? undefined);
+    }
     if (listVehicles) {
       form.setValue("id_member_creator", session?.id);
       form.setValue("vehicles", listVehicles);
     }
   }, [form, listVehicles]);
 
-  const handleCalculeDateFinal = (value: string) => {
+  const handleCalculeDateFinal = (value?: string) => {
     const data = moment(
       form?.getValues("date_start") +
         " " +
@@ -442,7 +458,7 @@ export const TabScheduleSave = ({
                               role="combobox"
                               className={cn("w-full justify-between")}
                             >
-                              {field.value !== ""
+                              {field.value !== undefined
                                 ? form.getValues("date_start") +
                                   ", " +
                                   field.value

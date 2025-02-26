@@ -34,10 +34,10 @@ type NavMainProps = {
   }[];
 };
 
-export function NavMain({ items }: NavMainProps) {
+export function NavAdmin({ items }: NavMainProps) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Geral</SidebarGroupLabel>
+      <SidebarGroupLabel>Administrativo</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible

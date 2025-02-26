@@ -26,7 +26,6 @@ export const TokenVerify = async ($token: string): Promise<ResponseProps> => {
       );
     }
 
-    console.log(dateExpiresCpnverted, dateNowConverted);
     if (dateExpiresCpnverted < dateNowConverted) {
       return {
         message: "Token inválido ou expirado",

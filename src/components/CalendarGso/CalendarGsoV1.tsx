@@ -8,6 +8,7 @@ import {
   LuArrowBigLeft,
   LuArrowBigRight,
   LuCalendarPlus,
+  LuCirclePlus,
 } from "react-icons/lu";
 import Link from "next/link";
 import { DataTableDetalheEscala } from "@/components/DataTables/DataTableDetalheEscala/data-table-detalhe-escala";
@@ -186,15 +187,41 @@ const CalendarGsoV1 = ({ dayEvent, company }: CalendarGsoV1Props) => {
                         {
                           locale: ptBR,
                         },
-                      )}
+                      ).toUpperCase()}{" "}
+                    | {company?.name}
                   </h2>
+                  <Link
+                    className="mb-2 self-end"
+                    href={
+                      "/servicos/unidades/" +
+                      company?.name?.toLowerCase() +
+                      "-" +
+                      company?.id +
+                      "/gestor-unidade/escala-unidade-salvar?date_schedule=" +
+                      selectedDay.year +
+                      "-" +
+                      selectedDay.month +
+                      "-" +
+                      selectedDay.day
+                    }
+                  >
+                    <Button variant="default">
+                      <LuCirclePlus />
+                      Nova Escala
+                    </Button>
+                  </Link>
+
                   <div className="flex h-full w-full overflow-scroll">
                     <DataTableDetalheEscala
                       columns={columnsDetailsSchedule(company)}
                       data={eventsOnDay}
                     />
                   </div>
-                  <Button className="mt-2 self-end" onClick={closeModal}>
+                  <Button
+                    variant="secondary"
+                    className="mt-2 self-end"
+                    onClick={closeModal}
+                  >
                     Fechar
                   </Button>
                 </div>

@@ -1,51 +1,50 @@
-'use server'
+"use server";
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath } from "next/cache";
 
 import {
   type IPreRegisterUserSchema,
   PreRegisterUserSchema,
-} from '@/app/(auth)/auth/schemas/IPreRegisterUserSchema'
+} from "@/app/(auth)/auth/schemas/IPreRegisterUserSchema";
 
 interface ReturnData {
-  email: string
-  status: 'success' | 'failure'
-  code: number
-  message: string
+  email: string;
+  status: "success" | "failure";
+  code: number;
+  message: string;
 }
 
 export const preRegisterUserServerActions = async (
   data: FormData | IPreRegisterUserSchema,
 ): Promise<IPreRegisterUserSchema> => {
-  revalidatePath('/')
+  revalidatePath("/");
   try {
     if (data instanceof FormData) {
-      const formData = Object.fromEntries(data.entries())
-      const result = PreRegisterUserSchema.safeParse(formData)
+      const formData = Object.fromEntries(data.entries());
+      const result = PreRegisterUserSchema.safeParse(formData);
 
       if (result.success) {
         return {
           email: result.data.email,
-          status: 'success',
+          status: "success",
           code: 200,
-          message: 'sucess',
-        } satisfies ReturnData
+          message: "sucess",
+        } satisfies ReturnData;
       }
 
       if (!result.success) {
-        console.log(result.error.message)
+        console.log(result.error.message);
         return {
-          email: 'failed',
-          status: 'failure',
+          email: "failed",
+          status: "failure",
           code: 400,
           message: result.error.message,
-        } satisfies ReturnData
+        } satisfies ReturnData;
       }
     }
-    console.log(data)
-    return data as IPreRegisterUserSchema
+    return data as IPreRegisterUserSchema;
   } catch (error) {
-    console.log(error)
-    return JSON.parse(JSON.stringify(error))
+    console.log(error);
+    return JSON.parse(JSON.stringify(error));
   }
-}
+};

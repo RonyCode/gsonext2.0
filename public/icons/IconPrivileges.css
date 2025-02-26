@@ -27,6 +27,8 @@ svg:hover #plusPrivileges, #cardModule:hover #plusPrivileges {
 @keyframes spinStart {
     to {
         transform: rotate(140deg);
+        fill: #a40101;
+
     }
 }
 
@@ -40,6 +42,7 @@ svg:hover #plusPrivileges, #cardModule:hover #plusPrivileges {
     70% {
         transform: scale(1.1);
         box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+
     }
 
     100% {

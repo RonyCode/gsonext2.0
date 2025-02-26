@@ -1,8 +1,8 @@
-'use client'
-import Image from 'next/image'
-import { redirect } from 'next/navigation'
-import React, { useEffect, useState, useTransition } from 'react'
-import { useForm, type UseFormReturn } from 'react-hook-form'
+"use client";
+import Image from "next/image";
+import { redirect } from "next/navigation";
+import React, { useEffect, useState, useTransition } from "react";
+import { useForm, type UseFormReturn } from "react-hook-form";
 import {
   LuBuilding2,
   LuCalendarCheck2,
@@ -15,18 +15,18 @@ import {
   LuListChecks,
   LuLoaderCircle,
   LuSpellCheck2,
-} from 'react-icons/lu'
+} from "react-icons/lu";
 
-import { saveVehicleIntoCorporationAction } from '@/actions/saveVehicleIntoCorporationAction'
-import { EditPhoto } from '@/components/EditPhoto/EditPhoto'
-import LoadingPage from '@/components/Loadings/LoadingPage'
-import { GetUserNotification } from '@/functions/GetNotificationUser'
-import { getAllVehicles } from '@/lib/GetAllVehicles'
-import { cn } from '@/lib/utils'
-import { VehicleSchema, type IVehicleSchema } from '@/schemas/CarsSchema'
-import { type IOrganizacaoSchema } from '@/schemas/OrganizacaoSchema'
-import { Button, buttonVariants } from '@/ui/button'
-import { Card } from '@/ui/card'
+import { saveVehicleIntoCorporationAction } from "@/actions/saveVehicleIntoCorporationAction";
+import { EditPhoto } from "@/components/EditPhoto/EditPhoto";
+import LoadingPage from "@/components/Loadings/LoadingPage";
+import { GetUserNotification } from "@/functions/GetNotificationUser";
+import { getAllVehicles } from "@/lib/GetAllVehicles";
+import { cn } from "@/lib/utils";
+import { VehicleSchema, type IVehicleSchema } from "@/schemas/CarsSchema";
+import { type IOrganizacaoSchema } from "@/schemas/OrganizacaoSchema";
+import { Button, buttonVariants } from "@/ui/button";
+import { Card } from "@/ui/card";
 import {
   Command,
   CommandEmpty,
@@ -34,7 +34,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/ui/command'
+} from "@/ui/command";
 import {
   Form,
   FormControl,
@@ -42,31 +42,31 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/ui/form'
-import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover'
-import { toast } from '@/hooks/use-toast'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { InputMask } from '@react-input/mask'
+} from "@/ui/form";
+import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
+import { toast } from "@/hooks/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { InputMask } from "@react-input/mask";
 
 type VehicleCorporationFormProps = React.HTMLAttributes<HTMLDivElement> & {
-  corporations?: IOrganizacaoSchema[] | null
-  myVehicle?: IVehicleSchema | null
-  idCorporation?: string | undefined | null
-}
+  corporations?: IOrganizacaoSchema[] | null;
+  myVehicle?: IVehicleSchema | null;
+  idCorporation?: string | undefined | null;
+};
 
 export const VehicleCorporationForm = ({
   corporations,
   myVehicle,
   idCorporation,
-}: VehicleCorporationFormProps)=> {
-  const [pending, startTransition] = useTransition()
-  const [detailVehicle, setDetailVehicle] = useState<IVehicleSchema[]>([])
-  const [modeloVehicle, setModeloVehicle] = useState<IVehicleSchema[]>([])
-  const [modeloAno, setModeloAno] = useState<IVehicleSchema[]>([])
+}: VehicleCorporationFormProps) => {
+  const [pending, startTransition] = useTransition();
+  const [detailVehicle, setDetailVehicle] = useState<IVehicleSchema[]>([]);
+  const [modeloVehicle, setModeloVehicle] = useState<IVehicleSchema[]>([]);
+  const [modeloAno, setModeloAno] = useState<IVehicleSchema[]>([]);
 
   const form = useForm<IVehicleSchema>({
-    mode: 'all',
-    criteriaMode: 'all',
+    mode: "all",
+    criteriaMode: "all",
     resolver: zodResolver(VehicleSchema),
     shouldFocusError: true,
     defaultValues: {
@@ -89,138 +89,137 @@ export const VehicleCorporationForm = ({
       subscription: null,
       excluded: myVehicle?.excluded ?? 0,
     },
-  })
-  console.log(myVehicle)
+  });
   const typeVehicle = [
-    { type: 'carros' },
-    { type: 'motos' },
-    { type: 'caminhoes' },
-  ]
+    { type: "carros" },
+    { type: "motos" },
+    { type: "caminhoes" },
+  ];
 
   const status = [
-    { id_status: '1', status: 'Operante' },
-    { id_status: '2', status: 'Inoperante' },
-  ]
+    { id_status: "1", status: "Operante" },
+    { id_status: "2", status: "Inoperante" },
+  ];
 
   const conditions = [
-    { id_condition: '1', condition: 'Novo' },
-    { id_condition: '2', condition: 'Usado' },
-    { id_condition: '3', condition: 'Em manutenção' },
-    { id_condition: '4', condition: 'Avariado' },
-  ]
+    { id_condition: "1", condition: "Novo" },
+    { id_condition: "2", condition: "Usado" },
+    { id_condition: "3", condition: "Em manutenção" },
+    { id_condition: "4", condition: "Avariado" },
+  ];
 
   const handleSubmit = (formData: IVehicleSchema): void => {
     startTransition(async () => {
-      const result = await saveVehicleIntoCorporationAction(formData)
+      const result = await saveVehicleIntoCorporationAction(formData);
 
       if (result?.code !== 202) {
         toast({
-          variant: 'danger',
-          title: 'Erro ao salvar veículo na corporação! 🤯 ',
+          variant: "danger",
+          title: "Erro ao salvar veículo na corporação! 🤯 ",
           description: result?.message,
-        })
+        });
       }
       if (result?.code === 202) {
         void GetUserNotification(
-          result?.data?.notification?.queue_name ?? '',
-          result?.data?.notification?.exchange ?? '',
-          result?.data?.notification?.id_message ?? '',
-        )
+          result?.data?.notification?.queue_name ?? "",
+          result?.data?.notification?.exchange ?? "",
+          result?.data?.notification?.id_message ?? "",
+        );
         toast({
-          variant: 'success',
+          variant: "success",
           title: `Ok! Veiculo salvo na corporação com sucesso! 🚀`,
-          description: 'Tudo certo veículo salvo',
-        })
-        redirect(`/servicos/veiculos`)
+          description: "Tudo certo veículo salvo",
+        });
+        redirect(`/servicos/veiculos`);
       }
-    })
-  }
+    });
+  };
   useEffect(() => {
-    handleSelectTypeVehicle()
-    handleSelectBrandVehicle()
-    handleSelectModel()
-    handleSelectYearVehicle()
+    handleSelectTypeVehicle();
+    handleSelectBrandVehicle();
+    handleSelectModel();
+    handleSelectYearVehicle();
   }, [
-    form?.getValues('type'),
-    form?.getValues('id_brand'),
-    form?.getValues('id_model'),
-    form?.getValues('id_year'),
-  ])
+    form?.getValues("type"),
+    form?.getValues("id_brand"),
+    form?.getValues("id_model"),
+    form?.getValues("id_year"),
+  ]);
 
   const handleSelectTypeVehicle = (): void => {
     startTransition(async () => {
-      if (form?.getValues('type') !== undefined) {
+      if (form?.getValues("type") !== undefined) {
         const result1 = await getAllVehicles(
-          `https://parallelum.com.br/fipe/api/v1/${form?.getValues('type')}/marcas`,
-        )
+          `https://parallelum.com.br/fipe/api/v1/${form?.getValues("type")}/marcas`,
+        );
         if (result1 !== undefined && result1 !== null) {
-          setDetailVehicle(result1 as unknown as IVehicleSchema[])
+          setDetailVehicle(result1 as unknown as IVehicleSchema[]);
         }
       }
-    })
-  }
+    });
+  };
 
   const handleSelectBrandVehicle = (): void => {
     startTransition(async () => {
       if (
-        form?.getValues('type') !== undefined &&
-        form?.getValues('id_brand') !== undefined
+        form?.getValues("type") !== undefined &&
+        form?.getValues("id_brand") !== undefined
       ) {
         const result2 = await getAllVehicles(
-          `https://parallelum.com.br/fipe/api/v1/${form?.getValues('type')}/marcas/${form?.getValues('id_brand')}/modelos`,
-        )
+          `https://parallelum.com.br/fipe/api/v1/${form?.getValues("type")}/marcas/${form?.getValues("id_brand")}/modelos`,
+        );
         if (result2?.modelos !== undefined) {
-          setModeloVehicle(result2?.modelos as unknown as IVehicleSchema[])
+          setModeloVehicle(result2?.modelos as unknown as IVehicleSchema[]);
         }
       }
-    })
-  }
+    });
+  };
 
   const handleSelectModel = (): void => {
     startTransition(async () => {
       if (
-        form?.getValues('type') !== undefined &&
-        form?.getValues('id_brand') !== undefined &&
-        form?.getValues('id_model') !== undefined
+        form?.getValues("type") !== undefined &&
+        form?.getValues("id_brand") !== undefined &&
+        form?.getValues("id_model") !== undefined
       ) {
         const result3 = await getAllVehicles(
-          `https://parallelum.com.br/fipe/api/v1/${form?.getValues('type')}/marcas/${form?.getValues('id_brand')}/modelos/${form?.getValues('id_model')}/anos`,
-        )
+          `https://parallelum.com.br/fipe/api/v1/${form?.getValues("type")}/marcas/${form?.getValues("id_brand")}/modelos/${form?.getValues("id_model")}/anos`,
+        );
         if (result3 !== undefined && result3 !== null) {
-          setModeloAno(result3 as unknown as IVehicleSchema[])
+          setModeloAno(result3 as unknown as IVehicleSchema[]);
         }
       }
-    })
-  }
+    });
+  };
 
   const handleSelectYearVehicle = (): void => {
     startTransition(async () => {
       if (
-        form?.getValues('type') !== undefined &&
-        form?.getValues('id_brand') !== undefined &&
-        form?.getValues('id_model') !== undefined &&
-        form?.getValues('id_year') !== undefined
+        form?.getValues("type") !== undefined &&
+        form?.getValues("id_brand") !== undefined &&
+        form?.getValues("id_model") !== undefined &&
+        form?.getValues("id_year") !== undefined
       ) {
         const result4 = await getAllVehicles(
-          `https://parallelum.com.br/fipe/api/v1/${form?.getValues('type')}/marcas/${form?.getValues('id_brand')}/modelos/${form?.getValues('id_model')}/anos/${form?.getValues('id_year')}`,
-        )
+          `https://parallelum.com.br/fipe/api/v1/${form?.getValues("type")}/marcas/${form?.getValues("id_brand")}/modelos/${form?.getValues("id_model")}/anos/${form?.getValues("id_year")}`,
+        );
 
         if (result4 !== undefined && result4 !== null) {
-          form.setValue('model', result4?.Modelo ?? '')
-          form.setValue('brand', result4?.Marca ?? '')
-          form.setValue('year', result4?.AnoModelo?.toString() ?? '')
-          form.setValue('fuel_type', result4?.Combustivel ?? '')
+          form.setValue("model", result4?.Modelo ?? "");
+          form.setValue("brand", result4?.Marca ?? "");
+          form.setValue("year", result4?.AnoModelo?.toString() ?? "");
+          form.setValue("fuel_type", result4?.Combustivel ?? "");
         }
       }
-    })
-  }
+    });
+  };
 
   return (
     <>
       <Card x-chunk="dashboard-06-chunk-0" className="p-4 md:p-6">
         <div className="flex items-center">
           <div className="flex w-full items-center justify-between space-y-2 p-4">
-            <h1 className=" mr-auto text-xl font-bold">
+            <h1 className="mr-auto text-xl font-bold">
               Salvar Veículo na Corporação
             </h1>
           </div>
@@ -229,28 +228,24 @@ export const VehicleCorporationForm = ({
           <Form {...form}>
             <LoadingPage pending={pending} />
             <form
-               
               onSubmit={form.handleSubmit(async (data) => {
-                handleSubmit(data)
+                handleSubmit(data);
               })}
               className="w-full space-y-4"
             >
-              <div className="grid h-full w-full grid-cols-12 ">
-                <div className="col-span-12 flex w-full  md:col-start-1  md:col-end-5 md:mt-4">
-                  <div className="flex h-full w-full flex-col items-center justify-center  rounded-[8px]">
-                    <div
-                      className=" relative aspect-square  h-48 w-full items-center justify-center rounded-[8px]
-                                     border border-foreground/10  md:flex md:h-56 "
-                    >
+              <div className="grid h-full w-full grid-cols-12">
+                <div className="col-span-12 flex w-full md:col-start-1 md:col-end-5 md:mt-4">
+                  <div className="flex h-full w-full flex-col items-center justify-center rounded-[8px]">
+                    <div className="relative aspect-square h-48 w-full items-center justify-center rounded-[8px] border border-foreground/10 md:flex md:h-56">
                       <div className="absolute -left-3 -top-3 z-10">
                         <EditPhoto
                           directoryFile={
                             process?.env?.NEXT_PUBLIC_API_GSO != null &&
-                            form.getValues('image') != null
+                            form.getValues("image") != null
                               ? process?.env?.NEXT_PUBLIC_API_GSO +
-                                form.getValues('image')
+                                form.getValues("image")
                               : process.env.NEXT_PUBLIC_API_GSO +
-                                '/public/images/img.png'
+                                "/public/images/img.png"
                           }
                           updateFormExternal={form as unknown as UseFormReturn}
                         />
@@ -258,11 +253,11 @@ export const VehicleCorporationForm = ({
                       <Image
                         src={
                           process?.env?.NEXT_PUBLIC_API_GSO != null &&
-                          form.getValues('image') != null
+                          form.getValues("image") != null
                             ? process?.env?.NEXT_PUBLIC_API_GSO +
-                              form.getValues('image')
+                              form.getValues("image")
                             : process.env.NEXT_PUBLIC_API_GSO +
-                              '/public/images/img.png'
+                              "/public/images/img.png"
                         }
                         fill
                         alt="imagem veiculo"
@@ -271,9 +266,9 @@ export const VehicleCorporationForm = ({
                     </div>
                   </div>
                 </div>
-                <div className="col-start-1 col-end-13 mb-8 flex h-full w-full  md:my-4 md:ml-3 lg:col-start-5">
-                  <div className="flex w-full grid-cols-1 flex-col  md:grid md:grid-cols-2 md:gap-4">
-                    <div className=" flex w-full flex-col justify-evenly">
+                <div className="col-start-1 col-end-13 mb-8 flex h-full w-full md:my-4 md:ml-3 lg:col-start-5">
+                  <div className="flex w-full grid-cols-1 flex-col md:grid md:grid-cols-2 md:gap-4">
+                    <div className="flex w-full flex-col justify-evenly">
                       <div className="py-2">
                         <FormField
                           control={form.control}
@@ -285,7 +280,7 @@ export const VehicleCorporationForm = ({
                                 className="flex w-full items-center gap-1"
                               >
                                 <LuClipboardList /> Categoria
-                              </FormLabel>{' '}
+                              </FormLabel>{" "}
                               <Popover>
                                 <PopoverTrigger asChild>
                                   <FormControl>
@@ -293,7 +288,7 @@ export const VehicleCorporationForm = ({
                                       variant="outline"
                                       role="combobox"
                                       className={cn(
-                                        'w-full justify-between text-muted-foreground',
+                                        "w-full justify-between text-muted-foreground",
                                       )}
                                     >
                                       {field.value !== undefined
@@ -301,7 +296,7 @@ export const VehicleCorporationForm = ({
                                             (vehicleItem) =>
                                               vehicleItem?.type === field.value,
                                           )?.type
-                                        : 'Selecione uma categoria'}
+                                        : "Selecione uma categoria"}
                                       <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                     </Button>
                                   </FormControl>
@@ -321,22 +316,21 @@ export const VehicleCorporationForm = ({
                                                 vehicleItem?.type ?? undefined
                                               }
                                               key={index}
-                                               
                                               onSelect={() => {
-                                                handleSelectTypeVehicle()
+                                                handleSelectTypeVehicle();
                                                 form.setValue(
-                                                  'type',
+                                                  "type",
                                                   vehicleItem?.type,
-                                                )
+                                                );
                                               }}
                                             >
                                               <LuCheck
                                                 className={cn(
-                                                  'mr-2 h-4 w-4',
+                                                  "mr-2 h-4 w-4",
                                                   vehicleItem?.type ===
                                                     field.value
-                                                    ? 'opacity-100'
-                                                    : 'opacity-0',
+                                                    ? "opacity-100"
+                                                    : "opacity-0",
                                                 )}
                                               />
                                               {vehicleItem?.type}
@@ -364,7 +358,7 @@ export const VehicleCorporationForm = ({
                                 className="flex w-full items-center gap-1"
                               >
                                 <LuCar /> Modelo Veículo
-                              </FormLabel>{' '}
+                              </FormLabel>{" "}
                               <Popover>
                                 <PopoverTrigger asChild>
                                   <FormControl>
@@ -372,7 +366,7 @@ export const VehicleCorporationForm = ({
                                       variant="outline"
                                       role="combobox"
                                       className={cn(
-                                        'w-full justify-between text-muted-foreground',
+                                        "w-full justify-between text-muted-foreground",
                                       )}
                                     >
                                       {field.value !== undefined &&
@@ -381,9 +375,9 @@ export const VehicleCorporationForm = ({
                                             return (
                                               corp?.codigo?.toString() ===
                                               field?.value?.toString()
-                                            )
+                                            );
                                           })?.nome
-                                        : 'Selecione um modelo de veículo'}
+                                        : "Selecione um modelo de veículo"}
                                       <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                     </Button>
                                   </FormControl>
@@ -400,22 +394,21 @@ export const VehicleCorporationForm = ({
                                           <CommandItem
                                             value={car?.codigo ?? undefined}
                                             key={index}
-                                             
                                             onSelect={() => {
-                                              handleSelectModel()
+                                              handleSelectModel();
                                               form.setValue(
-                                                'id_model',
-                                                car?.codigo?.toString() ?? '',
-                                              )
+                                                "id_model",
+                                                car?.codigo?.toString() ?? "",
+                                              );
                                             }}
                                           >
                                             <LuCheck
                                               className={cn(
-                                                'mr-2 h-4 w-4',
+                                                "mr-2 h-4 w-4",
                                                 car?.codigo?.toString() ===
                                                   field.value?.toString()
-                                                  ? 'opacity-100'
-                                                  : 'opacity-0',
+                                                  ? "opacity-100"
+                                                  : "opacity-0",
                                               )}
                                             />
                                             {car?.nome}
@@ -442,7 +435,7 @@ export const VehicleCorporationForm = ({
                                 className="flex w-full items-center gap-1"
                               >
                                 <LuBuilding2 /> Corporação
-                              </FormLabel>{' '}
+                              </FormLabel>{" "}
                               <Popover>
                                 <PopoverTrigger asChild>
                                   <FormControl>
@@ -450,15 +443,15 @@ export const VehicleCorporationForm = ({
                                       variant="outline"
                                       role="combobox"
                                       className={cn(
-                                        'w-full justify-between text-muted-foreground',
+                                        "w-full justify-between text-muted-foreground",
                                       )}
                                     >
                                       {field.value !== undefined &&
                                       corporations !== undefined
                                         ? corporations?.find((corp) => {
-                                            return corp?.id === field.value
+                                            return corp?.id === field.value;
                                           })?.short_name_corp
-                                        : 'Selecione a corporação'}
+                                        : "Selecione a corporação"}
                                       <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                     </Button>
                                   </FormControl>
@@ -475,20 +468,19 @@ export const VehicleCorporationForm = ({
                                           <CommandItem
                                             value={corp?.id ?? undefined}
                                             key={index}
-                                             
                                             onSelect={() => {
                                               form.setValue(
-                                                'id_corporation',
-                                                corp?.id ?? '',
-                                              )
+                                                "id_corporation",
+                                                corp?.id ?? "",
+                                              );
                                             }}
                                           >
                                             <LuCheck
                                               className={cn(
-                                                'mr-2 h-4 w-4',
+                                                "mr-2 h-4 w-4",
                                                 corp?.id === field.value
-                                                  ? 'opacity-100'
-                                                  : 'opacity-0',
+                                                  ? "opacity-100"
+                                                  : "opacity-0",
                                               )}
                                             />
                                             {corp?.short_name_corp}
@@ -519,11 +511,7 @@ export const VehicleCorporationForm = ({
                               <FormControl>
                                 <InputMask
                                   {...field}
-                                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3
-                                  py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent
-                                  file:text-sm file:font-medium placeholder:text-muted-foreground
-                                  focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring
-                                  disabled:cursor-not-allowed disabled:opacity-50"
+                                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                                   id="chassi"
                                   placeholder="ABCDE12A34F012345"
                                   mask="_________________"
@@ -536,7 +524,7 @@ export const VehicleCorporationForm = ({
                                   onChange={(event) => {
                                     field.onChange(
                                       event.target.value.toUpperCase(),
-                                    )
+                                    );
                                   }}
                                 />
                               </FormControl>
@@ -556,7 +544,7 @@ export const VehicleCorporationForm = ({
                                 className="flex w-full items-center gap-1"
                               >
                                 <LuCalendarCheck2 /> Condição
-                              </FormLabel>{' '}
+                              </FormLabel>{" "}
                               <Popover>
                                 <PopoverTrigger asChild>
                                   <FormControl>
@@ -564,7 +552,7 @@ export const VehicleCorporationForm = ({
                                       variant="outline"
                                       role="combobox"
                                       className={cn(
-                                        'w-full justify-between text-muted-foreground',
+                                        "w-full justify-between text-muted-foreground",
                                       )}
                                     >
                                       {field.value !== undefined
@@ -572,9 +560,9 @@ export const VehicleCorporationForm = ({
                                             return (
                                               +corp?.id_condition ===
                                               field.value
-                                            )
+                                            );
                                           })?.condition
-                                        : 'Selecione a condição do veículo'}
+                                        : "Selecione a condição do veículo"}
                                       <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                     </Button>
                                   </FormControl>
@@ -591,22 +579,21 @@ export const VehicleCorporationForm = ({
                                           <CommandItem
                                             value={car?.id_condition}
                                             key={index}
-                                             
                                             onSelect={() => {
-                                              handleSelectYearVehicle()
+                                              handleSelectYearVehicle();
                                               form.setValue(
-                                                'condition',
+                                                "condition",
                                                 +car?.id_condition,
-                                              )
+                                              );
                                             }}
                                           >
                                             <LuCheck
                                               className={cn(
-                                                'mr-2 h-4 w-4',
+                                                "mr-2 h-4 w-4",
                                                 +car?.id_condition ===
                                                   field.value
-                                                  ? 'opacity-100'
-                                                  : 'opacity-0',
+                                                  ? "opacity-100"
+                                                  : "opacity-0",
                                               )}
                                             />
                                             {car?.condition}
@@ -623,7 +610,7 @@ export const VehicleCorporationForm = ({
                         />
                       </div>
                     </div>
-                    <div className=" flex w-full flex-col justify-evenly">
+                    <div className="flex w-full flex-col justify-evenly">
                       <div className="py-2">
                         <FormField
                           control={form.control}
@@ -635,7 +622,7 @@ export const VehicleCorporationForm = ({
                                 className="flex w-full items-center gap-1"
                               >
                                 <LuListChecks /> Marca Veículo
-                              </FormLabel>{' '}
+                              </FormLabel>{" "}
                               <Popover>
                                 <PopoverTrigger asChild>
                                   <FormControl>
@@ -643,15 +630,15 @@ export const VehicleCorporationForm = ({
                                       variant="outline"
                                       role="combobox"
                                       className={cn(
-                                        'w-full justify-between text-muted-foreground',
+                                        "w-full justify-between text-muted-foreground",
                                       )}
                                     >
                                       {field.value !== undefined &&
                                       detailVehicle !== undefined
                                         ? detailVehicle?.find((corp) => {
-                                            return corp?.codigo === field.value
+                                            return corp?.codigo === field.value;
                                           })?.nome
-                                        : 'Selecione uma marca de veículo'}
+                                        : "Selecione uma marca de veículo"}
                                       <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                     </Button>
                                   </FormControl>
@@ -668,21 +655,20 @@ export const VehicleCorporationForm = ({
                                           <CommandItem
                                             value={car?.id_brand ?? undefined}
                                             key={index}
-                                             
                                             onSelect={() => {
-                                              handleSelectBrandVehicle()
+                                              handleSelectBrandVehicle();
                                               form.setValue(
-                                                'id_brand',
-                                                car?.codigo ?? '',
-                                              )
+                                                "id_brand",
+                                                car?.codigo ?? "",
+                                              );
                                             }}
                                           >
                                             <LuCheck
                                               className={cn(
-                                                'mr-2 h-4 w-4',
+                                                "mr-2 h-4 w-4",
                                                 car?.codigo === field.value
-                                                  ? 'opacity-100'
-                                                  : 'opacity-0',
+                                                  ? "opacity-100"
+                                                  : "opacity-0",
                                               )}
                                             />
                                             {car?.nome}
@@ -709,7 +695,7 @@ export const VehicleCorporationForm = ({
                                 className="flex w-full items-center gap-1"
                               >
                                 <LuCalendarCheck2 /> Ano Veículo
-                              </FormLabel>{' '}
+                              </FormLabel>{" "}
                               <Popover>
                                 <PopoverTrigger asChild>
                                   <FormControl>
@@ -717,15 +703,15 @@ export const VehicleCorporationForm = ({
                                       variant="outline"
                                       role="combobox"
                                       className={cn(
-                                        'w-full justify-between text-muted-foreground',
+                                        "w-full justify-between text-muted-foreground",
                                       )}
                                     >
                                       {field.value !== undefined &&
                                       modeloAno !== undefined
                                         ? modeloAno?.find((corp) => {
-                                            return corp?.codigo === field.value
+                                            return corp?.codigo === field.value;
                                           })?.nome
-                                        : 'Selecione o ano do veículo'}
+                                        : "Selecione o ano do veículo"}
                                       <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                     </Button>
                                   </FormControl>
@@ -742,21 +728,20 @@ export const VehicleCorporationForm = ({
                                           <CommandItem
                                             value={car?.codigo ?? undefined}
                                             key={index}
-                                             
                                             onSelect={() => {
-                                              handleSelectYearVehicle()
+                                              handleSelectYearVehicle();
                                               form.setValue(
-                                                'id_year',
-                                                car?.codigo ?? '',
-                                              )
+                                                "id_year",
+                                                car?.codigo ?? "",
+                                              );
                                             }}
                                           >
                                             <LuCheck
                                               className={cn(
-                                                'mr-2 h-4 w-4',
+                                                "mr-2 h-4 w-4",
                                                 car?.codigo === field.value
-                                                  ? 'opacity-100'
-                                                  : 'opacity-0',
+                                                  ? "opacity-100"
+                                                  : "opacity-0",
                                               )}
                                             />
                                             {car?.nome}
@@ -788,11 +773,7 @@ export const VehicleCorporationForm = ({
                                 <InputMask
                                   {...field}
                                   id="plate"
-                                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3
-                                  py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent
-                                  file:text-sm file:font-medium placeholder:text-muted-foreground
-                                  focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring
-                                  disabled:cursor-not-allowed disabled:opacity-50"
+                                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                                   placeholder="ABC9A99"
                                   mask="_______"
                                   replacement={{
@@ -801,7 +782,7 @@ export const VehicleCorporationForm = ({
                                   onChange={(event) => {
                                     field.onChange(
                                       event.target.value.toUpperCase(),
-                                    )
+                                    );
                                   }}
                                   autoCapitalize="none"
                                   autoComplete="name"
@@ -821,18 +802,14 @@ export const VehicleCorporationForm = ({
                             <FormItem className="w-full">
                               <FormLabel
                                 htmlFor="prefix"
-                                className="flex items-center gap-1 "
+                                className="flex items-center gap-1"
                               >
                                 <LuCaseUpper /> Prefixo
                               </FormLabel>
                               <FormControl>
                                 <InputMask
                                   {...field}
-                                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3
-                                  py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent
-                                  file:text-sm file:font-medium placeholder:text-muted-foreground
-                                  focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring
-                                  disabled:cursor-not-allowed disabled:opacity-50"
+                                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                                   id="prefix"
                                   placeholder="UR-99, ABT-01"
                                   mask="_________"
@@ -845,7 +822,7 @@ export const VehicleCorporationForm = ({
                                   onChange={(event) => {
                                     field.onChange(
                                       event.target.value.toUpperCase(),
-                                    )
+                                    );
                                   }}
                                 />
                               </FormControl>
@@ -865,7 +842,7 @@ export const VehicleCorporationForm = ({
                                 className="flex w-full items-center gap-1"
                               >
                                 <LuCalendarCheck2 /> Status
-                              </FormLabel>{' '}
+                              </FormLabel>{" "}
                               <Popover>
                                 <PopoverTrigger asChild>
                                   <FormControl>
@@ -873,16 +850,16 @@ export const VehicleCorporationForm = ({
                                       variant="outline"
                                       role="combobox"
                                       className={cn(
-                                        'w-full justify-between text-muted-foreground',
+                                        "w-full justify-between text-muted-foreground",
                                       )}
                                     >
                                       {field.value !== undefined
                                         ? status?.find((corp) => {
                                             return (
                                               +corp?.id_status === field.value
-                                            )
+                                            );
                                           })?.status
-                                        : 'Selecione o status do veículo'}
+                                        : "Selecione o status do veículo"}
                                       <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                     </Button>
                                   </FormControl>
@@ -899,21 +876,20 @@ export const VehicleCorporationForm = ({
                                           <CommandItem
                                             value={car?.id_status ?? undefined}
                                             key={index}
-                                             
                                             onSelect={() => {
-                                              handleSelectYearVehicle()
+                                              handleSelectYearVehicle();
                                               form.setValue(
-                                                'status',
+                                                "status",
                                                 Number(car?.id_status) ?? 0,
-                                              )
+                                              );
                                             }}
                                           >
                                             <LuCheck
                                               className={cn(
-                                                'mr-2 h-4 w-4',
+                                                "mr-2 h-4 w-4",
                                                 +car?.id_status === field.value
-                                                  ? 'opacity-100'
-                                                  : 'opacity-0',
+                                                  ? "opacity-100"
+                                                  : "opacity-0",
                                               )}
                                             />
                                             {car?.status}
@@ -934,11 +910,11 @@ export const VehicleCorporationForm = ({
                 </div>
               </div>
               {pending}
-              <div className="flex w-full flex-col  justify-end  md:flex-row">
+              <div className="flex w-full flex-col justify-end md:flex-row">
                 <Button
                   className={cn(
-                    buttonVariants({ variant: 'default' }),
-                    ' w-full animate-fadeIn  md:w-1/3 ',
+                    buttonVariants({ variant: "default" }),
+                    "w-full animate-fadeIn md:w-1/3",
                   )}
                   type="submit"
                 >
@@ -953,6 +929,6 @@ export const VehicleCorporationForm = ({
         </div>
       </Card>
     </>
-  )
-}
-export default VehicleCorporationForm
+  );
+};
+export default VehicleCorporationForm;

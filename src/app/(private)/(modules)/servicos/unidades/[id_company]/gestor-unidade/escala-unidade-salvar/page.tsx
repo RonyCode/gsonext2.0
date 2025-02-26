@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 import { getServerSession } from "next-auth";
 import React, { type ReactNode } from "react";
-import { LuSaveAll } from "react-icons/lu";
+import { LuSaveAll, LuSearchX } from "react-icons/lu";
 
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
@@ -18,11 +18,16 @@ const SalvarEscala = async ({
   searchParams,
 }: {
   params: Promise<{ id_company: string }>;
-  searchParams: Promise<{ cod_unidade: string; date_schedule: string }>;
+  searchParams: Promise<{
+    cod_unidade: string;
+    date_schedule: string;
+    id_schedule: string;
+  }>;
 }): Promise<ReactNode> => {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
   const { date_schedule } = resolvedSearchParams;
+  const { id_schedule } = resolvedSearchParams;
   const { id_company } = resolvedParams;
   const { data } = await getAllOrganizacoes();
   const session = await getServerSession(authOptions);
@@ -30,17 +35,15 @@ const SalvarEscala = async ({
     return corp?.id === session?.id_corporation;
   });
   const idPramas = id_company?.split("-")[1];
-  const dateParams = date_schedule;
+  const dateScheduleParams = date_schedule;
+  const scheduleIdParams = id_schedule;
 
-  const companyFound = corpFound?.companies?.find((comp) => {
-    if (comp?.id === idPramas && idPramas !== undefined) {
-      return comp;
-    }
-    return (
-      <>
-        <h1>Company no found!</h1>
-      </>
-    );
+  const companyFound = corpFound?.companies?.find(
+    (comp) => comp?.id === idPramas,
+  );
+
+  const scheduleFound = companyFound?.schedules?.find((schedule) => {
+    return schedule?.id === scheduleIdParams;
   });
 
   return (
@@ -60,15 +63,21 @@ const SalvarEscala = async ({
         icon={<LuSaveAll size={28} />}
       >
         <div className="overflow-scroll lg:overflow-hidden">
-          {companyFound !== null &&
-            dateParams !== null &&
-            companyFound !== undefined &&
-            dateParams !== undefined && (
-              <TabScheduleSave
-                dateSchedule={dateParams}
-                unidade={companyFound}
-              />
-            )}
+          {companyFound !== null && companyFound !== undefined ? (
+            <TabScheduleSave
+              dateSchedule={dateScheduleParams}
+              schedule={scheduleFound}
+              unidade={companyFound}
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center">
+              {" "}
+              <span className="flex items-center justify-center gap-1">
+                <LuSearchX size={28} className="text-primary/60" /> SEM UNIDADE
+                PARA ADICIONAR ESCALA 🤯
+              </span>
+            </div>
+          )}
         </div>
       </CardDefault>
     </>
