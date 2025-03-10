@@ -1,9 +1,9 @@
-'use client'
-import { useSession } from 'next-auth/react'
-import Image from 'next/image'
-import { redirect, useRouter } from 'next/navigation'
-import React, { useEffect, useTransition } from 'react'
-import { useForm } from 'react-hook-form'
+"use client";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import { redirect, useRouter } from "next/navigation";
+import React, { useEffect, useTransition } from "react";
+import { useForm } from "react-hook-form";
 import {
   LuBuilding2,
   LuCalendar,
@@ -20,25 +20,25 @@ import {
   LuPhone,
   LuScrollText,
   LuTrash2,
-} from 'react-icons/lu'
+} from "react-icons/lu";
 
-import { saveUnidadeAction } from '@/app/(private)/(modules)/servicos/gestor/actions/saveUnidadeAction'
-import { EditPhoto } from '@/components/EditPhoto/EditPhoto'
-import { MyInputMask } from '@/components/Form/Input/myInputMask'
-import LoadingPage from '@/components/Loadings/LoadingPage'
-import { maskCpfCnpj } from '@/functions/masks/maskCpfCnpj'
-import { maskPhone } from '@/functions/masks/maskphone'
-import { maskZipcode } from '@/functions/masks/maskZipcode'
-import { getAllCitiesByState } from '@/lib/getAllCitiesByState'
-import { getCep } from '@/lib/getCep'
-import { cn } from '@/lib/utils'
-import { type IOrganizacaoSchema } from '@/schemas/OrganizacaoSchema'
-import { type IUnidadeSchema, UnidadeSchema } from '@/schemas/UnidadeSchema'
-import { cityStore } from '@/stores/Address/CityByStateStore'
-import type { AddressProps } from '@/types/index'
-import { Button, buttonVariants } from '@/ui/button'
-import { Calendar } from '@/ui/calendar'
-import { Card } from '@/ui/card'
+import { saveUnidadeAction } from "@/app/(private)/(modules)/servicos/gestor/actions/saveUnidadeAction";
+import { EditPhoto } from "@/components/EditPhoto/EditPhoto";
+import { MyInputMask } from "@/components/Form/Input/myInputMask";
+import LoadingPage from "@/components/Loadings/LoadingPage";
+import { maskCpfCnpj } from "@/functions/masks/maskCpfCnpj";
+import { maskPhone } from "@/functions/masks/maskphone";
+import { maskZipcode } from "@/functions/masks/maskZipcode";
+import { getAllCitiesByState } from "@/lib/getAllCitiesByState";
+import { getCep } from "@/lib/getCep";
+import { cn } from "@/lib/utils";
+import { type IOrganizacaoSchema } from "@/schemas/OrganizacaoSchema";
+import { type IUnidadeSchema, UnidadeSchema } from "@/schemas/UnidadeSchema";
+import { cityStore } from "@/stores/Address/CityByStateStore";
+import type { AddressProps } from "@/types/index";
+import { Button, buttonVariants } from "@/ui/button";
+import { Calendar } from "@/ui/calendar";
+import { Card } from "@/ui/card";
 import {
   Command,
   CommandEmpty,
@@ -46,7 +46,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/ui/command'
+} from "@/ui/command";
 import {
   Dialog,
   DialogClose,
@@ -56,7 +56,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/ui/dialog'
+} from "@/ui/dialog";
 import {
   Form,
   FormControl,
@@ -64,121 +64,121 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/ui/form'
-import { Input } from '@/ui/input'
-import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover'
-import { toast } from '@/hooks/use-toast'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { CalendarIcon } from '@radix-ui/react-icons'
-import { format } from 'date-fns'
-import { ptBR } from 'date-fns/locale/pt-BR'
+} from "@/ui/form";
+import { Input } from "@/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
+import { toast } from "@/hooks/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale/pt-BR";
 
 enum Fields {
-  address = 'address',
-  district = 'district',
-  city = 'city',
-  shortName = 'short_name',
+  address = "address",
+  district = "district",
+  city = "city",
+  shortName = "short_name",
 }
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
-  unidade?: IUnidadeSchema | null
-  corporations?: IOrganizacaoSchema[] | null
-  className?: string
-  states?: AddressProps[] | null
-}
+  unidade?: IUnidadeSchema | null;
+  corporations?: IOrganizacaoSchema[] | null;
+  className?: string;
+  states?: AddressProps[] | null;
+};
 
 export const TabUnidadeDetails = ({
   unidade,
   corporations,
   className,
   states,
-}: UserRegisterFormProps)=> {
-  const [pending, startTransition] = useTransition()
-  const [disabled, setDisabled] = React.useState(true)
-  const [date, setDate] = React.useState<Date>()
-  const { data: session } = useSession()
+}: UserRegisterFormProps) => {
+  const [pending, startTransition] = useTransition();
+  const [disabled, setDisabled] = React.useState(true);
+  const [date, setDate] = React.useState<Date>();
+  const { data: session } = useSession();
 
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
     startTransition(async () => {
       if (unidade?.companyAddress?.short_name != null) {
-        await getAllCitiesByState(unidade?.companyAddress?.short_name)
+        await getAllCitiesByState(unidade?.companyAddress?.short_name);
       }
-    })
-    if (unidade?.companyAddress?.short_name == null) setDisabled(false)
-  }, [unidade?.companyAddress?.short_name, disabled])
+    });
+    if (unidade?.companyAddress?.short_name == null) setDisabled(false);
+  }, [unidade?.companyAddress?.short_name, disabled]);
 
   const form = useForm<IUnidadeSchema>({
-    mode: 'all',
-    criteriaMode: 'all',
+    mode: "all",
+    criteriaMode: "all",
     resolver: zodResolver(UnidadeSchema),
 
     defaultValues: {
       id: unidade?._id?.$oid ?? null,
       id_corporation: unidade?.id_corporation ?? null,
-      name: unidade?.name ?? '',
-      short_name_corp: unidade?.short_name_corp ?? '',
-      cnpj: maskCpfCnpj(unidade?.cnpj) ?? '',
-      phone: maskPhone(unidade?.phone) ?? '',
+      name: unidade?.name ?? "",
+      short_name_corp: unidade?.short_name_corp ?? "",
+      cnpj: maskCpfCnpj(unidade?.cnpj) ?? "",
+      phone: maskPhone(unidade?.phone) ?? "",
       image: unidade?.image ?? null,
-      address: unidade?.companyAddress?.address ?? '',
-      number: unidade?.companyAddress?.number ?? '',
-      zipcode: maskZipcode(unidade?.companyAddress?.zipcode) ?? '',
-      complement: unidade?.companyAddress?.complement ?? '',
-      district: unidade?.companyAddress?.district ?? '',
-      city: unidade?.companyAddress?.city ?? '',
-      short_name: unidade?.companyAddress?.short_name ?? '',
-      date_creation: unidade?.date_creation ?? '',
+      address: unidade?.companyAddress?.address ?? "",
+      number: unidade?.companyAddress?.number ?? "",
+      zipcode: maskZipcode(unidade?.companyAddress?.zipcode) ?? "",
+      complement: unidade?.companyAddress?.complement ?? "",
+      district: unidade?.companyAddress?.district ?? "",
+      city: unidade?.companyAddress?.city ?? "",
+      short_name: unidade?.companyAddress?.short_name ?? "",
+      date_creation: unidade?.date_creation ?? "",
       type: unidade?.type ?? null,
       manager: unidade?.manager ?? null,
       director: unidade?.director ?? null,
       director_company: unidade?.director_company ?? null,
       excluded: 0,
     },
-  })
+  });
   const handleSubmit = (formData: Partial<IUnidadeSchema>): void => {
     startTransition(async () => {
-      const result = await saveUnidadeAction(formData)
+      const result = await saveUnidadeAction(formData);
       if (result?.code !== 202) {
         toast({
-          variant: 'danger',
-          title: 'Erro ao salvar unidade! 🤯 ',
+          variant: "danger",
+          title: "Erro ao salvar unidade! 🤯 ",
           description: result?.message,
-        })
+        });
       }
       if (result?.code === 202) {
         toast({
-          variant: 'success',
-          title: 'Ok! Unidade salva com sucesso! 🚀',
-          description: 'Tudo certo unidade salva',
-        })
-        redirect(`/servico/unidades`)
+          variant: "success",
+          title: "Ok! Unidade salva com sucesso! 🚀",
+          description: "Tudo certo unidade salva",
+        });
+        redirect(`/servico/unidades`);
       }
-    })
-  }
+    });
+  };
   const handleDeleteAction = async (
     formData: IUnidadeSchema,
   ): Promise<void> => {
-    formData.excluded = 1
+    formData.excluded = 1;
     startTransition(async () => {
-      const result = await saveUnidadeAction(formData)
+      const result = await saveUnidadeAction(formData);
       if (result?.code !== 202) {
         toast({
-          variant: 'danger',
-          title: 'Erro ao deletar unidade! 🤯 ',
+          variant: "danger",
+          title: "Erro ao deletar unidade! 🤯 ",
           description: result?.message,
-        })
+        });
       }
       if (result?.code === 202) {
         toast({
-          variant: 'success',
-          title: 'Ok! Unidade deletada com sucesso! 🚀',
-          description: 'Tudo certo unidade deletada',
-        })
-        router.push(`/servicos/unidades`)
+          variant: "success",
+          title: "Ok! Unidade deletada com sucesso! 🚀",
+          description: "Tudo certo unidade deletada",
+        });
+        router.push(`/servicos/unidades`);
       }
-    })
-  }
+    });
+  };
 
   const chageValueInput = async (
     field: Partial<Fields>,
@@ -187,16 +187,16 @@ export const TabUnidadeDetails = ({
     form.setValue(field, newValue, {
       shouldDirty: true,
       shouldTouch: true,
-    })
-    if (field === Fields.shortName) await handleCity(newValue)
-    form.clearErrors(field)
-  }
+    });
+    if (field === Fields.shortName) await handleCity(newValue);
+    form.clearErrors(field);
+  };
 
   async function handleCity(value: string): Promise<void> {
-    await getAllCitiesByState(value)
+    await getAllCitiesByState(value);
   }
 
-  const arrayCitiesByState = cityStore().cities
+  const arrayCitiesByState = cityStore().cities;
 
   const handleCep = async (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -205,58 +205,57 @@ export const TabUnidadeDetails = ({
       startTransition(async () => {
         const { logradouro, localidade, uf, bairro } = await getCep(
           e.target?.value,
-        )
+        );
 
-        if (localidade === '' || localidade === undefined) {
-          states = []
+        if (localidade === "" || localidade === undefined) {
+          states = [];
           toast({
-            variant: 'danger',
-            title: 'Cep Incorreto! 🤯 ',
-            description: 'Cep não encontrado',
-          })
-          return
+            variant: "danger",
+            title: "Cep Incorreto! 🤯 ",
+            description: "Cep não encontrado",
+          });
+          return;
         }
-        await chageValueInput(Fields.address, logradouro)
-        await chageValueInput(Fields.shortName, uf)
-        await chageValueInput(Fields.city, localidade)
-        await chageValueInput(Fields.district, bairro)
-      })
+        await chageValueInput(Fields.address, logradouro);
+        await chageValueInput(Fields.shortName, uf);
+        await chageValueInput(Fields.city, localidade);
+        await chageValueInput(Fields.district, bairro);
+      });
     }
-  }
+  };
   const types = [
     {
       id: 1,
-      type: 'UNIDADE',
+      type: "UNIDADE",
     },
     {
       id: 2,
-      type: 'BATALHÃO',
+      type: "BATALHÃO",
     },
     {
       id: 3,
-      type: 'COMANDO',
+      type: "COMANDO",
     },
     {
       id: 4,
-      type: 'INDEPEDENTE',
+      type: "INDEPEDENTE",
     },
-  ]
-
+  ];
   return (
     <>
       <Card x-chunk="dashboard-06-chunk-0">
         <div className="flex items-center">
-          <div className="flex w-full items-center justify-between gap-4  space-y-2 p-6">
+          <div className="flex w-full items-center justify-between gap-4 space-y-2 p-6">
             <h1 className="ml-4 mr-auto text-xl font-bold">Detalhes</h1>
-            {session?.role === 'admin' && (
+            {session?.role === "admin" && (
               <div>
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button
                       disabled={pending}
                       className={cn(
-                        buttonVariants({ variant: 'outline' }),
-                        'group',
+                        buttonVariants({ variant: "outline" }),
+                        "group",
                       )}
                     >
                       <LuTrash2
@@ -288,9 +287,8 @@ export const TabUnidadeDetails = ({
                           <Button
                             className="ml-2"
                             type="button"
-                             
                             onClick={form.handleSubmit(async (data) => {
-                              await handleDeleteAction(data)
+                              await handleDeleteAction(data);
                             })}
                           >
                             Confirmar
@@ -303,12 +301,12 @@ export const TabUnidadeDetails = ({
 
                 <Button
                   onClick={() => {
-                    setDisabled(!disabled)
+                    setDisabled(!disabled);
                   }}
                   disabled={pending}
                   className={cn(
-                    buttonVariants({ variant: 'outline' }),
-                    'group ',
+                    buttonVariants({ variant: "outline" }),
+                    "group",
                   )}
                 >
                   <LuClipboardPen
@@ -320,28 +318,27 @@ export const TabUnidadeDetails = ({
             )}
           </div>
         </div>
-        <div className="my-8 p-6 md:px-28 md:py-10">
+        <div className="p-6">
           <Form {...form}>
             <LoadingPage pending={pending} />
             <form
-               
               onSubmit={form.handleSubmit(async (data) => {
-                handleSubmit(data)
+                handleSubmit(data);
               })}
               className="w-full space-y-4"
             >
-              <div className="grid h-full w-full grid-cols-12 ">
-                <div className=" relative col-start-1 col-end-6   mr-4 hidden h-60 justify-center rounded-[8px] border border-muted-foreground/10 md:flex">
+              <div className="grid h-full w-full grid-cols-12">
+                <div className="relative col-start-1 col-end-6 mr-4 hidden h-60 justify-center rounded-[8px] border border-muted-foreground/10 md:flex">
                   <div className="absolute -left-3 -top-3">
                     <EditPhoto
                       disabled={disabled}
                       directoryFile={
                         process.env.NEXT_PUBLIC_API_GSO &&
-                        form?.getValues('image')
+                        form?.getValues("image")
                           ? process.env.NEXT_PUBLIC_API_GSO +
-                            form?.getValues('image')
+                            form?.getValues("image")
                           : process.env.NEXT_PUBLIC_API_GSO +
-                            '/public/images/img.png'
+                            "/public/images/img.png"
                       }
                       updateFormExternal={form}
                     />
@@ -349,11 +346,11 @@ export const TabUnidadeDetails = ({
                   <Image
                     src={
                       process.env.NEXT_PUBLIC_API_GSO != null &&
-                      form?.getValues('image') != null
+                      form?.getValues("image") != null
                         ? process.env.NEXT_PUBLIC_API_GSO +
-                          form?.getValues('image')
+                          form?.getValues("image")
                         : process.env.NEXT_PUBLIC_API_GSO +
-                          '/public/images/img.png'
+                          "/public/images/img.png"
                     }
                     width={500}
                     height={500}
@@ -363,7 +360,7 @@ export const TabUnidadeDetails = ({
                   />
                 </div>
 
-                <div className="col-start-1 col-end-13 flex h-full flex-col justify-evenly  md:col-start-6  ">
+                <div className="col-start-1 col-end-13 flex h-full flex-col justify-evenly md:col-start-6">
                   <FormField
                     control={form.control}
                     name="id_corporation"
@@ -374,7 +371,7 @@ export const TabUnidadeDetails = ({
                           className="flex items-center gap-1 text-muted-foreground"
                         >
                           <LuLandmark /> Corporação
-                        </FormLabel>{' '}
+                        </FormLabel>{" "}
                         <Popover>
                           <PopoverTrigger asChild>
                             <FormControl>
@@ -382,15 +379,14 @@ export const TabUnidadeDetails = ({
                                 variant="outline"
                                 role="combobox"
                                 className={cn(
-                                  'w-full justify-between',
-                                  disabled && 'text-muted-foreground',
+                                  "w-full justify-between",
+                                  disabled && "text-muted-foreground",
                                 )}
                               >
-                                {field.value !== null
-                                  ? corporations?.find(
-                                      (corp) => corp.id === field.value,
-                                    )?.short_name_corp
-                                  : 'Selecione uma corporacao'}
+                                {corporations?.find((corp) => {
+                                  return corp.id === field.value;
+                                })?.short_name_corp ??
+                                  "Selecione uma corporacao"}
                                 <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                               </Button>
                             </FormControl>
@@ -408,20 +404,19 @@ export const TabUnidadeDetails = ({
                                       disabled={disabled}
                                       value={corp?.id?.toString()}
                                       key={index}
-                                       
                                       onSelect={async () => {
                                         form.setValue(
-                                          'id_corporation',
+                                          "id_corporation",
                                           corp?.id,
-                                        )
+                                        );
                                       }}
                                     >
                                       <LuCheck
                                         className={cn(
-                                          'mr-2 h-4 w-4',
+                                          "mr-2 h-4 w-4",
                                           corp.id === field.value
-                                            ? 'opacity-100'
-                                            : 'opacity-0',
+                                            ? "opacity-100"
+                                            : "opacity-0",
                                         )}
                                       />
                                       {corp.short_name_corp}
@@ -474,7 +469,7 @@ export const TabUnidadeDetails = ({
                           className="flex items-center gap-1 text-muted-foreground"
                         >
                           <LuMousePointerClick /> Tipo
-                        </FormLabel>{' '}
+                        </FormLabel>{" "}
                         <Popover>
                           <PopoverTrigger asChild>
                             <FormControl>
@@ -482,15 +477,15 @@ export const TabUnidadeDetails = ({
                                 variant="outline"
                                 role="combobox"
                                 className={cn(
-                                  'w-full justify-between',
-                                  disabled && 'text-muted-foreground',
+                                  "w-full justify-between",
+                                  disabled && "text-muted-foreground",
                                 )}
                               >
                                 {field.value !== null
                                   ? types?.find(
                                       (typeItem) => typeItem.id === field.value,
                                     )?.type
-                                  : 'Selecione um membro'}
+                                  : "Selecione um membro"}
                                 <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                               </Button>
                             </FormControl>
@@ -507,15 +502,15 @@ export const TabUnidadeDetails = ({
                                       value={String(typeItem.id)}
                                       key={index}
                                       onSelect={() => {
-                                        form.setValue('type', typeItem.id)
+                                        form.setValue("type", typeItem.id);
                                       }}
                                     >
                                       <LuCheck
                                         className={cn(
-                                          'mr-2 h-4 w-4',
+                                          "mr-2 h-4 w-4",
                                           typeItem.id === field.value
-                                            ? 'opacity-100'
-                                            : 'opacity-0',
+                                            ? "opacity-100"
+                                            : "opacity-0",
                                         )}
                                       />
                                       {typeItem.type}
@@ -541,20 +536,20 @@ export const TabUnidadeDetails = ({
                           className="flex items-center gap-1 text-muted-foreground"
                         >
                           <LuCalendar /> Data criação
-                        </FormLabel>{' '}
+                        </FormLabel>{" "}
                         <Popover>
                           <PopoverTrigger asChild>
                             <FormControl>
                               <Button
                                 disabled={disabled}
-                                variant={'outline'}
+                                variant={"outline"}
                                 className={cn(
-                                  'min-w-[240px] pl-3 text-left font-normal',
-                                  field?.value?.toString() === '' &&
-                                    'text-muted-foreground',
+                                  "min-w-[240px] pl-3 text-left font-normal",
+                                  field?.value?.toString() === "" &&
+                                    "text-muted-foreground",
                                 )}
                               >
-                                {field?.value?.toString() !== '' ? (
+                                {field?.value?.toString() !== "" ? (
                                   field?.value
                                 ) : (
                                   <span>Selecione uma data</span>
@@ -572,13 +567,13 @@ export const TabUnidadeDetails = ({
                               mode="single"
                               selected={date}
                               onSelect={(date) => {
-                                if (date == null) return
-                                setDate(date)
-                                field.onChange(format(date, 'dd/MM/yyyy'))
+                                if (date == null) return;
+                                setDate(date);
+                                field.onChange(format(date, "dd/MM/yyyy"));
                               }}
                               disabled={(date) =>
                                 date > new Date() ||
-                                date < new Date('1900-01-01')
+                                date < new Date("1900-01-01")
                               }
                               initialFocus
                             />
@@ -591,7 +586,7 @@ export const TabUnidadeDetails = ({
                 </div>
               </div>
 
-              <div className="flex w-full flex-col  gap-2 md:flex-row">
+              <div className="flex w-full flex-col gap-2 md:flex-row">
                 <FormField
                   control={form.control}
                   name="cnpj"
@@ -606,7 +601,7 @@ export const TabUnidadeDetails = ({
                       <FormControl>
                         <MyInputMask
                           className={cn(
-                            'flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
+                            "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
                             className,
                           )}
                           {...field}
@@ -651,12 +646,11 @@ export const TabUnidadeDetails = ({
                   )}
                 />
               </div>
-              <div className="flex w-full flex-col  gap-2 md:flex-row">
+              <div className="flex w-full flex-col gap-2 md:flex-row">
                 <FormField
                   control={form.control}
                   name="zipcode"
                   render={({ field }) => (
-                     
                     <FormItem onChange={handleCep}>
                       <FormLabel
                         htmlFor="zipcode"
@@ -708,7 +702,7 @@ export const TabUnidadeDetails = ({
                   )}
                 />
               </div>
-              <div className="flex w-full flex-col  gap-2 md:flex-row">
+              <div className="flex w-full flex-col gap-2 md:flex-row">
                 <FormField
                   control={form.control}
                   name="number"
@@ -761,7 +755,7 @@ export const TabUnidadeDetails = ({
                   )}
                 />
               </div>
-              <div className="flex w-full flex-col  gap-2 md:flex-row">
+              <div className="flex w-full flex-col gap-2 md:flex-row">
                 <FormField
                   control={form.control}
                   name="short_name"
@@ -772,7 +766,7 @@ export const TabUnidadeDetails = ({
                         className="flex items-center gap-1 text-muted-foreground"
                       >
                         <LuLandmark /> Estado
-                      </FormLabel>{' '}
+                      </FormLabel>{" "}
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -780,15 +774,15 @@ export const TabUnidadeDetails = ({
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                'w-full justify-between',
-                                disabled && 'text-muted-foreground',
+                                "w-full justify-between",
+                                disabled && "text-muted-foreground",
                               )}
                             >
                               {field.value !== null
                                 ? states?.find(
                                     (state) => state.sigla === field.value,
                                   )?.nome
-                                : 'Selecione um Estado'}
+                                : "Selecione um Estado"}
                               <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
@@ -804,18 +798,17 @@ export const TabUnidadeDetails = ({
                                     disabled={disabled}
                                     value={state.sigla}
                                     key={index}
-                                     
                                     onSelect={async () => {
-                                      await handleCity(state?.sigla)
-                                      form.setValue('short_name', state?.sigla)
+                                      await handleCity(state?.sigla);
+                                      form.setValue("short_name", state?.sigla);
                                     }}
                                   >
                                     <LuCheck
                                       className={cn(
-                                        'mr-2 h-4 w-4',
+                                        "mr-2 h-4 w-4",
                                         state.sigla === field.value
-                                          ? 'opacity-100'
-                                          : 'opacity-0',
+                                          ? "opacity-100"
+                                          : "opacity-0",
                                       )}
                                     />
                                     {state.nome}
@@ -841,7 +834,7 @@ export const TabUnidadeDetails = ({
                         className="flex items-center gap-1 text-muted-foreground"
                       >
                         <LuGlobe /> Cidade
-                      </FormLabel>{' '}
+                      </FormLabel>{" "}
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -849,16 +842,16 @@ export const TabUnidadeDetails = ({
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                'w-full justify-between',
+                                "w-full justify-between",
 
-                                disabled && 'text-muted-foreground',
+                                disabled && "text-muted-foreground",
                               )}
                             >
-                              {field.value !== ''
+                              {field.value !== ""
                                 ? arrayCitiesByState?.find(
                                     (city) => city.nome === field.value,
                                   )?.nome
-                                : 'Selecione uma Cidade'}
+                                : "Selecione uma Cidade"}
                               <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
@@ -875,15 +868,15 @@ export const TabUnidadeDetails = ({
                                     value={city.nome}
                                     key={index}
                                     onSelect={() => {
-                                      form.setValue('city', city.nome)
+                                      form.setValue("city", city.nome);
                                     }}
                                   >
                                     <LuCheck
                                       className={cn(
-                                        'mr-2 h-4 w-4',
+                                        "mr-2 h-4 w-4",
                                         city.nome === field.value
-                                          ? 'opacity-100'
-                                          : 'opacity-0',
+                                          ? "opacity-100"
+                                          : "opacity-0",
                                       )}
                                     />
                                     {city.nome}
@@ -926,13 +919,13 @@ export const TabUnidadeDetails = ({
                   )}
                 />
               </div>
-              <div className="flex w-full flex-col  justify-end gap-2 md:flex-row">
+              <div className="flex w-full flex-col justify-end gap-2 md:flex-row">
                 {!disabled && (
                   <Button
                     disabled={pending && !form.formState.isValid}
                     className={cn(
-                      buttonVariants({ variant: 'default' }),
-                      ' w-full animate-fadeIn  md:w-1/3 ',
+                      buttonVariants({ variant: "default" }),
+                      "w-full animate-fadeIn md:w-1/3",
                     )}
                     type="submit"
                   >
@@ -941,13 +934,13 @@ export const TabUnidadeDetails = ({
                     )}
                     Salvar
                   </Button>
-                )}{' '}
+                )}{" "}
               </div>
             </form>
           </Form>
         </div>
       </Card>
     </>
-  )
-}
-export default TabUnidadeDetails
+  );
+};
+export default TabUnidadeDetails;

@@ -1,19 +1,15 @@
 "use client";
 
-import * as React from "react";
+import React, { ComponentProps, useState } from "react";
 
 import {
   Building,
   Building2Icon,
   Calendar1Icon,
-  CogIcon,
+  Settings,
   Siren,
-  UserCog,
   UserCog2,
-  UserCog2Icon,
-  UserCogIcon,
 } from "lucide-react";
-
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
 import { TeamSwitcher } from "./team-switcher";
@@ -36,8 +32,9 @@ import { CompanySwitcher } from "@/components/Sidebar/company-switcher";
 import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
 import { NavAdmin } from "@/components/Sidebar/nav-admin";
 import IconBuildPlus from "@/icons/IconBuildPlus";
-import { LuUserCog } from "react-icons/lu";
 import IconPrivileges from "@/icons/IconPrivileges";
+import IconManager from "@/icons/IconManager";
+import IconPuzzle from "@/icons/IconPuzzle";
 
 interface AppSidebarProps {
   corp?: IOrganizacaoSchema;
@@ -46,9 +43,9 @@ interface AppSidebarProps {
 export function AppSidebar({
   corp,
   ...props
-}: AppSidebarProps & React.ComponentProps<typeof Sidebar>) {
+}: AppSidebarProps & ComponentProps<typeof Sidebar>) {
   const { data: session } = useSession();
-  const [compSelected, setCompSelected] = React.useState(
+  const [compSelected, setCompSelected] = useState(
     corp?.companies
       ? (corp?.companies[0] as IUnidadeSchema)
       : ({} as IUnidadeSchema),
@@ -207,7 +204,7 @@ export function AppSidebar({
         items: [
           {
             title: "Usuários",
-            icon: <IconBuildPlus width={32} className="fill-foreground/60" />,
+            icon: <IconManager width={32} className="fill-foreground/60" />,
             url: "/servicos/gestor/salvar-organizacao",
           },
           {
@@ -215,9 +212,16 @@ export function AppSidebar({
             icon: <IconPrivileges width={32} className="fill-foreground/60" />,
             url: "/servicos/gestor/salvar-organizacao",
           },
+        ],
+      },
+      {
+        title: "Configurações",
+        url: "#",
+        icon: Settings,
+        items: [
           {
-            title: "Adicionar Corporação",
-            icon: <IconBuildPlus width={32} className="fill-foreground/60" />,
+            title: "Módulos",
+            icon: <IconPuzzle width={32} className="stroke-foreground/60" />,
             url: "/servicos/gestor/salvar-organizacao",
           },
         ],

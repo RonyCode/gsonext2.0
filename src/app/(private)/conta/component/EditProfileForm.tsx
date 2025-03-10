@@ -219,10 +219,12 @@ export const EditProfileForm = ({
                   </div>
                   <Image
                     src={
-                      form.getValues("image") ??
-                      session?.image ??
-                      user?.account?.image ??
-                      process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+                      form.getValues("image") &&
+                      session?.image &&
+                      process.env.NEXT_PUBLIC_API_GSO != null
+                        ? process.env.NEXT_PUBLIC_API_GSO + user?.account?.image
+                        : process.env.NEXT_PUBLIC_API_GSO +
+                          "/public/images/img.png"
                     }
                     fill
                     quality={100}

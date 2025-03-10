@@ -27,7 +27,6 @@ export default function PushNotificationToggle() {
   return (
     <div>
       <label className="flex cursor-pointer items-center space-x-2">
-        <span>Notificações Push</span>
         <input
           type="checkbox"
           checked={enabled}
@@ -35,7 +34,7 @@ export default function PushNotificationToggle() {
           className="hidden"
         />
         <div
-          className={`flex h-6 w-12 items-center rounded-full p-1 transition duration-300 ${enabled ? "bg-green-500" : "bg-gray-300"}`}
+          className={`flex h-6 w-12 items-center rounded-full p-1 transition duration-300 ${enabled ? "bg-primary" : "bg-gray-300"}`}
         >
           <div
             className={`h-4 w-4 transform rounded-full bg-white shadow-md transition duration-300 ${enabled ? "translate-x-6" : "translate-x-0"}`}

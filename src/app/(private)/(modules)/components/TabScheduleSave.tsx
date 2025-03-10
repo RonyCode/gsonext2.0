@@ -151,10 +151,8 @@ export const TabScheduleSave = ({
     );
   }, [dateStart]);
 
+  console.log(form.getValues());
   const handleSubmit = async (formData: IScheduleFormSave): Promise<void> => {
-    console.log(JSON.stringify(form.getValues()));
-    console.log(form.formState.errors);
-
     startTransition(async () => {
       const result = await saveScheduleAction(formData);
       if (result?.code !== 202) {
@@ -295,8 +293,8 @@ export const TabScheduleSave = ({
   const handlerCalculateMemberAvailable = () => {
     const arrayMember = unidade?.members?.filter(
       (memberUnidade) =>
-        memberUnidade?.id !== form?.getValues("id_member_comunication") ||
-        memberUnidade?.id !== form?.getValues("id_cmt_sos"),
+        memberUnidade?.id_user !== form?.getValues("id_member_comunication") ||
+        memberUnidade?.id_user !== form?.getValues("id_cmt_sos"),
     );
 
     const arrayMembersVeicles: IMemberSchema[] = [];
@@ -304,7 +302,8 @@ export const TabScheduleSave = ({
       arrayMember?.forEach((memberUnidade) => {
         if (
           vehicle?.members?.some(
-            (memberVehicle) => memberUnidade?.id === memberVehicle?.member?.id,
+            (memberVehicle) =>
+              memberUnidade?.id_user === memberVehicle?.member?.id_user,
           )
         ) {
           arrayMembersVeicles.push(memberUnidade);
@@ -315,7 +314,7 @@ export const TabScheduleSave = ({
     const membersAvailable = arrayMember?.filter(
       (memberUnidade) =>
         !arrayMembersVeicles?.some(
-          (memberVehicle) => memberUnidade?.id === memberVehicle?.id,
+          (memberVehicle) => memberUnidade?.id_user === memberVehicle?.id_user,
         ),
     );
 
@@ -327,16 +326,16 @@ export const TabScheduleSave = ({
       return listVehicles?.some((vehicle) =>
         vehicle?.members?.some(
           (itemForm) =>
-            member?.id === itemForm?.member?.id ||
-            member?.id === form?.getValues("id_member_comunication") ||
-            member?.id === form?.getValues("id_cmt_sos"),
+            member?.id_user === itemForm?.member?.id_user ||
+            member?.id_user === form?.getValues("id_member_comunication") ||
+            member?.id_user === form?.getValues("id_cmt_sos"),
         ),
       );
     }
 
     return (
-      member?.id === form?.getValues("id_member_comunication") ||
-      member?.id === form?.getValues("id_cmt_sos")
+      member?.id_user === form?.getValues("id_member_comunication") ||
+      member?.id_user === form?.getValues("id_cmt_sos")
     );
   };
 
@@ -766,7 +765,8 @@ export const TabScheduleSave = ({
                             >
                               {field?.value != null
                                 ? unidade?.members?.find(
-                                    (itemSeat) => itemSeat?.id === field?.value,
+                                    (userUnidade) =>
+                                      userUnidade?.id_user === field?.value,
                                   )?.name
                                 : "Selecione um membro"}
                               <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -782,19 +782,19 @@ export const TabScheduleSave = ({
                                 {unidade?.members?.map((member, index) => (
                                   <CommandItem
                                     key={index}
-                                    value={String(member?.id)}
+                                    value={String(member?.id_user)}
                                     disabled={disableItem(member)}
                                     onSelect={() => {
                                       form?.setValue(
                                         "id_cmt_sos",
-                                        member?.id ?? undefined,
+                                        member?.id_user ?? undefined,
                                       );
                                     }}
                                   >
                                     <LuCheck
                                       className={cn(
                                         "mr-2 h-4 w-4",
-                                        member?.id === field.value
+                                        member?.id_user === field.value
                                           ? "opacity-100"
                                           : "opacity-0",
                                       )}
@@ -847,7 +847,8 @@ export const TabScheduleSave = ({
                             >
                               {field?.value != null
                                 ? unidade?.members?.find(
-                                    (itemSeat) => itemSeat?.id === field?.value,
+                                    (itemSeat) =>
+                                      itemSeat?.id_user === field?.value,
                                   )?.name
                                 : "Selecione um membro"}
                               <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -864,18 +865,18 @@ export const TabScheduleSave = ({
                                   <CommandItem
                                     key={index}
                                     disabled={disableItem(member)}
-                                    value={String(member?.id)}
+                                    value={String(member?.id_user)}
                                     onSelect={() => {
                                       form?.setValue(
                                         "id_member_comunication",
-                                        member?.id ?? undefined,
+                                        member?.id_user ?? undefined,
                                       );
                                     }}
                                   >
                                     <LuCheck
                                       className={cn(
                                         "mr-2 h-4 w-4",
-                                        member?.id === field.value
+                                        member?.id_user === field.value
                                           ? "opacity-100"
                                           : "opacity-0",
                                       )}

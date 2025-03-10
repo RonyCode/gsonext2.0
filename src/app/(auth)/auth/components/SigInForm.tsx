@@ -1,22 +1,22 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import * as React from 'react'
-import { useTransition } from 'react'
-import { useForm } from 'react-hook-form'
-import { FaSpinner } from 'react-icons/fa6'
-import { LuMail, LuSquareAsterisk } from 'react-icons/lu'
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import * as React from "react";
+import { useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { FaSpinner } from "react-icons/fa6";
+import { LuMail, LuSquareAsterisk } from "react-icons/lu";
 
-import { useSignIn } from '@/app/(auth)/auth/hooks/useSign'
+import { useSignIn } from "@/app/(auth)/auth/hooks/useSign";
 import {
   type ISignInSchema,
   SignInSchema,
-} from '@/app/(auth)/auth/schemas/SignInSchema'
-import LoadingPage from '@/components/Loadings/LoadingPage'
-import { GetUserNotification } from '@/functions/GetNotificationUser'
-import { cn } from '@/lib/utils'
-import { Button } from '@/ui/button'
+} from "@/app/(auth)/auth/schemas/SignInSchema";
+import LoadingPage from "@/components/Loadings/LoadingPage";
+import { GetUserNotification } from "@/functions/GetNotificationUser";
+import { cn } from "@/lib/utils";
+import { Button } from "@/ui/button";
 import {
   Form,
   FormControl,
@@ -24,105 +24,103 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/ui/form'
-import { Icons } from '@/ui/icons'
-import { Input } from '@/ui/input'
-import { toast } from '@/hooks/use-toast'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { setCookie } from 'cookies-next'
-import md5 from 'md5'
+} from "@/ui/form";
+import { Icons } from "@/ui/icons";
+import { Input } from "@/ui/input";
+import { toast } from "@/hooks/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { setCookie } from "cookies-next";
+import md5 from "md5";
 
 type UserAuthFormProps = {
-  className?: Element
-} & React.HTMLAttributes<HTMLDivElement>
+  className?: Element;
+} & React.HTMLAttributes<HTMLDivElement>;
 
 const SigInForm = ({ className, ...props }: UserAuthFormProps) => {
-  const [pending, startTransition] = useTransition()
-  const { signInWithGoogle, signInWithCredentials } = useSignIn()
-  const router = useRouter()
+  const [pending, startTransition] = useTransition();
+  const { signInWithGoogle, signInWithCredentials } = useSignIn();
+  const router = useRouter();
 
   const handleSubmitLogin = (data: ISignInSchema): void => {
     startTransition(async () => {
-      const result = await signInWithCredentials(data)
+      const result = await signInWithCredentials(data);
       if (!result.ok) {
         toast({
-          variant: 'danger',
-          title: 'Erro ao fazer login tente novamente! 🤯 ',
-          description: 'Usuário nao encontrado ou senha Incorreta',
-        })
+          variant: "danger",
+          title: "Erro ao fazer login tente novamente! 🤯 ",
+          description: "Usuário nao encontrado ou senha Incorreta",
+        });
       }
       if (result.ok) {
-        const idMessage = md5(data.email)
-        void GetUserNotification('auth', 'user_logged', idMessage)
+        const idMessage = md5(data.email);
+        void GetUserNotification("auth", "user_logged", idMessage);
         toast({
-          variant: 'success',
-          title: 'Bem vindo de volta! 😍',
-          description: 'Login realizado com sucesso',
-        })
-        router.push(`/`)
+          variant: "success",
+          title: "Bem vindo de volta! 😍",
+          description: "Login realizado com sucesso",
+        });
+        router.push(`/`);
       }
-    })
-  }
-
-
+    });
+  };
 
   const handleClickLogin = async (): Promise<void> => {
-    if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
+    if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
       void navigator.serviceWorker
-        .register('/service-worker/index.js')
+        .register("/service-worker/index.js")
         .then(async (serviceWorker) => {
           let subscriptionResult =
-            await serviceWorker.pushManager.getSubscription()
+            await serviceWorker.pushManager.getSubscription();
           if (subscriptionResult == null) {
             subscriptionResult = await serviceWorker.pushManager.subscribe({
               userVisibleOnly: true,
               applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
-            })
+            });
           }
-          console.log(JSON.stringify(subscriptionResult))
-          setCookie('subscription', JSON.stringify(subscriptionResult))
-        })
+          console.log(JSON.stringify(subscriptionResult));
+          setCookie("subscription", JSON.stringify(subscriptionResult));
+        });
     }
-  }
+  };
 
   const handleSubmitLoginWithGoogle = async (): Promise<void> => {
-    await handleClickLogin()
+    await handleClickLogin();
 
     startTransition(async (): Promise<void> => {
-      await signInWithGoogle()
-    })
-  }
+      await signInWithGoogle();
+    });
+  };
   const form = useForm<ISignInSchema>({
     resolver: zodResolver(SignInSchema),
-    mode: 'all',
+    mode: "all",
     defaultValues: {
-      email: '',
-      senha: '',
+      email: "",
+      senha: "",
     },
-  })
-  let countShow = true
+  });
+  let countShow = true;
 
   const detectCapsLock = (
     keyEvent: React.KeyboardEvent<HTMLInputElement>,
   ): void => {
     if (/[A-Z]/.test(keyEvent.currentTarget.value)) {
       if (countShow) {
-        countShow = false
+        countShow = false;
 
         toast({
-          variant: 'warning',
-          title: 'CAPS LOCK! 📌',
-          description: 'Cuidado a tecla CAPS LOCK está ativa',
-        })
+          variant: "warning",
+          title: "CAPS LOCK! 📌",
+          description: "Cuidado a tecla CAPS LOCK está ativa",
+        });
       }
     }
-  }
+  };
 
   return (
     <>
       <LoadingPage pending={pending} />
 
-      <div className=" flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+      <div className="flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col space-y-2 text-center">
           <h1 className="text-3xl font-semibold tracking-tight">Login</h1>
           <p className="text-sm text-muted-foreground">
@@ -130,15 +128,15 @@ const SigInForm = ({ className, ...props }: UserAuthFormProps) => {
           </p>
         </div>
 
-        <div className={cn('grid gap-6', className)} {...props}>
+        <div className={cn("grid gap-6", className)} {...props}>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(async (data): Promise<void> => {
-                handleSubmitLogin(data)
+                handleSubmitLogin(data);
               })}
               className="w-full space-y-4"
             >
-              {' '}
+              {" "}
               <FormField
                 control={form.control}
                 name="email"
@@ -176,7 +174,7 @@ const SigInForm = ({ className, ...props }: UserAuthFormProps) => {
                       className="flex items-center gap-1"
                     >
                       <LuSquareAsterisk /> Senha
-                    </FormLabel>{' '}
+                    </FormLabel>{" "}
                     <FormControl>
                       <Input
                         {...field}
@@ -202,12 +200,12 @@ const SigInForm = ({ className, ...props }: UserAuthFormProps) => {
               >
                 {pending && <FaSpinner className="mr-2 h-4 w-4 animate-spin" />}
                 Entrar
-              </Button>{' '}
+              </Button>{" "}
               <Link
                 href="/recuperar-senha"
                 className="underline underline-offset-4 hover:text-primary"
               >
-                <p className="p-2  text-sm text-muted-foreground hover:text-primary">
+                <p className="p-2 text-sm text-muted-foreground hover:text-primary">
                   Esqueceu sua senha?
                 </p>
               </Link>
@@ -218,7 +216,7 @@ const SigInForm = ({ className, ...props }: UserAuthFormProps) => {
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2  text-muted-foreground">
+              <span className="bg-background px-2 text-muted-foreground">
                 Ou continue com
               </span>
             </div>
@@ -259,12 +257,12 @@ const SigInForm = ({ className, ...props }: UserAuthFormProps) => {
                 />
                 <path d="M1 1h22v22H1z" fill="none" />
               </svg>
-            )}{' '}
+            )}{" "}
             Google
           </Button>
         </div>
       </div>
     </>
-  )
-}
-export default SigInForm
+  );
+};
+export default SigInForm;

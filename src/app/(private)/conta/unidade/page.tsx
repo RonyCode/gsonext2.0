@@ -1,41 +1,47 @@
 import { getServerSession } from "next-auth";
 import React, { type ReactNode } from "react";
-import { LuCalendarCheck } from "react-icons/lu";
+import { LuBuilding } from "react-icons/lu";
 
 import TabUnidadeDetails from "@/app/(private)/(modules)/components/TabUnidadeDetails";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import { getAllStates } from "@/lib/getAllStates";
-import { getMyUnidade } from "@/lib/GetMyUnidade";
+import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 
 const Page = async (): Promise<ReactNode> => {
-  const sesssion = await getServerSession(authOptions);
-  const { data } = await getMyUnidade(
-    sesssion?.id_corporation,
-    sesssion?.id_company,
-    sesssion?.id,
-  );
+  const session = await getServerSession(authOptions);
+  const { data } = await getAllOrganizacoes();
 
+  const corporacaoFound = data?.find((corp) => {
+    return corp?.id === session?.id_corporation;
+  });
+  const unidadeFound = corporacaoFound?.companies?.find((unidade) => {
+    return unidade?.members?.some((member) => member?.id_user === session?.id);
+  });
   const states = await getAllStates();
   return (
     <>
       <CardDefault
-        title={data?.name}
+        title={unidadeFound?.name}
         image={
-          process.env.NEXT_PUBLIC_API_GSO != null && data?.image != null
-            ? process.env.NEXT_PUBLIC_API_GSO + data?.image
+          process.env.NEXT_PUBLIC_API_GSO != null && unidadeFound?.image != null
+            ? process.env.NEXT_PUBLIC_API_GSO + unidadeFound?.image
             : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
         }
         imageMobile={
-          process.env.NEXT_PUBLIC_API_GSO != null && data?.image != null
-            ? process.env.NEXT_PUBLIC_API_GSO + data.image
+          process.env.NEXT_PUBLIC_API_GSO != null && unidadeFound?.image != null
+            ? process.env.NEXT_PUBLIC_API_GSO + unidadeFound.image
             : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
         }
-        description={data?.companyAddress?.city}
-        icon={<LuCalendarCheck size={28} />}
+        description={unidadeFound?.companyAddress?.city}
+        icon={<LuBuilding size={28} />}
       >
-        <div>
-          <TabUnidadeDetails unidade={data} states={states} />
+        <div className="w-full">
+          <TabUnidadeDetails
+            corporations={data}
+            unidade={unidadeFound}
+            states={states}
+          />
         </div>{" "}
       </CardDefault>{" "}
     </>

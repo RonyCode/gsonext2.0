@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import { redirect } from 'next/navigation'
-import * as React from 'react'
-import { useTransition } from 'react'
-import { useForm } from 'react-hook-form'
+import { redirect } from "next/navigation";
+import * as React from "react";
+import { useTransition } from "react";
+import { useForm } from "react-hook-form";
 import {
   FaBuildingColumns,
   FaEnvelope,
@@ -14,28 +14,28 @@ import {
   FaTreeCity,
   FaUser,
   FaUserLock,
-} from 'react-icons/fa6'
-import { LuCheck, LuChevronsUpDown } from 'react-icons/lu'
+} from "react-icons/fa6";
+import { LuCheck, LuChevronsUpDown } from "react-icons/lu";
 
-import { saveUserAction } from '@/actions/saveUserAction'
-import { MyInputMask } from '@/components/Form/Input/myInputMask'
-import LoadingPage from '@/components/Loadings/LoadingPage'
+import { saveUserAction } from "@/actions/saveUserAction";
+import { MyInputMask } from "@/components/Form/Input/myInputMask";
+import LoadingPage from "@/components/Loadings/LoadingPage";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover'
-import { getAllCitiesByState } from '@/lib/getAllCitiesByState'
-import { getCep } from '@/lib/getCep'
-import { cn } from '@/lib/utils'
+} from "@/components/ui/popover";
+import { getAllCitiesByState } from "@/lib/getAllCitiesByState";
+import { getCep } from "@/lib/getCep";
+import { cn } from "@/lib/utils";
 import {
   type IRegisterUserSchema,
   RegisterUserSchema,
-} from '@/schemas/RegisterUserSchema'
-import { cityStore } from '@/stores/Address/CityByStateStore'
-import { type AddressProps, type ResultUserRegistered } from '@/types/index'
-import { Button, buttonVariants } from '@/ui/button'
-import { Calendar } from '@/ui/calendar'
+} from "@/schemas/RegisterUserSchema";
+import { cityStore } from "@/stores/Address/CityByStateStore";
+import { type AddressProps, type ResultUserRegistered } from "@/types/index";
+import { Button, buttonVariants } from "@/ui/button";
+import { Calendar } from "@/ui/calendar";
 import {
   Command,
   CommandEmpty,
@@ -43,7 +43,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/ui/command'
+} from "@/ui/command";
 import {
   Form,
   FormControl,
@@ -51,30 +51,30 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/ui/form'
-import { Input } from '@/ui/input'
-import { toast } from '@/hooks/use-toast'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { CalendarIcon } from '@radix-ui/react-icons'
-import { format } from 'date-fns'
-import { ptBR } from 'date-fns/locale/pt-BR'
+} from "@/ui/form";
+import { Input } from "@/ui/input";
+import { toast } from "@/hooks/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale/pt-BR";
 
 enum Fields {
-  email = 'email',
-  cep = 'cep',
-  endereco = 'endereco',
-  sigla = 'sigla',
-  bairro = 'bairro',
-  cidade = 'cidade',
-  estado = 'estado',
-  senha = 'senha',
-  confirmaSenha = 'confirmaSenha',
+  email = "email",
+  cep = "cep",
+  endereco = "endereco",
+  sigla = "sigla",
+  bairro = "bairro",
+  cidade = "cidade",
+  estado = "estado",
+  senha = "senha",
+  confirmaSenha = "confirmaSenha",
 }
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
-  params: string
-  states: AddressProps[] | null
-}
+  params: string;
+  states: AddressProps[] | null;
+};
 
 // CHAMA O FETCH FORA DO COMPONENTE PARA NAO RE - RENDERIZAR LOOP INFINITO
 // INITIALIZE STATES
@@ -82,58 +82,56 @@ type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
 export const UserRegisterForm = ({
   params,
   states,
-   
+
   className,
   ...props
 }: UserRegisterFormProps): React.ReactElement => {
   const form = useForm<IRegisterUserSchema>({
-    mode: 'all',
-    criteriaMode: 'all',
+    mode: "all",
+    criteriaMode: "all",
     resolver: zodResolver(RegisterUserSchema),
     defaultValues: {
-      nome: '',
+      nome: "",
       email: params,
-      cpf: '',
-      data_nascimento: '',
-      telefone: '',
-      cep: '',
-      endereco: '',
-      numero: '',
-      complemento: '',
-      estado: '',
-      cidade: '',
-      bairro: '',
-      senha: '',
-      confirmaSenha: '',
+      cpf: "",
+      data_nascimento: "",
+      telefone: "",
+      cep: "",
+      endereco: "",
+      numero: "",
+      complemento: "",
+      estado: "",
+      cidade: "",
+      bairro: "",
+      senha: "",
+      confirmaSenha: "",
     },
-  })
+  });
 
-  const [pending, startTransition] = useTransition()
+  const [pending, startTransition] = useTransition();
 
-  const [date, setDate] = React.useState<Date>()
+  const [date, setDate] = React.useState<Date>();
 
   const handleSubmit = (formData: IRegisterUserSchema): void => {
     startTransition(async () => {
-      const result: ResultUserRegistered = await saveUserAction(formData)
-
-      console.log(JSON.stringify(form.getValues()))
+      const result: ResultUserRegistered = await saveUserAction(formData);
       if (result?.data?.id == null) {
         toast({
-          variant: 'danger',
-          title: 'Erro ao cadastrar usuário! 🤯 ',
+          variant: "danger",
+          title: "Erro ao cadastrar usuário! 🤯 ",
           description: result?.message,
-        })
+        });
       }
       if (result?.data?.id != null) {
         toast({
-          variant: 'success',
-          title: 'Ok! Usuário Cadastrado! 🤯 ',
-          description: 'Tudo certo usuário cadastrado',
-        })
-        redirect('/auth')
+          variant: "success",
+          title: "Ok! Usuário Cadastrado! 🤯 ",
+          description: "Tudo certo usuário cadastrado",
+        });
+        redirect("/auth");
       }
-    })
-  }
+    });
+  };
 
   const chageValueInput = async (
     field: Fields,
@@ -142,17 +140,17 @@ export const UserRegisterForm = ({
     form.setValue(field, newValue, {
       shouldDirty: true,
       shouldTouch: true,
-    })
-    if (field === Fields.estado) await handleCity(newValue)
-    form.clearErrors(field)
-  }
+    });
+    if (field === Fields.estado) await handleCity(newValue);
+    form.clearErrors(field);
+  };
 
   async function handleCity(value: string): Promise<void> {
-    await getAllCitiesByState(value)
+    await getAllCitiesByState(value);
   }
 
   // let states = stateStore().states
-  let arrayCitiesByState = cityStore().cities
+  let arrayCitiesByState = cityStore().cities;
 
   const handleCep = async (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -161,50 +159,49 @@ export const UserRegisterForm = ({
       startTransition(async () => {
         const { logradouro, localidade, uf, bairro } = await getCep(
           e.target?.value,
-        )
-        await chageValueInput(Fields.endereco, logradouro)
-        await chageValueInput(Fields.sigla, uf)
-        await chageValueInput(Fields.cidade, localidade)
-        await chageValueInput(Fields.bairro, bairro)
-        await chageValueInput(Fields.estado, uf)
-        if (localidade === '') {
-          states = []
-          arrayCitiesByState = []
+        );
+        await chageValueInput(Fields.endereco, logradouro);
+        await chageValueInput(Fields.sigla, uf);
+        await chageValueInput(Fields.cidade, localidade);
+        await chageValueInput(Fields.bairro, bairro);
+        await chageValueInput(Fields.estado, uf);
+        if (localidade === "") {
+          states = [];
+          arrayCitiesByState = [];
           toast({
-            variant: 'danger',
-            title: 'Cep Incorreto! 🤯 ',
-            description: 'Cep não encontrado',
-          })
+            variant: "danger",
+            title: "Cep Incorreto! 🤯 ",
+            description: "Cep não encontrado",
+          });
         }
-      })
+      });
     }
-  }
+  };
   return (
     <>
-      <div className="  flex  h-full  flex-col ">
+      <div className="flex h-full flex-col">
         <div className="flex flex-col space-y-2 text-center">
           <span className="text-2xl font-semibold tracking-tight">
             Cadastro
           </span>
-          <p className="text-sm text-muted-foreground ">
+          <p className="text-sm text-muted-foreground">
             Complete o cadastro observe os campos obrigatórios
           </p>
         </div>
 
         <div
-          className={cn(' grid place-items-center pt-4  lg:pt-12', className)}
+          className={cn("grid place-items-center pt-4 lg:pt-12", className)}
           {...props}
         >
           <LoadingPage pending={pending} />
           <Form {...form}>
             <form
-               
               onSubmit={form.handleSubmit(async (data) => {
-                handleSubmit(data)
+                handleSubmit(data);
               })}
               className="w-full space-y-4"
             >
-              <div className="flex w-full flex-col  gap-2 md:flex-row">
+              <div className="flex w-full flex-col gap-2 md:flex-row">
                 <FormField
                   control={form.control}
                   name="nome"
@@ -259,7 +256,7 @@ export const UserRegisterForm = ({
                   )}
                 />
               </div>
-              <div className="flex w-full flex-col  gap-2 md:flex-row">
+              <div className="flex w-full flex-col gap-2 md:flex-row">
                 <FormField
                   control={form.control}
                   name="cpf"
@@ -274,7 +271,7 @@ export const UserRegisterForm = ({
                       <FormControl>
                         <MyInputMask
                           className={cn(
-                            'flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
+                            "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
                             className,
                           )}
                           {...field}
@@ -301,14 +298,14 @@ export const UserRegisterForm = ({
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
-                              variant={'outline'}
+                              variant={"outline"}
                               className={cn(
-                                'min-w-[240px] pl-3 text-left font-normal',
-                                field.value.toString() === '' &&
-                                  'text-muted-foreground',
+                                "min-w-[240px] pl-3 text-left font-normal",
+                                field.value.toString() === "" &&
+                                  "text-muted-foreground",
                               )}
                             >
-                              {field.value.toString() !== '' ? (
+                              {field.value.toString() !== "" ? (
                                 field.value
                               ) : (
                                 <span>Selecione uma data</span>
@@ -326,12 +323,12 @@ export const UserRegisterForm = ({
                             mode="single"
                             selected={date}
                             onSelect={(date) => {
-                              if (date == null) return
-                              setDate(date)
-                              field.onChange(format(date, 'dd/MM/yyyy'))
+                              if (date == null) return;
+                              setDate(date);
+                              field.onChange(format(date, "dd/MM/yyyy"));
                             }}
                             disabled={(date) =>
-                              date > new Date() || date < new Date('1900-01-01')
+                              date > new Date() || date < new Date("1900-01-01")
                             }
                             initialFocus
                           />
@@ -369,12 +366,11 @@ export const UserRegisterForm = ({
                   )}
                 />
               </div>
-              <div className="flex w-full flex-col  gap-2 md:flex-row">
+              <div className="flex w-full flex-col gap-2 md:flex-row">
                 <FormField
                   control={form.control}
                   name="cep"
                   render={({ field }) => (
-                     
                     <FormItem onChange={handleCep}>
                       <FormLabel
                         htmlFor="cep"
@@ -426,7 +422,7 @@ export const UserRegisterForm = ({
                   )}
                 />
               </div>
-              <div className="flex w-full flex-col  gap-2 md:flex-row">
+              <div className="flex w-full flex-col gap-2 md:flex-row">
                 <FormField
                   control={form.control}
                   name="numero"
@@ -479,7 +475,7 @@ export const UserRegisterForm = ({
                   )}
                 />
               </div>
-              <div className="flex w-full flex-col  gap-2 md:flex-row">
+              <div className="flex w-full flex-col gap-2 md:flex-row">
                 <FormField
                   control={form.control}
                   name="estado"
@@ -490,7 +486,7 @@ export const UserRegisterForm = ({
                         className="flex items-center gap-1"
                       >
                         <FaBuildingColumns /> Estado
-                      </FormLabel>{' '}
+                      </FormLabel>{" "}
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -498,15 +494,15 @@ export const UserRegisterForm = ({
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                'w-full justify-between',
-                                field.value === '' && 'text-muted-foreground',
+                                "w-full justify-between",
+                                field.value === "" && "text-muted-foreground",
                               )}
                             >
-                              {field.value !== ''
+                              {field.value !== ""
                                 ? states?.find(
                                     (state) => state.sigla === field.value,
                                   )?.nome
-                                : 'Selecione um Estado'}
+                                : "Selecione um Estado"}
                               <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
@@ -521,18 +517,17 @@ export const UserRegisterForm = ({
                                   <CommandItem
                                     value={state.sigla}
                                     key={index}
-                                     
                                     onSelect={async () => {
-                                      await handleCity(state.sigla)
-                                      form.setValue('estado', state.sigla)
+                                      await handleCity(state.sigla);
+                                      form.setValue("estado", state.sigla);
                                     }}
                                   >
                                     <LuCheck
                                       className={cn(
-                                        'mr-2 h-4 w-4',
+                                        "mr-2 h-4 w-4",
                                         state.sigla === field.value
-                                          ? 'opacity-100'
-                                          : 'opacity-0',
+                                          ? "opacity-100"
+                                          : "opacity-0",
                                       )}
                                     />
                                     {state.nome}
@@ -558,7 +553,7 @@ export const UserRegisterForm = ({
                         className="flex items-center gap-1"
                       >
                         <FaBuildingColumns /> Cidade
-                      </FormLabel>{' '}
+                      </FormLabel>{" "}
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -566,15 +561,15 @@ export const UserRegisterForm = ({
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                'w-full justify-between',
-                                field.value === '' && 'text-muted-foreground',
+                                "w-full justify-between",
+                                field.value === "" && "text-muted-foreground",
                               )}
                             >
-                              {field.value !== ''
+                              {field.value !== ""
                                 ? arrayCitiesByState?.find(
                                     (city) => city.nome === field.value,
                                   )?.nome
-                                : 'Selecione uma Cidade'}
+                                : "Selecione uma Cidade"}
                               <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
@@ -590,15 +585,15 @@ export const UserRegisterForm = ({
                                     value={city.nome}
                                     key={index}
                                     onSelect={() => {
-                                      form.setValue('cidade', city.nome)
+                                      form.setValue("cidade", city.nome);
                                     }}
                                   >
                                     <LuCheck
                                       className={cn(
-                                        'mr-2 h-4 w-4',
+                                        "mr-2 h-4 w-4",
                                         city.nome === field.value
-                                          ? 'opacity-100'
-                                          : 'opacity-0',
+                                          ? "opacity-100"
+                                          : "opacity-0",
                                       )}
                                     />
                                     {city.nome}
@@ -641,7 +636,7 @@ export const UserRegisterForm = ({
                   )}
                 />
               </div>
-              <div className="flex w-full flex-col  justify-center gap-2 md:flex-row">
+              <div className="flex w-full flex-col justify-center gap-2 md:flex-row">
                 <FormField
                   control={form.control}
                   name="senha"
@@ -652,7 +647,7 @@ export const UserRegisterForm = ({
                         className="flex items-center gap-1"
                       >
                         <FaUserLock /> Senha
-                      </FormLabel>{' '}
+                      </FormLabel>{" "}
                       <FormControl>
                         <Input
                           {...field}
@@ -679,7 +674,7 @@ export const UserRegisterForm = ({
                         className="flex items-center gap-1"
                       >
                         <FaUserLock /> Repita senha
-                      </FormLabel>{' '}
+                      </FormLabel>{" "}
                       <FormControl>
                         <Input
                           {...field}
@@ -696,12 +691,12 @@ export const UserRegisterForm = ({
                     </FormItem>
                   )}
                 />
-                <div className=" mb-4 mt-2 w-full lg:mt-[1.380rem] lg:w-5/12 lg:gap-1">
+                <div className="mb-4 mt-2 w-full lg:mt-[1.380rem] lg:w-5/12 lg:gap-1">
                   <Button
                     disabled={pending}
                     className={cn(
-                      buttonVariants({ variant: 'default' }),
-                      ' w-full ',
+                      buttonVariants({ variant: "default" }),
+                      "w-full",
                     )}
                     type="submit"
                   >
@@ -709,7 +704,7 @@ export const UserRegisterForm = ({
                       <FaSpinner className="mr-2 h-4 w-4 animate-spin" />
                     )}
                     Cadastrar
-                  </Button>{' '}
+                  </Button>{" "}
                 </div>
               </div>
             </form>
@@ -717,5 +712,5 @@ export const UserRegisterForm = ({
         </div>
       </div>
     </>
-  )
-}
+  );
+};

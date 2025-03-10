@@ -24,19 +24,19 @@ export default async function PrivateLayout({
     return corp?.id === session?.id_corporation;
   });
   return (
-    <div className="w-screen">
+    <div className="w-full">
       <SidebarProvider defaultOpen={defaultOpen}>
         <AppSidebar corp={corpFound} />
         <SidebarInset>
-          <header className="fixed z-10 flex h-16 w-full shrink-0 items-center gap-2 bg-background transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-            <div className="flex items-center gap-2 px-4">
+          <header className="fixed z-10 flex h-14 w-full shrink-0 items-center bg-background transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-14">
+            <div className="flex items-center gap-2">
               <SidebarTrigger className="-ml-1" />
               <Separator orientation="vertical" className="mr-2 h-4" />
-
               <BreadcrumbGso />
             </div>
           </header>
-          <div className="min-h-screen w-full p-4 pt-16">{children}</div>
+
+          <div className="min-h-screen w-full pt-16">{children}</div>
         </SidebarInset>
       </SidebarProvider>
       <FooterNormal />

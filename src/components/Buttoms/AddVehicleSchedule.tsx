@@ -121,10 +121,11 @@ export const AddVehicleSchedule = ({
   const handlerCalculateMemberAvailable = () => {
     let arrayMember = membersCompany?.filter(
       (memberUnidade) =>
-        memberUnidade?.id !== form?.getValues("id_member_comunication"),
+        memberUnidade?.id_user !== form?.getValues("id_member_comunication"),
     );
     arrayMember = arrayMember?.filter(
-      (memberUnidade) => memberUnidade?.id !== form?.getValues("id_cmt_sos"),
+      (memberUnidade) =>
+        memberUnidade?.id_user !== form?.getValues("id_cmt_sos"),
     );
 
     const arrayMembersVeicles: IMemberSchema[] = [];
@@ -132,7 +133,8 @@ export const AddVehicleSchedule = ({
       arrayMember?.forEach((memberUnidade) => {
         if (
           vehicle?.members?.some(
-            (memberVehicle) => memberUnidade?.id === memberVehicle?.member?.id,
+            (memberVehicle) =>
+              memberUnidade?.id_user === memberVehicle?.member?.id_user,
           )
         ) {
           arrayMembersVeicles.push(memberUnidade);
@@ -143,7 +145,7 @@ export const AddVehicleSchedule = ({
     const membersAvailable = arrayMember?.filter(
       (memberUnidade) =>
         !arrayMembersVeicles?.some(
-          (memberVehicle) => memberUnidade?.id === memberVehicle?.id,
+          (memberVehicle) => memberUnidade?.id_user === memberVehicle?.id_user,
         ),
     );
 
@@ -229,7 +231,10 @@ export const AddVehicleSchedule = ({
                                 >
                                   {memberAvailable?.find(
                                     (itemMember: IMemberSchema) =>
-                                      itemMember?.id === field.value?.id,
+                                      itemMember?.id_user ===
+                                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                      // @ts-expect-error
+                                      field.value?.id_user,
                                   )?.name ?? "Selecione um membro"}
                                   <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                 </Button>
@@ -257,12 +262,12 @@ export const AddVehicleSchedule = ({
                                         <LuCheck
                                           className={cn(
                                             "mr-2 h-4 w-4",
-                                            member?.id ===
+                                            member?.id_user ===
                                               vehicle?.members?.find(
                                                 (itemSeat) =>
-                                                  itemSeat?.member?.id ===
-                                                  member?.id,
-                                              )?.member?.id
+                                                  itemSeat?.member?.id_user ===
+                                                  member?.id_user,
+                                              )?.member?.id_user
                                               ? "opacity-100"
                                               : "opacity-0",
                                           )}

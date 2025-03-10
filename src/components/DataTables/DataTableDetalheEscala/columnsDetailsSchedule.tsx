@@ -43,7 +43,7 @@ export function columnsDetailsSchedule(
             <span className="flex items-center truncate font-medium">
               <period.icon className="mr-2 h-4 w-4 text-muted-foreground" />
               {row?.original.hour_start} as{" "}
-              {moment(date + " " + row?.original.hour_start)
+              {moment(new Date(date + " " + row?.original.hour_start))
                 .add({ hours: period?.value })
                 .format("HH:mm")}
             </span>

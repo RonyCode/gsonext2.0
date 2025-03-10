@@ -238,18 +238,11 @@ export interface NotificationMessage {
 }
 
 export interface UserNotification {
-  messages: NotificationMessage[];
-  id: string;
   title: string;
-  type: string;
-  qtd: number;
-  status: string;
-  code: number;
-  notification?: {
-    id_message: string;
-    queue_name: string;
-    exchange: string;
-  };
+  message: string;
+  id_user: string;
+  id_message: string;
+  url: string;
 }
 
 export interface CepProps {
