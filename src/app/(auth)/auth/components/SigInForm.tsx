@@ -14,7 +14,7 @@ import {
   SignInSchema,
 } from "@/app/(auth)/auth/schemas/SignInSchema";
 import LoadingPage from "@/components/Loadings/LoadingPage";
-import { GetUserNotification } from "@/functions/GetNotificationUser";
+import { GetUserNotification } from "@/lib/GetNotificationUser";
 import { cn } from "@/lib/utils";
 import { Button } from "@/ui/button";
 import {

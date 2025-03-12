@@ -1,4 +1,4 @@
-'use server'
+"use server";
 
 export const signInServerActions = async (): Promise<void> => {
   // try {
@@ -11,7 +11,7 @@ export const signInServerActions = async (): Promise<void> => {
   //       return result.data as SignInSchema
   //     }
   //     if (!result.success) {
-  //       console.log(result.error.message)
+  //       console.log(result.error.notification-view)
   //       return JSON.parse(JSON.stringify(result.error as ZodError))
   //     }
   //   }
@@ -20,4 +20,4 @@ export const signInServerActions = async (): Promise<void> => {
   // } catch (error) {
   //   return JSON.parse(JSON.stringify(error as ZodError))
   // }
-}
+};

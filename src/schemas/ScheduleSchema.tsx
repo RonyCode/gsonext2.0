@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const ScheduleSchema = z.object({
   id: z.string().nullable().optional(),
-  id_period: z.number().nullable().optional(),
+  id_period: z.string().nullable().optional(),
   id_company: z.string().nullable().optional(),
   id_corporation: z.string().nullable().optional(),
   id_cmt_sos: z.string().nullable().optional(),

@@ -334,21 +334,20 @@ export const TabUnidadeDetails = ({
                       disabled={disabled}
                       directoryFile={
                         process.env.NEXT_PUBLIC_API_GSO &&
-                        form?.getValues("image")
-                          ? process.env.NEXT_PUBLIC_API_GSO +
-                            form?.getValues("image")
+                        unidade?.image !== null
+                          ? process.env.NEXT_PUBLIC_API_GSO + unidade?.image
                           : process.env.NEXT_PUBLIC_API_GSO +
                             "/public/images/img.png"
                       }
                       updateFormExternal={form}
                     />
                   </div>
+                  {unidade?.image}
                   <Image
                     src={
                       process.env.NEXT_PUBLIC_API_GSO != null &&
-                      form?.getValues("image") != null
-                        ? process.env.NEXT_PUBLIC_API_GSO +
-                          form?.getValues("image")
+                      unidade?.image != null
+                        ? process.env.NEXT_PUBLIC_API_GSO + unidade?.image
                         : process.env.NEXT_PUBLIC_API_GSO +
                           "/public/images/img.png"
                     }
@@ -780,7 +779,7 @@ export const TabUnidadeDetails = ({
                             >
                               {field.value !== null
                                 ? states?.find(
-                                    (state) => state.sigla === field.value,
+                                    (state) => state?.sigla === field.value,
                                   )?.nome
                                 : "Selecione um Estado"}
                               <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />

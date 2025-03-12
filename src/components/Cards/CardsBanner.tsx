@@ -1,9 +1,9 @@
-import React, { type ReactElement } from 'react'
-import { LuBellRing, LuCheck } from 'react-icons/lu'
+import React, { type ReactElement } from "react";
+import { LuBellRing, LuCheck } from "react-icons/lu";
 
-import { EditPhoto } from '../EditPhoto/EditPhoto'
-import { cn } from '@/lib/utils'
-import { Button } from '@/ui/button'
+import { EditPhoto } from "../EditPhoto/EditPhoto";
+import { cn } from "@/lib/utils";
+import { Button } from "@/ui/button";
 import {
   Card,
   CardContent,
@@ -11,10 +11,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/ui/card'
-import { Switch } from '@/ui/switch'
+} from "@/ui/card";
+import { Switch } from "@/ui/switch";
 
-type CardProps = React.ComponentProps<typeof Card>
+type CardProps = React.ComponentProps<typeof Card>;
 
 export const CardsBanner = ({
   // eslint-disable-next-line react/prop-types
@@ -23,21 +23,21 @@ export const CardsBanner = ({
 }: CardProps): ReactElement => {
   const notifications = [
     {
-      title: 'Your call has been confirmed.',
-      description: '1 hour ago',
+      title: "Your call has been confirmed.",
+      description: "1 hour ago",
     },
     {
-      title: 'You have a new message!',
-      description: '1 hour ago',
+      title: "You have a new notification-view!",
+      description: "1 hour ago",
     },
     {
-      title: 'Your subscription is expiring soon!',
-      description: '2 hours ago',
+      title: "Your subscription is expiring soon!",
+      description: "2 hours ago",
     },
-  ]
+  ];
   return (
     <>
-      <Card className={cn(' w-full md:w-[380px]', className)} {...props}>
+      <Card className={cn("w-full md:w-[380px]", className)} {...props}>
         <CardHeader>
           <CardTitle>Notificações</CardTitle>
           <CardDescription>
@@ -45,7 +45,7 @@ export const CardsBanner = ({
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <div className=" flex items-center space-x-4 rounded-md border p-4">
+          <div className="flex items-center space-x-4 rounded-md border p-4">
             <LuBellRing />
             <div className="flex-1 space-y-1">
               <p className="text-sm font-medium leading-none">
@@ -85,5 +85,5 @@ export const CardsBanner = ({
         </CardFooter>
       </Card>
     </>
-  )
-}
+  );
+};

@@ -20,7 +20,7 @@ import {
 import { saveVehicleIntoCorporationAction } from "@/actions/saveVehicleIntoCorporationAction";
 import { EditPhoto } from "@/components/EditPhoto/EditPhoto";
 import LoadingPage from "@/components/Loadings/LoadingPage";
-import { GetUserNotification } from "@/functions/GetNotificationUser";
+import { GetUserNotification } from "@/lib/GetNotificationUser";
 import { getAllVehicles } from "@/lib/GetAllVehicles";
 import { cn } from "@/lib/utils";
 import { VehicleSchema, type IVehicleSchema } from "@/schemas/CarsSchema";
