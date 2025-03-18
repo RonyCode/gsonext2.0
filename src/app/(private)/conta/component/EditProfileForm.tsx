@@ -224,7 +224,7 @@ export const EditProfileForm = ({
                       process.env.NEXT_PUBLIC_API_GSO != null
                         ? process.env.NEXT_PUBLIC_API_GSO + user?.account?.image
                         : process.env.NEXT_PUBLIC_API_GSO +
-                          "/public/images/img.png"
+                          "/public/images/img.svg"
                     }
                     fill
                     quality={100}

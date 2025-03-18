@@ -1,13 +1,13 @@
 import { fetchWrapper } from "@/functions/fetch";
 import { type IUnidadeSchema } from "@/schemas/UnidadeSchema";
 import { type ResponseApi } from "@/types/index";
+import { IMemberSchema } from "@/schemas/MemberSchema";
 
-export const getCompanyById = async (
-  idCorporation: string,
+export const getMembersCompanyById = async (
   idCompany: string,
-): Promise<ResponseApi<IUnidadeSchema>> => {
-  return await fetchWrapper<ResponseApi<IUnidadeSchema>>(
-    `${process.env.NEXT_PUBLIC_NEXT_URL}/api/unidade?id_corporation=${idCorporation}&id_company=${idCompany}`,
+): Promise<ResponseApi<IMemberSchema>> => {
+  return await fetchWrapper<ResponseApi<IMemberSchema>>(
+    `${process.env.NEXT_PUBLIC_NEXT_URL}/api/membros-unidade?id_company=${idCompany}`,
     {
       method: "GET",
       headers: {

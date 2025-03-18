@@ -33,7 +33,6 @@ export const preRegisterUserServerActions = async (
       }
 
       if (!result.success) {
-        console.log(result.error.message);
         return {
           email: "failed",
           status: "failure",

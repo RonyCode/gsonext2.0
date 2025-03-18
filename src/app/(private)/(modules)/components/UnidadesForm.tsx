@@ -17,7 +17,7 @@ export const UnidadesForm = ({ params }: UserRegisterFormProps) => {
 
   const result = use(ImageExist(data?.image));
   if (result.status !== 200 && data?.image) {
-    data.image = process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png";
+    data.image = process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg";
   }
   return (
     <div className="grid flex-1 items-start md:p-4">

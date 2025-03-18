@@ -245,7 +245,7 @@ export const VehicleCorporationForm = ({
                               ? process?.env?.NEXT_PUBLIC_API_GSO +
                                 form.getValues("image")
                               : process.env.NEXT_PUBLIC_API_GSO +
-                                "/public/images/img.png"
+                                "/public/images/img.svg"
                           }
                           updateFormExternal={form as unknown as UseFormReturn}
                         />
@@ -257,7 +257,7 @@ export const VehicleCorporationForm = ({
                             ? process?.env?.NEXT_PUBLIC_API_GSO +
                               form.getValues("image")
                             : process.env.NEXT_PUBLIC_API_GSO +
-                              "/public/images/img.png"
+                              "/public/images/img.svg"
                         }
                         fill
                         alt="imagem veiculo"

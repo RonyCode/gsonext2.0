@@ -38,18 +38,26 @@ import IconPuzzle from "@/icons/IconPuzzle";
 
 interface AppSidebarProps {
   corp?: IOrganizacaoSchema;
+  companies?: IUnidadeSchema[];
 }
 
 export function AppSidebar({
   corp,
+  companies,
   ...props
 }: AppSidebarProps & ComponentProps<typeof Sidebar>) {
   const { data: session } = useSession();
   const [compSelected, setCompSelected] = useState(
-    corp?.companies
-      ? (corp?.companies[0] as IUnidadeSchema)
-      : ({} as IUnidadeSchema),
+    companies ? companies[0] : {},
   );
+
+  React.useEffect(() => {
+    if (session?.id_company) {
+      const comp = companies?.find((comp) => comp.id === session?.id_company);
+      setCompSelected(comp as IUnidadeSchema);
+    }
+  }, [session?.id_company, companies]);
+
   const data = {
     navMain: [
       {
@@ -111,24 +119,24 @@ export function AppSidebar({
           {
             title: "Minha Unidade",
             icon: <IconBuild width={32} className="fill-foreground/60" />,
-            url: `/servicos/unidades/${compSelected.name}-${compSelected.id}`,
+            url: `/servicos/unidades/${compSelected?.name}-${compSelected?.id}`,
           },
           {
             title: "Membros Unidade",
             icon: <IconMembers width={32} className="fill-foreground/60" />,
-            url: `/servicos/unidades/${compSelected.name}-${compSelected.id}/membros`,
+            url: `/servicos/unidades/${compSelected?.name}-${compSelected?.id}/membros`,
           },
           {
             title: "Veículos Unidade",
             icon: (
               <IconCarFrontal width={32} className="stroke-foreground/60" />
             ),
-            url: `/servicos/unidades/${compSelected.name}-${compSelected.id}/veiculos`,
+            url: `/servicos/unidades/${compSelected?.name}-${compSelected?.id}/veiculos`,
           },
           {
             title: "Escalas Unidades",
             icon: <IconCalendar width={32} className="fill-foreground/60" />,
-            url: `/servicos/unidades/${compSelected.name}-${compSelected.id}/escalas`,
+            url: `/servicos/unidades/${compSelected?.name}-${compSelected?.id}/escalas`,
           },
         ],
       },
@@ -183,17 +191,17 @@ export function AppSidebar({
           {
             title: "Adicionar Membro Unidade",
             icon: <IconMembers width={32} className="fill-foreground/60" />,
-            url: `/servicos/unidades/${compSelected.name}-${compSelected.id}/gestor-unidade/membro-unidade-salvar`,
+            url: `/servicos/unidades/${compSelected?.name}-${compSelected?.id}/gestor-unidade/membro-unidade-salvar`,
           },
           {
             title: "Adicionar Veículos Unidade",
             icon: <IconBuildPlus width={32} className="fill-foreground/60" />,
-            url: `/servicos/unidades/${compSelected.name}-${compSelected.id}/gestor-unidade/veiculo-unidade-salvar`,
+            url: `/servicos/unidades/${compSelected?.name}-${compSelected?.id}/gestor-unidade/veiculo-unidade-salvar`,
           },
           {
             title: "Adicionar Escala Unidade",
             icon: <IconCalendar width={32} className="fill-foreground/60" />,
-            url: `/servicos/unidades/${compSelected.name}-${compSelected.id}/gestor-unidade/escala-unidade-salvar`,
+            url: `/servicos/unidades/${compSelected?.name}-${compSelected?.id}/gestor-unidade/escala-unidade-salvar`,
           },
         ],
       },
@@ -233,10 +241,11 @@ export function AppSidebar({
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         {corp && <TeamSwitcher corp={corp} />}
-        {corp?.companies && (
+        {companies && (
           <CompanySwitcher
-            companies={corp?.companies}
+            companies={companies}
             setCompSelectedAction={setCompSelected}
+            idCompany={session?.id_company ?? ""}
           />
         )}
       </SidebarHeader>

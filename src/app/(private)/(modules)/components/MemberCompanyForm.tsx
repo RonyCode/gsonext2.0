@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React, { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { LuBuilding2, LuLoaderCircle, LuSearch } from "react-icons/lu";
@@ -10,7 +10,6 @@ import { DataTableMembers } from "@/components/DataTables/DataTableMembers/data-
 import LoadingPage from "@/components/Loadings/LoadingPage";
 import { searchUsersWithoutCompany } from "@/lib/searchUsersWithoutCompany";
 import { cn } from "@/lib/utils";
-import { type IMemberSchema } from "@/schemas/MemberSchema";
 import {
   type ISaveMemberCompanySchema,
   SaveMemberCompanySchema,
@@ -30,6 +29,7 @@ import { Input } from "@/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { debounce } from "lodash";
 import { toast } from "@/hooks/use-toast";
+import { IUserSchema } from "@/schemas/UsersSchema";
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
   idCorporation?: string;
@@ -44,8 +44,10 @@ export const MemberCompanyForm = ({
   className,
 }: UserRegisterFormProps) => {
   const [pending, startTransition] = useTransition();
-  const [data, setData] = useState<IMemberSchema[]>([]);
+  const [data, setData] = useState<IUserSchema[]>([]);
   const router = useRouter();
+
+  const idCompParam = idCompany?.split("-")[1] ?? "";
 
   const form = useForm<ISaveMemberCompanySchema>({
     mode: "all",
@@ -53,30 +55,30 @@ export const MemberCompanyForm = ({
 
     defaultValues: {
       id_corporation: idCorporation ?? " ",
-      id_company: idCompany ?? " ",
+      id_company: idCompParam ?? " ",
       termo_busca: "",
-      id_member: "",
+      id_user: "",
     },
   });
   const handleSubmit = (formData: ISaveMemberCompanySchema) => {
-    if (formData.id_member !== "" && formData.id_corporation !== "") {
+    if (formData.id_user !== "" && formData.id_corporation !== "") {
       startTransition(async () => {
         const result = await saveMemberIntoCompanyAction(formData);
 
-        if (result?.code !== 202) {
+        if (result?.code !== 200) {
           toast({
             variant: "danger",
             title: "Erro ao salvar membro na unidade! 🤯 ",
             description: result?.message,
           });
         }
-        if (result?.code === 202) {
+        if (result?.code === 200) {
           toast({
             variant: "success",
             title: "Ok! Membro salvo com sucesso! 🚀",
             description: "Tudo certo membro salvo na unidade",
           });
-          // redirect(`/servicos/membros`)
+          redirect(`/servicos/unidades/${idCompany}/membros`);
         }
       });
     }
@@ -89,21 +91,21 @@ export const MemberCompanyForm = ({
         form.getValues("termo_busca"),
       );
       if (result?.code === 200) {
-        setData(result?.data ?? ([] as IMemberSchema[]));
+        setData(result?.data ?? ([] as IUserSchema[]));
       } else {
-        setData([] as IMemberSchema[]);
-        form.resetField("id_member");
+        setData([] as IUserSchema[]);
+        form.resetField("id_user");
       }
     });
   };
 
   const handleCheckboxChange = (value: string): void => {
     if (value === "") {
-      form.setValue("id_member", "");
-      form.setError("id_member", { message: "Usuário nao selecionado" });
+      form.setValue("id_user", "");
+      form.setError("id_user", { message: "Usuário nao selecionado" });
     } else {
-      form.setValue("id_member", value);
-      form.clearErrors("id_member");
+      form.setValue("id_user", value);
+      form.clearErrors("id_user");
     }
   };
 
@@ -209,7 +211,7 @@ export const MemberCompanyForm = ({
                 </Button>
                 <Button
                   disabled={
-                    !form.getValues("id_member") ||
+                    !form.getValues("id_user") ||
                     !form.getValues("id_corporation")
                   }
                   variant="default"

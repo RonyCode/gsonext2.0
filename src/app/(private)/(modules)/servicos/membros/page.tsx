@@ -8,15 +8,15 @@ import { CardWithLogo } from "@/components/Cards/CardWithLogo";
 import { columnsMembers } from "@/components/DataTables/DataTableMembers/columnsMembers";
 import { DataTableMembers } from "@/components/DataTables/DataTableMembers/data-table-members";
 import { authOptions } from "@/lib/auth";
-import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import { Button } from "@/ui/button";
+import { getMembersCorporation } from "@/lib/getMembersCorporation";
+import { IMemberSchema } from "@/schemas/MemberSchema";
 
 const MembrosUnidade = async () => {
   const session = await getServerSession(authOptions);
-  const { data } = await getAllOrganizacoes();
-  const organizacaoFound = data?.find((organizacao) => {
-    return organizacao?.id === session?.id_corporation;
-  });
+  const { data: membersFound } = await getMembersCorporation(
+    session?.id_corporation ?? "",
+  );
   return (
     <div>
       {
@@ -30,12 +30,12 @@ const MembrosUnidade = async () => {
           icon={<LuUsers size={28} />}
           iconDescription={<LuListChecks size={18} />}
         >
-          {organizacaoFound !== undefined ? (
+          {membersFound !== undefined ? (
             <div className="overflow-scroll p-4 lg:overflow-hidden">
-              {organizacaoFound?.members != null && (
+              {membersFound != null && (
                 <DataTableMembers
                   columns={columnsMembers}
-                  data={organizacaoFound?.members}
+                  data={membersFound as IMemberSchema[]}
                 />
               )}
             </div>

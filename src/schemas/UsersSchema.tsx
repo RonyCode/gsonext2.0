@@ -1,16 +1,17 @@
-import { AccountUserSchema } from './AccountUserSchema'
-import { AddressSchema } from './AddressSchema'
-import { AuthUserSchema } from './AuthUserSchema'
-import { ProfileSchema } from './ProfileSchema'
-import { TokenSchema } from './TokenSchema'
-import { z } from 'zod'
+import { AccountUserSchema } from "./AccountUserSchema";
+import { AddressSchema } from "./AddressSchema";
+import { AuthUserSchema } from "./AuthUserSchema";
+import { ProfileSchema } from "./ProfileSchema";
+import { TokenSchema } from "./TokenSchema";
+import { z } from "zod";
 
 export const UserSchema = z.object({
   _id: z.object({ $oid: z.string() }).optional(),
+  id_member: z.string().optional(),
   id: z
     .string()
     .min(1, {
-      message: 'id inválido deve conter no mínimo 1 caracteres',
+      message: "id inválido deve conter no mínimo 1 caracteres",
     })
     .optional()
     .nullable(),
@@ -20,6 +21,6 @@ export const UserSchema = z.object({
   profile: ProfileSchema.optional().nullable(),
   token: TokenSchema.optional().nullable(),
   excluded: z.number().optional().nullable(),
-})
+});
 
-export type IUserSchema = z.infer<typeof UserSchema>
+export type IUserSchema = z.infer<typeof UserSchema>;

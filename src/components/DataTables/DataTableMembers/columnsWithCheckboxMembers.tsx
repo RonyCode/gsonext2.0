@@ -1,21 +1,23 @@
 "use client";
 
 import React from "react";
-import { LuBuilding2, LuMail, LuPhone, LuUser } from "react-icons/lu";
+import { LuBuilding2, LuPhone, LuUser } from "react-icons/lu";
 
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
 import { maskPhone } from "@/functions/masks/maskphone";
-import { type IMemberSchema } from "@/schemas/MemberSchema";
 import { Badge } from "@/ui/badge";
 import { Checkbox } from "@/ui/checkbox";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { type ColumnDef } from "@tanstack/react-table";
+import { maskOcultaCpfCnpj } from "@/functions/masks/maskOcultaCpfCnpj";
+import { IUserSchema } from "@/schemas/UsersSchema";
+export const path = process.env.NEXT_PUBLIC_API_GSO;
 
 export const columnsWithCheckboxMembers = (
   onCheckboxChange: (id: string) => void,
 ) => {
-  const columnsMembers: Array<ColumnDef<IMemberSchema>> = [
+  const columnsMembers: Array<ColumnDef<IUserSchema>> = [
     {
       id: "select",
       accessorKey: "id",
@@ -57,14 +59,14 @@ export const columnsWithCheckboxMembers = (
 
     {
       accessorKey: "name",
+      accessorFn: (row) => row.account?.name, // Acessa o valor diretamente
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Dados Usuário" />
       ),
       cell: ({ row }) => {
-        const accountName = row.original?.name;
-        const accountEmail = row.original?.email;
-        const accountPhone = row.original?.phone;
-        const path = process?.env?.NEXT_PUBLIC_API_GSO ?? "";
+        const accountName = row.original?.account?.name;
+        const imageAccount = row?.original?.account?.image;
+        const accountPhone = row.original?.account?.phone;
         return (
           <>
             <div className="flex min-w-64 items-center space-x-2 text-[0.8500rem] text-muted-foreground">
@@ -72,11 +74,12 @@ export const columnsWithCheckboxMembers = (
                 <AvatarImage
                   className="aspect-square rounded-full object-cover"
                   src={
-                    row?.original?.image !== null && path !== undefined
-                      ? path + row?.original?.image
+                    imageAccount !== null && imageAccount !== undefined
+                      ? path + imageAccount
                       : path + "/public/images/avatar.svg"
                   }
                 />
+
                 <AvatarFallback>{<LuBuilding2 size={36} />}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col justify-center">
@@ -85,12 +88,7 @@ export const columnsWithCheckboxMembers = (
                     <LuUser size={16} className="mr-2" /> {accountName}
                   </div>
                 </div>
-                <div>
-                  {" "}
-                  <div className="flex items-center py-0.5">
-                    <LuMail size={16} className="mr-2" /> {accountEmail}
-                  </div>
-                </div>
+
                 <div>
                   {" "}
                   <div className="flex items-center py-0.5">
@@ -106,21 +104,39 @@ export const columnsWithCheckboxMembers = (
     },
 
     {
-      accessorKey: "cpf",
+      accessorKey: "email",
+      accessorFn: (row) => row.auth?.email,
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="CPF" />
+        <DataTableColumnHeader column={column} title="Email" />
       ),
       cell: ({ row }) => {
-        // const type = types.find((type) => type.value === row.getValue('type'))
-        // if (type == null) {
-        //   return null
-        // }
         return (
           <Badge
             variant="secondary"
             className="flex w-full items-center justify-center"
           >
-            {row.getValue("cpf")}
+            {row.getValue("email")}
+          </Badge>
+        );
+      },
+      filterFn: (row, id, value) => {
+        return value.includes(row.getValue(id));
+      },
+    },
+
+    {
+      accessorKey: "cpf",
+      accessorFn: (row) => row.account?.cpf, // Acessa o valor diretamente
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="CPF" />
+      ),
+      cell: ({ row }) => {
+        return (
+          <Badge
+            variant="secondary"
+            className="flex w-full items-center justify-center"
+          >
+            {maskOcultaCpfCnpj(row.getValue("cpf"))}
           </Badge>
         );
       },

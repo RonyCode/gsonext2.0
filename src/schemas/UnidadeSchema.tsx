@@ -20,7 +20,7 @@ export const UnidadeSchema = z.object({
   date_creation: z.string().min(10, { message: "Data inválida" }).optional(),
   type: z.number().optional().nullable(),
   schedules: z.array(ScheduleSchema).nullable().optional(),
-  companyAddress: AddressSchema.optional(),
+  companyAddress: AddressSchema.optional().nullable(),
   members: z.array(MemberSchema).optional(),
   vehicles: z.array(VehicleSchema).optional(),
   manager: z.string().optional().nullable(),

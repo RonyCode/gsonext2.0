@@ -28,7 +28,6 @@ import { MyInputMask } from "@/components/Form/Input/myInputMask";
 import LoadingPage from "@/components/Loadings/LoadingPage";
 import { maskCpfCnpj } from "@/functions/masks/maskCpfCnpj";
 import { maskPhone } from "@/functions/masks/maskphone";
-import { maskZipcode } from "@/functions/masks/maskZipcode";
 import { getAllCitiesByState } from "@/lib/getAllCitiesByState";
 import { getCep } from "@/lib/getCep";
 import { cn } from "@/lib/utils";
@@ -74,10 +73,10 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
 
 enum Fields {
-  address = "address",
-  district = "district",
-  city = "city",
-  shortName = "short_name",
+  address = "companyAddress.address",
+  district = "companyAddress.district",
+  city = "companyAddress.city",
+  shortName = "companyAddress.short_name",
 }
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
@@ -98,7 +97,6 @@ export const TabUnidadeDetails = ({
   const [date, setDate] = React.useState<Date>();
   const { data: session } = useSession();
 
-  const router = useRouter();
   useEffect(() => {
     startTransition(async () => {
       if (unidade?.companyAddress?.short_name != null) {
@@ -121,13 +119,7 @@ export const TabUnidadeDetails = ({
       cnpj: maskCpfCnpj(unidade?.cnpj) ?? "",
       phone: maskPhone(unidade?.phone) ?? "",
       image: unidade?.image ?? null,
-      address: unidade?.companyAddress?.address ?? "",
-      number: unidade?.companyAddress?.number ?? "",
-      zipcode: maskZipcode(unidade?.companyAddress?.zipcode) ?? "",
-      complement: unidade?.companyAddress?.complement ?? "",
-      district: unidade?.companyAddress?.district ?? "",
-      city: unidade?.companyAddress?.city ?? "",
-      short_name: unidade?.companyAddress?.short_name ?? "",
+      companyAddress: unidade?.companyAddress ?? undefined,
       date_creation: unidade?.date_creation ?? "",
       type: unidade?.type ?? null,
       manager: unidade?.manager ?? null,
@@ -152,7 +144,7 @@ export const TabUnidadeDetails = ({
           title: "Ok! Unidade salva com sucesso! 🚀",
           description: "Tudo certo unidade salva",
         });
-        redirect(`/servico/unidades`);
+        redirect(`/servicos/unidades`);
       }
     });
   };
@@ -175,7 +167,7 @@ export const TabUnidadeDetails = ({
           title: "Ok! Unidade deletada com sucesso! 🚀",
           description: "Tudo certo unidade deletada",
         });
-        router.push(`/servicos/unidades`);
+        redirect(`/servicos/unidades`);
       }
     });
   };
@@ -337,19 +329,19 @@ export const TabUnidadeDetails = ({
                         unidade?.image !== null
                           ? process.env.NEXT_PUBLIC_API_GSO + unidade?.image
                           : process.env.NEXT_PUBLIC_API_GSO +
-                            "/public/images/img.png"
+                            "/public/images/img.svg"
                       }
                       updateFormExternal={form}
                     />
                   </div>
-                  {unidade?.image}
                   <Image
                     src={
                       process.env.NEXT_PUBLIC_API_GSO != null &&
-                      unidade?.image != null
-                        ? process.env.NEXT_PUBLIC_API_GSO + unidade?.image
+                      form?.getValues("image") != null
+                        ? process.env.NEXT_PUBLIC_API_GSO +
+                          form?.getValues("image")
                         : process.env.NEXT_PUBLIC_API_GSO +
-                          "/public/images/img.png"
+                          "/public/images/img.svg"
                     }
                     width={500}
                     height={500}
@@ -648,7 +640,7 @@ export const TabUnidadeDetails = ({
               <div className="flex w-full flex-col gap-2 md:flex-row">
                 <FormField
                   control={form.control}
-                  name="zipcode"
+                  name="companyAddress.zipcode"
                   render={({ field }) => (
                     <FormItem onChange={handleCep}>
                       <FormLabel
@@ -660,7 +652,7 @@ export const TabUnidadeDetails = ({
                       <FormControl>
                         <MyInputMask
                           {...field}
-                          id="zipcode"
+                          id="companyAddress.zipcode"
                           placeholder="00000-000"
                           mask="_____-___"
                           autoCapitalize="none"
@@ -676,7 +668,7 @@ export const TabUnidadeDetails = ({
 
                 <FormField
                   control={form.control}
-                  name="address"
+                  name="companyAddress.address"
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel
@@ -688,7 +680,7 @@ export const TabUnidadeDetails = ({
                       <FormControl>
                         <Input
                           {...field}
-                          id="address"
+                          id="companyAddress.address"
                           placeholder="Digite seu endereço"
                           autoCapitalize="none"
                           autoComplete="address"
@@ -704,7 +696,7 @@ export const TabUnidadeDetails = ({
               <div className="flex w-full flex-col gap-2 md:flex-row">
                 <FormField
                   control={form.control}
-                  name="number"
+                  name="companyAddress.number"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel
@@ -716,7 +708,7 @@ export const TabUnidadeDetails = ({
                       <FormControl>
                         <Input
                           {...field}
-                          id="number"
+                          id="companyAddress.number"
                           placeholder="Digite o numero da casa"
                           autoCapitalize="none"
                           autoComplete="number"
@@ -731,11 +723,11 @@ export const TabUnidadeDetails = ({
 
                 <FormField
                   control={form.control}
-                  name="complement"
+                  name="companyAddress.complement"
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel
-                        htmlFor="complement"
+                        htmlFor="companyAddress.complement"
                         className="flex items-center gap-1 text-muted-foreground"
                       >
                         <LuScrollText /> Complemento
@@ -746,6 +738,7 @@ export const TabUnidadeDetails = ({
                           id="complement"
                           placeholder="Digite ponto de referência"
                           autoComplete="complement"
+                          value={field.value?.toString() ?? "N/A"}
                           disabled={disabled}
                         />
                       </FormControl>
@@ -757,11 +750,11 @@ export const TabUnidadeDetails = ({
               <div className="flex w-full flex-col gap-2 md:flex-row">
                 <FormField
                   control={form.control}
-                  name="short_name"
+                  name="companyAddress.short_name"
                   render={({ field }) => (
                     <FormItem className="flex w-full flex-col">
                       <FormLabel
-                        htmlFor="short_name"
+                        htmlFor="companyAddress.short_name"
                         className="flex items-center gap-1 text-muted-foreground"
                       >
                         <LuLandmark /> Estado
@@ -799,7 +792,10 @@ export const TabUnidadeDetails = ({
                                     key={index}
                                     onSelect={async () => {
                                       await handleCity(state?.sigla);
-                                      form.setValue("short_name", state?.sigla);
+                                      form.setValue(
+                                        "companyAddress.short_name",
+                                        state?.sigla,
+                                      );
                                     }}
                                   >
                                     <LuCheck
@@ -825,7 +821,7 @@ export const TabUnidadeDetails = ({
 
                 <FormField
                   control={form.control}
-                  name="city"
+                  name="companyAddress.city"
                   render={({ field }) => (
                     <FormItem className="flex w-full flex-col">
                       <FormLabel
@@ -867,7 +863,10 @@ export const TabUnidadeDetails = ({
                                     value={city.nome}
                                     key={index}
                                     onSelect={() => {
-                                      form.setValue("city", city.nome);
+                                      form.setValue(
+                                        "companyAddress.city",
+                                        city.nome,
+                                      );
                                     }}
                                   >
                                     <LuCheck
@@ -893,11 +892,11 @@ export const TabUnidadeDetails = ({
 
                 <FormField
                   control={form.control}
-                  name="district"
+                  name="companyAddress.district"
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel
-                        htmlFor="district"
+                        htmlFor="companyAddress.district"
                         className="flex items-center gap-1 text-muted-foreground"
                       >
                         <LuFlag /> Bairro
@@ -905,7 +904,7 @@ export const TabUnidadeDetails = ({
                       <FormControl>
                         <Input
                           {...field}
-                          id="district"
+                          id="companyAddress.district"
                           placeholder="district"
                           autoCapitalize="none"
                           autoComplete="district"

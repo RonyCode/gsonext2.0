@@ -5,8 +5,8 @@ import { LuBuilding, LuBuilding2, LuSearchX } from "react-icons/lu";
 
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
-import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import TabCompaniesDetails from "@/app/(private)/(modules)/components/TabCompaniesDetails";
+import { getAllCompanies } from "@/lib/getAllCompanies";
 
 export const metadata: Metadata = {
   title: "GSO | Unidades",
@@ -15,10 +15,7 @@ export const metadata: Metadata = {
 
 const listaUnidades = async () => {
   const session = await getServerSession(authOptions);
-  const dataCorporacao = await getAllOrganizacoes();
-  const corporacaoFound = dataCorporacao?.data?.find((corp) => {
-    return corp?.id === session?.id_corporation;
-  });
+  const { data } = await getAllCompanies(session?.id_corporation);
 
   return (
     <CardDefault
@@ -26,22 +23,18 @@ const listaUnidades = async () => {
       description="Minhas Unidades"
       iconDescription={<LuBuilding size={18} />}
       image={
-        (process.env.NEXT_PUBLIC_API_GSO &&
-          corporacaoFound?.image &&
-          process.env.NEXT_PUBLIC_API_GSO + corporacaoFound?.image) ??
-        process.env.NEXT_PUBLIC_API_GSO + "/public/images/modules.png"
+        process.env.NEXT_PUBLIC_API_GSO &&
+        process.env.NEXT_PUBLIC_API_GSO + "/public/images/modules.jpg"
       }
       imageMobile={
-        (process.env.NEXT_PUBLIC_API_GSO &&
-          corporacaoFound?.image &&
-          process.env.NEXT_PUBLIC_API_GSO + corporacaoFound?.image) ??
-        process.env.NEXT_PUBLIC_API_GSO + "/public/images/modules.png"
+        process.env.NEXT_PUBLIC_API_GSO &&
+        process.env.NEXT_PUBLIC_API_GSO + "/public/images/modules.jpg"
       }
       icon={<LuBuilding2 size={28} />}
     >
       <div className="md:overflow-none h-full w-full overflow-scroll">
-        {corporacaoFound !== null ? (
-          <TabCompaniesDetails companies={corporacaoFound?.companies} />
+        {data !== undefined && data?.length > 0 ? (
+          <TabCompaniesDetails companies={data} />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
             {" "}

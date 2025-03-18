@@ -22,20 +22,30 @@ import {
 import { Avatar, AvatarImage } from "@/ui/avatar";
 import Link from "next/link";
 import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 type SwitcherComp = {
   companies: Partial<IUnidadeSchema[]>;
   setCompSelectedAction: (company: IUnidadeSchema) => void;
+  idCompany: string;
 };
 
 export function CompanySwitcher({
   companies,
   setCompSelectedAction,
+  idCompany,
 }: SwitcherComp) {
   const { isMobile } = useSidebar();
-  const router = useRouter();
-  const [activeTeam, setActiveTeam] = React.useState(companies[0]);
+  const [activeTeam, setActiveTeam] = React.useState({} as IUnidadeSchema);
+
+  React.useEffect(() => {
+    if (idCompany) {
+      const comp = companies?.find((item) => item?.id === idCompany);
+      setActiveTeam(comp as IUnidadeSchema);
+    } else {
+      setActiveTeam(companies[0] as IUnidadeSchema);
+    }
+  }, [idCompany, companies]);
 
   return (
     <SidebarMenu>
@@ -51,10 +61,11 @@ export function CompanySwitcher({
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
                     src={
-                      process.env.NEXT_PUBLIC_API_GSO !== undefined &&
+                      process.env.NEXT_PUBLIC_API_GSO !== null &&
+                      activeTeam?.image !== null &&
                       activeTeam?.image !== undefined
                         ? process.env.NEXT_PUBLIC_API_GSO + activeTeam?.image
-                        : process.env.NEXT_PUBLIC_API_GSO + "/images/avatar.svg"
+                        : process.env.NEXT_PUBLIC_API_GSO + "/images/img.svg"
                     }
                     alt={"img user"}
                   />
@@ -80,13 +91,13 @@ export function CompanySwitcher({
             <DropdownMenuLabel className="text-xs text-muted-foreground">
               Unidades
             </DropdownMenuLabel>
-            {companies.map((team, index) => (
+            {companies.map((comp, index) => (
               <DropdownMenuItem
-                key={team?.name}
+                key={comp?.name}
                 onClick={() => {
-                  setCompSelectedAction(team ?? {});
-                  setActiveTeam(team);
-                  router.push("/servicos");
+                  setCompSelectedAction(comp ?? {});
+                  setActiveTeam(comp ?? {});
+                  redirect("/servicos");
                 }}
                 className="gap-2 p-2"
               >
@@ -95,16 +106,16 @@ export function CompanySwitcher({
                     <AvatarImage
                       src={
                         process.env.NEXT_PUBLIC_API_GSO !== undefined &&
-                        team?.image !== undefined
-                          ? process.env.NEXT_PUBLIC_API_GSO + team.image
-                          : process.env.NEXT_PUBLIC_API_GSO +
-                            "/images/avatar.svg"
+                        comp?.image !== null &&
+                        comp?.image !== undefined
+                          ? process.env.NEXT_PUBLIC_API_GSO + comp.image
+                          : process.env.NEXT_PUBLIC_API_GSO + "/images/img.svg"
                       }
                       alt={"img user"}
                     />
                   </Avatar>
                 </div>
-                <span className="ml-2"> {team?.name}</span>
+                <span className="ml-2"> {comp?.name}</span>
                 <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
               </DropdownMenuItem>
             ))}

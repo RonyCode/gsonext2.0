@@ -33,7 +33,7 @@ const MinhaUnidade = async ({
   const imgValided = await ImageExist(companyFound?.image);
   if (imgValided.status !== 200 && companyFound?.image !== undefined) {
     companyFound.image =
-      process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png";
+      process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg";
   }
   return (
     <div>
@@ -45,11 +45,11 @@ const MinhaUnidade = async ({
           }
           image={
             companyFound?.image ??
-            process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+            process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
           }
           imageMobile={
             companyFound?.image ??
-            process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+            process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
           }
           icon={<LuBuilding size={28} />}
           iconDescription={<MdOutlineSupervisorAccount size={18} />}

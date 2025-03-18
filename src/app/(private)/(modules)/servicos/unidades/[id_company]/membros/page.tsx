@@ -6,8 +6,10 @@ import { MdOutlineSupervisorAccount } from "react-icons/md";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { columnsMembers } from "@/components/DataTables/DataTableMembers/columnsMembers";
 import { DataTableMembers } from "@/components/DataTables/DataTableMembers/data-table-members";
+import { getMembersCompanyById } from "@/lib/GetMembersCompanyById";
+import { getCompanyById } from "@/lib/GetUnidadeById";
 import { authOptions } from "@/lib/auth";
-import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
+import { IMemberSchema } from "@/schemas/MemberSchema";
 
 const MembrosUnidade = async ({
   params,
@@ -16,24 +18,14 @@ const MembrosUnidade = async ({
 }) => {
   const resolvedParams = await params;
   const { id_company } = resolvedParams;
-  const { data } = await getAllOrganizacoes();
   const session = await getServerSession(authOptions);
-  const corpFound = data?.find((corp) => {
-    return corp?.id === session?.id_corporation;
-  });
+  const idCompanyParams = id_company.split("-")[1];
+  const idCorp = session?.id_corporation ?? "";
 
-  const companyFound = corpFound?.companies?.find((comp) => {
-    if (comp?.id === id_company?.split("-")[1]) {
-      return comp;
-    }
-    return null;
-  });
+  const { data: companyFound } = await getCompanyById(idCorp, idCompanyParams);
 
-  const diretor = companyFound?.members?.find((member) => {
-    if (member?.id === companyFound?.director) {
-      return member;
-    }
-  });
+  const { data: companyMembersFound } =
+    await getMembersCompanyById(idCompanyParams);
 
   return (
     <div>
@@ -42,24 +34,24 @@ const MembrosUnidade = async ({
           title={
             companyFound?.name + " / " + companyFound?.companyAddress?.city
           }
-          description={"CMD : " + diretor?.competence + " - " + diretor?.name}
+          description={"CMD "}
           image={
             process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
               ? process.env.NEXT_PUBLIC_API_GSO + companyFound?.image
-              : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+              : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
           }
           imageMobile={
             process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
               ? process.env.NEXT_PUBLIC_API_GSO + companyFound?.image
-              : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+              : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
           }
           icon={<LuBuilding size={28} />}
           iconDescription={<MdOutlineSupervisorAccount size={18} />}
         >
-          {companyFound?.members != null ? (
+          {companyMembersFound != null && true ? (
             <DataTableMembers
               columns={columnsMembers}
-              data={companyFound.members}
+              data={companyMembersFound as IMemberSchema[]}
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center">

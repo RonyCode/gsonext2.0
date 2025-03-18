@@ -8,6 +8,7 @@ import ModuleMinhaUnidade from "@/app/(private)/(modules)/components/module/Modu
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
+import { getCompanyById } from "@/lib/GetUnidadeById";
 
 export const metadata: Metadata = {
   title: "GSO | unidade",
@@ -20,46 +21,27 @@ const MinhaUnidade = async ({
 }) => {
   const resolvedParams = await params;
   const { id_company } = resolvedParams;
-  const { data } = await getAllOrganizacoes();
   const session = await getServerSession(authOptions);
 
-  const corpFound = data?.find((corp) => {
-    if (corp?.id === session?.id_corporation) {
-      return corp;
-    }
-    return null;
-  });
+  const id_compParams = id_company.split("-")[1] ?? "";
+  const id_corporation = session?.id_corporation ?? "";
 
-  const companyFounded = corpFound?.companies?.find((company) => {
-    if (company?.id === id_company?.split("-")[1]) {
-      return company;
-    }
-    return null;
-  });
-
-  const diretor = corpFound?.members?.find((member) => {
-    if (member?.id === companyFounded?.director) {
-      return member;
-    }
-    return null;
-  });
+  const { data } = await getCompanyById(id_corporation, id_compParams);
   return (
     <div>
       {
         <CardDefault
-          title={
-            companyFounded?.name + " / " + companyFounded?.companyAddress?.city
-          }
-          description={"CMD : " + diretor?.competence + " - " + diretor?.name}
+          title={data?.name + " / " + data?.companyAddress?.city}
+          description={"CMD : "}
           image={
-            process.env.NEXT_PUBLIC_API_GSO && companyFounded?.image
-              ? process.env.NEXT_PUBLIC_API_GSO + companyFounded?.image
-              : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+            process.env.NEXT_PUBLIC_API_GSO && data?.image
+              ? process.env.NEXT_PUBLIC_API_GSO + data?.image
+              : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
           }
           imageMobile={
-            process.env.NEXT_PUBLIC_API_GSO && companyFounded?.image
-              ? process.env.NEXT_PUBLIC_API_GSO + companyFounded?.image
-              : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+            process.env.NEXT_PUBLIC_API_GSO && data?.image
+              ? process.env.NEXT_PUBLIC_API_GSO + data?.image
+              : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
           }
           icon={<LuBuilding size={28} />}
           iconDescription={<MdOutlineSupervisorAccount size={18} />}

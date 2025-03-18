@@ -111,7 +111,7 @@ export const TabScheduleSave = ({
       id: schedule?.id ?? null,
       id_company: schedule?.id_company ?? unidade?.id,
       id_corporation: schedule?.id_corporation ?? unidade?.id_corporation,
-      id_period: schedule?.id_period ?? undefined,
+      id_period: Number(schedule?.id_period) ?? undefined,
       id_member_creator: schedule?.id_member_creator ?? session?.id,
       id_cmt_sos: schedule?.id_cmt_sos ?? undefined,
       id_member_comunication: schedule?.id_member_comunication ?? undefined,
@@ -151,7 +151,6 @@ export const TabScheduleSave = ({
     );
   }, [dateStart]);
 
-  console.log(form.getValues());
   const handleSubmit = async (formData: IScheduleFormSave): Promise<void> => {
     startTransition(async () => {
       const result = await saveScheduleAction(formData);
@@ -1030,7 +1029,7 @@ export const TabScheduleSave = ({
                                       ? process.env.NEXT_PUBLIC_API_GSO +
                                         vehicle.image
                                       : process.env.NEXT_PUBLIC_API_GSO +
-                                        "/public/images/img.png"
+                                        "/public/images/img.svg"
                                   }
                                   className="m-2 aspect-square rounded-sm border border-foreground bg-background object-contain transition-all duration-300 ease-in-out hover:scale-[250%] xl:mt-4"
                                   sizes="100"

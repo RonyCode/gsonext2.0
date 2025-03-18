@@ -42,12 +42,12 @@ const CarsUnidade = async ({
           image={
             process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
               ? process.env.NEXT_PUBLIC_API_GSO + companyFound?.image
-              : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+              : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
           }
           imageMobile={
             process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
               ? process.env.NEXT_PUBLIC_API_GSO + companyFound?.image
-              : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+              : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
           }
           icon={<LuBuilding size={28} />}
           iconDescription={<MdOutlineSupervisorAccount size={18} />}

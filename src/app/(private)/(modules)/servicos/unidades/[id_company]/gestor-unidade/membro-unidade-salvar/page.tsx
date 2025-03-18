@@ -1,16 +1,16 @@
 import { type Metadata } from "next";
 import { getServerSession } from "next-auth";
 import React from "react";
-import { LuSaveAll, LuUsers } from "react-icons/lu";
+import { LuUsers } from "react-icons/lu";
 
 import { MemberCompanyForm } from "@/app/(private)/(modules)/components/MemberCompanyForm";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
-import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import { Building } from "lucide-react";
+import { getCompanyById } from "@/lib/GetUnidadeById";
 
 export const metadata: Metadata = {
-  title: "GSO | unidades",
+  title: "GSO | salvar membro unidade",
   description: "Página de unidades do site GSO.",
 };
 
@@ -21,18 +21,11 @@ const SalvarMembro = async ({
 }) => {
   const resolvedParams = await params;
   const { id_company } = resolvedParams;
-  const { data } = await getAllOrganizacoes();
-
   const session = await getServerSession(authOptions);
-  const corpFound = data?.find((corp) => {
-    return corp?.id === session?.id_corporation;
-  });
+  const idCompParam = id_company?.split("-")[1] ?? "";
+  const idCorpParam = session?.id_corporation ?? "";
 
-  const idPramas = id_company?.split("-")[1];
-
-  const companyFound = corpFound?.companies?.find(
-    (comp) => comp?.id === idPramas,
-  );
+  const { data: companyFound } = await getCompanyById(idCorpParam, idCompParam);
 
   return (
     <>
@@ -58,8 +51,8 @@ const SalvarMembro = async ({
       >
         <div className="overflow-scroll lg:overflow-hidden">
           <MemberCompanyForm
-            idCompany={id_company?.split("-")[1]}
-            idCorporation={session?.id_corporation}
+            idCompany={id_company}
+            idCorporation={idCorpParam}
           />
         </div>
       </CardDefault>

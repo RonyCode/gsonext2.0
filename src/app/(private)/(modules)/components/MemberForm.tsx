@@ -76,14 +76,14 @@ export const MemberForm = ({
     if (formData.id_user !== "" && formData.id_corporation !== "") {
       startTransition(async () => {
         const result = await saveMemberIntoCorporationAction(formData);
-        if (result?.code !== 202) {
+        if (result?.code !== 200) {
           toast({
             variant: "danger",
             title: "Erro ao salvar membro na corporação! 🤯 ",
             description: result?.message,
           });
         }
-        if (result?.code === 202) {
+        if (result?.code === 200) {
           await update({
             ...session,
             id_corporation: formData?.id_corporation,
@@ -152,7 +152,7 @@ export const MemberForm = ({
   };
   const debouncedOnChange = debounce(() => {
     handleSearchClick();
-  }, 700);
+  }, 1000);
 
   return (
     <>

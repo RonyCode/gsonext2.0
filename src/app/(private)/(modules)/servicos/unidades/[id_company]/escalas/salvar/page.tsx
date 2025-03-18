@@ -27,7 +27,7 @@ const SalvarEscala = async ({
 
   const imgValided = await ImageExist(data?.image);
   if (imgValided.status !== 200 && data?.image != null) {
-    data.image = process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png";
+    data.image = process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg";
   }
   return (
     <>
@@ -37,11 +37,11 @@ const SalvarEscala = async ({
         icon={<LuCalendarDays size={28} />}
         image={
           data?.image ??
-          process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+          process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
         }
         imageMobile={
           data?.image ??
-          process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+          process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
         }
       >
         {scheduleFound !== null && true && (

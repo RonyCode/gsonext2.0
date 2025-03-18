@@ -33,12 +33,12 @@ const SalvarUnidade = async ({
         image={
           process.env.NEXT_PUBLIC_API_GSO != null
             ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/frota-cars.jpg"
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
         }
         imageMobile={
           process.env.NEXT_PUBLIC_API_GSO != null
             ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/frota-cars.jpg"
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
         }
         icon={<LuCar size={28} />}
       >

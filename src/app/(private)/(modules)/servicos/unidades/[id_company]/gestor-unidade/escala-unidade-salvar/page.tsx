@@ -53,12 +53,12 @@ const SalvarEscala = async ({
         image={
           process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
             ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/escala.png"
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
         }
         imageMobile={
           process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
             ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/escala.png"
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
         }
         icon={<LuSaveAll size={28} />}
       >

@@ -24,12 +24,12 @@ const VehicleCompany = async () => {
       image={
         process.env.NEXT_PUBLIC_API_GSO !== null && corpFound?.image != null
           ? process.env.NEXT_PUBLIC_API_GSO + corpFound?.image
-          : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+          : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
       }
       imageMobile={
         process.env.NEXT_PUBLIC_API_GSO !== null && corpFound?.image != null
           ? process.env.NEXT_PUBLIC_API_GSO + corpFound?.image
-          : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+          : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
       }
       icon={<LuCar size={28} />}
       iconDescription={<MdOutlineSupervisorAccount size={18} />}

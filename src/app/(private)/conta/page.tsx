@@ -22,13 +22,13 @@ const ProfileUser = async () => {
           process.env.NEXT_PUBLIC_API_GSO != null &&
           user?.account?.image != null
             ? process.env.NEXT_PUBLIC_API_GSO + user?.account?.image
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
         }
         imageMobile={
           process.env.NEXT_PUBLIC_API_GSO != null &&
           user?.account?.image != null
             ? process.env.NEXT_PUBLIC_API_GSO + user?.account?.image
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
         }
         icon={<LuUserCheck size={28} />}
       >

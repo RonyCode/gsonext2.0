@@ -15,13 +15,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       body: JSON.stringify({
         id_corporation: body?.id_corporation,
         id_company: body?.id_company,
-        id_member: body?.id_member,
+        id_user: body?.id_user,
       }),
     },
   );
   if (!res.ok) {
     const { message } = await res.json();
-    return NextResponse.json({ message }, { status: 401 });
+    return NextResponse.json({ message }, { status: 400 });
   }
   const response = await res.json();
   return NextResponse.json(response);

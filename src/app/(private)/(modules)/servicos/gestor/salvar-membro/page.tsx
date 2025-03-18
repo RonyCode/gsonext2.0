@@ -10,7 +10,7 @@ import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import { Button } from "@/ui/button";
 
 export const metadata: Metadata = {
-  title: "GSO | unidades",
+  title: "GSO | Membros",
   description: "Página de unidades do site GSO.",
 };
 
@@ -27,12 +27,12 @@ const SalvarMembro = async (): Promise<ReactNode> => {
         image={
           process.env.NEXT_PUBLIC_API_GSO
             ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/members.jpg"
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
         }
         imageMobile={
           process.env.NEXT_PUBLIC_API_GSO
             ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/members.jpg"
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
         }
         icon={<LuSaveAll size={28} />}
       >

@@ -1,8 +1,8 @@
-'use client'
-import Image from 'next/image'
-import { redirect, useRouter } from 'next/navigation'
-import React, { useEffect, useTransition } from 'react'
-import { useForm } from 'react-hook-form'
+"use client";
+import Image from "next/image";
+import { redirect, useRouter } from "next/navigation";
+import React, { useEffect, useTransition } from "react";
+import { useForm } from "react-hook-form";
 import {
   LuBuilding2,
   LuCheck,
@@ -17,26 +17,26 @@ import {
   LuPhone,
   LuScrollText,
   LuTrash2,
-} from 'react-icons/lu'
+} from "react-icons/lu";
 
-import { saveCorporationAction } from '@/app/(private)/(modules)/servicos/gestor/actions/saveCorporationAction'
-import { EditPhoto } from '@/components/EditPhoto/EditPhoto'
-import { MyInputMask } from '@/components/Form/Input/myInputMask'
-import LoadingPage from '@/components/Loadings/LoadingPage'
-import { maskCpfCnpj } from '@/functions/masks/maskCpfCnpj'
-import { maskPhone } from '@/functions/masks/maskphone'
-import { maskZipcode } from '@/functions/masks/maskZipcode'
-import { getAllCitiesByState } from '@/lib/getAllCitiesByState'
-import { getCep } from '@/lib/getCep'
-import { cn } from '@/lib/utils'
+import { saveCorporationAction } from "@/app/(private)/(modules)/servicos/gestor/actions/saveCorporationAction";
+import { EditPhoto } from "@/components/EditPhoto/EditPhoto";
+import { MyInputMask } from "@/components/Form/Input/myInputMask";
+import LoadingPage from "@/components/Loadings/LoadingPage";
+import { maskCpfCnpj } from "@/functions/masks/maskCpfCnpj";
+import { maskPhone } from "@/functions/masks/maskphone";
+import { maskZipcode } from "@/functions/masks/maskZipcode";
+import { getAllCitiesByState } from "@/lib/getAllCitiesByState";
+import { getCep } from "@/lib/getCep";
+import { cn } from "@/lib/utils";
 import {
   type IOrganizacaoSchema,
   OrganizacaoSchema,
-} from '@/schemas/OrganizacaoSchema'
-import { cityStore } from '@/stores/Address/CityByStateStore'
-import type { AddressProps } from '@/types/index'
-import { Button, buttonVariants } from '@/ui/button'
-import { Card } from '@/ui/card'
+} from "@/schemas/OrganizacaoSchema";
+import { cityStore } from "@/stores/Address/CityByStateStore";
+import type { AddressProps } from "@/types/index";
+import { Button, buttonVariants } from "@/ui/button";
+import { Card } from "@/ui/card";
 import {
   Command,
   CommandEmpty,
@@ -44,7 +44,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/ui/command'
+} from "@/ui/command";
 import {
   Dialog,
   DialogClose,
@@ -54,7 +54,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/ui/dialog'
+} from "@/ui/dialog";
 import {
   Form,
   FormControl,
@@ -62,112 +62,112 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/ui/form'
-import { Input } from '@/ui/input'
-import { Popover, PopoverContent, PopoverTrigger } from '@/ui/popover'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useSession } from 'next-auth/react'
-import { toast } from '@/hooks/use-toast'
+} from "@/ui/form";
+import { Input } from "@/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useSession } from "next-auth/react";
+import { toast } from "@/hooks/use-toast";
 
 enum Fields {
-  address = 'address.address',
-  district = 'address.district',
-  city = 'address.city',
-  shortName = 'address.short_name',
+  address = "address.address",
+  district = "address.district",
+  city = "address.city",
+  shortName = "address.short_name",
 }
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
-  organizacao?: IOrganizacaoSchema | null
-  className?: string
-  states?: AddressProps[] | null
-}
+  organizacao?: IOrganizacaoSchema | null;
+  className?: string;
+  states?: AddressProps[] | null;
+};
 
 export const OrganizacaoForm = ({
-                                  organizacao,
-                                  className,
-                                  states,
-                                }: UserRegisterFormProps) => {
-  const [pending, startTransition] = useTransition()
-  const { data:session } = useSession();
-  const [disabled, setDisabled] = React.useState(true)
-  const router = useRouter()
+  organizacao,
+  className,
+  states,
+}: UserRegisterFormProps) => {
+  const [pending, startTransition] = useTransition();
+  const { data: session } = useSession();
+  const [disabled, setDisabled] = React.useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     startTransition(async () => {
       if (organizacao?.address?.short_name != null) {
-        await getAllCitiesByState(organizacao?.address?.short_name)
+        await getAllCitiesByState(organizacao?.address?.short_name);
       }
-    })
-    if (organizacao?.address?.short_name == null) setDisabled(false)
-  }, [organizacao?.address?.short_name, disabled])
+    });
+    if (organizacao?.address?.short_name == null) setDisabled(false);
+  }, [organizacao?.address?.short_name, disabled]);
 
   const form = useForm<Partial<IOrganizacaoSchema>>({
-    mode: 'all',
-    criteriaMode: 'all',
+    mode: "all",
+    criteriaMode: "all",
     resolver: zodResolver(OrganizacaoSchema),
     defaultValues: {
       id: organizacao?.id ?? null,
-      name: organizacao?.name ?? '',
-      short_name_corp: organizacao?.short_name_corp ?? '',
-      cnpj: maskCpfCnpj(organizacao?.cnpj) ?? '',
-      phone: maskPhone(organizacao?.phone) ?? '',
-      image: organizacao?.image ?? '',
+      name: organizacao?.name ?? "",
+      short_name_corp: organizacao?.short_name_corp ?? "",
+      cnpj: maskCpfCnpj(organizacao?.cnpj) ?? "",
+      phone: maskPhone(organizacao?.phone) ?? "",
+      image: organizacao?.image ?? "",
       address: {
-        address: organizacao?.address?.address ?? '',
-        number: organizacao?.address?.number ?? '',
-        zipcode: maskZipcode(organizacao?.address?.zipcode) ?? '',
-        complement: organizacao?.address?.complement ?? '',
-        district: organizacao?.address?.district ?? '',
-        city: organizacao?.address?.city ?? '',
-        short_name: organizacao?.address?.short_name ?? '',
+        address: organizacao?.address?.address ?? "",
+        number: organizacao?.address?.number ?? "",
+        zipcode: maskZipcode(organizacao?.address?.zipcode) ?? "",
+        complement: organizacao?.address?.complement ?? "",
+        district: organizacao?.address?.district ?? "",
+        city: organizacao?.address?.city ?? "",
+        short_name: organizacao?.address?.short_name ?? "",
       },
       excluded: 0,
     },
-  })
+  });
   const handleSubmit = (formData: Partial<IOrganizacaoSchema>): void => {
     startTransition(async () => {
-      const result = await saveCorporationAction(formData)
+      const result = await saveCorporationAction(formData);
       if (result?.code !== 202) {
         toast({
-          variant: 'danger',
-          title: 'Erro ao salvar organização! 🤯 ',
+          variant: "danger",
+          title: "Erro ao salvar organização! 🤯 ",
           description: result?.message,
-        })
+        });
       }
       if (result?.code === 202) {
         toast({
-          variant: 'success',
-          title: 'Ok! organização salva com sucesso! 🚀',
-          description: 'Tudo certo organização salva',
-        })
-        redirect(`/servicos/organizacao`)
+          variant: "success",
+          title: "Ok! organização salva com sucesso! 🚀",
+          description: "Tudo certo organização salva",
+        });
+        redirect(`/servicos/organizacao`);
       }
-    })
-  }
+    });
+  };
   const handleDeleteAction = async (
     formData: Partial<IOrganizacaoSchema>,
   ): Promise<void> => {
-    formData.excluded = 1
+    formData.excluded = 1;
 
     startTransition(async () => {
-      const result = await saveCorporationAction(formData)
+      const result = await saveCorporationAction(formData);
       if (result?.code !== 202) {
         toast({
-          variant: 'danger',
-          title: 'Erro ao deletar organização! 🤯 ',
+          variant: "danger",
+          title: "Erro ao deletar organização! 🤯 ",
           description: result?.message,
-        })
+        });
       }
       if (result?.code === 202) {
         toast({
-          variant: 'success',
-          title: 'Ok! organização deletada com sucesso! 🚀',
-          description: 'Tudo certo organização deletada',
-        })
-        router.push(`/servicos/organizacao`)
+          variant: "success",
+          title: "Ok! organização deletada com sucesso! 🚀",
+          description: "Tudo certo organização deletada",
+        });
+        router.push(`/servicos/organizacao`);
       }
-    })
-  }
+    });
+  };
 
   const chageValueInput = async (
     field: Partial<Fields>,
@@ -176,16 +176,16 @@ export const OrganizacaoForm = ({
     form.setValue(field, newValue, {
       shouldDirty: true,
       shouldTouch: true,
-    })
-    if (field === Fields.shortName) await handleCity(newValue)
-    form.clearErrors(field)
-  }
+    });
+    if (field === Fields.shortName) await handleCity(newValue);
+    form.clearErrors(field);
+  };
 
   async function handleCity(value: string): Promise<void> {
-    await getAllCitiesByState(value)
+    await getAllCitiesByState(value);
   }
 
-  let arrayCitiesByState = cityStore().cities
+  let arrayCitiesByState = cityStore().cities;
 
   const handleCep = async (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -194,136 +194,138 @@ export const OrganizacaoForm = ({
       startTransition(async () => {
         const { logradouro, localidade, uf, bairro } = await getCep(
           e.target?.value,
-        )
+        );
 
-        if (localidade === '' || localidade === undefined) {
-          states = []
-          arrayCitiesByState = []
+        if (localidade === "" || localidade === undefined) {
+          states = [];
+          arrayCitiesByState = [];
           toast({
-            variant: 'danger',
-            title: 'Cep Incorreto! 🤯 ',
-            description: 'Cep não encontrado',
-          })
-          return
+            variant: "danger",
+            title: "Cep Incorreto! 🤯 ",
+            description: "Cep não encontrado",
+          });
+          return;
         }
-        await chageValueInput(Fields.address, logradouro)
-        await chageValueInput(Fields.shortName, uf)
-        await chageValueInput(Fields.city, localidade)
-        await chageValueInput(Fields.district, bairro)
-      })
+        await chageValueInput(Fields.address, logradouro);
+        await chageValueInput(Fields.shortName, uf);
+        await chageValueInput(Fields.city, localidade);
+        await chageValueInput(Fields.district, bairro);
+      });
     }
-  }
+  };
   return (
     <>
       <Card x-chunk="dashboard-06-chunk-0">
         <div className="flex items-center">
-          <div className="flex w-full items-center justify-between gap-2 p-4 ">
+          <div className="flex w-full items-center justify-between gap-2 p-4">
             <h1 className="ml-4 mr-auto text-xl font-bold">Detalhes</h1>
-            {organizacao?.id !== undefined || session?.role === 'admin' && (
-              <div>
+            {organizacao?.id !== undefined ||
+              (session?.role === "admin" && (
+                <div>
                   <Dialog>
-                  <DialogTrigger asChild>
-                    <Button
-                      disabled={pending}
-                      className={cn(
-                        buttonVariants({ variant: 'outline' }),
-                        'group ',
-                      )}
-                    >
-                      <LuTrash2
-                        className="text-foreground group-hover:text-muted-foreground"
-                        size={24}
-                      />
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                      <DialogTitle>Excluir Corporação</DialogTitle>
-                      <DialogDescription>
-                        Está ação precisa ser confirmada
-                      </DialogDescription>
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                      <p>
-                        {' '}
-                        ATENÇÂO!!! Tem certeza que deseja excluir esta Corporação?
-                      </p>
-                    </div>
-                    <DialogFooter>
-                      <DialogClose asChild>
-                        <div>
-                          <Button variant="secondary" type="button">
-                            Cancelar
-                          </Button>
+                    <DialogTrigger asChild>
+                      <Button
+                        disabled={pending}
+                        className={cn(
+                          buttonVariants({ variant: "outline" }),
+                          "group",
+                        )}
+                      >
+                        <LuTrash2
+                          className="text-foreground group-hover:text-muted-foreground"
+                          size={24}
+                        />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                      <DialogHeader>
+                        <DialogTitle>Excluir Corporação</DialogTitle>
+                        <DialogDescription>
+                          Está ação precisa ser confirmada
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="grid gap-4 py-4">
+                        <p>
+                          {" "}
+                          ATENÇÂO!!! Tem certeza que deseja excluir esta
+                          Corporação?
+                        </p>
+                      </div>
+                      <DialogFooter>
+                        <DialogClose asChild>
+                          <div>
+                            <Button variant="secondary" type="button">
+                              Cancelar
+                            </Button>
 
-                          <Button
-                            className="ml-2"
-                            type="button"
-                             
-                            onClick={form.handleSubmit(async (data) => {
-                              await handleDeleteAction(data)
-                            })}
-                          >
-                            Confirmar
-                          </Button>
-                        </div>
-                      </DialogClose>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
+                            <Button
+                              className="ml-2"
+                              type="button"
+                              onClick={form.handleSubmit(async (data) => {
+                                await handleDeleteAction(data);
+                              })}
+                            >
+                              Confirmar
+                            </Button>
+                          </div>
+                        </DialogClose>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
 
-                <Button
-                  onClick={() => {
-                    setDisabled(!disabled)
-                  }}
-                  disabled={pending}
-                  className={cn(
-                    buttonVariants({ variant: 'outline' }),
-                    'group ',
-                  )}
-                >
-                  <LuClipboardPen
-                    className="text-foreground group-hover:text-muted-foreground"
-                    size={24}
-                  />
-                </Button>
-              </div>
-            )}
+                  <Button
+                    onClick={() => {
+                      setDisabled(!disabled);
+                    }}
+                    disabled={pending}
+                    className={cn(
+                      buttonVariants({ variant: "outline" }),
+                      "group",
+                    )}
+                  >
+                    <LuClipboardPen
+                      className="text-foreground group-hover:text-muted-foreground"
+                      size={24}
+                    />
+                  </Button>
+                </div>
+              ))}
           </div>
         </div>
         <div className="my-8 p-6 md:px-28 md:py-10">
           <Form {...form}>
             <LoadingPage pending={pending} />
             <form
-               
               onSubmit={form.handleSubmit(async (data) => {
-                handleSubmit(data)
+                handleSubmit(data);
               })}
               className="w-full space-y-4"
             >
-              <div className="grid h-full w-full grid-cols-12 ">
-                <div className=" relative col-start-1 col-end-6   mr-4 hidden h-60 justify-center md:flex">
+              <div className="grid h-full w-full grid-cols-12">
+                <div className="relative col-start-1 col-end-6 mr-4 hidden h-60 justify-center md:flex">
                   <div className="absolute -left-3 -top-3">
                     <EditPhoto
                       disabled={disabled}
                       directoryFile={
                         process.env.NEXT_PUBLIC_API_GSO &&
-                        form?.getValues('image')
+                        form?.getValues("image")
                           ? process.env.NEXT_PUBLIC_API_GSO +
-                            form?.getValues('image')
+                            form?.getValues("image")
                           : process.env.NEXT_PUBLIC_API_GSO +
-                          '/public/images/img.png'
+                            "/public/images/img.svg"
                       }
                       updateFormExternal={form}
                     />
                   </div>
                   <Image
-                    src={process.env.NEXT_PUBLIC_API_GSO &&
-                    form?.getValues('image')
-                      ? process.env.NEXT_PUBLIC_API_GSO +
-                      form?.getValues('image')
-                      : process.env.NEXT_PUBLIC_API_GSO +
-                      '/public/images/img.png'}
+                    src={
+                      process.env.NEXT_PUBLIC_API_GSO &&
+                      form?.getValues("image")
+                        ? process.env.NEXT_PUBLIC_API_GSO +
+                          form?.getValues("image")
+                        : process.env.NEXT_PUBLIC_API_GSO +
+                          "/public/images/img.svg"
+                    }
                     width={500}
                     height={500}
                     quality={100}
@@ -332,7 +334,7 @@ export const OrganizacaoForm = ({
                   />
                 </div>
 
-                <div className="col-start-1 col-end-13 flex h-full flex-col justify-evenly  md:col-start-6  ">
+                <div className="col-start-1 col-end-13 flex h-full flex-col justify-evenly md:col-start-6">
                   <FormField
                     control={form.control}
                     name="name"
@@ -388,7 +390,7 @@ export const OrganizacaoForm = ({
                 </div>
               </div>
 
-              <div className="flex w-full flex-col  gap-2 md:flex-row">
+              <div className="flex w-full flex-col gap-2 md:flex-row">
                 <FormField
                   control={form.control}
                   name="cnpj"
@@ -403,7 +405,7 @@ export const OrganizacaoForm = ({
                       <FormControl>
                         <MyInputMask
                           className={cn(
-                            'flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
+                            "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
                             className,
                           )}
                           {...field}
@@ -448,12 +450,11 @@ export const OrganizacaoForm = ({
                   )}
                 />
               </div>
-              <div className="flex w-full flex-col  gap-2 md:flex-row">
+              <div className="flex w-full flex-col gap-2 md:flex-row">
                 <FormField
                   control={form.control}
                   name="address.zipcode"
                   render={({ field }) => (
-                     
                     <FormItem onChange={handleCep}>
                       <FormLabel
                         htmlFor="address.zipcode"
@@ -505,7 +506,7 @@ export const OrganizacaoForm = ({
                   )}
                 />
               </div>
-              <div className="flex w-full flex-col  gap-2 md:flex-row">
+              <div className="flex w-full flex-col gap-2 md:flex-row">
                 <FormField
                   control={form.control}
                   name="address.number"
@@ -558,7 +559,7 @@ export const OrganizacaoForm = ({
                   )}
                 />
               </div>
-              <div className="flex w-full flex-col  gap-2 md:flex-row">
+              <div className="flex w-full flex-col gap-2 md:flex-row">
                 <FormField
                   control={form.control}
                   name="address.short_name"
@@ -569,7 +570,7 @@ export const OrganizacaoForm = ({
                         className="flex items-center gap-1 text-muted-foreground"
                       >
                         <LuLandmark /> Estado
-                      </FormLabel>{' '}
+                      </FormLabel>{" "}
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -577,15 +578,15 @@ export const OrganizacaoForm = ({
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                'w-full justify-between',
-                                disabled && 'text-muted-foreground',
+                                "w-full justify-between",
+                                disabled && "text-muted-foreground",
                               )}
                             >
                               {field.value !== null
                                 ? states?.find(
-                                  (state) => state.sigla === field.value,
-                                )?.nome
-                                : 'Selecione um Estado'}
+                                    (state) => state.sigla === field.value,
+                                  )?.nome
+                                : "Selecione um Estado"}
                               <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
@@ -601,18 +602,20 @@ export const OrganizacaoForm = ({
                                     disabled={disabled}
                                     value={state.sigla}
                                     key={index}
-                                     
                                     onSelect={async () => {
-                                      await handleCity(state.sigla)
-                                      form.setValue('address.short_name', state.sigla)
+                                      await handleCity(state.sigla);
+                                      form.setValue(
+                                        "address.short_name",
+                                        state.sigla,
+                                      );
                                     }}
                                   >
                                     <LuCheck
                                       className={cn(
-                                        'mr-2 h-4 w-4',
+                                        "mr-2 h-4 w-4",
                                         state.sigla === field.value
-                                          ? 'opacity-100'
-                                          : 'opacity-0',
+                                          ? "opacity-100"
+                                          : "opacity-0",
                                       )}
                                     />
                                     {state.nome}
@@ -638,7 +641,7 @@ export const OrganizacaoForm = ({
                         className="flex items-center gap-1 text-muted-foreground"
                       >
                         <LuGlobe /> Cidade
-                      </FormLabel>{' '}
+                      </FormLabel>{" "}
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -646,16 +649,16 @@ export const OrganizacaoForm = ({
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                'w-full justify-between',
+                                "w-full justify-between",
 
-                                disabled && 'text-muted-foreground',
+                                disabled && "text-muted-foreground",
                               )}
                             >
-                              {field.value !== ''
+                              {field.value !== ""
                                 ? arrayCitiesByState?.find(
-                                  (city) => city.nome === field.value,
-                                )?.nome
-                                : 'Selecione uma Cidade'}
+                                    (city) => city.nome === field.value,
+                                  )?.nome
+                                : "Selecione uma Cidade"}
                               <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
@@ -672,15 +675,15 @@ export const OrganizacaoForm = ({
                                     value={city.nome}
                                     key={index}
                                     onSelect={() => {
-                                      form.setValue('address.city', city.nome)
+                                      form.setValue("address.city", city.nome);
                                     }}
                                   >
                                     <LuCheck
                                       className={cn(
-                                        'mr-2 h-4 w-4',
+                                        "mr-2 h-4 w-4",
                                         city.nome === field.value
-                                          ? 'opacity-100'
-                                          : 'opacity-0',
+                                          ? "opacity-100"
+                                          : "opacity-0",
                                       )}
                                     />
                                     {city.nome}
@@ -723,13 +726,13 @@ export const OrganizacaoForm = ({
                   )}
                 />
               </div>
-              <div className="flex w-full flex-col  justify-end gap-2 md:flex-row">
-                {!disabled  &&  session?.role === 'admin'&&(
+              <div className="flex w-full flex-col justify-end gap-2 md:flex-row">
+                {!disabled && session?.role === "admin" && (
                   <Button
                     disabled={pending && !form.formState.isValid}
                     className={cn(
-                      buttonVariants({ variant: 'default' }),
-                      ' w-full animate-fadeIn  md:w-1/3 ',
+                      buttonVariants({ variant: "default" }),
+                      "w-full animate-fadeIn md:w-1/3",
                     )}
                     type="submit"
                   >
@@ -738,13 +741,13 @@ export const OrganizacaoForm = ({
                     )}
                     Salvar
                   </Button>
-                )}{' '}
+                )}{" "}
               </div>
             </form>
           </Form>
         </div>
       </Card>
     </>
-  )
-}
-export default OrganizacaoForm
+  );
+};
+export default OrganizacaoForm;

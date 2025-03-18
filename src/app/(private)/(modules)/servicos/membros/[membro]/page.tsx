@@ -23,12 +23,12 @@ const Members = async ({ params }: { params: Promise<{ membro: string }> }) => {
       image={
         process.env.NEXT_PUBLIC_API_GSO && memberFOunded?.image
           ? process.env.NEXT_PUBLIC_API_GSO + memberFOunded?.image
-          : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+          : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
       }
       imageMobile={
         process.env.NEXT_PUBLIC_API_GSO && memberFOunded?.image
           ? process.env.NEXT_PUBLIC_API_GSO + memberFOunded?.image
-          : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+          : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
       }
     >
       teste

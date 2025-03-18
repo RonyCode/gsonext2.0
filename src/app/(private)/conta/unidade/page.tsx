@@ -26,12 +26,12 @@ const Page = async (): Promise<ReactNode> => {
         image={
           process.env.NEXT_PUBLIC_API_GSO != null && unidadeFound?.image != null
             ? process.env.NEXT_PUBLIC_API_GSO + unidadeFound?.image
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
         }
         imageMobile={
           process.env.NEXT_PUBLIC_API_GSO != null && unidadeFound?.image != null
             ? process.env.NEXT_PUBLIC_API_GSO + unidadeFound.image
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.png"
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
         }
         description={unidadeFound?.companyAddress?.city}
         icon={<LuBuilding size={28} />}
