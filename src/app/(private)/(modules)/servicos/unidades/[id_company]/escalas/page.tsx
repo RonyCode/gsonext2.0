@@ -1,14 +1,14 @@
 import { getServerSession } from "next-auth";
 import React, { Suspense } from "react";
 import { LuBuilding } from "react-icons/lu";
-import { MdOutlineSupervisorAccount } from "react-icons/md";
 
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
-import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import CalendarGsoV1 from "@/components/CalendarGso/CalendarGsoV1";
 import LoadingPage from "@/components/Loadings/LoadingPage";
 import { Calendar } from "lucide-react";
+import { getAllSchedulesCompany } from "@/lib/getAllSchedulesCompany";
+import { getCompanyById } from "@/lib/GetCompanyById";
 
 const EscalasUnidade = async ({
   params,
@@ -16,19 +16,21 @@ const EscalasUnidade = async ({
   params: Promise<{ id_company: string }>;
 }) => {
   const resolvedParams = await params;
-  const { id_company } = resolvedParams;
   const session = await getServerSession(authOptions);
-  const { data } = await getAllOrganizacoes();
-  const corpFound = data?.find((corp) => {
-    return corp?.id === session?.id_corporation;
-  });
 
-  const companyFound = corpFound?.companies?.find((comp) => {
-    if (comp?.id === id_company?.split("-")[1]) {
-      return comp;
-    }
-    return null;
-  });
+  const { id_company } = resolvedParams;
+  const idCorporation = session?.id_corporation;
+  const idCompany = id_company?.split("-")[1];
+
+  const { data: schedules } = await getAllSchedulesCompany(
+    idCorporation ?? "",
+    idCompany ?? "",
+  );
+
+  const { data: companyFound } = await getCompanyById(
+    idCorporation ?? "",
+    idCompany ?? "",
+  );
 
   return (
     <>
@@ -48,13 +50,10 @@ const EscalasUnidade = async ({
         icon={<LuBuilding size={28} />}
         iconDescription={<Calendar size={18} />}
       >
-        {companyFound?.schedules != null && (
+        {schedules != null && (
           <div className="m-0 min-h-screen w-full md:p-6">
             <Suspense fallback={<LoadingPage pending={true} />}>
-              <CalendarGsoV1
-                company={companyFound}
-                dayEvent={companyFound.schedules}
-              />
+              <CalendarGsoV1 company={companyFound} schedules={schedules} />
             </Suspense>
           </div>
         )}

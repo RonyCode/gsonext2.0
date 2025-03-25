@@ -7,7 +7,7 @@ import { MemberCompanyForm } from "@/app/(private)/(modules)/components/MemberCo
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import { Building } from "lucide-react";
-import { getCompanyById } from "@/lib/GetUnidadeById";
+import { getCompanyById } from "@/lib/GetCompanyById";
 
 export const metadata: Metadata = {
   title: "GSO | salvar membro unidade",

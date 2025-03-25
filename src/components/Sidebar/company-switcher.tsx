@@ -22,7 +22,7 @@ import {
 import { Avatar, AvatarImage } from "@/ui/avatar";
 import Link from "next/link";
 import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 type SwitcherComp = {
   companies: Partial<IUnidadeSchema[]>;

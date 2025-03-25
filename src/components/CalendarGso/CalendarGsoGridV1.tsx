@@ -7,7 +7,7 @@ import { type IScheduleSchema } from "@/schemas/ScheduleSchema";
 import { Badge } from "@/ui/badge";
 
 type CalendarGsoGridProps = {
-  dayEvent?: Partial<IScheduleSchema>[];
+  schedules?: Partial<IScheduleSchema>[];
   month?: number;
   day?: number;
   year?: number;
@@ -16,7 +16,7 @@ type CalendarGsoGridProps = {
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const CalendarGsoGridV1 = ({
-  dayEvent,
+  schedules,
   month,
   day,
   year,
@@ -45,7 +45,7 @@ const CalendarGsoGridV1 = ({
         >
           {year !== undefined &&
           month !== undefined &&
-          dayEvent?.length === 0 &&
+          schedules?.length === 0 &&
           new Date(year, month, day).setHours(1, 1, 1, 1) <
             new Date().setHours(0, 0, 0, 0) ? (
             <Badge
@@ -58,7 +58,7 @@ const CalendarGsoGridV1 = ({
               </span>
             </Badge>
           ) : (
-            dayEvent?.map((itemEvent, indexEvent) => (
+            schedules?.map((itemEvent, indexEvent) => (
               <div key={indexEvent} className="m-0 self-start pb-1">
                 <Badge
                   variant="outline"

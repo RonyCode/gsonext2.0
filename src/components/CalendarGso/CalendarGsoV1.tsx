@@ -19,11 +19,11 @@ import { columnsDetailsSchedule } from "@/components/DataTables/DataTableDetalhe
 import { useCheckMobile } from "@/functions/IsMobile";
 
 type CalendarGsoV1Props = {
-  dayEvent?: Partial<IScheduleSchema>[];
+  schedules?: Partial<IScheduleSchema>[];
   company?: Partial<IUnidadeSchema>;
 };
 
-const CalendarGsoV1 = ({ dayEvent, company }: CalendarGsoV1Props) => {
+const CalendarGsoV1 = ({ schedules, company }: CalendarGsoV1Props) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [eventsOnDay, setEventsOnDay] = useState<Partial<IScheduleSchema[]>>(
@@ -80,7 +80,7 @@ const CalendarGsoV1 = ({ dayEvent, company }: CalendarGsoV1Props) => {
       setIsModalOpen(true);
     }
 
-    const eventSeted = dayEvent?.filter(
+    const eventSeted = schedules?.filter(
       (event) =>
         event?.day === day && event?.month === month && event?.year === year,
     );
@@ -128,7 +128,7 @@ const CalendarGsoV1 = ({ dayEvent, company }: CalendarGsoV1Props) => {
               month={month}
               year={year}
               isMuted={isMuted}
-              dayEvent={dayEvent?.filter(
+              schedules={schedules?.filter(
                 (event) =>
                   event?.day === day &&
                   event?.month === month &&
@@ -151,11 +151,11 @@ const CalendarGsoV1 = ({ dayEvent, company }: CalendarGsoV1Props) => {
             selectedDay.month,
             selectedDay.day,
           ).setHours(1, 1, 1, 1) < new Date().setHours(0, 0, 0, 0) &&
-            dayEvent?.some((item) => selectedDay.day === item.day) &&
-            dayEvent?.some((item) => selectedDay.month === item.month) &&
-            dayEvent?.some((item) => selectedDay.year === item.year))) && (
+            schedules?.some((item) => selectedDay.day === item.day) &&
+            schedules?.some((item) => selectedDay.month === item.month) &&
+            schedules?.some((item) => selectedDay.year === item.year))) && (
           <div className="flex items-center justify-center">
-            {dayEvent?.some(
+            {schedules?.some(
               (event) =>
                 event?.day === selectedDay.day &&
                 event?.month === selectedDay.month &&

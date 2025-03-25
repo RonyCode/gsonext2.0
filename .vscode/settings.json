@@ -1,0 +1,17 @@
+{
+  "files.autoSave": "onWindowChange",
+  "editor.wordWrap": "on",
+  "files.exclude": {
+    "**.idea": true,
+    "**.qodo": true,
+    "**.vscode": true,
+    "**.yarn": true,
+    "**/node_modules": true
+  },
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": false,
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#09342B",
+    "titleBar.activeBackground": "#0D493C",
+    "titleBar.activeForeground": "#F0FCFA"
+  }
+}

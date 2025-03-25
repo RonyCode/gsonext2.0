@@ -4,7 +4,7 @@ import TabUnidadeDetails from "./TabUnidadeDetails";
 
 import { ImageExist } from "@/functions/ImageExist";
 import { getAllStates } from "@/lib/getAllStates";
-import { getUnidadeById } from "@/lib/GetUnidadeById";
+import { getUnidadeById } from "@/lib/GetCompanyById";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/ui/tabs";
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {

@@ -11,7 +11,7 @@ import { authOptions } from "@/lib/auth";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import { getAllStates } from "@/lib/getAllStates";
 import { Button } from "@/ui/button";
-import { getCompanyById } from "@/lib/GetUnidadeById";
+import { getCompanyById } from "@/lib/GetCompanyById";
 
 export const metadata: Metadata = {
   title: "GSO | unidades",

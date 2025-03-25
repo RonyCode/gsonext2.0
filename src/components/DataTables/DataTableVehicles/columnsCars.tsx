@@ -11,6 +11,7 @@ import { type IVehicleSchema } from "@/schemas/CarsSchema";
 import { Badge } from "../../ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { type ColumnDef } from "@tanstack/react-table";
+import DataCompanyColumns from "@/lib/DataCompanyColumns";
 
 export const columnsCars: Array<ColumnDef<IVehicleSchema>> = [
   {
@@ -103,11 +104,10 @@ export const columnsCars: Array<ColumnDef<IVehicleSchema>> = [
     ),
     cell: ({ row }) => {
       return (
-        <div className="flex w-full items-center">
-          <div className="mr-2 text-muted-foreground">
-            {row?.original?.local != null ? row.original.local : "N/A"}
-          </div>
-        </div>
+        <DataCompanyColumns
+          idCompany={row?.original?.id_company ?? ""}
+          idCorporation={row?.original?.id_corporation ?? ""}
+        />
       );
     },
     filterFn: (row, id, value) => {

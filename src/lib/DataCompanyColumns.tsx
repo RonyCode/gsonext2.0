@@ -3,7 +3,7 @@ import { getAllCompanies } from "@/lib/getAllCompanies";
 import React, { useEffect } from "react";
 import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
 
-const DataColumns = ({
+const DataCompanyColumns = ({
   idCompany,
   idCorporation,
 }: {
@@ -28,4 +28,4 @@ const DataColumns = ({
   return <>{company?.name || "N/A"}</>;
 };
 
-export default DataColumns;
+export default DataCompanyColumns;

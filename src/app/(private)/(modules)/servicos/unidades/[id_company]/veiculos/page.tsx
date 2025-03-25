@@ -6,8 +6,8 @@ import { MdOutlineSupervisorAccount } from "react-icons/md";
 import TabCarsDetails from "@/app/(private)/(modules)/components/TabCarsDetails";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
-import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
-import { type IUnidadeSchema } from "@/schemas/UnidadeSchema";
+import { getAllVehiclesCompany } from "@/lib/getAllVehiclesCompany";
+import { getCompanyById } from "@/lib/GetCompanyById";
 
 const CarsUnidade = async ({
   params,
@@ -17,18 +17,15 @@ const CarsUnidade = async ({
   const resolvedParams = await params;
   const { id_company } = resolvedParams;
   const session = await getServerSession(authOptions);
-  const { data } = await getAllOrganizacoes();
-  const corpFound = data?.find((corp) => {
-    return corp?.id === session?.id_corporation;
-  });
+  const idCompany = id_company.split("-")[1];
+  const { data: companyFound } = await getCompanyById(
+    session?.id_corporation ?? "",
+    idCompany,
+  );
 
-  const companyFound: IUnidadeSchema | undefined = corpFound?.companies?.find(
-    (comp) => {
-      if (comp?.id === id_company?.split("-")[1]) {
-        return comp;
-      }
-      return null;
-    },
+  const { data: vehicles } = await getAllVehiclesCompany(
+    session?.id_corporation ?? "",
+    idCompany,
   );
 
   return (
@@ -53,14 +50,14 @@ const CarsUnidade = async ({
           iconDescription={<MdOutlineSupervisorAccount size={18} />}
         >
           <div className="md:overflow-none overflow-scroll">
-            {companyFound?.vehicles !== null ? (
-              <TabCarsDetails vehicles={companyFound?.vehicles} />
+            {vehicles !== null && vehicles !== undefined ? (
+              <TabCarsDetails vehicles={vehicles} />
             ) : (
               <div className="flex h-full w-full items-center justify-center">
                 {" "}
                 <span className="flex items-center justify-center gap-1">
                   <LuSearchX size={28} className="text-primary/60" /> SEM
-                  VEÍCULOS CADASTRADOS 🤯
+                  VEÍCULOS CADASTRADOS NESTA UNIDADE 🤯
                 </span>
               </div>
             )}

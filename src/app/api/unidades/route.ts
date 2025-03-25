@@ -19,10 +19,7 @@ export async function GET(request: Request): Promise<NextResponse> {
     },
   );
   if (!res.ok) {
-    return NextResponse.json(
-      { message: res.statusText },
-      { status: res.status },
-    );
+    return NextResponse.json({ message: res.statusText }, { status: 400 });
   }
   const result = await res.json();
 

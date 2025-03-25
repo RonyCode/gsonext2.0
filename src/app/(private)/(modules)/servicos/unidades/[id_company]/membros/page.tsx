@@ -7,7 +7,7 @@ import { CardDefault } from "@/components/Cards/CardDefault";
 import { columnsMembers } from "@/components/DataTables/DataTableMembers/columnsMembers";
 import { DataTableMembers } from "@/components/DataTables/DataTableMembers/data-table-members";
 import { getMembersCompanyById } from "@/lib/GetMembersCompanyById";
-import { getCompanyById } from "@/lib/GetUnidadeById";
+import { getCompanyById } from "@/lib/GetCompanyById";
 import { authOptions } from "@/lib/auth";
 import { IMemberSchema } from "@/schemas/MemberSchema";
 

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c4de5031-80c2-4cc7-8968-8fb03cd1922c" name="Changes" comment="refatoring">
+      <change afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableMembers/columnsWithMembersCompany.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableMembers/data/DataColumns.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/useCompany.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/membros/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/membros/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/unidades/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/unidades/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableMembers/columnsMembers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableMembers/columnsMembers.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableMembers/columnsWithCheckboxMembers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableMembers/columnsWithCheckboxMembers.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableMembers/data/data.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableMembers/data/data.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/MemberSchema.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/MemberSchema.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;RonyCode&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:RonyCode/gsonext2.0.git&quot;,
+    &quot;accountId&quot;: &quot;b902a297-1afe-4f73-ae98-213f2b6e8e9b&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2tGgu2QzzL4Ti1xJelDZfVnxylH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="false" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/rony/Sites/gso-next2.0/src/components/DataTables/DataTableMembers/data&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/rony/Sites/gso-next2.0/node_modules/prettier&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/rony/Sites/gso-next2.0/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="ReactDesignerToolWindowState">
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.intellij.reactbuddy.reactComponents" value="false" />
+        <entry key="com.intellij.reactbuddy.reactInspector" value="false" />
+        <entry key="com.intellij.reactbuddy.storybook" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/DataTables/DataTableMembers/data" />
+      <recent name="$PROJECT_DIR$/src/app/api" />
+      <recent name="$PROJECT_DIR$/src/lib" />
+      <recent name="$PROJECT_DIR$/src/functions" />
+      <recent name="$PROJECT_DIR$/src/components/Sidebar" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/DataTables/DataTableMembers" />
+      <recent name="$PROJECT_DIR$/src/lib" />
+      <recent name="$PROJECT_DIR$/src/components/Notification" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-WS-243.26053.12" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c4de5031-80c2-4cc7-8968-8fb03cd1922c" name="Changes" comment="" />
+      <created>1723912660655</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1723912660655</updated>
+      <workItem from="1723912662045" duration="29000" />
+      <workItem from="1723912729125" duration="72000" />
+      <workItem from="1723912831673" duration="115000" />
+      <workItem from="1739984046385" duration="12445000" />
+      <workItem from="1740015315805" duration="645000" />
+      <workItem from="1740072767767" duration="20111000" />
+      <workItem from="1740152818364" duration="2638000" />
+      <workItem from="1740189756867" duration="2976000" />
+      <workItem from="1740240868691" duration="21572000" />
+      <workItem from="1740275134250" duration="1166000" />
+      <workItem from="1740330173609" duration="513000" />
+      <workItem from="1740331504507" duration="3922000" />
+      <workItem from="1740338971464" duration="4606000" />
+      <workItem from="1740345144568" duration="16116000" />
+      <workItem from="1740408470826" duration="5373000" />
+      <workItem from="1740415997674" duration="18929000" />
+      <workItem from="1740444782948" duration="677000" />
+      <workItem from="1740514930425" duration="12967000" />
+      <workItem from="1740586800306" duration="35935000" />
+      <workItem from="1740743420325" duration="2392000" />
+      <workItem from="1740745850949" duration="604000" />
+      <workItem from="1740772753481" duration="19890000" />
+      <workItem from="1740877317663" duration="47000" />
+      <workItem from="1740877371981" duration="609000" />
+      <workItem from="1740945318666" duration="1220000" />
+      <workItem from="1741020610737" duration="2800000" />
+      <workItem from="1741052172466" duration="4609000" />
+      <workItem from="1741547338667" duration="12233000" />
+      <workItem from="1741604282737" duration="41690000" />
+      <workItem from="1741789619512" duration="4081000" />
+      <workItem from="1741812621709" duration="3029000" />
+      <workItem from="1741863762136" duration="2093000" />
+      <workItem from="1741879721049" duration="19143000" />
+      <workItem from="1741986476471" duration="28153000" />
+      <workItem from="1742143473772" duration="20060000" />
+      <workItem from="1742216914636" duration="21510000" />
+      <workItem from="1742413186248" duration="14343000" />
+      <workItem from="1742591267017" duration="14108000" />
+    </task>
+    <task id="LOCAL-00001" summary="update google login">
+      <option name="closed" value="true" />
+      <created>1740015352506</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740015352506</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update google login">
+      <option name="closed" value="true" />
+      <created>1740205880325</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1740205880325</updated>
+    </task>
+    <task id="LOCAL-00003" summary="corrections">
+      <option name="closed" value="true" />
+      <created>1740250607441</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1740250607441</updated>
+    </task>
+    <task id="LOCAL-00004" summary="corrections">
+      <option name="closed" value="true" />
+      <created>1740254117357</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1740254117357</updated>
+    </task>
+    <task id="LOCAL-00005" summary="corrections">
+      <option name="closed" value="true" />
+      <created>1740254340829</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1740254340829</updated>
+    </task>
+    <task id="LOCAL-00006" summary="corrections">
+      <option name="closed" value="true" />
+      <created>1740254632527</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1740254632527</updated>
+    </task>
+    <task id="LOCAL-00007" summary="corrections">
+      <option name="closed" value="true" />
+      <created>1740254796834</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1740254796834</updated>
+    </task>
+    <task id="LOCAL-00008" summary="correction bug schedule">
+      <option name="closed" value="true" />
+      <created>1740444433044</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1740444433044</updated>
+    </task>
+    <task id="LOCAL-00009" summary="correction bug schedule">
+      <option name="closed" value="true" />
+      <created>1740444583867</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1740444583867</updated>
+    </task>
+    <task id="LOCAL-00010" summary="implements sidebar itens">
+      <option name="closed" value="true" />
+      <created>1740599658998</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1740599658998</updated>
+    </task>
+    <task id="LOCAL-00011" summary="implements sidebar itens">
+      <option name="closed" value="true" />
+      <created>1741582464084</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1741582464084</updated>
+    </task>
+    <task id="LOCAL-00012" summary="implements sidebar itens">
+      <option name="closed" value="true" />
+      <created>1741742026706</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1741742026706</updated>
+    </task>
+    <task id="LOCAL-00013" summary="refatoring">
+      <option name="closed" value="true" />
+      <created>1742262862056</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1742262862056</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/types/index.d.ts" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update google login" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/main'&#10;&#10;# Conflicts:&#10;#&#9;.env.local" />
+    <MESSAGE value="corrections" />
+    <MESSAGE value="correction bug schedule" />
+    <MESSAGE value="implements sidebar itens" />
+    <MESSAGE value="refatoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="refatoring" />
+  </component>
+</project>

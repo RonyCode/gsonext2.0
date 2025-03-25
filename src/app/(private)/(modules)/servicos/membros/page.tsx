@@ -5,12 +5,12 @@ import { LuListChecks, LuUsers } from "react-icons/lu";
 
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { CardWithLogo } from "@/components/Cards/CardWithLogo";
-import { columnsMembers } from "@/components/DataTables/DataTableMembers/columnsMembers";
 import { DataTableMembers } from "@/components/DataTables/DataTableMembers/data-table-members";
 import { authOptions } from "@/lib/auth";
 import { Button } from "@/ui/button";
 import { getMembersCorporation } from "@/lib/getMembersCorporation";
 import { IMemberSchema } from "@/schemas/MemberSchema";
+import { columnsMembers } from "@/components/DataTables/DataTableMembers/columnsMembers";
 
 const MembrosUnidade = async () => {
   const session = await getServerSession(authOptions);

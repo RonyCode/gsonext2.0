@@ -7,8 +7,7 @@ import { MdOutlineSupervisorAccount } from "react-icons/md";
 import ModuleMinhaUnidade from "@/app/(private)/(modules)/components/module/ModuleMinhaUnidade";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
-import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
-import { getCompanyById } from "@/lib/GetUnidadeById";
+import { getCompanyById } from "@/lib/GetCompanyById";
 
 export const metadata: Metadata = {
   title: "GSO | unidade",

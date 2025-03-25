@@ -29,7 +29,6 @@ import {
   type IScheduleFormSave,
   ScheduleFormSave,
 } from "@/schemas/ScheduleFormSave";
-import { type IUnidadeSchema } from "@/schemas/UnidadeSchema";
 import { Button } from "@/ui/button";
 import { Calendar } from "@/ui/calendar";
 import { Card } from "@/ui/card";
@@ -65,15 +64,21 @@ import { saveScheduleAction } from "@/actions/saveScheduleAction";
 import { IScheduleSchema } from "@/schemas/ScheduleSchema";
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
-  unidade?: IUnidadeSchema;
-  schedule?: IScheduleSchema;
+  idCompany: string;
+  idCorporation: string;
+  membersCompany?: IMemberSchema[];
+  vehiclesCompany?: IVehicleSchema[];
+  scheduleCompany?: IScheduleSchema;
   dateSchedule?: string;
   className?: string;
 };
 
 export const TabScheduleSave = ({
-  unidade,
-  schedule,
+  idCompany,
+  idCorporation,
+  membersCompany,
+  vehiclesCompany,
+  scheduleCompany,
   dateSchedule,
   className,
   ...props
@@ -87,11 +92,72 @@ export const TabScheduleSave = ({
     dateSchedule != null ? new Date(dateSchedule) : new Date(),
   );
   const [dateFinish, setDateFinish] = React.useState<string>();
-  const [listVehicles, setListVehicles] = React.useState(
-    schedule?.vehicles ?? ([] as IVehicleSchema[]),
+  const [listVehicles, setListVehicles] = React.useState<IVehicleSchema[]>(
+    scheduleCompany?.vehicles ?? [],
   );
-  const [listMembersAvailable, setListMembersAvailable] = React.useState(
-    unidade?.members ?? ([] as IMemberSchema[]),
+  const [listMembersAvailable, setListMembersAvailable] = React.useState<
+    IMemberSchema[]
+  >(membersCompany ?? []);
+
+  // Dados para selects
+  const horarios = React.useMemo(
+    () => [
+      "06:00",
+      "07:00",
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00",
+      "00:00",
+      "01:00",
+      "02:00",
+      "03:00",
+      "04:00",
+      "05:00",
+    ],
+    [],
+  );
+
+  const intervaloHorarios = React.useMemo(
+    () => [
+      { id: 6, period: "06h:00min" },
+      { id: 8, period: "08h:00min" },
+      { id: 12, period: "12h:00min" },
+      { id: 24, period: "24h:00min" },
+    ],
+    [],
+  );
+
+  const tipos = React.useMemo(
+    () => [
+      { id: 1, name: "NORMAL" },
+      { id: 2, name: "EXTRA" },
+      { id: 3, name: "ORDEM SERVIÇO" },
+    ],
+    [],
+  );
+
+  const team = React.useMemo(
+    () => [
+      { id: 1, name: "ALFA" },
+      { id: 2, name: "BRAVO" },
+      { id: 3, name: "CHARLIE" },
+      { id: 4, name: "DELTA" },
+      { id: 5, name: "EXTRA" },
+    ],
+    [],
   );
 
   const form = useForm<IScheduleFormSave>({
@@ -100,244 +166,220 @@ export const TabScheduleSave = ({
     resolver: zodResolver(ScheduleFormSave),
     defaultValues: {
       day:
-        schedule?.day ??
+        scheduleCompany?.day ??
         (dateSchedule != null ? new Date(dateSchedule).getDate() : undefined),
       month:
-        schedule?.month ??
+        scheduleCompany?.month ??
         (dateSchedule ? new Date(dateSchedule).getMonth() : undefined),
       year:
-        schedule?.year ??
+        scheduleCompany?.year ??
         (dateSchedule ? new Date(dateSchedule).getFullYear() : undefined),
-      id: schedule?.id ?? null,
-      id_company: schedule?.id_company ?? unidade?.id,
-      id_corporation: schedule?.id_corporation ?? unidade?.id_corporation,
-      id_period: Number(schedule?.id_period) ?? undefined,
-      id_member_creator: schedule?.id_member_creator ?? session?.id,
-      id_cmt_sos: schedule?.id_cmt_sos ?? undefined,
-      id_member_comunication: schedule?.id_member_comunication ?? undefined,
-      hour_start: schedule?.hour_start ?? undefined,
-      team: schedule?.team ?? undefined,
+      id: scheduleCompany?.id ?? null,
+      id_company: scheduleCompany?.id_company ?? idCompany,
+      id_corporation: scheduleCompany?.id_corporation ?? idCorporation,
+      id_period: Number(scheduleCompany?.id_period) ?? undefined,
+      id_member_creator: scheduleCompany?.id_member_creator ?? session?.id,
+      id_cmt_sos: scheduleCompany?.id_cmt_sos ?? undefined,
+      id_member_comunication:
+        scheduleCompany?.id_member_comunication ?? undefined,
+      hour_start: scheduleCompany?.hour_start ?? undefined,
+      team: scheduleCompany?.team ?? undefined,
       date_creation:
-        schedule?.date_creation ?? new Date().toLocaleDateString("pt-BR"),
+        scheduleCompany?.date_creation ??
+        new Date().toLocaleDateString("pt-BR"),
       date_start:
-        schedule?.date_start ??
+        scheduleCompany?.date_start ??
         (dateSchedule != null
           ? new Date(dateSchedule).toLocaleDateString("pt-BR")
           : new Date().toLocaleDateString("pt-BR")),
-      date_finish: schedule?.date_finish ?? "",
+      date_finish: scheduleCompany?.date_finish ?? "",
       obs:
-        schedule?.obs ??
-        "escala de serviço do dia " +
-          (dateSchedule !== undefined
+        scheduleCompany?.obs ??
+        `escala de serviço do dia ${
+          dateSchedule !== undefined
             ? new Date(dateSchedule).toLocaleDateString("pt-BR")
-            : new Date().toLocaleDateString("pt-BR")) +
-          " para o dia " +
-          dateFinish,
-      vehicle: schedule?.vehicle ?? undefined,
-      vehicles: schedule?.vehicles ?? [],
-      excluded: schedule?.excluded ?? 0,
+            : new Date().toLocaleDateString("pt-BR")
+        } para o dia ${dateFinish}`,
+      vehicle: scheduleCompany?.vehicle ?? undefined,
+      vehicles: scheduleCompany?.vehicles ?? [],
+      excluded: scheduleCompany?.excluded ?? 0,
     },
   });
 
+  // Atualiza o formato de exibição da data
   useEffect(() => {
     setDayWeekPrint(
-      format(new Date(dateStart), "eeeeee", {
-        locale: ptBR,
-      }) +
+      format(new Date(dateStart), "eeeeee", { locale: ptBR }) +
         "  | " +
-        format(new Date(dateStart), "dd/MM", {
-          locale: ptBR,
-        }),
+        format(new Date(dateStart), "dd/MM", { locale: ptBR }),
     );
   }, [dateStart]);
 
-  const handleSubmit = async (formData: IScheduleFormSave): Promise<void> => {
-    startTransition(async () => {
-      const result = await saveScheduleAction(formData);
-      if (result?.code !== 202) {
-        toast({
-          variant: "danger",
-          title: "Erro ao salvar Escala! 🤯 ",
-          description: result?.message,
-        });
-      }
-      if (result?.code === 202) {
-        toast({
-          variant: "success",
-          title: "Ok! Escala salva com sucesso! 🚀",
-          description: "Tudo certo Escala salva",
-        });
-        redirect(`/servicos/unidades/${(await params)?.id_company}/escalas`);
-      }
-    });
-  };
+  // Função para calcular data de encerramento baseada no período
+  const handleCalculeDateFinal = React.useCallback(
+    (value?: string) => {
+      if (
+        !value ||
+        !form.getValues("date_start") ||
+        !form.getValues("hour_start")
+      )
+        return;
 
-  const horarios = [
-    "06:00",
-    "07:00",
-    "08:00",
-    "09:00",
-    "10:00",
-    "11:00",
-    "12:00",
-    "13:00",
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-    "22:00",
-    "23:00",
-    "00:00",
-    "01:00",
-    "02:00",
-    "03:00",
-    "04:00",
-    "05:00",
-  ];
+      const data = moment(
+        `${form.getValues("date_start")} ${form.getValues("hour_start")}00`,
+        "DD/MM/YYYY HH:mm:ss",
+      ).toDate();
 
-  const intervaloHorarios = [
-    { id: 6, period: "06h:00min" },
-    { id: 8, period: "08h:00min" },
-    { id: 12, period: "12h:00min" },
-    { id: 24, period: "24h:00min" },
-  ];
-
-  const tipos = [
-    { id: 1, name: "NORMAL" },
-    { id: 2, name: "EXTRA" },
-    { id: 3, name: "ORDEM SERVIÇO" },
-  ];
-
-  const team = [
-    { id: 1, name: "ALFA" },
-    { id: 2, name: "BRAVO" },
-    { id: 3, name: "CHARLIE" },
-    { id: 4, name: "DELTA" },
-    { id: 5, name: "EXTRA" },
-  ];
-
-  const handleAddListVehicle = () => {
-    const isVehicleSelected =
-      form.getValues("vehicle")?.id ===
-      listVehicles?.find(
-        (vehiclelist: IVehicleSchema) =>
-          vehiclelist.id === form?.getValues("vehicle")?.id,
-      )?.id;
-
-    if (form?.getValues("vehicle") === undefined) {
-      toast({
-        variant: "warning",
-        title: "Selecione um veículo para adicionar! 🤯 ",
-        description: "É preciso selecionar um veículo para adicionar",
+      data.setTime(data.getTime() + Number(value) * 60 * 60 * 1000);
+      const dateFinish = data.toLocaleString("pt-BR", {
+        timeZone: "America/Sao_Paulo",
       });
-    }
 
-    if (isVehicleSelected && form?.getValues("vehicle") !== undefined) {
-      toast({
-        variant: "danger",
-        title: "Erro ao adicionar veículo! 🤯 ",
-        description: "Veículo já adicionado",
-      });
-    }
+      form.setValue("date_finish", dateFinish);
+      form.setValue(
+        "obs",
+        `Escala de serviço do dia ${form.getValues("date_start")} para o dia ${dateFinish}`,
+      );
 
-    if (form?.getValues("vehicle") !== undefined && !isVehicleSelected) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      setListVehicles((prevState: IVehicleSchema[]) => {
-        return [...prevState, form.getValues("vehicle")];
-      });
-      form.resetField("vehicle");
-    }
-  };
+      setDateFinish(dateFinish);
+      form.setValue("day", data.getDate());
+      form.setValue("month", data.getMonth());
+      form.setValue("year", data.getFullYear());
+    },
+    [form, setDateFinish],
+  );
 
+  // Atualiza dados quando o período ou veículos mudam
   useEffect(() => {
-    if (schedule?.id_period) {
-      handleCalculeDateFinal(schedule?.id_period?.toString() ?? undefined);
+    if (scheduleCompany?.id_period) {
+      handleCalculeDateFinal(scheduleCompany.id_period.toString());
     }
-    if (listVehicles) {
+
+    if (listVehicles?.length > 0) {
       form.setValue("id_member_creator", session?.id);
       form.setValue("vehicles", listVehicles);
     }
-  }, [form, listVehicles]);
+  }, [
+    form,
+    listVehicles,
+    scheduleCompany?.id_period,
+    session?.id,
+    handleCalculeDateFinal,
+  ]);
 
-  const handleCalculeDateFinal = (value?: string) => {
-    const data = moment(
-      form?.getValues("date_start") +
-        " " +
-        form?.getValues("hour_start") +
-        "00",
-      "DD/MM/YYYY HH:mm:ss",
-    ).toDate();
+  // Filtra membros disponíveis para escala
+  const handlerCalculateMemberAvailable = React.useCallback(() => {
+    const assignedMembers = [
+      form.getValues("id_member_comunication"),
+      form.getValues("id_cmt_sos"),
+    ].filter(Boolean);
 
-    data.setTime(data.getTime() + Number(value) * 60 * 60 * 1000);
-    const dateFinish = data.toLocaleString("pt-BR", {
-      timeZone: "America/Sao_Paulo",
-    });
-    form?.setValue("date_finish", dateFinish);
-    form?.setValue(
-      "obs",
-      "Escala de serviço do dia " +
-        form?.getValues("date_start") +
-        " para o dia " +
-        dateFinish,
-    );
+    // Filtra membros que não estão como comunicação ou comandante
+    const initialMembers =
+      membersCompany?.filter(
+        (member) =>
+          member?.id_user != null && !assignedMembers.includes(member.id_user),
+      ) || [];
 
-    setDateFinish(dateFinish);
-  };
-
-  const handlerCalculateMemberAvailable = () => {
-    const arrayMember = unidade?.members?.filter(
-      (memberUnidade) =>
-        memberUnidade?.id_user !== form?.getValues("id_member_comunication") ||
-        memberUnidade?.id_user !== form?.getValues("id_cmt_sos"),
-    );
-
-    const arrayMembersVeicles: IMemberSchema[] = [];
-    form?.getValues("vehicles")?.forEach((vehicle) => {
-      arrayMember?.forEach((memberUnidade) => {
-        if (
-          vehicle?.members?.some(
-            (memberVehicle) =>
-              memberUnidade?.id_user === memberVehicle?.member?.id_user,
-          )
-        ) {
-          arrayMembersVeicles.push(memberUnidade);
+    // Encontra membros já atribuídos a veículos
+    const vehicleAssignedMembers: Set<string> = new Set();
+    listVehicles.forEach((vehicle) => {
+      vehicle?.members?.forEach((memberVehicle) => {
+        if (memberVehicle?.member?.id_user) {
+          vehicleAssignedMembers.add(memberVehicle.member.id_user);
         }
       });
     });
 
-    const membersAvailable = arrayMember?.filter(
-      (memberUnidade) =>
-        !arrayMembersVeicles?.some(
-          (memberVehicle) => memberUnidade?.id_user === memberVehicle?.id_user,
-        ),
+    // Filtra membros que não estão em veículos
+    const availableMembers = initialMembers.filter(
+      (member) =>
+        member?.id_user && !vehicleAssignedMembers.has(member.id_user),
     );
 
-    setListMembersAvailable(membersAvailable ?? []);
+    setListMembersAvailable(availableMembers);
+  }, [form, listVehicles, membersCompany]);
+
+  // Verifica se um membro está indisponível (já atribuído)
+  const disableItem = React.useCallback(
+    (member: IMemberSchema) => {
+      const assignedRoles = [
+        form.getValues("id_member_comunication"),
+        form.getValues("id_cmt_sos"),
+      ];
+
+      // Verifica se o membro já tem função atribuída
+      if (member?.id_user && assignedRoles.includes(member.id_user)) {
+        return true;
+      }
+
+      // Verifica se o membro já está em algum veículo
+      if (listVehicles.length > 0) {
+        return listVehicles.some((vehicle) =>
+          vehicle?.members?.some(
+            (item) => member?.id_user === item?.member?.id_user,
+          ),
+        );
+      }
+
+      return false;
+    },
+    [form, listVehicles],
+  );
+
+  // Submissão do formulário
+  const handleSubmit = async (formData: IScheduleFormSave): Promise<void> => {
+    startTransition(async () => {
+      const result = await saveScheduleAction(formData);
+
+      if (result?.code !== 200) {
+        toast({
+          variant: "danger",
+          title: "Erro ao salvar Escala! 🤯",
+          description: result?.message,
+        });
+        return;
+      }
+
+      toast({
+        variant: "success",
+        title: "Ok! Escala salva com sucesso! 🚀",
+        description: "Tudo certo Escala salva",
+      });
+
+      redirect(`/servicos/unidades/${(await params)?.id_company}/escalas`);
+    });
   };
 
-  const disableItem = (member: IMemberSchema) => {
-    if (listVehicles.length) {
-      return listVehicles?.some((vehicle) =>
-        vehicle?.members?.some(
-          (itemForm) =>
-            member?.id_user === itemForm?.member?.id_user ||
-            member?.id_user === form?.getValues("id_member_comunication") ||
-            member?.id_user === form?.getValues("id_cmt_sos"),
-        ),
-      );
+  // Adiciona veículo à lista
+  const handleAddListVehicle = React.useCallback(() => {
+    const vehicle = form.getValues("vehicle");
+
+    if (!vehicle) {
+      toast({
+        variant: "warning",
+        title: "Selecione um veículo para adicionar! 🤯",
+        description: "É preciso selecionar um veículo para adicionar",
+      });
+      return;
     }
 
-    return (
-      member?.id_user === form?.getValues("id_member_comunication") ||
-      member?.id_user === form?.getValues("id_cmt_sos")
-    );
-  };
+    const isVehicleSelected = listVehicles.some((v) => v.id === vehicle.id);
 
+    if (isVehicleSelected) {
+      toast({
+        variant: "danger",
+        title: "Erro ao adicionar veículo! 🤯",
+        description: "Veículo já adicionado",
+      });
+      return;
+    }
+
+    setListVehicles((prevState) => [...prevState, vehicle]);
+    form.resetField("vehicle");
+  }, [form, listVehicles]);
+
+  console.log(form.formState.errors);
   return (
     <>
       <Card
@@ -763,7 +805,7 @@ export const TabScheduleSave = ({
                               className={cn("w-full justify-between")}
                             >
                               {field?.value != null
-                                ? unidade?.members?.find(
+                                ? membersCompany?.find(
                                     (userUnidade) =>
                                       userUnidade?.id_user === field?.value,
                                   )?.name
@@ -778,7 +820,7 @@ export const TabScheduleSave = ({
                             <CommandEmpty>Membro não encontrado.</CommandEmpty>
                             <CommandGroup>
                               <CommandList>
-                                {unidade?.members?.map((member, index) => (
+                                {membersCompany?.map((member, index) => (
                                   <CommandItem
                                     key={index}
                                     value={String(member?.id_user)}
@@ -845,7 +887,7 @@ export const TabScheduleSave = ({
                               className={cn("w-full justify-between")}
                             >
                               {field?.value != null
-                                ? unidade?.members?.find(
+                                ? membersCompany?.find(
                                     (itemSeat) =>
                                       itemSeat?.id_user === field?.value,
                                   )?.name
@@ -860,7 +902,7 @@ export const TabScheduleSave = ({
                             <CommandEmpty>Membro não encontrado.</CommandEmpty>
                             <CommandGroup>
                               <CommandList>
-                                {unidade?.members?.map((member, index) => (
+                                {membersCompany?.map((member, index) => (
                                   <CommandItem
                                     key={index}
                                     disabled={disableItem(member)}
@@ -943,10 +985,11 @@ export const TabScheduleSave = ({
                             <CommandEmpty>Veículo não encontrado.</CommandEmpty>
                             <CommandGroup>
                               <CommandList>
-                                {unidade?.vehicles?.map((veihcle, index) => (
+                                {vehiclesCompany?.map((veihcle, index) => (
                                   <CommandItem
                                     key={index}
                                     onSelect={() => {
+                                      console.log(veihcle);
                                       form?.setValue(
                                         "vehicle",
                                         listVehicles?.find(

@@ -35,6 +35,7 @@ import IconBuildPlus from "@/icons/IconBuildPlus";
 import IconPrivileges from "@/icons/IconPrivileges";
 import IconManager from "@/icons/IconManager";
 import IconPuzzle from "@/icons/IconPuzzle";
+import { useParams } from "next/navigation";
 
 interface AppSidebarProps {
   corp?: IOrganizacaoSchema;
@@ -47,16 +48,20 @@ export function AppSidebar({
   ...props
 }: AppSidebarProps & ComponentProps<typeof Sidebar>) {
   const { data: session } = useSession();
+  const params = useParams();
   const [compSelected, setCompSelected] = useState(
     companies ? companies[0] : {},
   );
+  const idCompanyParam = params.id_company;
+  const idCompany =
+    (idCompanyParam?.slice(-24) as string) ?? (session?.id_company as string);
 
   React.useEffect(() => {
-    if (session?.id_company) {
-      const comp = companies?.find((comp) => comp.id === session?.id_company);
+    if (idCompany) {
+      const comp = companies?.find((comp) => comp?.id === idCompany);
       setCompSelected(comp as IUnidadeSchema);
     }
-  }, [session?.id_company, companies]);
+  }, [idCompany, session?.id_company, companies]);
 
   const data = {
     navMain: [
@@ -66,7 +71,7 @@ export function AppSidebar({
         icon: Siren,
         items: [
           {
-            title: "Minhas Ocorrências",
+            title: "Ocorrências",
             icon: (
               <IconSirene
                 width={32}
@@ -88,7 +93,7 @@ export function AppSidebar({
         icon: Building2Icon,
         items: [
           {
-            title: "Minha Corporação",
+            title: "Corporação",
             icon: <IconBuild width={32} className="fill-foreground/60" />,
             url: "/servicos/corporacao",
           },
@@ -117,9 +122,9 @@ export function AppSidebar({
         icon: Building,
         items: [
           {
-            title: "Minha Unidade",
+            title: "Unidade",
             icon: <IconBuild width={32} className="fill-foreground/60" />,
-            url: `/servicos/unidades/${compSelected?.name}-${compSelected?.id}`,
+            url: `/servicos/unidades/${compSelected?.name}-${compSelected?.id}/detalhes`,
           },
           {
             title: "Membros Unidade",
@@ -245,7 +250,7 @@ export function AppSidebar({
           <CompanySwitcher
             companies={companies}
             setCompSelectedAction={setCompSelected}
-            idCompany={session?.id_company ?? ""}
+            idCompany={idCompany}
           />
         )}
       </SidebarHeader>

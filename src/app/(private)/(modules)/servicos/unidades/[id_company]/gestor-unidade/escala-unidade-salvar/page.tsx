@@ -5,8 +5,11 @@ import { LuSaveAll, LuSearchX } from "react-icons/lu";
 
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
-import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import TabScheduleSave from "@/app/(private)/(modules)/components/TabScheduleSave";
+import { getCompanyById } from "@/lib/GetCompanyById";
+import { getScheduleById } from "@/lib/GetScheduleById";
+import { getAllVehiclesCompany } from "@/lib/getAllVehiclesCompany";
+import { getMembersCompanyById } from "@/lib/GetMembersCompanyById";
 
 export const metadata: Metadata = {
   title: "GSO | salvar escala",
@@ -29,22 +32,25 @@ const SalvarEscala = async ({
   const { date_schedule } = resolvedSearchParams;
   const { id_schedule } = resolvedSearchParams;
   const { id_company } = resolvedParams;
-  const { data } = await getAllOrganizacoes();
   const session = await getServerSession(authOptions);
-  const corpFound = data?.find((corp) => {
-    return corp?.id === session?.id_corporation;
-  });
-  const idPramas = id_company?.split("-")[1];
+
+  const idCompany = id_company?.split("-")[1];
+  const idCorporation = session?.id_corporation ?? "";
+  const idSchedule = id_schedule ?? "";
   const dateScheduleParams = date_schedule;
-  const scheduleIdParams = id_schedule;
 
-  const companyFound = corpFound?.companies?.find(
-    (comp) => comp?.id === idPramas,
+  const { data: companyFound } = await getCompanyById(idCorporation, idCompany);
+  const { data: vehiclesFound } = await getAllVehiclesCompany(
+    idCorporation,
+    idCompany,
   );
+  const { data: membersFound } = await getMembersCompanyById(idCompany);
 
-  const scheduleFound = companyFound?.schedules?.find((schedule) => {
-    return schedule?.id === scheduleIdParams;
-  });
+  const { data: scheduleFound } = await getScheduleById(
+    idCorporation,
+    idCompany,
+    idSchedule,
+  );
 
   return (
     <>
@@ -65,9 +71,12 @@ const SalvarEscala = async ({
         <div className="overflow-scroll lg:overflow-hidden">
           {companyFound !== null && companyFound !== undefined ? (
             <TabScheduleSave
+              idCompany={idCompany}
+              idCorporation={idCorporation}
               dateSchedule={dateScheduleParams}
-              schedule={scheduleFound}
-              unidade={companyFound}
+              scheduleCompany={scheduleFound}
+              membersCompany={membersFound}
+              vehiclesCompany={vehiclesFound}
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center">

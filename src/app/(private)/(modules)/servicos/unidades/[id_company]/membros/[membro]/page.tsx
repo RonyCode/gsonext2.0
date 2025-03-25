@@ -1,6 +1,6 @@
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { ImageExist } from "@/functions/ImageExist";
-import { getUnidadeById } from "@/lib/GetUnidadeById";
+import { getUnidadeById } from "@/lib/GetCompanyById";
 
 const Members = async ({
   params,

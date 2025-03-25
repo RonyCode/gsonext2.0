@@ -1,21 +1,18 @@
-"use client";
-
-import React from "react";
+import { IMemberSchema } from "@/schemas/MemberSchema";
+import { ColumnDef } from "@tanstack/react-table";
+import { DataTableColumnHeader } from "@/components/DataTables/DataTableMembers/data-table-column-header";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { LuBuilding2, LuPhone, LuUser } from "react-icons/lu";
-
 import { maskPhone } from "@/functions/masks/maskphone";
 import { Badge } from "@/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { type ColumnDef } from "@tanstack/react-table";
-import { maskOcultaCpfCnpj } from "@/functions/masks/maskOcultaCpfCnpj";
 import { getAllCompanies } from "@/lib/getAllCompanies";
-import { IMemberSchema } from "@/schemas/MemberSchema";
-import { DataTableColumnHeader } from "@/components/DataTables/DataTableMembers/data-table-column-header";
-import { DataTableRowActions } from "@/components/DataTables/DataTableMembers/data-table-row-actions";
+import { maskOcultaCpfCnpj } from "@/functions/masks/maskOcultaCpfCnpj";
+import { DataTableRowActions } from "@/components/DataTables/DataTableUsers/data-table-row-actions";
+
 export const path = process.env.NEXT_PUBLIC_API_GSO;
 
-export const columnsWithMembersCompany = (id: string) => {
-  const columnsMembers: Array<ColumnDef<IMemberSchema>> = [
+export const columnsWithMembersCompany = () => {
+  const columnsWithMembersCompany: Array<ColumnDef<IMemberSchema>> = [
     {
       accessorKey: "name",
       accessorFn: (row) => row?.name, // Acessa o valor diretamente
@@ -91,12 +88,12 @@ export const columnsWithMembersCompany = (id: string) => {
         <DataTableColumnHeader column={column} title="Unidade" />
       ),
       cell: ({ row }) => {
-        const test = getAllCompanies(id).then((response) => {
+        const test = getAllCompanies("FEFRF").then((response) => {
           console.log(response);
         });
-        // const type = types.find((type) => type.value === row.getValue('type'))
+        // const type = types.find((type) => type.value === row.getValue("type"));
         // if (type == null) {
-        //   return null
+        //   return null;
         // }
         return <p>{row.original?.id_company}</p>;
       },
@@ -130,5 +127,5 @@ export const columnsWithMembersCompany = (id: string) => {
       },
     },
   ];
-  return columnsMembers;
+  return columnsWithMembersCompany;
 };

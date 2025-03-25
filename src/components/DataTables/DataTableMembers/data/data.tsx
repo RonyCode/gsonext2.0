@@ -1,136 +1,136 @@
-import { LuFlag, LuHouse, LuHotel, LuLandmark } from 'react-icons/lu'
+import { LuFlag, LuHouse, LuHotel, LuLandmark } from "react-icons/lu";
 
 import {
   CheckCircledIcon,
   CrossCircledIcon,
   StopwatchIcon,
-} from '@radix-ui/react-icons'
+} from "@radix-ui/react-icons";
 
 export const labels = [
   {
-    value: 'Alfa',
-    label: 'Alfa',
+    value: "Alfa",
+    label: "Alfa",
   },
   {
-    value: '07:00',
-    label: '07:00',
+    value: "07:00",
+    label: "07:00",
   },
   {
-    value: '19:00',
-    label: '19:00',
+    value: "19:00",
+    label: "19:00",
   },
   {
-    value: 'Bravo',
-    label: 'Bravo',
+    value: "Bravo",
+    label: "Bravo",
   },
   {
-    value: 'Charlie',
-    label: 'Charlie',
+    value: "Charlie",
+    label: "Charlie",
   },
   {
-    value: 'Delta',
-    label: 'Delta',
+    value: "Delta",
+    label: "Delta",
   },
 
   {
-    value: 'Extra',
-    label: 'Extra',
+    value: "Extra",
+    label: "Extra",
   },
-]
+];
 
 export const statuses = [
   {
-    value: 'aguardando',
-    label: 'Aguardando',
+    value: "aguardando",
+    label: "Aguardando",
     icon: StopwatchIcon,
   },
   {
-    value: 'publicado',
-    label: 'Publicado',
+    value: "publicado",
+    label: "Publicado",
     icon: CheckCircledIcon,
   },
   {
-    value: 'cancelado',
-    label: 'Cancelado',
+    value: "cancelado",
+    label: "Cancelado",
     icon: CrossCircledIcon,
   },
-]
+];
 
 export const types = [
   {
-    label: 'UNIDADE',
+    label: "UNIDADE",
     value: 1,
     icon: LuHouse,
   },
   {
-    label: 'BATALHÃO',
+    label: "BATALHÃO",
     value: 2,
     icon: LuHotel,
   },
 
   {
-    label: 'COMANDO',
+    label: "COMANDO",
     value: 3,
     icon: LuLandmark,
   },
 
   {
-    label: 'INDEPENDENTE',
+    label: "INDEPENDENTE",
     value: 4,
     icon: LuFlag,
   },
-]
+];
 
 export const unities = [
   {
-    label: '1º CIA',
-    value: '1',
+    label: "1º CIA",
+    value: "1",
     icon: LuHotel,
   },
 
   {
-    label: '2º CIA',
-    value: '2',
+    label: "2º CIA",
+    value: "2",
     icon: LuHotel,
   },
   {
-    label: '3º CIA',
-    value: '3',
+    label: "3º CIA",
+    value: "3",
     icon: LuHotel,
   },
   {
-    label: '4º CIA',
-    value: '4',
+    label: "4º CIA",
+    value: "4",
     icon: LuHotel,
   },
   {
-    label: '5º CIA',
-    value: '5',
+    label: "5º CIA",
+    value: "5",
     icon: LuHotel,
   },
   {
-    label: '6º CIA',
-    value: '6',
+    label: "6º CIA",
+    value: "6",
     icon: LuHotel,
   },
   {
-    label: '7º CIA',
-    value: '7',
+    label: "7º CIA",
+    value: "7",
     icon: LuHotel,
   },
   {
-    label: '8º CIA',
-    value: '8',
+    label: "8º CIA",
+    value: "8",
     icon: LuHotel,
   },
   {
-    label: '9º CIA',
-    value: '9',
+    label: "9º CIA",
+    value: "9",
     icon: LuHotel,
   },
   {
-    label: '10º CIA',
-    value: '10',
+    label: "10º CIA",
+    value: "10",
     icon: LuHotel,
   },
-]
+];
