@@ -4,91 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c4de5031-80c2-4cc7-8968-8fb03cd1922c" name="Changes" comment="refatoring">
-      <change afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuarios/[id_usuario]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/saveVehicleIntoCorporationAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/saveVehicleIntoCorporationAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/MemberForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/MemberForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/SelectCompanySchedule.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/SelectCompanySchedule.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/TabScheduleSave.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/TabScheduleSave.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/TabUnidadeDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/TabUnidadeDetails.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/VehicleCorporationForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/VehicleCorporationForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/escalas/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/escalas/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/salvar-membro/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/salvar-membro/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/salvar-unidade/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/salvar-unidade/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/salvar-veiculo/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/salvar-veiculo/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/unidades/[id_company]/detalhes/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/unidades/[id_company]/detalhes/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/unidades/[id_company]/gestor-unidade/escala-unidade-salvar/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/unidades/[id_company]/gestor-unidade/escala-unidade-salvar/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/unidades/[id_company]/gestor-unidade/veiculo-unidade-salvar/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/unidades/[id_company]/gestor-unidade/veiculo-unidade-salvar/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/unidades/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/unidades/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/veiculos/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/veiculos/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/cadastrar-escala/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/cadastrar-escala/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/cadastrar-membro-unidade/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/cadastrar-membro-unidade/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/cadastrar-membro/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/cadastrar-membro/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/corporation-save/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/corporation-save/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/escalas/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/escalas/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/estados/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/estados/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/file/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/file/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/functions/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/functions/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/login/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/login/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/membros-corporacao/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/membros-corporacao/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/membros-unidade/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/membros-unidade/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/minha-unidade/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/minha-unidade/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/notification-delete-all/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/notification-delete-all/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/notification-delete/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/notification-delete/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/notification-view/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/notification-view/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/organizacoes/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/organizacoes/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/profile/[id]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/profile/[id]/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/unidade-save/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/unidade-save/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/unidade/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/unidade/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/unidades/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/unidades/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/user-id/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/user-id/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/users-without-company/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/users-without-company/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/users-without-corp/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/users-without-corp/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/users/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/users/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/vehicles-save-company/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/vehicles-save-company/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/vehicles-without-company/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/vehicles-without-company/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/veiculos-corporacao/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/veiculos-corporacao/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/veiculos-unidade/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/veiculos-unidade/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableUsers/columnsUsers.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableUsers/data-table-row-actions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableUsers/data-table-row-actions.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableUsers/data-table-toolbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableUsers/data-table-toolbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/Input/myInputMask.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/Input/myInputMask.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Sidebar/app-sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar/app-sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/functions/fetch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/functions/fetch.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/DeleteAllNotificationUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/DeleteAllNotificationUser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/DeleteNotificationUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/DeleteNotificationUser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/GetAllFunctions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/GetAllFunctions.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/GetAllOrganizacoes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/GetAllOrganizacoes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/GetAllUnidades.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/GetAllUnidades.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/GetAllUserWithoutCorp.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/GetAllUserWithoutCorp.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/GetAllUsers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/GetAllUsers.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/GetAllVehicles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/GetAllVehicles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/GetCompanyById.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/GetCompanyById.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/GetMembersCompanyById.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/GetMembersCompanyById.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/GetMyUnidade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/GetMyUnidade.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/GetNotificationUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/GetNotificationUser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/GetRefreshToken.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/GetRefreshToken.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/GetScheduleById.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/GetScheduleById.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/GetUserById.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/GetUserById.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/getAllCompanies.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/getAllCompanies.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/getAllSchedulesCompany.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/getAllSchedulesCompany.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/getAllVehiclesCompany.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/getAllVehiclesCompany.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/getAllVehiclesCorporation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/getAllVehiclesCorporation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/getMembersCorporation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/getMembersCorporation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/getProfile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/getProfile.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/saveVehicleIntoCompany.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/saveVehicleIntoCompany.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/searchUsersWithoutCompany.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/searchUsersWithoutCompany.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/searchUsersWithoutCorporation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/searchUsersWithoutCorporation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/searchVehicleWithoutCompany.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/searchVehicleWithoutCompany.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middlewares/withAuthMiddleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/withAuthMiddleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/CarsSchema.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/CarsSchema.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/ScheduleFormSave.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/ScheduleFormSave.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="c4de5031-80c2-4cc7-8968-8fb03cd1922c" name="Changes" comment="fix refreshtoken" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -232,7 +148,7 @@
       <workItem from="1742948289723" duration="191000" />
       <workItem from="1743171346985" duration="5164000" />
       <workItem from="1743431139226" duration="13940000" />
-      <workItem from="1743455628697" duration="3459000" />
+      <workItem from="1743455628697" duration="3907000" />
     </task>
     <task id="LOCAL-00001" summary="update google login">
       <option name="closed" value="true" />
@@ -338,7 +254,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742262862056</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="fix refreshtoken">
+      <option name="closed" value="true" />
+      <created>1743466635129</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1743466635129</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -367,6 +291,7 @@
     <MESSAGE value="correction bug schedule" />
     <MESSAGE value="implements sidebar itens" />
     <MESSAGE value="refatoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="refatoring" />
+    <MESSAGE value="fix refreshtoken" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix refreshtoken" />
   </component>
 </project>
