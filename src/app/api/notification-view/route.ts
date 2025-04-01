@@ -6,21 +6,20 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   const exchangeName = searchParams.get("exchange_name");
   const routingKey = searchParams.get("routing_key");
 
+  const token = request.headers.get("authorization");
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_GSO}/services/amqp/view-notifications?queue_name=${nameQueue}&exchange_name=${exchangeName}&routing_key=${routingKey}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     },
   );
 
   if (!res.ok) {
-    return NextResponse.json(
-      { message: res.statusText },
-      { status: res.status },
-    );
+    return NextResponse.json(await res.json());
   }
 
   const data = await res.json();

@@ -20,7 +20,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      // "Access-Control-Allow-Origin": origin ?? "*",
     },
     body: JSON.stringify({
       email,
@@ -34,6 +33,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const { message } = await res.json();
     return NextResponse.json({ message }, { status: 401 });
   }
+  const refreshToken = res.headers.get("x-refresh-token");
+  const token = res.headers.get("authorization")?.replace("Bearer ", "");
+
   const { data } = await res.json();
-  return NextResponse.json(data);
+
+  const responsedata = { ...data, token: token, refresh_token: refreshToken };
+  return NextResponse.json(responsedata);
 }

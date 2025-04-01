@@ -1,27 +1,27 @@
-'use client'
+"use client";
 
-import { DataTableViewOptions } from '../DataTableUnidades/data-table-view-options'
-import { Button } from '@/ui/button'
-import { Input } from '@/ui/input'
-import { Cross2Icon } from '@radix-ui/react-icons'
-import { type Table } from '@tanstack/react-table'
+import { DataTableViewOptions } from "../DataTableUnidades/data-table-view-options";
+import { Button } from "@/ui/button";
+import { Input } from "@/ui/input";
+import { Cross2Icon } from "@radix-ui/react-icons";
+import { type Table } from "@tanstack/react-table";
 
 interface DataTableToolbarProps<TData> {
-  table: Table<TData>
+  table: Table<TData>;
 }
 
 export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>): React.ReactNode {
-  const isFiltered = table.getState().columnFilters.length > 0
+  const isFiltered = table.getState().columnFilters.length > 0;
 
   return (
-    <div className="grid w-full  grid-cols-2 gap-2  md:grid-cols-3">
+    <div className="grid w-full grid-cols-2 gap-2 md:grid-cols-3">
       <Input
         placeholder="Filtrar usuários..."
-        value={(table.getColumn('nome')?.getFilterValue() as string) ?? ''}
+        value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
         onChange={(event) =>
-          table.getColumn('nome')?.setFilterValue(event.target.value)
+          table.getColumn("name")?.setFilterValue(event.target.value)
         }
         className="h-8 w-full lg:w-[250px]"
       />
@@ -44,7 +44,7 @@ export function DataTableToolbar<TData>({
           <Button
             variant="ghost"
             onClick={() => {
-              table.resetColumnFilters()
+              table.resetColumnFilters();
             }}
             className="h-8 px-2 lg:px-3"
           >
@@ -54,5 +54,5 @@ export function DataTableToolbar<TData>({
         )}
       </div>
     </div>
-  )
+  );
 }

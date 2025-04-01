@@ -13,7 +13,6 @@ import {
 } from "react-icons/lu";
 
 import { saveMemberIntoCorporationAction } from "@/actions/saveMemberIntoCorporationAction";
-import { columnsUsersArray } from "@/components/DataTables/DataTableUsers/columnsUsers";
 import { DataTableUsers } from "@/components/DataTables/DataTableUsers/data-table-users";
 import LoadingPage from "@/components/Loadings/LoadingPage";
 import { searchUsersWithoutCorporation } from "@/lib/searchUsersWithoutCorporation";
@@ -47,6 +46,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { debounce } from "lodash";
 import { toast } from "@/hooks/use-toast";
+import { columnsUsersWithCheckbox } from "@/components/DataTables/DataTableUsers/columnsUsersWithCheckbox";
+import { columnsWithCheckboxMembers } from "@/components/DataTables/DataTableMembers/columnsWithCheckboxMembers";
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
   corporations?: IOrganizacaoSchema[] | null;
@@ -302,7 +303,7 @@ export const MemberForm = ({
               </div>
               {data !== null && (
                 <DataTableUsers
-                  columns={columnsUsersArray(handleCheckboxChange)}
+                  columns={columnsWithCheckboxMembers(handleCheckboxChange)}
                   data={data}
                 />
               )}

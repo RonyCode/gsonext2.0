@@ -40,6 +40,7 @@ export const ScheduleFormSave = z.object({
   vehicle: VehicleSchema.optional(),
   vehicles: z.array(VehicleSchema).optional(),
   excluded: z.number().optional(),
+  subscription: z.string().optional(),
 });
 
 export type IScheduleFormSave = z.infer<typeof ScheduleFormSave>;

@@ -20,7 +20,6 @@ import {
 import { saveVehicleIntoCorporationAction } from "@/actions/saveVehicleIntoCorporationAction";
 import { EditPhoto } from "@/components/EditPhoto/EditPhoto";
 import LoadingPage from "@/components/Loadings/LoadingPage";
-import { GetUserNotification } from "@/lib/GetNotificationUser";
 import { getAllVehicles } from "@/lib/GetAllVehicles";
 import { cn } from "@/lib/utils";
 import { VehicleSchema, type IVehicleSchema } from "@/schemas/CarsSchema";
@@ -76,6 +75,14 @@ export const VehicleCorporationForm = ({
       id_model: myVehicle?.id_model ?? undefined,
       id_year: myVehicle?.id_year ?? undefined,
       model: myVehicle?.model ?? undefined,
+      members: myVehicle?.members ?? [
+        { position: 1, member: null },
+        { position: 2, member: null },
+        { position: 3, member: null },
+        { position: 4, member: null },
+        { position: 5, member: null },
+        { position: 6, member: null },
+      ],
       brand: myVehicle?.brand ?? undefined,
       chassi: myVehicle?.chassi ?? undefined,
       year: myVehicle?.year ?? undefined,
@@ -112,19 +119,14 @@ export const VehicleCorporationForm = ({
     startTransition(async () => {
       const result = await saveVehicleIntoCorporationAction(formData);
 
-      if (result?.code !== 202) {
+      if (result?.code !== 200) {
         toast({
           variant: "danger",
           title: "Erro ao salvar veículo na corporação! 🤯 ",
           description: result?.message,
         });
       }
-      if (result?.code === 202) {
-        void GetUserNotification(
-          result?.data?.notification?.queue_name ?? "",
-          result?.data?.notification?.exchange ?? "",
-          result?.data?.notification?.id_message ?? "",
-        );
+      if (result?.code === 200) {
         toast({
           variant: "success",
           title: `Ok! Veiculo salvo na corporação com sucesso! 🚀`,

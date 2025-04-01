@@ -8,6 +8,7 @@ import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import { getAllStates } from "@/lib/getAllStates";
+import { getCompanyById } from "@/lib/GetCompanyById";
 
 const MinhaUnidade = async ({
   params,
@@ -16,23 +17,13 @@ const MinhaUnidade = async ({
 }) => {
   const resolvedParams = await params;
   const { id_company } = resolvedParams;
-  const { data } = await getAllOrganizacoes();
   const session = await getServerSession(authOptions);
   const states = await getAllStates();
+  const idCorporation = session?.id_corporation ?? "";
+  const idCompany = id_company.split("-")[1] ?? "";
 
-  const corpFound = data?.find((corp) => {
-    if (corp?.id === session?.id_corporation) {
-      return corp;
-    }
-    return null;
-  });
-
-  const companyFound = corpFound?.companies?.find((comp) => {
-    if (comp?.id === id_company?.split("-")[1]) {
-      return comp;
-    }
-    return null;
-  });
+  const { data: corporations } = await getAllOrganizacoes();
+  const { data: companyFound } = await getCompanyById(idCorporation, idCompany);
 
   return (
     <div>
@@ -58,7 +49,7 @@ const MinhaUnidade = async ({
           <div className="md:overflow-none overflow-scroll">
             <TabUnidadeDetails
               unidade={companyFound}
-              corporations={data}
+              corporations={corporations}
               states={states}
             />
           </div>

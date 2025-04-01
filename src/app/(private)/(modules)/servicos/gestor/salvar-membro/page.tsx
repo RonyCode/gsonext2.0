@@ -15,9 +15,6 @@ export const metadata: Metadata = {
 };
 
 const SalvarMembro = async (): Promise<ReactNode> => {
-  if (process.env.NEXT_PHASE === "phase-production-build") {
-    return null;
-  }
   const { data } = await getAllOrganizacoes();
   return (
     <>

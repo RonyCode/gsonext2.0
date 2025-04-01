@@ -11,6 +11,7 @@ export async function GET(request: Request): Promise<NextResponse> {
       { status: 400 },
     );
   }
+  const token = request.headers.get("authorization");
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/company?id_corporation=${idCorporation}&id_company=${idCompany}`,
@@ -18,8 +19,8 @@ export async function GET(request: Request): Promise<NextResponse> {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      next: { revalidate: 1, tags: ["unidadesFetch"] },
     },
   );
 

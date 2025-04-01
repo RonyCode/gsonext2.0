@@ -1,8 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: Request): Promise<NextResponse> {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
   const id_corporation = searchParams.get("id_corporation");
+  const token = request.headers.get("authorization");
 
   if (id_corporation != null) {
     const res: Response = await fetch(
@@ -11,6 +12,7 @@ export async function GET(request: Request): Promise<NextResponse> {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       },
     );

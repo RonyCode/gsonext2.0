@@ -19,11 +19,7 @@ export const VehicleSchema = z.object({
   }),
   local: z.string().nullable().optional(),
   members: z
-    .array(
-      z
-        .object({ position: z.number(), member: MemberSchema.nullable() })
-        .optional(),
-    )
+    .array(z.object({ position: z.number(), member: MemberSchema.nullable() }))
     .optional(),
   excluded: z.number(),
   brand: z.string().nullable().optional(),

@@ -1,14 +1,13 @@
-import { fetchWrapper } from '@/functions/fetch'
-import type { IVehicleSchema } from '@/schemas/CarsSchema'
+import { fetchWrapper } from "@/functions/fetch";
+import type { IVehicleSchema } from "@/schemas/CarsSchema";
 
-export const getAllVehicles = async (query = ''): Promise<IVehicleSchema> => {
+export const getAllVehicles = async (query = ""): Promise<IVehicleSchema> => {
   return await fetchWrapper<IVehicleSchema>(query, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
-      'X-Subscription-Token': process.env.NEXT_PUBLIC_KEY_FIPE ?? '',
+      "Content-Type": "application/json",
+      "X-Subscription-Token": process.env.NEXT_PUBLIC_KEY_FIPE ?? "",
     },
-
-    next: { revalidate: 1, tags: ['vehiclesDetailsFetch'] },
-  })
-}
+    cache: "force-cache",
+  });
+};

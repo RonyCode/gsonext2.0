@@ -64,6 +64,7 @@ import { saveScheduleAction } from "@/actions/saveScheduleAction";
 import { IScheduleSchema } from "@/schemas/ScheduleSchema";
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
+  subscriptionsUser: string;
   idCompany: string;
   idCorporation: string;
   membersCompany?: IMemberSchema[];
@@ -74,6 +75,7 @@ type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
 };
 
 export const TabScheduleSave = ({
+  subscriptionsUser,
   idCompany,
   idCorporation,
   membersCompany,
@@ -203,6 +205,7 @@ export const TabScheduleSave = ({
       vehicle: scheduleCompany?.vehicle ?? undefined,
       vehicles: scheduleCompany?.vehicles ?? [],
       excluded: scheduleCompany?.excluded ?? 0,
+      subscription: subscriptionsUser ?? "",
     },
   });
 

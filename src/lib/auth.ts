@@ -31,13 +31,14 @@ export const confereLogado = async (payload: {
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_NEXT_URL}/api/login`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(payload),
   });
 
-  // console.log(await res.json())
-
   if (res.ok) {
+    // Retorna os dados do usuário junto com os tokens dos headers
     return await res.json();
   } else {
     return null;
@@ -97,7 +98,7 @@ export const authOptions: NextAuthOptions = {
 
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 24,
+    maxAge: 60 * 20,
   },
 
   pages: {
@@ -129,7 +130,7 @@ export const authOptions: NextAuthOptions = {
             name: "token",
             value: userGoogle?.token,
             httpOnly: true,
-            maxAge: 60 * 60 * 24,
+            maxAge: 60 * 20,
             path: "/",
           });
 
@@ -137,7 +138,7 @@ export const authOptions: NextAuthOptions = {
             name: "refresh_token",
             value: userGoogle?.refresh_token,
             httpOnly: true,
-            maxAge: 60 * 60 * 2,
+            maxAge: 60 * 60 * 7,
             path: "/",
           });
           // =====================================================================
@@ -167,7 +168,7 @@ export const authOptions: NextAuthOptions = {
             name: "token",
             value: user?.token,
             httpOnly: true,
-            maxAge: 60 * 60 * 24,
+            maxAge: 60 * 20,
             path: "/",
           });
 
@@ -175,7 +176,7 @@ export const authOptions: NextAuthOptions = {
             name: "refresh_token",
             value: user?.refresh_token,
             httpOnly: true,
-            maxAge: 60 * 60 * 2,
+            maxAge: 60 * 60 * 7,
             path: "/",
           });
           //= ====================================================================

@@ -1,6 +1,7 @@
 import { fetchWrapper } from "@/functions/fetch";
 import { type IUnidadeSchema } from "@/schemas/UnidadeSchema";
 import { type ResponseApi } from "@/types/index";
+import { TokenManager } from "@/functions/TokenManager";
 
 export const getMyUnidade = async (
   idCorporation?: string | undefined | null,
@@ -9,14 +10,17 @@ export const getMyUnidade = async (
 ): Promise<ResponseApi<IUnidadeSchema>> => {
   if ($idUser == null || idCompany == null || idCorporation == null)
     return {} as ResponseApi<IUnidadeSchema>;
+
+  const token = await TokenManager("token");
+
   return await fetchWrapper<ResponseApi<IUnidadeSchema>>(
     `${process.env.NEXT_PUBLIC_NEXT_URL}/api/minha-unidade?id-corporation=${idCorporation}&id-company=${idCompany}&id-user=${$idUser}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      next: { revalidate: 1, tags: ["unidadesFetch"] },
     },
   );
 };

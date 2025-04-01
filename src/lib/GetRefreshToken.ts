@@ -1,16 +1,16 @@
+import { TokenManager } from "@/functions/TokenManager";
+
 export const getRefreshToken = async (
-  tokenPayload?: string | undefined | null,
-  token?: string | undefined | null,
+  refreshToken?: string | undefined | null,
 ): Promise<Response> => {
   return await fetch(
-    `${process.env.NEXT_PUBLIC_API_GSO}/api/auth/refresh-token/${tokenPayload}`,
+    `${process.env.NEXT_PUBLIC_API_GSO}/api/auth/refresh-token`,
     {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "x-refresh-token": `Bearer ${refreshToken}`,
       },
-      cache: 'no-cache',
     },
-  )
-}
+  );
+};

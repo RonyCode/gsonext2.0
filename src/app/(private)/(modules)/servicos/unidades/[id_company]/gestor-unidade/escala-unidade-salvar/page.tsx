@@ -10,6 +10,7 @@ import { getCompanyById } from "@/lib/GetCompanyById";
 import { getScheduleById } from "@/lib/GetScheduleById";
 import { getAllVehiclesCompany } from "@/lib/getAllVehiclesCompany";
 import { getMembersCompanyById } from "@/lib/GetMembersCompanyById";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "GSO | salvar escala",
@@ -52,6 +53,8 @@ const SalvarEscala = async ({
     idSchedule,
   );
 
+  const subscriptionsUser = (await cookies()).get("subscription")?.value;
+
   return (
     <>
       <CardDefault
@@ -71,6 +74,7 @@ const SalvarEscala = async ({
         <div className="overflow-scroll lg:overflow-hidden">
           {companyFound !== null && companyFound !== undefined ? (
             <TabScheduleSave
+              subscriptionsUser={JSON.stringify(subscriptionsUser)}
               idCompany={idCompany}
               idCorporation={idCorporation}
               dateSchedule={dateScheduleParams}

@@ -6,9 +6,10 @@ export async function GET(
 ): Promise<NextResponse> {
   const resolvedParams = await params;
   const { id } = resolvedParams;
-  const token = request.headers.get("Authorization");
 
-  const res: Response = await fetch(
+  const token = request.headers.get("authorization");
+
+  const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_GSO}/api/user/user-id/${id}`,
     {
       method: "GET",
@@ -18,12 +19,14 @@ export async function GET(
       },
     },
   );
-  if (!res.ok) {
+
+  if (!response.ok) {
     return NextResponse.json(
-      { message: res.statusText },
-      { status: res.status },
+      { message: response.statusText },
+      { status: response.status },
     );
   }
-  // const data = await res.json()
-  return NextResponse.json(await res.json());
+
+  const data = await response.json();
+  return NextResponse.json(data);
 }

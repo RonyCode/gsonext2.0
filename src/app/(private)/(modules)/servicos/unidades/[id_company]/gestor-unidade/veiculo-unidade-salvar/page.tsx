@@ -1,14 +1,13 @@
 import { getServerSession } from "next-auth";
 import React from "react";
-import { LuBuilding, LuCar, LuSearchX, LuUsers } from "react-icons/lu";
-import { MdOutlineSupervisorAccount } from "react-icons/md";
+import { LuCar, LuSearchX } from "react-icons/lu";
 
 import VehicleCompanyForm from "@/app/(private)/(modules)/components/VehicleCompanyForm";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
-import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import { searchVehicleWithoutCompany } from "@/lib/searchVehicleWithoutCompany";
 import { Building } from "lucide-react";
+import { getCompanyById } from "@/lib/GetCompanyById";
 
 const MembrosUnidade = async ({
   params,
@@ -17,18 +16,15 @@ const MembrosUnidade = async ({
 }) => {
   const resolvedParams = await params;
   const { id_company } = resolvedParams;
-  const { data } = await getAllOrganizacoes();
   const session = await getServerSession(authOptions);
-  const corpFound = data?.find((corp) => {
-    return corp?.id === session?.id_corporation;
-  });
-  const idPramas = id_company?.split("-")[1];
+  const idCompany = id_company?.split("-")[1];
+  const idCorporation = session?.id_corporation ?? "";
 
-  const result = await searchVehicleWithoutCompany(session?.id_corporation);
+  const { data: vehicles } = await searchVehicleWithoutCompany(
+    session?.id_corporation,
+  );
 
-  const companyFound = corpFound?.companies?.find((comp) => {
-    return comp?.id === idPramas;
-  });
+  const { data: companyFound } = await getCompanyById(idCorporation, idCompany);
 
   return (
     <div>
@@ -56,11 +52,11 @@ const MembrosUnidade = async ({
           iconDescription={<LuCar />}
         >
           {companyFound?.id_corporation != null &&
-          result?.data != null &&
+          vehicles != null &&
           id_company != null ? (
             <div className="overflow-scroll">
               <VehicleCompanyForm
-                vehicles={result?.data}
+                vehicles={vehicles}
                 idCorporation={session?.id_corporation}
                 idCompany={id_company}
               />

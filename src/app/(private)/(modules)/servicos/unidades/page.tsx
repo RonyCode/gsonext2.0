@@ -7,6 +7,7 @@ import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import TabCompaniesDetails from "@/app/(private)/(modules)/components/TabCompaniesDetails";
 import { getAllCompanies } from "@/lib/getAllCompanies";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "GSO | Unidades",
@@ -15,7 +16,9 @@ export const metadata: Metadata = {
 
 const listaUnidades = async () => {
   const session = await getServerSession(authOptions);
-  const { data } = await getAllCompanies(session?.id_corporation);
+  const { data } = await getAllCompanies(session?.id_corporation, token);
+
+  console.log(data);
 
   return (
     <CardDefault

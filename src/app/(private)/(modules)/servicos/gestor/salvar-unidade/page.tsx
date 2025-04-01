@@ -1,5 +1,4 @@
 import { type Metadata } from "next";
-import { getServerSession } from "next-auth";
 import Link from "next/link";
 import React, { type ReactNode } from "react";
 import { LuSquareMenu } from "react-icons/lu";
@@ -7,11 +6,9 @@ import { LuSquareMenu } from "react-icons/lu";
 import TabUnidadeDetails from "@/app/(private)/(modules)/components/TabUnidadeDetails";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { CardWithLogo } from "@/components/Cards/CardWithLogo";
-import { authOptions } from "@/lib/auth";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import { getAllStates } from "@/lib/getAllStates";
 import { Button } from "@/ui/button";
-import { getCompanyById } from "@/lib/GetCompanyById";
 
 export const metadata: Metadata = {
   title: "GSO | unidades",

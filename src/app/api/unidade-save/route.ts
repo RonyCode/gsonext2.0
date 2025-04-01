@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const body = await request.json();
-
+  const token = request.headers.get("authorization");
   if (body.id_corporation === null)
     return NextResponse.json({ message: "Erro parâmetros necessários" });
   const res = await fetch(
@@ -11,9 +11,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ company: body }),
-      cache: "no-store",
     },
   );
   // console.log(await res.text());

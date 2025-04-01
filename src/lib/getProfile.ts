@@ -1,13 +1,12 @@
-import { cookies } from "next/headers";
-
 import { type UserType } from "@/types/index";
 
 import { fetchWrapper } from "@/functions/fetch";
+import { TokenManager } from "@/functions/TokenManager";
 
 export const getProfile = async (
   idUser: string | null | undefined,
 ): Promise<UserType> => {
-  const token = (await cookies()).get("token")?.value;
+  const token = await TokenManager("token");
   return await fetchWrapper<UserType>(
     `${process.env.NEXT_PUBLIC_NEXT_URL}/api/profile/${idUser}`,
 

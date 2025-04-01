@@ -21,6 +21,9 @@ const VehicleCompany = async () => {
   const corpFound = data?.find((corp) => {
     return corp?.id === session?.id_corporation;
   });
+
+  console.log(vehicles);
+
   return (
     <CardDefault
       title={corpFound?.short_name_corp + " / " + corpFound?.address?.city}

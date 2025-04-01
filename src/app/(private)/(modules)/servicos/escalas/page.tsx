@@ -6,7 +6,7 @@ import { LuCalendarDays } from "react-icons/lu";
 import SelectCompanySchedule from "@/app/(private)/(modules)/components/SelectCompanySchedule";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
-import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
+import { getAllCompanies } from "@/lib/getAllCompanies";
 
 export const metadata: Metadata = {
   title: "GSO | Escalas",
@@ -16,10 +16,8 @@ export const metadata: Metadata = {
 const Escala = async () => {
   const session = await getServerSession(authOptions);
   if (session === null) return <> </>;
-  const { data } = await getAllOrganizacoes();
-  const corporacaoFound = data?.find((corp) => {
-    return corp?.id === session?.id_corporation;
-  });
+  const idCorporation = session?.id_corporation ?? "";
+  const { data: companies } = await getAllCompanies(idCorporation);
 
   return (
     <div>
@@ -32,9 +30,11 @@ const Escala = async () => {
         }
         icon={<LuCalendarDays size={28} />}
       >
-        <div className="md:p-4">
-          <SelectCompanySchedule unidades={corporacaoFound?.companies} />
-        </div>
+        {companies !== undefined && (
+          <div className="md:p-4">
+            <SelectCompanySchedule unidades={companies} />
+          </div>
+        )}
       </CardDefault>
     </div>
   );

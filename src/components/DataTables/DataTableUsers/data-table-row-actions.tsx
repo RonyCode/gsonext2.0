@@ -1,25 +1,25 @@
-import Link from 'next/link'
-import { type ReactElement } from 'react'
+import Link from "next/link";
+import { type ReactElement } from "react";
 
-import { Button } from '../../ui/button'
+import { Button } from "@/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '../../ui/dropdown-menu'
-import { UserSchema } from '@/schemas/UsersSchema'
-import { DotsHorizontalIcon } from '@radix-ui/react-icons'
-import { type Row } from '@tanstack/react-table'
+} from "@/ui/dropdown-menu";
+import { UserSchema } from "@/schemas/UsersSchema";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { type Row } from "@tanstack/react-table";
 
 interface DataTableRowActionsProps<TData> {
-  row: Row<TData>
+  row: Row<TData>;
 }
 
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>): ReactElement {
-  const task = UserSchema.parse(row.original)
+  const task = UserSchema.parse(row.original);
 
   return (
     <DropdownMenu>
@@ -34,11 +34,11 @@ export function DataTableRowActions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <Link
-          href={`/servicos/membros/${task?.account?.name?.toLowerCase() + '-' + task?.id}`}
+          href={`/servicos/usuarios/${task?.account?.name?.toLowerCase() + "-" + task?.id}`}
         >
           <DropdownMenuItem>Detalhes</DropdownMenuItem>
         </Link>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

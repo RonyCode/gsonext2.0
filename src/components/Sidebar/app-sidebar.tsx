@@ -200,7 +200,9 @@ export function AppSidebar({
           },
           {
             title: "Adicionar Veículos Unidade",
-            icon: <IconBuildPlus width={32} className="fill-foreground/60" />,
+            icon: (
+              <IconCarFrontal width={32} className="stroke-foreground/60" />
+            ),
             url: `/servicos/unidades/${compSelected?.name}-${compSelected?.id}/gestor-unidade/veiculo-unidade-salvar`,
           },
           {
@@ -218,7 +220,7 @@ export function AppSidebar({
           {
             title: "Usuários",
             icon: <IconManager width={32} className="fill-foreground/60" />,
-            url: "/servicos/gestor/salvar-organizacao",
+            url: "/servicos/usuarios",
           },
           {
             title: "Privilégios",

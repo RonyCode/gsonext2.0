@@ -1,7 +1,7 @@
 "use client";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import React, { useEffect, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -71,6 +71,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
+import { maskZipcode } from "@/functions/masks/maskZipcode";
 
 enum Fields {
   address = "companyAddress.address",
@@ -119,7 +120,12 @@ export const TabUnidadeDetails = ({
       cnpj: maskCpfCnpj(unidade?.cnpj) ?? "",
       phone: maskPhone(unidade?.phone) ?? "",
       image: unidade?.image ?? null,
-      companyAddress: unidade?.companyAddress ?? undefined,
+      companyAddress: unidade?.companyAddress
+        ? {
+            ...unidade.companyAddress,
+            zipcode: maskZipcode(unidade?.companyAddress?.zipcode) ?? "",
+          }
+        : undefined,
       date_creation: unidade?.date_creation ?? "",
       type: unidade?.type ?? null,
       manager: unidade?.manager ?? null,

@@ -1,16 +1,15 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(): Promise<NextResponse> {
+export async function GET(request: NextRequest): Promise<NextResponse> {
+  const token = request.headers.get("authorization");
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_GSO}/services/functions`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-      },
-      next: {
-        revalidate: 1,
-        tags: ["functionsFetch"],
+        Authorization: `Bearer ${token}`,
       },
     },
   );

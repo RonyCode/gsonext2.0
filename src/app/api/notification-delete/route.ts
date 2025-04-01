@@ -6,12 +6,15 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   const exchangeName = searchParams.get("exchange_name");
   const idMessage = searchParams.get("id_message");
 
+  const token = request.headers.get("authorization");
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_GSO}/services/amqp/delete-notification?exchange_name=${exchangeName}&id_user=${idUser}&id_message=${idMessage}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     },
   );

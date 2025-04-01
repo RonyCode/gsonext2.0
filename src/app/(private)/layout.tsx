@@ -25,7 +25,8 @@ export default async function PrivateLayout({
   const corpFound = data?.find((corp) => {
     return corp?.id === session?.id_corporation;
   });
-  const companyFound = await getAllCompanies(session?.id_corporation);
+  const token = cookieStore.get("token")?.value;
+  const companyFound = await getAllCompanies(session?.id_corporation, token);
 
   return (
     <div className="w-full">

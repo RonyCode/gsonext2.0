@@ -8,6 +8,7 @@ import { CardWithLogo } from "@/components/Cards/CardWithLogo";
 import LoadingPage from "@/components/Loadings/LoadingPage";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import { Button } from "@/ui/button";
+import { getAllVehiclesCorporation } from "@/lib/getAllVehiclesCorporation";
 
 const SalvarUnidade = async ({
   searchParams,
@@ -18,13 +19,17 @@ const SalvarUnidade = async ({
   const { id_vehicle } = resolvedSearchParams;
 
   const { data } = await getAllOrganizacoes();
+
   const corpFound = data?.find((corp) =>
     corp.vehicles?.find((vehicle) => vehicle?.id === id_vehicle),
   );
 
-  const myVehicle = corpFound?.vehicles?.find(
-    (vehicle) => vehicle?.id === id_vehicle,
+  const { data: vehicles } = await getAllVehiclesCorporation(
+    corpFound?.id ?? "",
   );
+
+  const myVehicle = vehicles?.find((vehicle) => vehicle?.id === id_vehicle);
+
   return (
     <>
       <CardDefault

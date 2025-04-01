@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useTransition } from "react";
-import { LuCheck, LuChevronsUpDown } from "react-icons/lu";
+import { LuCheck, LuChevronsUpDown, LuSearchX } from "react-icons/lu";
 
 import LoadingPage from "@/components/Loadings/LoadingPage";
 import { cn } from "@/lib/utils";
@@ -17,9 +17,12 @@ import {
 } from "@/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
 import CalendarGsoV1 from "@/components/CalendarGso/CalendarGsoV1";
+import { IScheduleSchema } from "@/schemas/ScheduleSchema";
+import { getAllSchedulesCompany } from "@/lib/getAllSchedulesCompany";
 
 type SelectCompanyModuleProps = React.HTMLAttributes<HTMLDivElement> & {
-  unidades?: IUnidadeSchema[];
+  unidades: IUnidadeSchema[];
+  schedules: IScheduleSchema[];
 };
 
 export const SelectCompanySchedule = ({
@@ -27,6 +30,7 @@ export const SelectCompanySchedule = ({
 }: SelectCompanyModuleProps) => {
   const disabled = false;
   const [dataUnidade, setDataUnidade] = useState<IUnidadeSchema | null>(null);
+  const [schedules, setSchedules] = useState<IScheduleSchema[]>([]);
   const [isPending, startTransition] = useTransition();
 
   const handleSelectUnidade = (unidadeOnSelect: IUnidadeSchema): void => {
@@ -38,8 +42,15 @@ export const SelectCompanySchedule = ({
 
         setDataUnidade(unidadeSelected ?? null);
       }
+
+      const { data: schedules } = await getAllSchedulesCompany(
+        unidadeOnSelect?.id_corporation ?? "",
+        unidadeOnSelect?.id ?? "",
+      );
+      setSchedules(schedules ?? []);
     });
   };
+  console.log(schedules);
 
   return (
     <>
@@ -101,16 +112,19 @@ export const SelectCompanySchedule = ({
           </Card>
         </div>
       </Card>
-      <div>
-        {dataUnidade?.schedules != null && (
-          <div>
-            <CalendarGsoV1
-              company={dataUnidade}
-              dayEvent={dataUnidade?.schedules}
-            />
-          </div>
-        )}
-      </div>
+      {schedules != null && schedules?.length > 0 ? (
+        <div>
+          <CalendarGsoV1 company={dataUnidade ?? {}} schedules={schedules} />
+        </div>
+      ) : (
+        <div className="flex h-full w-full items-center justify-center">
+          {" "}
+          <span className="flex items-center justify-center gap-1">
+            <LuSearchX size={28} className="text-primary/60" /> SEM ESCALAS
+            CADASTRADAS PARA ESTA UNIDADE 🤯
+          </span>
+        </div>
+      )}
     </>
   );
 };
