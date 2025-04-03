@@ -1,11 +1,11 @@
 import { fetchWrapper } from "@/functions/fetch";
-import { IMemberSchema } from "@/schemas/MemberSchema";
 import { type ResponseApi } from "@/types/index";
 import { TokenManager } from "@/functions/TokenManager";
+import { IUserSchema } from "@/schemas/UsersSchema";
 
-export const getAllUsers = async (): Promise<ResponseApi<IMemberSchema[]>> => {
+export const getAllUsers = async (): Promise<ResponseApi<IUserSchema[]>> => {
   const token = await TokenManager("token");
-  return await fetchWrapper<ResponseApi<IMemberSchema[]>>(
+  return await fetchWrapper<ResponseApi<IUserSchema[]>>(
     `${process.env.NEXT_PUBLIC_NEXT_URL}/api/users`,
     {
       method: "GET",

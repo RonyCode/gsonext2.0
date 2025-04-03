@@ -15,7 +15,6 @@ export async function handleTokenRefresh(
   if (resp.ok) {
     const tokenRes = (await resp.json()) as TokenResponse;
 
-    console.log(tokenRes);
     // Atualiza os tokens nos headers
     response.headers.set("Authorization", `Bearer ${tokenRes.token}`);
     response.headers.set("x-refresh-token", tokenRes.refresh_token);

@@ -7,13 +7,12 @@ import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/ui/button";
 import { Card } from "@/ui/card";
 import { IMemberSchema } from "@/schemas/MemberSchema";
-import { columnsMembers } from "@/components/DataTables/DataTableMembers/columnsMembers";
-import { DataTableMembers } from "@/components/DataTables/DataTableMembers/data-table-members";
 import { DataTableUsers } from "@/components/DataTables/DataTableUsers/data-table-users";
 import { columnsUsers } from "@/components/DataTables/DataTableUsers/columnsUser";
+import { IUserSchema } from "@/schemas/UsersSchema";
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
-  users?: IMemberSchema[];
+  users?: IUserSchema[];
   className?: string;
 };
 
@@ -40,7 +39,7 @@ export const UsersDetails = ({
             </Link>
           </div>
         </div>
-        <div className="md:px-28 md:py-4">
+        <div className="md:p-4">
           <DataTableUsers columns={columnsUsers} data={users ?? []} />
         </div>
       </Card>

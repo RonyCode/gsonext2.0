@@ -1,25 +1,22 @@
-import Link from 'next/link'
-import * as React from 'react'
+import Link from "next/link";
+import * as React from "react";
 import {
   LuFacebook,
   LuGithub,
   LuGitlab,
   LuLinkedin,
   LuTwitter,
-} from 'react-icons/lu'
+} from "react-icons/lu";
 
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils";
 
 type FooterLayoutProps = {
-  className?: string
-} & React.HTMLAttributes<HTMLDivElement>
-const FooterHomePage = ({
-  className,
-  ...props
-}: FooterLayoutProps) => {
+  className?: string;
+} & React.HTMLAttributes<HTMLDivElement>;
+const FooterHomePage = ({ className, ...props }: FooterLayoutProps) => {
   return (
     <footer
-      className={cn('bottom-0 z-50 bg-secondary pb-6 pt-8', className)}
+      className={cn("bottom-0 z-10 bg-secondary pb-6 pt-8", className)}
       {...props}
     >
       <div className="container mx-auto px-4">
@@ -37,33 +34,33 @@ const FooterHomePage = ({
                 className="align-center mr-2 h-10 w-10 items-center justify-center rounded-full font-normal text-foreground shadow-lg outline-none focus:outline-none"
                 type="button"
               >
-                <LuTwitter size={36} />{' '}
+                <LuTwitter size={36} />{" "}
               </button>
 
               <button
                 className="align-center mr-2 h-10 w-10 items-center justify-center rounded-full font-normal text-foreground shadow-lg outline-none focus:outline-none"
                 type="button"
               >
-                <LuLinkedin size={36} />{' '}
+                <LuLinkedin size={36} />{" "}
               </button>
               <button
                 className="align-center mr-2 h-10 w-10 items-center justify-center rounded-full font-normal text-foreground shadow-lg outline-none focus:outline-none"
                 type="button"
               >
-                <LuGitlab size={36} />{' '}
+                <LuGitlab size={36} />{" "}
               </button>
               <button
-                className="align-center mr-2 h-10 w-10 items-center justify-center rounded-full  font-normal text-foreground shadow-lg outline-none focus:outline-none"
+                className="align-center mr-2 h-10 w-10 items-center justify-center rounded-full font-normal text-foreground shadow-lg outline-none focus:outline-none"
                 type="button"
               >
-                <LuFacebook size={36} />{' '}
+                <LuFacebook size={36} />{" "}
               </button>
 
               <button
-                className="align-center mr-2 h-10 w-10 items-center justify-center rounded-full  font-normal text-foreground shadow-lg outline-none focus:outline-none"
+                className="align-center mr-2 h-10 w-10 items-center justify-center rounded-full font-normal text-foreground shadow-lg outline-none focus:outline-none"
                 type="button"
               >
-                <LuGithub size={36} />{' '}
+                <LuGithub size={36} />{" "}
               </button>
             </div>
           </div>
@@ -76,7 +73,7 @@ const FooterHomePage = ({
                 <ul className="list-unstyled">
                   <li>
                     <Link
-                      className="block pb-2 text-sm font-semibold text-foreground hover:text-primary/60 "
+                      className="block pb-2 text-sm font-semibold text-foreground hover:text-primary/60"
                       href="/about"
                     >
                       Sobre Nós
@@ -84,7 +81,7 @@ const FooterHomePage = ({
                   </li>
                   <li>
                     <Link
-                      className="block pb-2 text-sm font-semibold text-foreground hover:text-primary/60 "
+                      className="block pb-2 text-sm font-semibold text-foreground hover:text-primary/60"
                       href="https://blog.creative-tim.com?ref=njs-profile"
                     >
                       Apresentação
@@ -160,10 +157,10 @@ const FooterHomePage = ({
                 className="text-foreground hover:text-primary/60"
                 target="_blank"
               >
-                {' '}
-                GSO{' '}
+                {" "}
+                GSO{" "}
               </Link>
-              by{' '}
+              by{" "}
               <Link
                 href="https://github.com/RonyCode"
                 className="text-foreground hover:text-primary/60"
@@ -176,6 +173,6 @@ const FooterHomePage = ({
         </div>
       </div>
     </footer>
-  )
-}
-export default FooterHomePage
+  );
+};
+export default FooterHomePage;

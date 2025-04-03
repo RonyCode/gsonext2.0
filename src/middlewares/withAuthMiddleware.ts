@@ -1,6 +1,5 @@
-// middlewares/withAuthMiddleware.ts
-import type { NextFetchEvent, NextRequest } from "next/server";
-import { NextResponse } from "next/server";
+// middlewares/withAuthMiddleware.tsimport type { NextFetchEvent, NextRequest } from "next/server";
+import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
 import { type CustomMiddleware } from "./chain";
 import { handleTokenRefresh } from "@/lib/tokenManager";

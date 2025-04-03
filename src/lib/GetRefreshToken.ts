@@ -1,5 +1,3 @@
-import { TokenManager } from "@/functions/TokenManager";
-
 export const getRefreshToken = async (
   refreshToken?: string | undefined | null,
 ): Promise<Response> => {
@@ -10,6 +8,7 @@ export const getRefreshToken = async (
       headers: {
         "Content-Type": "application/json",
         "x-refresh-token": `Bearer ${refreshToken}`,
+        Authorization: `Bearer ${refreshToken}`,
       },
     },
   );
