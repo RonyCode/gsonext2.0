@@ -12,7 +12,12 @@ interface RoutePermission {
 
 export const routePermissions: RoutePermission[] = [
   {
-    paths: ["^/servicos/gestor.*"],
+    paths: [
+      "^/servicos/corporacao/membros.*",
+      "^/servicos/corporacao/gestor.*",
+      "^/servicos/corporacao/veiculos.*",
+      "^/servicos/corporacao/usuarios.*",
+    ],
     roles: ["admin"],
     methods: ["GET", "POST", "PUT", "DELETE"],
   },

@@ -1,18 +1,18 @@
 import React, { use } from "react";
 
-import TabUnidadeDetails from "./TabUnidadeDetails";
+import TabUnidadeDetails from "./ListaUnidadeDetails";
 
 import { ImageExist } from "@/functions/ImageExist";
 import { getAllStates } from "@/lib/getAllStates";
-import { getUnidadeById } from "@/lib/GetCompanyById";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/ui/tabs";
+import { getCompanyById } from "@/lib/GetCompanyById";
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
   params: { id: string; id_corporation: string };
 };
 
 export const UnidadesForm = ({ params }: UserRegisterFormProps) => {
-  const { data } = use(getUnidadeById(params.id_corporation, params.id));
+  const { data } = use(getCompanyById(params.id_corporation, params.id));
   const states = use(getAllStates());
 
   const result = use(ImageExist(data?.image));

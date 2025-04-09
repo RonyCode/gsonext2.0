@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { type ReactNode } from "react";
 import { LuSquareMenu } from "react-icons/lu";
 
-import TabUnidadeDetails from "@/app/(private)/(modules)/components/TabUnidadeDetails";
+import TabUnidadeDetails from "@/app/(private)/(modules)/components/ListaUnidadeDetails";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { CardWithLogo } from "@/components/Cards/CardWithLogo";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";

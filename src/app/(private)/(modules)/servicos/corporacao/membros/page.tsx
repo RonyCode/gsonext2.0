@@ -35,7 +35,7 @@ const MembrosUnidade = async () => {
               {membersFound != null && (
                 <DataTableMembers
                   columns={columnsMembers}
-                  data={membersFound as IMemberSchema[]}
+                  data={membersFound as unknown as IMemberSchema[]}
                 />
               )}
             </div>

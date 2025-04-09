@@ -1,6 +1,6 @@
 import { getAllUsers } from "@/lib/GetAllUsers";
 import React from "react";
-import UsersDetails from "../../components/usersDetails";
+import UsersDetails from "../../../components/usersDetails";
 import { LuSearchX } from "react-icons/lu";
 
 export default async function UsuariosPage() {

@@ -1,6 +1,13 @@
 "use client";
 
-import { ChevronRight, type LucideIcon } from "lucide-react";
+import {
+  Building,
+  Building2Icon,
+  Calendar1Icon,
+  ChevronRight,
+  Siren,
+  type LucideIcon,
+} from "lucide-react";
 
 import {
   Collapsible,
@@ -19,27 +26,146 @@ import {
 } from "@/components/ui/sidebar";
 import { ReactNode } from "react";
 import Link from "next/link";
+import IconSirene from "@/icons/IconSirene";
+import IconEditSave from "@/icons/IconEditSave";
+import IconBuild from "@/icons/IconBuild";
+import IconMembers from "@/icons/IconMembers";
+import IconCarFrontal from "@/icons/IconCarFrontal";
+import IconCalendar from "@/icons/IconCalendar";
+import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
+import { Session } from "next-auth";
+
+interface MenuItem {
+  title: string;
+  icon: ReactNode;
+  url: string;
+}
+
+interface NavItem {
+  title: string;
+  url: string;
+  icon: LucideIcon;
+  items: MenuItem[];
+  isActive?: boolean;
+}
 
 type NavMainProps = {
-  items: {
-    title: string;
-    url: string;
-    icon?: LucideIcon;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      icon?: ReactNode;
-      url: string;
-    }[];
-  }[];
+  compSelected: IUnidadeSchema;
+  session: Session | null;
 };
 
-export function NavMain({ items }: NavMainProps) {
+export function NavMain({ compSelected, session }: NavMainProps) {
+  const itemsGeral: NavItem[] = [
+    {
+      title: "Ocorrências",
+      url: "#",
+      icon: Siren,
+      items: [
+        {
+          title: "Ocorrências",
+          icon: (
+            <IconSirene
+              width={32}
+              className="fill-foreground/60 stroke-foreground/60 text-foreground/60"
+            />
+          ),
+          url: "/servicos/corporacao",
+        },
+        {
+          title: "Novas Ocorrências",
+          icon: <IconEditSave width={32} className="fill-foreground/60" />,
+          url: "/servicos/membros",
+        },
+      ],
+    },
+    {
+      title: "Corporação",
+      url: "#",
+      icon: Building2Icon,
+      items:
+        session?.role === "admin"
+          ? [
+              {
+                title: "Corporação",
+                icon: <IconBuild width={32} className="fill-foreground/60" />,
+                url: "/servicos/corporacao",
+              },
+              {
+                title: "Membros Corporação",
+                icon: <IconMembers width={32} className="fill-foreground/60" />,
+                url: "/servicos/corporacao/membros",
+              },
+              {
+                title: "Veículos Corporação",
+                icon: (
+                  <IconCarFrontal width={32} className="stroke-foreground/60" />
+                ),
+                url: "/servicos/corporacao/veiculos",
+              },
+              {
+                title: "Unidades Corporação",
+                icon: <IconBuild width={32} className="fill-foreground/60" />,
+                url: "/servicos/corporacao/unidades",
+              },
+            ]
+          : [
+              {
+                title: "Corporação",
+                icon: <IconBuild width={32} className="fill-foreground/60" />,
+                url: "/servicos/corporacao",
+              },
+              {
+                title: "Unidades Corporação",
+                icon: <IconBuild width={32} className="fill-foreground/60" />,
+                url: "/servicos/corporacao/unidades",
+              },
+            ],
+    },
+    {
+      title: "Unidade",
+      url: "#",
+      icon: Building,
+      items: [
+        {
+          title: "Unidade",
+          icon: <IconBuild width={32} className="fill-foreground/60" />,
+          url: `/servicos/corporacao/unidades/${compSelected?.name}-${compSelected?.id}/detalhes`,
+        },
+        {
+          title: "Membros Unidade",
+          icon: <IconMembers width={32} className="fill-foreground/60" />,
+          url: `/servicos/corporacao/unidades/${compSelected?.name}-${compSelected?.id}/membros`,
+        },
+        {
+          title: "Veículos Unidade",
+          icon: <IconCarFrontal width={32} className="stroke-foreground/60" />,
+          url: `/servicos/corporacao/unidades/${compSelected?.name}-${compSelected?.id}/veiculos`,
+        },
+        {
+          title: "Escalas Unidades",
+          icon: <IconCalendar width={32} className="fill-foreground/60" />,
+          url: `/servicos/corporacao/unidades/${compSelected?.name}-${compSelected?.id}/escalas`,
+        },
+      ],
+    },
+    {
+      title: "Escalas",
+      url: "#",
+      icon: Calendar1Icon,
+      items: [
+        {
+          title: "Escalas Unidades",
+          icon: <IconCalendar width={32} className="fill-foreground/60" />,
+          url: "/servicos/escalas",
+        },
+      ],
+    },
+  ];
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Geral</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
+        {itemsGeral.map((item) => (
           <Collapsible
             key={item.title}
             asChild

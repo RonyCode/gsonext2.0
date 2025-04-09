@@ -15,7 +15,7 @@ type TabUnidadesProps = React.HTMLAttributes<HTMLDivElement> & {
   className?: string;
 };
 
-export const TabCompaniesDetails = ({
+export const ListCompaniesDetails = ({
   companies,
   className,
   ...props
@@ -50,4 +50,4 @@ export const TabCompaniesDetails = ({
     </div>
   );
 };
-export default TabCompaniesDetails;
+export default ListCompaniesDetails;

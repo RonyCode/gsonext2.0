@@ -19,7 +19,7 @@ import {
   LuTrash2,
 } from "react-icons/lu";
 
-import { saveCorporationAction } from "@/app/(private)/(modules)/servicos/gestor/actions/saveCorporationAction";
+import { saveCorporationAction } from "@/app/(private)/(modules)/servicos/corporacao/gestor/actions/saveCorporationAction";
 import { EditPhoto } from "@/components/EditPhoto/EditPhoto";
 import { MyInputMask } from "@/components/Form/Input/myInputMask";
 import LoadingPage from "@/components/Loadings/LoadingPage";

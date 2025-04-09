@@ -5,7 +5,7 @@ import { LuBuilding, LuBuilding2, LuSearchX } from "react-icons/lu";
 
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
-import TabCompaniesDetails from "@/app/(private)/(modules)/components/TabCompaniesDetails";
+import { ListCompaniesDetails } from "@/app/(private)/(modules)/components/ListCompaniesDetails";
 import { getAllCompanies } from "@/lib/getAllCompanies";
 
 export const metadata: Metadata = {
@@ -34,7 +34,7 @@ const listaUnidades = async () => {
     >
       <div className="md:overflow-none h-full w-full overflow-scroll">
         {data !== undefined && data?.length > 0 ? (
-          <TabCompaniesDetails companies={data} />
+          <ListCompaniesDetails companies={data} />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
             {" "}

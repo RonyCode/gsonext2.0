@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import React, { type ReactNode } from "react";
 import { LuBuilding } from "react-icons/lu";
 
-import TabUnidadeDetails from "@/app/(private)/(modules)/components/TabUnidadeDetails";
+import TabUnidadeDetails from "@/app/(private)/(modules)/components/ListaUnidadeDetails";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import { getAllStates } from "@/lib/getAllStates";

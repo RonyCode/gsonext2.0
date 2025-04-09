@@ -3,7 +3,7 @@ import React from "react";
 import { LuBuilding } from "react-icons/lu";
 import { MdOutlineSupervisorAccount } from "react-icons/md";
 
-import TabUnidadeDetails from "@/app/(private)/(modules)/components/TabUnidadeDetails";
+import TabUnidadeDetails from "@/app/(private)/(modules)/components/ListaUnidadeDetails";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";

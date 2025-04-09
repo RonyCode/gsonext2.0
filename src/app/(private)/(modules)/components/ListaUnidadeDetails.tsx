@@ -22,7 +22,7 @@ import {
   LuTrash2,
 } from "react-icons/lu";
 
-import { saveUnidadeAction } from "@/app/(private)/(modules)/servicos/gestor/actions/saveUnidadeAction";
+import { saveUnidadeAction } from "@/app/(private)/(modules)/servicos/corporacao/gestor/actions/saveUnidadeAction";
 import { EditPhoto } from "@/components/EditPhoto/EditPhoto";
 import { MyInputMask } from "@/components/Form/Input/myInputMask";
 import LoadingPage from "@/components/Loadings/LoadingPage";
@@ -87,7 +87,7 @@ type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
   states?: AddressProps[] | null;
 };
 
-export const TabUnidadeDetails = ({
+export const ListaUnidadeDetails = ({
   unidade,
   corporations,
   className,
@@ -947,4 +947,4 @@ export const TabUnidadeDetails = ({
     </>
   );
 };
-export default TabUnidadeDetails;
+export default ListaUnidadeDetails;
