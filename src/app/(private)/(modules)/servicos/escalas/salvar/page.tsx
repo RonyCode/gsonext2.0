@@ -22,10 +22,8 @@ const SalvarEscala = async () => {
       <CardDefault
         title="Escalas"
         description="Serviço de escala"
-        image={process.env.NEXT_PUBLIC_API_GSO + "/public/images/calendar.jpg"}
-        imageMobile={
-          process.env.NEXT_PUBLIC_API_GSO + "/public/images/calendar.jpg"
-        }
+        image={"/public/images/calendar.jpg"}
+        imageMobile={"/public/images/calendar.jpg"}
         icon={<LuCalendarDays size={28} />}
       >
         <div>

@@ -37,10 +37,8 @@ const SalvarEscala = async ({
       <CardDefault
         title="Salvar Escala Corporação"
         description="Gerenciar Escalas"
-        image={process.env.NEXT_PUBLIC_API_GSO + "/public/images/escala.png"}
-        imageMobile={
-          process.env.NEXT_PUBLIC_API_GSO + "/public/images/escala.png"
-        }
+        image={"/public/images/escala.png"}
+        imageMobile={"/public/images/escala.png"}
         icon={<LuSaveAll size={28} />}
       >
         <div className="overflow-scroll lg:overflow-hidden">

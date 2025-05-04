@@ -122,7 +122,14 @@ export const authOptions: NextAuthOptions = {
           const userGoogle = await confereLogado(payload);
 
           if (userGoogle == null) {
-            return token;
+            return {
+              ...token,
+              provider: account.provider,
+              provider_user_id: token.sub,
+              email: token?.email,
+              name: token?.name,
+              image: token?.picture,
+            };
           }
 
           // Save the access token and refresh token in the JWT on the initial login
@@ -146,6 +153,8 @@ export const authOptions: NextAuthOptions = {
           return {
             ...token,
             id: userGoogle?.id,
+            provider_user_id: token.sub,
+            provider: account.provider,
             id_message: userGoogle?.id_message,
             id_corporation: userGoogle?.id_corporation,
             id_company: userGoogle?.id_company,
@@ -184,6 +193,8 @@ export const authOptions: NextAuthOptions = {
           return {
             ...token,
             id: user?.id,
+            provider_user_id: user.provider_user_id,
+            provider: user.provider,
             id_message: user?.id_message,
             id_corporation: user?.id_corporation,
             id_company: user?.id_company,
@@ -217,6 +228,8 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token, newSession, trigger }) {
       session.id = token?.id;
       session.id_message = token?.id_message;
+      session.provider_user_id = token.provider_user_id;
+      session.provider = token.provider;
       session.id_corporation = token?.id_corporation;
       session.id_company = token?.id_company;
       session.email = token?.email;

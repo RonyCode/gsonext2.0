@@ -30,6 +30,7 @@ import { Input } from "@/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { type AxiosProgressEvent } from "axios";
 import { toast } from "@/hooks/use-toast";
+import { TokenManager } from "@/functions/TokenManager";
 
 type EditPhotoProps = {
   className?: string;
@@ -65,6 +66,8 @@ export const EditPhoto = ({
 
   const handleSubmit = (data: IFileSchema): void => {
     startTransition(async () => {
+      const token = await TokenManager("token");
+
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_GSO}/services/upload`,
         { file: data.file_image, directoryFile },
@@ -72,6 +75,7 @@ export const EditPhoto = ({
           onUploadProgress,
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         },
       );

@@ -1,14 +1,16 @@
 import { getServerSession } from "next-auth";
 import React, { Suspense } from "react";
-import { LuBuilding } from "react-icons/lu";
+import { LuBuilding, LuCalendar1, LuSearchX } from "react-icons/lu";
 
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import CalendarGsoV1 from "@/components/CalendarGso/CalendarGsoV1";
 import LoadingPage from "@/components/Loadings/LoadingPage";
-import { Calendar } from "lucide-react";
 import { getAllSchedulesCompany } from "@/lib/getAllSchedulesCompany";
 import { getCompanyById } from "@/lib/GetCompanyById";
+import { CardWithLogo } from "@/components/Cards/CardWithLogo";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const EscalasUnidade = async ({
   params,
@@ -35,26 +37,44 @@ const EscalasUnidade = async ({
   return (
     <>
       <CardDefault
-        title={companyFound?.name + " / " + companyFound?.companyAddress?.city}
+        title={
+          companyFound?.name !== undefined && companyFound?.name !== null
+            ? companyFound?.name + " / " + companyFound?.companyAddress?.city
+            : "Unidade não encontrada!"
+        }
         description={"Escalas da minha Unidade"}
-        image={
-          process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
-            ? process.env.NEXT_PUBLIC_API_GSO + companyFound?.image
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-        }
-        imageMobile={
-          process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
-            ? process.env.NEXT_PUBLIC_API_GSO + companyFound?.image
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-        }
+        image={companyFound?.image}
+        imageMobile={companyFound?.image}
         icon={<LuBuilding size={28} />}
-        iconDescription={<Calendar size={18} />}
+        iconDescription={<LuCalendar1 size={18} />}
       >
-        {schedules != null && (
+        {schedules != null ? (
           <div className="m-0 min-h-screen w-full md:p-6">
             <Suspense fallback={<LoadingPage pending={true} />}>
               <CalendarGsoV1 company={companyFound} schedules={schedules} />
             </Suspense>
+          </div>
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            {session?.id_corporation === undefined ||
+            session?.id_corporation == null ? (
+              <CardWithLogo
+                title="Usuário sem Corporação"
+                description="É necessário solicitar inclusão em uma corporação para acessar nossos módulos"
+              >
+                <Link
+                  href="/contact"
+                  className="flex w-full items-center justify-center"
+                >
+                  <Button>Solicitar inclusão</Button>
+                </Link>
+              </CardWithLogo>
+            ) : (
+              <span className="flex items-center justify-center gap-1">
+                <LuSearchX size={28} className="text-primary/60" /> SEM UNIDADE
+                CADASTRADA 🤯
+              </span>
+            )}
           </div>
         )}
       </CardDefault>

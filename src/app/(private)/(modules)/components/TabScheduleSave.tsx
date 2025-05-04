@@ -186,6 +186,7 @@ export const TabScheduleSave = ({
         scheduleCompany?.id_member_comunication ?? undefined,
       hour_start: scheduleCompany?.hour_start ?? undefined,
       team: scheduleCompany?.team ?? undefined,
+      type: scheduleCompany?.type ?? undefined,
       date_creation:
         scheduleCompany?.date_creation ??
         new Date().toLocaleDateString("pt-BR"),
@@ -382,7 +383,6 @@ export const TabScheduleSave = ({
     form.resetField("vehicle");
   }, [form, listVehicles]);
 
-  console.log(form.formState.errors);
   return (
     <>
       <Card
@@ -395,7 +395,7 @@ export const TabScheduleSave = ({
             <div className="mb-6 flex w-full items-center justify-between border-b border-foreground/10">
               <div className="mx-4 flex w-full items-center justify-between">
                 <h1 className="text-xl font-bold">Salvar nova escala</h1>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 py-2">
                   <LuCalendarDays size={24} />
                   <h1 className="text-xl font-bold">{dayWeekPrint}</h1>
                 </div>
@@ -992,7 +992,6 @@ export const TabScheduleSave = ({
                                   <CommandItem
                                     key={index}
                                     onSelect={() => {
-                                      console.log(veihcle);
                                       form?.setValue(
                                         "vehicle",
                                         listVehicles?.find(

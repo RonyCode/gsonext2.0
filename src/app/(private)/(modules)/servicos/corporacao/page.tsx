@@ -6,6 +6,9 @@ import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import { getAllStates } from "@/lib/getAllStates";
+import { CardWithLogo } from "@/components/Cards/CardWithLogo";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const Organizacao = async (): Promise<ReactNode> => {
   const { data } = await getAllOrganizacoes();
@@ -16,29 +19,29 @@ const Organizacao = async (): Promise<ReactNode> => {
   });
 
   return (
-    <>
-      <CardDefault
-        title="Minha Corporação"
-        description="Gerenciar Corporação"
-        image={
-          process.env.NEXT_PUBLIC_API_GSO !== null &&
-          organizacaoFound?.image != null
-            ? process.env.NEXT_PUBLIC_API_GSO + organizacaoFound.image
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-        }
-        imageMobile={
-          process.env.NEXT_PUBLIC_API_GSO !== null &&
-          organizacaoFound?.image != null
-            ? process.env.NEXT_PUBLIC_API_GSO + organizacaoFound.image
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-        }
-        icon={<LuBuilding2 size={28} />}
-      >
-        {organizacaoFound !== undefined && dataStates !== undefined && (
-          <OrganizacaoForm organizacao={organizacaoFound} states={dataStates} />
-        )}
-      </CardDefault>
-    </>
+    <CardDefault
+      title="Minha Corporação"
+      description="Gerenciar Corporação"
+      image={organizacaoFound?.image}
+      imageMobile={organizacaoFound?.image}
+      icon={<LuBuilding2 size={28} />}
+    >
+      {organizacaoFound !== undefined && dataStates !== undefined ? (
+        <OrganizacaoForm organizacao={organizacaoFound} states={dataStates} />
+      ) : (
+        <CardWithLogo
+          title="Usuário sem Corporação"
+          description="É necessário solicitar inclusão em uma corporação para acessar nossos módulos"
+        >
+          <Link
+            href="/contact"
+            className="flex w-full items-center justify-center"
+          >
+            <Button>Solicitar inclusão</Button>
+          </Link>
+        </CardWithLogo>
+      )}
+    </CardDefault>
   );
 };
 

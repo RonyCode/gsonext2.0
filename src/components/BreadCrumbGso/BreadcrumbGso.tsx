@@ -3,7 +3,6 @@ import Link from "next/link";
 import React, { type ReactElement } from "react";
 import { LiaChevronRightSolid } from "react-icons/lia";
 import { LuHouse } from "react-icons/lu";
-
 import {
   Breadcrumb,
   BreadcrumbEllipsis,
@@ -19,22 +18,41 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu";
-import { isArray } from "node:util";
+
+interface BreadcrumbSegment {
+  label: string;
+  path: string;
+}
+
+const formatPathSegment = (segment: string): string => {
+  return (
+    segment.charAt(0).toUpperCase() +
+    decodeURI(
+      segment
+        .slice(1)
+        .toLowerCase()
+        .replace(/#.*$/, "")
+        .replace(/\/&.*$/, "")
+        .replace(/\?.*$/, "")
+        .replace(/-.*$/, "")
+        .split("/")[0],
+    )
+  );
+};
 
 const BreadcrumbGso = (): ReactElement => {
   const pathname = usePathname();
-  const arrayPathname = pathname?.split("/");
-  arrayPathname?.shift();
-  let link = "";
-  const linkColpse: string[] = [];
-  const arrayLink: string[] = [];
-  const arrayLinkCollapse: string[] = [];
+  const segments = pathname?.split("/").filter(Boolean) || [];
 
-  if (arrayPathname?.length > 3) {
-    arrayLinkCollapse.push(
-      ...arrayPathname?.slice(1, arrayPathname?.length - 1),
-    );
-  }
+  const buildBreadcrumbSegments = (): BreadcrumbSegment[] => {
+    return segments.map((segment, index) => ({
+      label: formatPathSegment(segment),
+      path: "/" + segments.slice(0, index + 1).join("/"),
+    }));
+  };
+
+  const breadcrumbSegments = buildBreadcrumbSegments();
+  const middleSegments = breadcrumbSegments.slice(1, -1);
 
   return (
     <>
@@ -42,183 +60,72 @@ const BreadcrumbGso = (): ReactElement => {
         <BreadcrumbList>
           <BreadcrumbItem className="hover:text-foreground">
             <Link href="/">
-              {" "}
               <LuHouse />
             </Link>
           </BreadcrumbItem>
 
-          {arrayPathname?.map((path, index) => {
-            if (index === 0) {
-              arrayLink.push("/" + path);
-            }
-            link = arrayLink.join("/");
+          {breadcrumbSegments.length > 0 && (
+            <>
+              <BreadcrumbSeparator>
+                <LiaChevronRightSolid />
+              </BreadcrumbSeparator>
+              <BreadcrumbItem className="hover:text-foreground">
+                <Link
+                  href={breadcrumbSegments[0].path}
+                  className="text-[.825rem] font-light md:font-medium"
+                >
+                  {breadcrumbSegments[0].label}
+                </Link>
+              </BreadcrumbItem>
+            </>
+          )}
 
-            return (
-              <div
-                key={index}
-                className={`flex items-center ${index === 1 ? "hidden" : ""} `}
-              >
-                {arrayPathname?.length > 3 && (
-                  <BreadcrumbItem
-                    className={`hover:text-foreground ${
-                      arrayPathname?.length === index ? "text-foreground" : ""
-                    }`}
+          {breadcrumbSegments.length > 3 && (
+            <>
+              <BreadcrumbSeparator>
+                <LiaChevronRightSolid />
+              </BreadcrumbSeparator>
+              <BreadcrumbItem>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center text-[.825rem] font-light md:font-medium">
+                    <BreadcrumbEllipsis className="w-auto" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    align="start"
+                    className="z-100 text-[.825rem]"
                   >
-                    {index === 0 && (
-                      <>
-                        <ol>
-                          <BreadcrumbSeparator>
-                            <LiaChevronRightSolid />
-                          </BreadcrumbSeparator>
-                        </ol>
-                        <Link
-                          href={link}
-                          className="m-0 p-0 text-[.825rem] font-light md:font-medium"
-                        >
-                          {path.charAt(0).toUpperCase() +
-                            decodeURI(
-                              path
-                                .slice(1)
-                                .toLowerCase()
-                                .replace(/#.*$/, "")
-                                .replace(/\/&.*$/, "")
-                                .replace(/\?.*$/, "")
-                                .replace(/-.*$/, "")
-                                .split("/")[0],
-                            )}
-                        </Link>
-                      </>
-                    )}
-                    {index == 1 && <div className="hidden"></div>}
-                    {index == 2 && (
-                      <>
-                        <ol>
-                          <BreadcrumbSeparator>
-                            <LiaChevronRightSolid className="m-0 gap-0 p-0" />
-                          </BreadcrumbSeparator>
-                        </ol>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger className="m-0 flex items-center gap-0 p-0 text-[.825rem] font-light md:font-medium">
-                            <BreadcrumbEllipsis className="m-0 w-auto gap-0 p-0" />
-                            <span className="sr-only">
-                              <ol>
-                                <BreadcrumbSeparator>
-                                  <LiaChevronRightSolid />
-                                </BreadcrumbSeparator>
-                              </ol>
-                            </span>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent
-                            align="start"
-                            className="z-100 text-[.825rem] font-light md:font-medium"
-                          >
-                            {arrayLinkCollapse?.length > 0 &&
-                              arrayLinkCollapse?.map((itemPath, index) => {
-                                linkColpse.push(itemPath);
-                                return (
-                                  <DropdownMenuItem key={index}>
-                                    <ol>
-                                      <BreadcrumbSeparator>
-                                        <LiaChevronRightSolid />
-                                      </BreadcrumbSeparator>
-                                    </ol>
-                                    <Link
-                                      href={"/servicos/" + linkColpse.join("/")}
-                                      className="m-0 p-0 text-[.825rem] font-light text-muted-foreground hover:text-foreground md:font-medium"
-                                    >
-                                      {itemPath.charAt(0).toUpperCase() +
-                                        decodeURI(
-                                          itemPath
-                                            .slice(1)
-                                            .toLowerCase()
-                                            .replace(/#.*$/, "")
-                                            .replace(/\/&.*$/, "")
-                                            .replace(/\?.*$/, "")
-                                            .replace(/-.*$/, "")
-                                            .split("/")[0],
-                                        )}
-                                    </Link>
-                                  </DropdownMenuItem>
-                                );
-                              })}
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </>
-                    )}
-                    {index === arrayPathname?.length - 1 && (
-                      <>
-                        <ol>
-                          <BreadcrumbSeparator
-                            className={`${
-                              arrayPathname[arrayPathname.length - 1] ===
-                                path && "text-primary"
-                            }`}
-                          >
-                            <LiaChevronRightSolid />
-                          </BreadcrumbSeparator>
-                        </ol>
-                        <Link
-                          href={link}
-                          className="m-0 p-0 text-[.825rem] font-light text-foreground md:font-medium"
-                        >
-                          {path.charAt(0).toUpperCase() +
-                            decodeURI(
-                              path
-                                .slice(1)
-                                .toLowerCase()
-                                .replace(/#.*$/, "")
-                                .replace(/\/&.*$/, "")
-                                .replace(/\?.*$/, "")
-                                .replace(/-.*$/, "")
-                                .split("/")[0],
-                            )}
-                        </Link>
-                      </>
-                    )}
-                  </BreadcrumbItem>
-                )}
-
-                {arrayPathname?.length < 4 && (
-                  <>
-                    <BreadcrumbItem
-                      className={`hover:text-foreground ${
-                        arrayPathname[arrayPathname.length - 1] === path
-                          ? "text-foreground"
-                          : ""
-                      }`}
-                    >
-                      <ol>
-                        <BreadcrumbSeparator
-                          className={`${
-                            arrayPathname[arrayPathname.length - 1] === path &&
-                            "text-primary"
-                          }`}
-                        >
-                          <LiaChevronRightSolid />
-                        </BreadcrumbSeparator>
-                      </ol>
-                      <Link
-                        href={link}
-                        className="m-0 p-0 text-[.825rem] font-light md:font-medium"
+                    {middleSegments.map((segment, index) => (
+                      <DropdownMenuItem
+                        key={index}
+                        className="text-[.825rem] font-light text-muted-foreground hover:text-foreground md:font-medium"
                       >
-                        {path.charAt(0).toUpperCase() +
-                          decodeURI(
-                            path
-                              .slice(1)
-                              .toLowerCase()
-                              .replace(/#.*$/, "")
-                              .replace(/\/&.*$/, "")
-                              .replace(/\?.*$/, "")
-                              .replace(/-.*$/, "")
-                              .split("/")[0],
-                          )}
-                      </Link>
-                    </BreadcrumbItem>
-                  </>
-                )}
-              </div>
-            );
-          })}
+                        <LiaChevronRightSolid
+                          style={{ width: "5px!important" }}
+                        />
+                        <Link href={segment.path}>{segment.label}</Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </BreadcrumbItem>
+            </>
+          )}
+
+          {breadcrumbSegments.length > 1 && (
+            <>
+              <BreadcrumbSeparator className="text-primary">
+                <LiaChevronRightSolid />
+              </BreadcrumbSeparator>
+              <BreadcrumbItem className="text-foreground">
+                <Link
+                  href={breadcrumbSegments[breadcrumbSegments.length - 1].path}
+                  className="text-[.825rem] font-light md:font-medium"
+                >
+                  {breadcrumbSegments[breadcrumbSegments.length - 1].label}
+                </Link>
+              </BreadcrumbItem>
+            </>
+          )}
         </BreadcrumbList>
       </Breadcrumb>
       <div className="fixed right-1">
@@ -227,4 +134,5 @@ const BreadcrumbGso = (): ReactElement => {
     </>
   );
 };
+
 export default BreadcrumbGso;

@@ -9,7 +9,6 @@ export const config = {
   matcher: [
     "/auth/:path*",
     "/servicos/:path*",
-    "/conta/:path*",
     "/((?!api|images|cadastro-usuario|recuperar-senha|_next/static|favicon.ico).*)",
   ],
 };

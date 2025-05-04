@@ -13,10 +13,10 @@ interface RoutePermission {
 export const routePermissions: RoutePermission[] = [
   {
     paths: [
-      "^/servicos/corporacao/membros.*",
+      "^/servicos/corporacao/membros/.*",
       "^/servicos/corporacao/gestor.*",
-      "^/servicos/corporacao/veiculos.*",
-      "^/servicos/corporacao/usuarios.*",
+      "^/servicos/corporacao/veiculos/.*",
+      "^/servicos/corporacao/usuarios/.*",
     ],
     roles: ["admin"],
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -56,15 +56,13 @@ export function permissionUserMiddleware(
         ) {
           try {
             const regex = new RegExp(routePath);
-            const result = regex.test(path);
-            return result;
+            return regex.test(path);
           } catch (error) {
             console.error("  Erro no regex:", error);
             return false;
           }
         }
-        const result = routePath === path;
-        return result;
+        return routePath === path;
       });
 
       if (pathMatch) {

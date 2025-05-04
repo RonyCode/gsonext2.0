@@ -1,7 +1,6 @@
 import { fetchWrapper } from "@/functions/fetch";
 import { type IUnidadeSchema } from "@/schemas/UnidadeSchema";
 import { type ResponseApi } from "@/types/index";
-import { cookies } from "next/headers";
 import { TokenManager } from "@/functions/TokenManager";
 
 export const getCompanyById = async (

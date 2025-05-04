@@ -19,7 +19,7 @@ import {
   LuTrash2,
 } from "react-icons/lu";
 
-import { saveCorporationAction } from "@/app/(private)/(modules)/servicos/corporacao/gestor/actions/saveCorporationAction";
+import { saveCorporationAction } from "@/actions/saveCorporationAction";
 import { EditPhoto } from "@/components/EditPhoto/EditPhoto";
 import { MyInputMask } from "@/components/Form/Input/myInputMask";
 import LoadingPage from "@/components/Loadings/LoadingPage";
@@ -219,77 +219,73 @@ export const OrganizacaoForm = ({
         <div className="flex items-center">
           <div className="flex w-full items-center justify-between gap-2 p-4">
             <h1 className="ml-4 mr-auto text-xl font-bold">Detalhes</h1>
-            {organizacao?.id !== undefined ||
-              (session?.role === "admin" && (
-                <div>
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button
-                        disabled={pending}
-                        className={cn(
-                          buttonVariants({ variant: "outline" }),
-                          "group",
-                        )}
-                      >
-                        <LuTrash2
-                          className="text-foreground group-hover:text-muted-foreground"
-                          size={24}
-                        />
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
-                      <DialogHeader>
-                        <DialogTitle>Excluir Corporação</DialogTitle>
-                        <DialogDescription>
-                          Está ação precisa ser confirmada
-                        </DialogDescription>
-                      </DialogHeader>
-                      <div className="grid gap-4 py-4">
-                        <p>
-                          {" "}
-                          ATENÇÂO!!! Tem certeza que deseja excluir esta
-                          Corporação?
-                        </p>
-                      </div>
-                      <DialogFooter>
-                        <DialogClose asChild>
-                          <div>
-                            <Button variant="secondary" type="button">
-                              Cancelar
-                            </Button>
+            {session?.role === "admin" && (
+              <div>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      disabled={pending}
+                      className={`${cn(buttonVariants({ variant: "outline" }), "group")}`}
+                    >
+                      <LuTrash2
+                        className="text-foreground group-hover:text-muted-foreground"
+                        size={24}
+                      />
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Excluir Corporação</DialogTitle>
+                      <DialogDescription>
+                        Está ação precisa ser confirmada
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                      <p>
+                        {" "}
+                        ATENÇÂO!!! Tem certeza que deseja excluir esta
+                        Corporação?
+                      </p>
+                    </div>
+                    <DialogFooter>
+                      <DialogClose asChild>
+                        <div>
+                          <Button variant="secondary" type="button">
+                            Cancelar
+                          </Button>
 
-                            <Button
-                              className="ml-2"
-                              type="button"
-                              onClick={form.handleSubmit(async (data) => {
-                                await handleDeleteAction(data);
-                              })}
-                            >
-                              Confirmar
-                            </Button>
-                          </div>
-                        </DialogClose>
-                      </DialogFooter>
-                    </DialogContent>
-                  </Dialog>
+                          <Button
+                            className="ml-2"
+                            type="button"
+                            onClick={form.handleSubmit(async (data) => {
+                              await handleDeleteAction(data);
+                            })}
+                          >
+                            Confirmar
+                          </Button>
+                        </div>
+                      </DialogClose>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
 
-                  <Button
-                    onClick={() => {
-                      setDisabled(!disabled);
-                    }}
-                    disabled={pending}
-                    className={cn(
-                      buttonVariants({ variant: "outline" }),
-                      "group",
-                    )}
-                  >
-                    <LuClipboardPen
-                      className="text-foreground group-hover:text-muted-foreground"
-                      size={24}
-                    />
-                  </Button>
-                </div>
-              ))}
+                <Button
+                  onClick={() => {
+                    setDisabled(!disabled);
+                  }}
+                  disabled={pending}
+                  className={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "group",
+                  )}
+                >
+                  <LuClipboardPen
+                    className="text-primary group-hover:text-primary/60"
+                    size={24}
+                  />
+                </Button>
+              </div>
+            )}
           </div>
         </div>
         <div className="my-8 p-6 md:px-28 md:py-10">
@@ -548,6 +544,7 @@ export const OrganizacaoForm = ({
                       <FormControl>
                         <Input
                           {...field}
+                          value={field.value === null ? "" : field.value}
                           id="address.complement"
                           placeholder="Digite ponto de referência"
                           autoComplete="complement"

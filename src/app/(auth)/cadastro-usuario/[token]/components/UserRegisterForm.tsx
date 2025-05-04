@@ -316,10 +316,7 @@ export const UserRegisterForm = ({
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
                           <Calendar
-                            captionLayout="dropdown-buttons"
                             locale={ptBR}
-                            toYear={2100}
-                            fromYear={1900}
                             mode="single"
                             selected={date}
                             onSelect={(date) => {
@@ -330,7 +327,6 @@ export const UserRegisterForm = ({
                             disabled={(date) =>
                               date > new Date() || date < new Date("1900-01-01")
                             }
-                            initialFocus
                           />
                         </PopoverContent>
                       </Popover>

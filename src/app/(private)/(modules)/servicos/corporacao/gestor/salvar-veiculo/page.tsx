@@ -35,16 +35,8 @@ const SalvarUnidade = async ({
       <CardDefault
         title="Veículos"
         description="Gerenciar Veículos"
-        image={
-          process.env.NEXT_PUBLIC_API_GSO != null
-            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/frota-cars.jpg"
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-        }
-        imageMobile={
-          process.env.NEXT_PUBLIC_API_GSO != null
-            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/frota-cars.jpg"
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-        }
+        image={"/public/images/frota-cars.jpg"}
+        imageMobile={"/public/images/frota-cars.jpg"}
         icon={<LuCar size={28} />}
       >
         <div>

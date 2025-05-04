@@ -13,7 +13,7 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { IMemberSchema } from "@/schemas/MemberSchema";
 import DataColumns from "@/components/DataTables/DataTableMembers/data/DataColumns";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_GSO;
+const apiUrl = process.env.NEXT_PUBLIC_API_GSO ?? "";
 export const columnsMembers: Array<ColumnDef<IMemberSchema>> = [
   {
     id: "select",
@@ -62,9 +62,8 @@ export const columnsMembers: Array<ColumnDef<IMemberSchema>> = [
               <AvatarImage
                 className="aspect-square rounded-lg object-cover"
                 src={
-                  apiUrl != null && row?.original?.image != null
-                    ? apiUrl + row?.original?.image
-                    : "/images/avatar.svg"
+                  (apiUrl && apiUrl + row?.original?.image) ??
+                  "/images/avatar.svg"
                 }
               />
               <AvatarFallback>{<LuUser size={36} />}</AvatarFallback>

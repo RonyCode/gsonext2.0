@@ -1,6 +1,6 @@
-import { PieChartOcorrencia } from "@/app/(private)/(modules)/servicos/(geral)/dashboard/components/PieChart/pie-chart-ocorrencia";
-import { PieChartMembros } from "@/app/(private)/(modules)/servicos/(geral)/dashboard/components/PieChart/pie-chart-membros";
-import { PieChartVeiculos } from "@/app/(private)/(modules)/servicos/(geral)/dashboard/components/PieChart/pie-chart-veiculos";
+import { PieChartOcorrencia } from "@/app/(private)/(modules)/servicos/dashboard/components/PieChart/pie-chart-ocorrencia";
+import { PieChartMembros } from "@/app/(private)/(modules)/servicos/dashboard/components/PieChart/pie-chart-membros";
+import { PieChartVeiculos } from "@/app/(private)/(modules)/servicos/dashboard/components/PieChart/pie-chart-veiculos";
 
 export function SectionPierCharts() {
   return (

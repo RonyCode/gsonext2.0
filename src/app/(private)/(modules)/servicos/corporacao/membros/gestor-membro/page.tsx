@@ -20,16 +20,8 @@ const Members = async ({ params }: { params: Promise<{ membro: string }> }) => {
     <CardDefault
       title={memberFOunded?.name ?? ""}
       description={memberFOunded?.email ?? ""}
-      image={
-        process.env.NEXT_PUBLIC_API_GSO && memberFOunded?.image
-          ? process.env.NEXT_PUBLIC_API_GSO + memberFOunded?.image
-          : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-      }
-      imageMobile={
-        process.env.NEXT_PUBLIC_API_GSO && memberFOunded?.image
-          ? process.env.NEXT_PUBLIC_API_GSO + memberFOunded?.image
-          : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-      }
+      image={memberFOunded?.image}
+      imageMobile={memberFOunded?.image}
     >
       teste
     </CardDefault>

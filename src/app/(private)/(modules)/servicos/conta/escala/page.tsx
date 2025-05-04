@@ -4,9 +4,9 @@ import { LuCalendarCheck } from "react-icons/lu";
 
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
-import { getMyUnidade } from "@/lib/GetMyUnidade";
 import CalendarGsoV1 from "@/components/CalendarGso/CalendarGsoV1";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
+import { IScheduleSchema } from "@/schemas/ScheduleSchema";
 
 const MinhaEscala = async (): Promise<ReactNode> => {
   const session = await getServerSession(authOptions);
@@ -24,8 +24,8 @@ const MinhaEscala = async (): Promise<ReactNode> => {
       <CardDefault
         title="Minha Escala"
         description={unidadeFound?.name}
-        image="https://apexpublicschool.com/assets/images/calender.jpg"
-        imageMobile="https://apexpublicschool.com/assets/images/calender.jpg"
+        image="/images/calender.jpg"
+        imageMobile="/images/calender.jpg"
         icon={<LuCalendarCheck size={28} />}
       >
         <div>
@@ -34,7 +34,7 @@ const MinhaEscala = async (): Promise<ReactNode> => {
             data !== null && (
               <CalendarGsoV1
                 company={unidadeFound}
-                dayEvent={unidadeFound.schedules}
+                schedules={unidadeFound?.schedules as IScheduleSchema[]}
               />
             )}
         </div>{" "}

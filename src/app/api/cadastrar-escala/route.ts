@@ -1,7 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 import type { IScheduleFormSave } from "@/schemas/ScheduleFormSave";
-import { TokenManager } from "@/functions/TokenManager";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const body: IScheduleFormSave = await request.json();

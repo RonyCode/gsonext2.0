@@ -6,7 +6,6 @@ import { LuListPlus } from "react-icons/lu";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/ui/button";
 import { Card } from "@/ui/card";
-import { IMemberSchema } from "@/schemas/MemberSchema";
 import { DataTableUsers } from "@/components/DataTables/DataTableUsers/data-table-users";
 import { columnsUsers } from "@/components/DataTables/DataTableUsers/columnsUser";
 import { IUserSchema } from "@/schemas/UsersSchema";

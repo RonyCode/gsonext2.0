@@ -11,7 +11,7 @@
   "editor.bracketPairColorization.independentColorPoolPerBracketType": false,
   "workbench.colorCustomizations": {
     "activityBar.background": "#6a0b90",
-    "titleBar.activeBackground": "#a912e5",
+    "titleBar.activeBackground": "#ab11e838",
     "titleBar.activeForeground": "#F0FCFA"
   }
 }

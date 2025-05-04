@@ -1,14 +1,11 @@
 "use client";
 
 import {
-  BadgeCheck,
   Bell,
   CalendarCheck,
   ChevronsUpDown,
-  CreditCard,
   Landmark,
   LogOut,
-  Sparkles,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -28,12 +25,13 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { GetFirstLettersNameUser } from "@/functions/GetFirstLettersNameUser";
-import Credentials from "next-auth/providers/credentials";
-import { LuCreditCard, LuIdCard, LuTheater, LuWallet } from "react-icons/lu";
+import { LuIdCard } from "react-icons/lu";
 import Link from "next/link";
 import { deleteCookies } from "@/components/Buttoms/SignOutButton/LogoutAction";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { ModeToggle } from "../Buttoms/ModeTogle";
+import NotificationsChecker from "../Notification/NotificationsChecker";
 
 export function NavUser({
   user,
@@ -109,11 +107,12 @@ export function NavUser({
                   <span className="truncate font-semibold">{user?.name}</span>
                   <span className="truncate text-xs">{user?.email}</span>
                 </div>
+                <ModeToggle />
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <Link href={`/conta`}>
+              <Link href={`/servicos/conta`}>
                 <DropdownMenuItem>
                   <LuIdCard />
                   Minha Conta
@@ -122,20 +121,22 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <Link href={`/conta/unidade`}>
+              <Link href={`/servicos/conta/unidade`}>
                 <DropdownMenuItem>
                   <Landmark />
                   Minha Unidade
                 </DropdownMenuItem>
               </Link>
-              <Link href={`/conta/escala`}>
+              <Link href={`/servicos/conta/escala`}>
                 <DropdownMenuItem>
                   <CalendarCheck />
                   Minha Escala
                 </DropdownMenuItem>
               </Link>
-              <DropdownMenuItem>
-                <Bell />
+              <DropdownMenuItem className="m-0 p-0">
+                <div className="m-0 gap-0 border-none p-0">
+                  <NotificationsChecker className="m-0 gap-0 border-none p-0" />
+                </div>
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>

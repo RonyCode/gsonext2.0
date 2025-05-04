@@ -5,9 +5,10 @@ import Image from "next/image";
 import { redirect, useRouter } from "next/navigation";
 import * as React from "react";
 import { useEffect, useTransition } from "react";
-import { useForm, type UseFormReturn } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   LuCalendar,
+  LuCamera,
   LuCheck,
   LuChevronsUpDown,
   LuHash,
@@ -19,7 +20,6 @@ import {
 } from "react-icons/lu";
 
 import { saveUserAction } from "@/actions/saveUserAction";
-import { EditPhoto } from "@/components/EditPhoto/EditPhoto";
 import { MyInputMask } from "@/components/Form/Input/myInputMask";
 import LoadingPage from "@/components/Loadings/LoadingPage";
 import { maskCpfCnpj } from "@/functions/masks/maskCpfCnpj";
@@ -84,7 +84,12 @@ export const EditProfileForm = ({
 }: UserRegisterFormProps): React.ReactElement => {
   const [pending, startTransition] = useTransition();
   const [date, setDate] = React.useState<Date>();
-  const { update, data: session } = useSession();
+  const { update } = useSession();
+  const [file, setFile] = React.useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = React.useState<string | null>(
+    user?.account?.image ?? null,
+  );
+
   const router = useRouter();
   let defaultValues = {};
 
@@ -94,13 +99,29 @@ export const EditProfileForm = ({
         await getAllCitiesByState(user?.address?.short_name);
       }
     });
-  }, [user?.address?.short_name, user?.address?.state]);
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+      return () => URL.revokeObjectURL(url);
+    } else {
+      setPreviewUrl(
+        process.env.NEXT_PUBLIC_API_GSO != undefined
+          ? process.env.NEXT_PUBLIC_API_GSO + user?.account?.image
+          : null,
+      );
+    }
+  }, [
+    file,
+    user?.account?.image,
+    user?.address?.short_name,
+    user?.address?.state,
+  ]);
 
   if (user?.account?.name !== "user-external") {
     defaultValues = {
       id: user?.id?.toString(),
       nome: user?.account?.name,
-      image: user?.account?.image,
+      image: user?.account?.image ?? "",
       email: user?.userAuth?.email,
       cpf: maskCpfCnpj(user?.account?.cpf),
       data_nascimento: user?.account?.birthday,
@@ -112,6 +133,7 @@ export const EditProfileForm = ({
       numero: user?.address?.number,
       bairro: user?.address?.district,
       estado: user?.address?.short_name,
+      role: user?.profile?.role,
       cidade: user?.address?.city,
     };
   }
@@ -211,25 +233,56 @@ export const EditProfileForm = ({
               <div className="flex w-full flex-col gap-2 md:flex-row">
                 <div className="relative mr-4 h-60 w-full justify-center md:flex md:w-6/12">
                   <div className="absolute -left-3 -top-3 z-100">
-                    <EditPhoto
-                      disabled={false}
-                      directoryFile={form.getValues("image") ?? ""}
-                      updateFormExternal={form as unknown as UseFormReturn}
+                    <FormField
+                      control={form.control}
+                      name="image"
+                      render={() => (
+                        <FormItem className="w-full">
+                          <FormLabel
+                            htmlFor="image"
+                            className="flex items-center gap-1 hover:text-primary/60"
+                          >
+                            <LuCamera className="z-100 h-9 w-9 rounded-full border-2 border-foreground/50 bg-accent/50 p-1 text-foreground/50 backdrop-blur hover:border-foreground hover:text-foreground" />
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              onChange={(e) => {
+                                const file = e.target.files?.[0] ?? null;
+                                setFile(file);
+                                if (file != null) {
+                                  const url = URL.createObjectURL(file);
+                                  setPreviewUrl(url);
+                                  form?.setValue("image", url);
+                                }
+                              }}
+                              accept={"image/*"}
+                              className="hidden"
+                              id="image"
+                              type="file"
+                              placeholder="Digite seu nome"
+                              autoCapitalize="none"
+                              autoComplete="nome"
+                              autoCorrect="off"
+                              disabled={pending}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
                   </div>
                   <Image
                     src={
-                      form.getValues("image") &&
-                      session?.image &&
-                      process.env.NEXT_PUBLIC_API_GSO != null
-                        ? process.env.NEXT_PUBLIC_API_GSO + user?.account?.image
+                      process.env.NEXT_PUBLIC_API_GSO !== undefined &&
+                      previewUrl !== null
+                        ? previewUrl
                         : process.env.NEXT_PUBLIC_API_GSO +
                           "/public/images/img.svg"
                     }
                     fill
                     quality={100}
                     alt="imagem director"
-                    className="aspect-square rounded-[5px] object-cover"
+                    className="aspect-square rounded-[5px] object-contain object-center"
                   />
                 </div>
                 <div className="w-full">
@@ -330,10 +383,7 @@ export const EditProfileForm = ({
                               align="start"
                             >
                               <Calendar
-                                captionLayout="dropdown-buttons"
                                 locale={ptBR}
-                                toYear={2100}
-                                fromYear={1900}
                                 mode="single"
                                 selected={date}
                                 onSelect={(date) => {
@@ -381,6 +431,74 @@ export const EditProfileForm = ({
                       )}
                     />
                   </div>
+                  <FormField
+                    control={form.control}
+                    name="role"
+                    render={({ field }) => (
+                      <FormItem className="flex w-full flex-col">
+                        <FormLabel
+                          htmlFor="role"
+                          className="flex items-center gap-1"
+                        >
+                          <LuMapPin /> Perfil
+                        </FormLabel>{" "}
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                className={cn(
+                                  "w-full justify-between",
+                                  field.value === "" && "text-muted-foreground",
+                                )}
+                              >
+                                {field.value !== ""
+                                  ? states?.find(
+                                      (state) => state.sigla === field.value,
+                                    )?.nome
+                                  : "Selecione um Estado"}
+                                <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-full p-0">
+                            <Command>
+                              <CommandList>
+                                <CommandInput placeholder="Buscar Estado..." />
+                                <CommandEmpty>
+                                  Estado não encontrado.
+                                </CommandEmpty>
+                                <CommandGroup>
+                                  {states?.map((state, index) => (
+                                    <CommandItem
+                                      value={state.sigla}
+                                      key={index + 1}
+                                      onSelect={async () => {
+                                        await handleCity(state.sigla);
+                                        form.setValue("estado", state.sigla);
+                                      }}
+                                    >
+                                      <LuCheck
+                                        className={cn(
+                                          "mr-2 h-4 w-4",
+                                          state?.sigla === field?.value
+                                            ? "opacity-100"
+                                            : "opacity-0",
+                                        )}
+                                      />
+                                      {state?.nome}
+                                    </CommandItem>
+                                  ))}
+                                </CommandGroup>
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
               </div>
               <div className="flex w-full flex-col gap-2 md:flex-row">
@@ -531,7 +649,8 @@ export const EditProfileForm = ({
                                 field.value === "" && "text-muted-foreground",
                               )}
                             >
-                              {field.value !== ""
+                              {field.value !== "" &&
+                              Array.isArray(arrayCitiesByState)
                                 ? arrayCitiesByState?.find(
                                     (city) => city.nome === field.value,
                                   )?.nome
@@ -548,25 +667,26 @@ export const EditProfileForm = ({
                                 Cidade não encontrada.
                               </CommandEmpty>
                               <CommandGroup>
-                                {arrayCitiesByState?.map((city, index) => (
-                                  <CommandItem
-                                    value={city.nome}
-                                    key={index + 1}
-                                    onSelect={() => {
-                                      form.setValue("cidade", city.nome);
-                                    }}
-                                  >
-                                    <LuCheck
-                                      className={cn(
-                                        "mr-2 h-4 w-4",
-                                        city.nome === field.value
-                                          ? "opacity-100"
-                                          : "opacity-0",
-                                      )}
-                                    />
-                                    {city.nome}
-                                  </CommandItem>
-                                ))}
+                                {Array.isArray(arrayCitiesByState) &&
+                                  arrayCitiesByState?.map((city, index) => (
+                                    <CommandItem
+                                      value={city.nome}
+                                      key={index + 1}
+                                      onSelect={() => {
+                                        form.setValue("cidade", city.nome);
+                                      }}
+                                    >
+                                      <LuCheck
+                                        className={cn(
+                                          "mr-2 h-4 w-4",
+                                          city.nome === field.value
+                                            ? "opacity-100"
+                                            : "opacity-0",
+                                        )}
+                                      />
+                                      {city.nome}
+                                    </CommandItem>
+                                  ))}
                               </CommandGroup>
                             </CommandList>
                           </Command>

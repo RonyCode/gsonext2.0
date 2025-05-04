@@ -360,6 +360,8 @@ export interface ResultUserRegistered {
 declare module "next-auth" {
   interface Session {
     id?: string | null;
+    provider_user_id?: string | null;
+    provider?: string | null;
     id_message?: string | null;
     id_corporation: string;
     id_company: string;
@@ -381,6 +383,8 @@ declare module "next-auth" {
 
   interface User {
     id: string;
+    provider_user_id?: string | null;
+    provider?: string | null;
     id_message: string;
     id_corporation: string;
     id_company: string;
@@ -404,6 +408,8 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     id: string;
+    provider_user_id?: string | null;
+    provider?: string | null;
     id_message: string;
     id_corporation: string;
     id_company: string;

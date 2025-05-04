@@ -18,6 +18,7 @@ import { CompanySwitcher } from "@/components/Sidebar/company-switcher";
 import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
 import { NavAdmin } from "@/components/Sidebar/nav-admin";
 import { useParams } from "next/navigation";
+import { NavTicket } from "./nav-ticket";
 
 interface AppSidebarProps {
   corp?: IOrganizacaoSchema;
@@ -60,6 +61,7 @@ export function AppSidebar({
       <SidebarContent>
         <NavMain compSelected={compSelected} session={session} />
         {session?.role === "admin" && <NavAdmin compSelected={compSelected} />}
+        <NavTicket compSelected={compSelected} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser

@@ -59,16 +59,8 @@ const SalvarEscala = async ({
     <>
       <CardDefault
         title={"Salvar Escala em: " + companyFound?.name}
-        image={
-          process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
-            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/escala.png"
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-        }
-        imageMobile={
-          process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
-            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/escala.png"
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-        }
+        image={"/public/images/escala.png"}
+        imageMobile={"/public/images/escala.png"}
         icon={<LuSaveAll size={28} />}
       >
         <div className="overflow-scroll lg:overflow-hidden">

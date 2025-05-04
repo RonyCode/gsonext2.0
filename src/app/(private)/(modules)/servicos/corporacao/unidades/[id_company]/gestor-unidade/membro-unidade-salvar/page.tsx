@@ -3,11 +3,11 @@ import { getServerSession } from "next-auth";
 import React from "react";
 import { LuUsers } from "react-icons/lu";
 
-import { MemberCompanyForm } from "@/app/(private)/(modules)/components/MemberCompanyForm";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import { Building } from "lucide-react";
 import { getCompanyById } from "@/lib/GetCompanyById";
+import ListMemberCompany from "@/app/(private)/(modules)/components/ListMemberCompany";
 
 export const metadata: Metadata = {
   title: "GSO | salvar membro unidade",
@@ -36,21 +36,13 @@ const SalvarMembro = async ({
             : "Salvar Membro Unidade"
         }
         description={"Salvar Membro Unidade"}
-        image={
-          process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
-            ? process.env.NEXT_PUBLIC_API_GSO + companyFound?.image
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/escala.png"
-        }
-        imageMobile={
-          process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
-            ? process.env.NEXT_PUBLIC_API_GSO + companyFound?.image
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/escala.png"
-        }
+        image={companyFound?.image}
+        imageMobile={companyFound?.image}
         icon={<Building size={28} />}
         iconDescription={<LuUsers />}
       >
         <div className="overflow-scroll lg:overflow-hidden">
-          <MemberCompanyForm
+          <ListMemberCompany
             idCompany={id_company}
             idCorporation={idCorpParam}
           />

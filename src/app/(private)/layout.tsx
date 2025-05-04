@@ -1,7 +1,6 @@
 import "../globals.css";
 import React from "react";
 
-import FooterNormal from "@/components/Footer/FooterNormal";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/ui/sidebar";
 import { AppSidebar } from "@/components/Sidebar/app-sidebar";
 import { Separator } from "@/ui/separator";
@@ -11,6 +10,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { cookies } from "next/headers";
 import { getAllCompanies } from "@/lib/getAllCompanies";
+import FooterLayout from "@/components/Footer/FooterLayout";
 
 export default async function PrivateLayout({
   children,
@@ -40,10 +40,12 @@ export default async function PrivateLayout({
             </div>
           </header>
 
-          <div className="min-h-screen w-full pt-16">{children}</div>
+          <div className="min-h-screen w-full pt-16 md:pr-3">
+            {children}
+            <FooterLayout />
+          </div>
         </SidebarInset>
       </SidebarProvider>
-      <FooterNormal />
     </div>
   );
 }

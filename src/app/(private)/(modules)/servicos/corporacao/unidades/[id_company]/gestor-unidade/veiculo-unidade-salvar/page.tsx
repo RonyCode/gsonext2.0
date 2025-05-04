@@ -36,18 +36,8 @@ const MembrosUnidade = async ({
               : "Veículos Unidade"
           }
           description={"Salvar Veículos Unidade"}
-          image={
-            process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
-              ? process.env.NEXT_PUBLIC_API_GSO + companyFound?.image
-              : process.env.NEXT_PUBLIC_API_GSO +
-                "/public/images/frota-cars.jpg"
-          }
-          imageMobile={
-            process.env.NEXT_PUBLIC_API_GSO && companyFound?.image
-              ? process.env.NEXT_PUBLIC_API_GSO + companyFound?.image
-              : process.env.NEXT_PUBLIC_API_GSO +
-                "/public/images/frota-cars.jpg"
-          }
+          image={companyFound?.image}
+          imageMobile={companyFound?.image}
           icon={<Building size={28} />}
           iconDescription={<LuCar />}
         >

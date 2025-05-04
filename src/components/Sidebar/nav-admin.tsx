@@ -4,9 +4,10 @@ import {
   Building,
   Building2Icon,
   ChevronRight,
-  Settings,
   UserCog2,
   type LucideIcon,
+  CarIcon,
+  Calendar,
 } from "lucide-react";
 
 import {
@@ -32,8 +33,8 @@ import IconCarFrontal from "@/icons/IconCarFrontal";
 import IconCalendar from "@/icons/IconCalendar";
 import IconManager from "@/icons/IconManager";
 import IconPrivileges from "@/icons/IconPrivileges";
-import IconPuzzle from "@/icons/IconPuzzle";
 import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
+import IconEditSave from "@/icons/IconEditSave";
 
 type NavMainProps = {
   items: {
@@ -52,80 +53,101 @@ type NavMainProps = {
 export function NavAdmin({ compSelected }: { compSelected: IUnidadeSchema }) {
   const data: NavMainProps["items"] = [
     {
-      title: "Gestão Corporação",
+      title: "Corporação",
       url: "#",
       icon: Building2Icon,
       items: [
         {
-          title: "Add Corporação",
+          title: "Add+ Corporação",
           icon: <IconBuildPlus width={32} className="fill-foreground/60" />,
-          url: "/servicos/gestor/salvar-organizacao",
+          url: "/servicos/corporacao/gestor/salvar-organizacao",
         },
         {
-          title: "Add Unidade Corporação",
+          title: "Add+ Unidade Corporação",
           icon: <IconBuildPlus width={32} className="fill-foreground/60" />,
-          url: "/servicos/gestor/salvar-unidade",
-        },
-        {
-          title: "Add Membro Corporação",
-          icon: <IconMembers width={32} className="fill-foreground/60" />,
-          url: "/servicos/gestor/salvar-membro",
-        },
-        {
-          title: "Add Veículos Corporação",
-          icon: <IconCarFrontal width={32} className="stroke-foreground/60" />,
-          url: "/servicos/gestor/salvar-veiculo",
+          url: "/servicos/corporacao/gestor/salvar-unidade",
         },
       ],
     },
     {
-      title: "Gestão Unidade",
+      title: "Unidade",
       url: "#",
       icon: Building,
       items: [
         {
-          title: "Adicionar Membro Unidade",
-          icon: <IconMembers width={32} className="fill-foreground/60" />,
-          url: `/servicos/unidades/${compSelected?.name}-${compSelected?.id}/gestor-unidade/membro-unidade-salvar`,
-        },
-        {
-          title: "Adicionar Veículos Unidade",
-          icon: <IconCarFrontal width={32} className="stroke-foreground/60" />,
-          url: `/servicos/unidades/${compSelected?.name}-${compSelected?.id}/gestor-unidade/veiculo-unidade-salvar`,
-        },
-        {
-          title: "Adicionar Escala Unidade",
-          icon: <IconCalendar width={32} className="fill-foreground/60" />,
-          url: `/servicos/unidades/${compSelected?.name}-${compSelected?.id}/gestor-unidade/escala-unidade-salvar`,
+          title: "Editar Unidade",
+          icon: <IconEditSave width={32} className="fill-foreground/60" />,
+          url: `/servicos/corporacao/unidades/${compSelected?.name}-${compSelected?.id}/detalhes`,
         },
       ],
     },
     {
-      title: "Gestão Usuários",
+      title: "Veículos",
+      url: "#",
+      icon: CarIcon,
+      items: [
+        {
+          title: "Add+ Veículo Corporação",
+          icon: <IconCarFrontal width={32} className="stroke-foreground/60" />,
+          url: "/servicos/corporacao/gestor/salvar-veiculo",
+        },
+        {
+          title: "Add+ Veículo Unidade",
+          icon: <IconCarFrontal width={32} className="stroke-foreground/60" />,
+          url: `/servicos/corporacao/unidades/${compSelected?.name}-${compSelected?.id}/gestor-unidade/veiculo-unidade-salvar`,
+        },
+      ],
+    },
+    {
+      title: "Escalas",
+      url: "#",
+      icon: Calendar,
+      items: [
+        {
+          title: "Add+ Escala Unidade",
+          icon: <IconCalendar width={32} className="fill-foreground/60" />,
+          url: `/servicos/corporacao/unidades/${compSelected?.name}-${compSelected?.id}/gestor-unidade/escala-unidade-salvar`,
+        },
+      ],
+    },
+
+    {
+      title: "Membros",
+      url: "#",
+      icon: UserCog2,
+      items: [
+        {
+          title: "Editar Membro Corporação",
+          icon: <IconEditSave width={28} className="fill-foreground/60" />,
+          url: "/servicos/corporacao/membros/salvar-membro",
+        },
+        {
+          title: "Add+ Membro Corporação",
+          icon: <IconMembers width={32} className="fill-foreground/60" />,
+          url: "/servicos/corporacao/gestor/salvar-membro",
+        },
+        {
+          title: "Add+ Membro Unidade",
+          icon: <IconMembers width={32} className="fill-foreground/60" />,
+          url: `/servicos/corporacao/unidades/${compSelected?.name}-${compSelected?.id}/gestor-unidade/membro-unidade-salvar`,
+        },
+      ],
+    },
+
+    {
+      title: "Usuários",
       url: "#",
       icon: UserCog2,
       items: [
         {
           title: "Usuários",
           icon: <IconManager width={32} className="fill-foreground/60" />,
-          url: "/servicos/usuarios",
+          url: "/servicos/corporacao/usuarios",
         },
         {
           title: "Privilégios",
           icon: <IconPrivileges width={32} className="fill-foreground/60" />,
-          url: "/servicos/gestor/salvar-organizacao",
-        },
-      ],
-    },
-    {
-      title: "Configurações",
-      url: "#",
-      icon: Settings,
-      items: [
-        {
-          title: "Módulos",
-          icon: <IconPuzzle width={32} className="stroke-foreground/60" />,
-          url: "/servicos/gestor/salvar-organizacao",
+          url: "/servicos/corporacao/gestor/salvar-organizacao",
         },
       ],
     },
@@ -133,7 +155,7 @@ export function NavAdmin({ compSelected }: { compSelected: IUnidadeSchema }) {
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Administrativo</SidebarGroupLabel>
+      <SidebarGroupLabel>Gestão Administrativa</SidebarGroupLabel>
       <SidebarMenu>
         {data.map((item) => (
           <Collapsible

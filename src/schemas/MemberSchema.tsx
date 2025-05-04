@@ -85,44 +85,15 @@ export const MemberSchema = z
       })
       .optional()
       .nullable(),
-    address: AddressSchema,
-    number: z
-      .string()
-      .min(1, {
-        message: "numero inválido deve conter no mínimo 1 caracteres",
-      })
-      .optional()
-      .nullable(),
-    zipcode: z
-      .string()
-      .min(9, {
-        message: "Cep inválido deve conter no mínimo 9 caracteres",
-      })
-      .optional()
-      .nullable(),
+    address: AddressSchema.optional(),
+    street: z.string().optional().nullable(),
+    number: z.string().optional().nullable(),
+    zipcode: z.string().optional().nullable(),
     complement: z.string().optional(),
-    district: z
-      .string()
-      .min(1, {
-        message: "Bairro inválida deve conter no mínimo 1 caracteres",
-      })
-      .optional()
-      .nullable(),
-    city: z
-      .string()
-      .min(1, {
-        message: "Cidade inválida deve conter no mínimo 1 caracteres",
-      })
-      .optional()
-      .nullable(),
+    district: z.string().optional().nullable(),
+    city: z.string().optional().nullable(),
 
-    state: z
-      .string()
-      .min(2, {
-        message: "Estado inválido deve conter no mínimo 1 caracteres",
-      })
-      .optional()
-      .nullable(),
+    state: z.string().optional().nullable(),
     short_name: z
       .string()
       .min(2, {
@@ -130,22 +101,8 @@ export const MemberSchema = z
       })
       .optional()
       .nullable(),
-    role: z
-      .string()
-      .min(1, {
-        message:
-          "Perfil privilégio  inválido deve conter no mínimo 1 caracteres",
-      })
-      .optional()
-      .nullable(),
-    date_granted: z
-      .string()
-      .min(10, {
-        message:
-          "Data privilegio cedido inválido deve conter no mínimo 10 caracteres",
-      })
-      .optional()
-      .nullable(),
+    role: z.string().optional().nullable(),
+    date_granted: z.string().optional().nullable(),
     date_expires: z
       .string()
       .min(11, {

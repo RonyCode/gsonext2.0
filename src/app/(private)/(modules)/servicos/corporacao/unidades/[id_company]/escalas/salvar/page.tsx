@@ -25,24 +25,14 @@ const SalvarEscala = async ({
       schedule?.id === id_schedule,
   );
 
-  const imgValided = await ImageExist(data?.image);
-  if (imgValided.status !== 200 && data?.image != null) {
-    data.image = process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg";
-  }
   return (
     <>
       <CardDefault
         title={`Escala ${data?.name}`}
         description="Editar/Salvar"
         icon={<LuCalendarDays size={28} />}
-        image={
-          data?.image ??
-          process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-        }
-        imageMobile={
-          data?.image ??
-          process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-        }
+        image={data?.image}
+        imageMobile={data?.image}
       >
         {scheduleFound !== null && true && (
           <TabScheduleSave unidade={data} schedule={scheduleFound} />

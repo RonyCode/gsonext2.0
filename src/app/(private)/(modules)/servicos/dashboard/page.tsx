@@ -1,7 +1,7 @@
 import React from "react";
-import { SectionCards } from "@/app/(private)/(modules)/servicos/(geral)/dashboard/components/sectionCards/section-cards";
-import { ChartAreaInteractive } from "@/app/(private)/(modules)/servicos/(geral)/dashboard/components/charts/chart-area-interactive";
-import { SectionPierCharts } from "@/app/(private)/(modules)/servicos/(geral)/dashboard/components/sectionPierCharts/section-pier-charts";
+import { SectionCards } from "@/app/(private)/(modules)/servicos/dashboard/components/sectionCards/section-cards";
+import { ChartAreaInteractive } from "@/app/(private)/(modules)/servicos/dashboard/components/charts/chart-area-interactive";
+import { SectionPierCharts } from "@/app/(private)/(modules)/servicos/dashboard/components/sectionPierCharts/section-pier-charts";
 import { DataTableEscala } from "@/components/DataTables/DataTableEscala/data-table-escala";
 import { columnsEscala } from "@/components/DataTables/DataTableEscala/columnsEscala";
 

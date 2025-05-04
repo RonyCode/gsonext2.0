@@ -197,7 +197,7 @@ const CalendarGsoV1 = ({ schedules, company }: CalendarGsoV1Props) => {
                       company?.name?.toLowerCase() +
                       "-" +
                       company?.id +
-                      "/gestor-unidade/escala-unidade-salvar?date_schedule=" +
+                      "/gestor-unidade/salvar-escala?date_schedule=" +
                       selectedDay.year +
                       "-" +
                       selectedDay.month +

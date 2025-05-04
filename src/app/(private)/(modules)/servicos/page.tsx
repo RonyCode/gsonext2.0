@@ -10,10 +10,8 @@ const Page = async () => {
       <CardDefault
         title="Serviços"
         description="Serviços disponíveis por modules"
-        image={process.env.NEXT_PUBLIC_API_GSO + "/public/images/modules.png"}
-        imageMobile={
-          process.env.NEXT_PUBLIC_API_GSO + "/public/images/modules.png"
-        }
+        image={"/public/images/modules.png"}
+        imageMobile={"/public/images/modules.png"}
         icon={<LuFolderCog size={28} />}
       >
         <Modules />

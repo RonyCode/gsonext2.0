@@ -24,10 +24,8 @@ const SalvarUnidade = async (): Promise<ReactNode> => {
       <CardDefault
         title="Unidades"
         description="Gerenciar unidades"
-        image={process.env.NEXT_PUBLIC_API_GSO + "/public/images/manager1.jpg"}
-        imageMobile={
-          process.env.NEXT_PUBLIC_API_GSO + "/public/images/manager1.jpg"
-        }
+        image={"/public/images/manager1.jpg"}
+        imageMobile={"/public/images/manager1.jpg"}
         icon={<LuSquareMenu size={28} />}
       >
         <div className="overflow-scroll p-6 lg:overflow-hidden">

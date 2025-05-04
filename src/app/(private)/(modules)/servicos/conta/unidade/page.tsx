@@ -23,16 +23,8 @@ const Page = async (): Promise<ReactNode> => {
     <>
       <CardDefault
         title={unidadeFound?.name}
-        image={
-          process.env.NEXT_PUBLIC_API_GSO != null && unidadeFound?.image != null
-            ? process.env.NEXT_PUBLIC_API_GSO + unidadeFound?.image
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-        }
-        imageMobile={
-          process.env.NEXT_PUBLIC_API_GSO != null && unidadeFound?.image != null
-            ? process.env.NEXT_PUBLIC_API_GSO + unidadeFound.image
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-        }
+        image={unidadeFound?.image}
+        imageMobile={unidadeFound?.image}
         description={unidadeFound?.companyAddress?.city}
         icon={<LuBuilding size={28} />}
       >

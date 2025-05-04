@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { type ReactNode } from "react";
 import { LuSaveAll } from "react-icons/lu";
 
-import MemberForm from "@/app/(private)/(modules)/components/MemberForm";
+import MemberForm from "@/app/(private)/(modules)/components/ListMemberCorporation";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { CardWithLogo } from "@/components/Cards/CardWithLogo";
 import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
@@ -21,16 +21,8 @@ const SalvarMembro = async (): Promise<ReactNode> => {
       <CardDefault
         title="Salvar Membro Corporação"
         description="Gerenciar Membros"
-        image={
-          process.env.NEXT_PUBLIC_API_GSO
-            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/members.jpg"
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-        }
-        imageMobile={
-          process.env.NEXT_PUBLIC_API_GSO
-            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/members.jpg"
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-        }
+        image={"/public/images/members.jpg"}
+        imageMobile={"/public/images/members.jpg"}
         icon={<LuSaveAll size={28} />}
       >
         <div className="overflow-scroll lg:overflow-hidden">

@@ -21,8 +21,7 @@ import { IScheduleSchema } from "@/schemas/ScheduleSchema";
 import { getAllSchedulesCompany } from "@/lib/getAllSchedulesCompany";
 
 type SelectCompanyModuleProps = React.HTMLAttributes<HTMLDivElement> & {
-  unidades: IUnidadeSchema[];
-  schedules: IScheduleSchema[];
+  unidades: Partial<IUnidadeSchema[]>;
 };
 
 export const SelectCompanySchedule = ({
@@ -37,7 +36,7 @@ export const SelectCompanySchedule = ({
     startTransition(async () => {
       if (unidadeOnSelect !== null && unidadeOnSelect !== undefined) {
         const unidadeSelected = unidades?.find(
-          (uniItem) => uniItem.id === unidadeOnSelect.id,
+          (uniItem) => uniItem?.id === unidadeOnSelect?.id,
         );
 
         setDataUnidade(unidadeSelected ?? null);
@@ -50,7 +49,6 @@ export const SelectCompanySchedule = ({
       setSchedules(schedules ?? []);
     });
   };
-  console.log(schedules);
 
   return (
     <>
@@ -90,7 +88,10 @@ export const SelectCompanySchedule = ({
                           disabled={disabled}
                           value={state?.id?.toString()}
                           key={indexUnidade}
-                          onSelect={handleSelectUnidade.bind(null, state)}
+                          onSelect={handleSelectUnidade.bind(
+                            null,
+                            state as IUnidadeSchema,
+                          )}
                         >
                           <LuCheck
                             className={cn(
@@ -101,7 +102,7 @@ export const SelectCompanySchedule = ({
                                 : "opacity-0",
                             )}
                           />
-                          {state.name}
+                          {state?.name}
                         </CommandItem>
                       ))}
                     </CommandList>

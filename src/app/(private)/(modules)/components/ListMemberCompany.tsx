@@ -38,7 +38,7 @@ type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
   states?: AddressProps[] | null;
 };
 
-export const MemberCompanyForm = ({
+export const ListMemberCompany = ({
   idCorporation,
   idCompany,
   className,
@@ -230,4 +230,4 @@ export const MemberCompanyForm = ({
     </>
   );
 };
-export default MemberCompanyForm;
+export default ListMemberCompany;

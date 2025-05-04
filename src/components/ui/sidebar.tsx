@@ -342,7 +342,7 @@ const SidebarInset = React.forwardRef<
 SidebarInset.displayName = "SidebarInset";
 
 const SidebarInput = React.forwardRef<
-  React.ElementRef<typeof Input>,
+  HTMLInputElement,
   React.ComponentProps<typeof Input>
 >(({ className, ...props }, ref) => {
   return (
@@ -390,7 +390,7 @@ const SidebarFooter = React.forwardRef<
 SidebarFooter.displayName = "SidebarFooter";
 
 const SidebarSeparator = React.forwardRef<
-  React.ElementRef<typeof Separator>,
+  HTMLDivElement,
   React.ComponentProps<typeof Separator>
 >(({ className, ...props }, ref) => {
   return (

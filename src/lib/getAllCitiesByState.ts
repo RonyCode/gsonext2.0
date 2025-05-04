@@ -6,7 +6,7 @@ export const getAllCitiesByState = async (
   state: string,
 ): Promise<AddressProps[]> => {
   const res = await fetchWrapper<AddressProps[]>(
-    `${process.env.NEXT_PUBLIC_NEXT_URL}/api/cidades/${state}`,
+    `${process.env.NEXT_PUBLIC_NEXT_URL}/api/cidades?state=${state}`,
     {
       method: "GET",
       headers: {
@@ -14,6 +14,7 @@ export const getAllCitiesByState = async (
       },
     },
   );
+
   cityStore.setState({ cities: res });
   return res;
 };

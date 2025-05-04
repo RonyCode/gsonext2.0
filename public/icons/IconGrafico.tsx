@@ -1,11 +1,11 @@
-import './IconGrafico.css'
-import * as React from 'react'
-import { cn } from '@/lib/utils'
+import "./IconGrafico.css";
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 type SVGProps = {
-  width?: number
+  width?: number;
 } & React.SVGProps<SVGSVGElement> &
-  React.HTMLAttributes<HTMLDivElement>
+  React.HTMLAttributes<HTMLDivElement>;
 export default function IconGrafico({ width, className, ...props }: SVGProps) {
   return (
     <svg
@@ -15,7 +15,7 @@ export default function IconGrafico({ width, className, ...props }: SVGProps) {
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       viewBox="0 0 32 32"
-      className={cn(' ', className)}
+      className={cn(" ", className)}
       {...props}
     >
       <path
@@ -41,5 +41,5 @@ export default function IconGrafico({ width, className, ...props }: SVGProps) {
       />
       <path d="M3.1,27.8h25.8v1.1H3.1C3.1,28.9,3.1,27.8,3.1,27.8z" />
     </svg>
-  )
+  );
 }

@@ -22,7 +22,7 @@ import {
   LuTrash2,
 } from "react-icons/lu";
 
-import { saveUnidadeAction } from "@/app/(private)/(modules)/servicos/corporacao/gestor/actions/saveUnidadeAction";
+import { saveUnidadeAction } from "@/actions/saveUnidadeAction";
 import { EditPhoto } from "@/components/EditPhoto/EditPhoto";
 import { MyInputMask } from "@/components/Form/Input/myInputMask";
 import LoadingPage from "@/components/Loadings/LoadingPage";

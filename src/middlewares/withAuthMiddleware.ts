@@ -3,6 +3,7 @@ import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
 import { type CustomMiddleware } from "./chain";
 import { handleTokenRefresh } from "@/lib/tokenManager";
+import { decodeJwt } from "jose";
 
 export function withAuthMiddleware(
   middleware: CustomMiddleware,
@@ -41,6 +42,10 @@ export function withAuthMiddleware(
 
     const token = request.cookies.get("token")?.value;
     const refreshToken = request.cookies.get("refresh_token")?.value;
+    const tokenDecoded = token && decodeJwt(token);
+    const objetTokenParsed = Object(tokenDecoded);
+    const userEsternalToConfirmSigUp =
+      objetTokenParsed?.data?.user_external_confirmed == true;
     const sessaoToken =
       request.cookies.get("next-auth.session-token")?.value ??
       request.cookies.get("__Secure-next-auth.session-token")?.value;
@@ -63,6 +68,9 @@ export function withAuthMiddleware(
 
     if (sessaoToken !== "" && request.nextUrl.pathname === "/auth") {
       return NextResponse.redirect(new URL("/", request.url));
+    }
+    if (!userEsternalToConfirmSigUp && request.nextUrl.pathname !== "/") {
+      return NextResponse.redirect(new URL("/cadastro-usuario", request.url));
     }
 
     response.headers.set("Authorization", `Bearer ${token}`);

@@ -46,7 +46,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { debounce } from "lodash";
 import { toast } from "@/hooks/use-toast";
-import { columnsUsersWithCheckbox } from "@/components/DataTables/DataTableUsers/columnsUsersWithCheckbox";
 import { columnsWithCheckboxMembers } from "@/components/DataTables/DataTableMembers/columnsWithCheckboxMembers";
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
@@ -54,7 +53,7 @@ type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
   className?: string;
 };
 
-export const MemberForm = ({
+export const ListMemberCorporation = ({
   corporations,
   className,
 }: UserRegisterFormProps) => {
@@ -339,4 +338,4 @@ export const MemberForm = ({
     </>
   );
 };
-export default MemberForm;
+export default ListMemberCorporation;

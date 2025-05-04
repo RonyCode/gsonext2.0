@@ -28,8 +28,11 @@ import { ResponseApi, UserNotification } from "@/types/index";
 import { DeleteNotificationUser } from "@/lib/DeleteNotificationUser";
 import LoadingPage from "@/components/Loadings/LoadingPage";
 import { DeleteAllNotificationUser } from "@/lib/DeleteAllNotificationUser";
+import { cn } from "@/lib/utils";
 
-export default function NotificationsChecker() {
+export default function NotificationsChecker({
+  className,
+}: React.HTMLAttributes<HTMLDivElement>) {
   const { data: session } = useSession();
   const [pending, startTransition] = useTransition();
   const pathname = usePathname();
@@ -126,7 +129,10 @@ export default function NotificationsChecker() {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="relative mr-2 h-12 w-12 rounded-full border hover:border-foreground/20 md:flex md:h-11 md:w-11"
+            className={cn(
+              "relative mr-2 h-12 w-12 rounded-full border hover:border-foreground/20 md:flex md:h-11 md:w-11",
+              className,
+            )}
           >
             <div className="relative flex w-14 items-center justify-center">
               {notifications?.data && notifications?.data?.length > 0 && (
