@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import React from "react";
 import { LuCrown } from "react-icons/lu";
 
-import ModuloGestor from "../../../components/module/ModuloGestor";
+import ModuloGestor from "../../../../components/module/ModuloGestor";
 
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";

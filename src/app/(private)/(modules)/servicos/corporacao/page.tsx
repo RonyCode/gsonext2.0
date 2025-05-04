@@ -23,13 +23,13 @@ const Organizacao = async (): Promise<ReactNode> => {
         image={
           process.env.NEXT_PUBLIC_API_GSO !== null &&
           organizacaoFound?.image != null
-            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/bannerCorp.jpg"
+            ? process.env.NEXT_PUBLIC_API_GSO + organizacaoFound.image
             : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
         }
         imageMobile={
           process.env.NEXT_PUBLIC_API_GSO !== null &&
           organizacaoFound?.image != null
-            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/bannerCorp.jpg"
+            ? process.env.NEXT_PUBLIC_API_GSO + organizacaoFound.image
             : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
         }
         icon={<LuBuilding2 size={28} />}

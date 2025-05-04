@@ -2,7 +2,7 @@ import React, { type ReactNode } from "react";
 import { LuCalendarDays } from "react-icons/lu";
 
 import { CardDefault } from "@/components/Cards/CardDefault";
-import ModuloOcorrencia from "@/app/(private)/(modules)/servicos/ocorrencias/module/ModuloOcorrencia";
+import ModuloOcorrencia from "../../../components/module/ModuloOcorrencia";
 
 const Ocorrencias = (): ReactNode => {
   return (
