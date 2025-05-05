@@ -130,7 +130,6 @@ export function NavbarMain({
       icon: <LuComponent />,
       path: `/servicos`,
     },
-    { title: "Contato", icon: <LuContact />, path: "/contact" },
     {
       title: "Atendimento",
       icon: <LuMegaphone />,
@@ -233,9 +232,6 @@ export function NavbarMain({
             ))}
           </ul>
         </div>
-        <ModeToggle
-          className={`absolute right-6 md:relative ${state ? "absolute bottom-3" : "relative right-28 md:right-4"}`}
-        />
 
         {session?.user != null ? (
           <div
@@ -266,13 +262,15 @@ export function NavbarMain({
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-72" align="center" forceMount>
                 <DropdownMenuLabel className="font-normal">
-                  <div className="flex h-14 w-full flex-col items-start justify-center rounded-[8px] border border-primary/70 p-2">
-                    <p className="text-lg leading-none">{session?.name}</p>
-                    <p className="leading-none text-muted-foreground">
-                      {session.user.email}
-                    </p>
+                  <div className="flex items-center justify-between rounded-[8px] border border-primary/70 px-2">
+                    <div className="flex h-14 w-full flex-col items-start justify-center">
+                      <p className="text-lg leading-none">{session?.name}</p>
+                      <p className="leading-none text-muted-foreground">
+                        {session.user.email}
+                      </p>
+                    </div>
+                    <ModeToggle />{" "}
                   </div>
-                  <div className="absolute right-1 top-4"> </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
