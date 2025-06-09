@@ -106,9 +106,10 @@ export function CompanySwitcher({
                     <AvatarImage
                       src={
                         process.env.NEXT_PUBLIC_API_GSO !== undefined &&
+                        process.env.NEXT_PUBLIC_API_GSO !== null &&
                         comp?.image !== null &&
                         comp?.image !== undefined
-                          ? process.env.NEXT_PUBLIC_API_GSO + comp.image
+                          ? process.env.NEXT_PUBLIC_API_GSO + comp?.image
                           : process.env.NEXT_PUBLIC_API_GSO + "/images/img.svg"
                       }
                       alt={"img user"}

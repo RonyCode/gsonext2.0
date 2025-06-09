@@ -7,12 +7,13 @@ import { CardDefault } from "@/components/Cards/CardDefault";
 import { columnsMembers } from "@/components/DataTables/DataTableMembers/columnsMembers";
 import { DataTableMembers } from "@/components/DataTables/DataTableMembers/data-table-members";
 import { getMembersCompanyById } from "@/lib/GetMembersCompanyById";
-import { getCompanyById } from "@/lib/GetCompanyById";
+import { GetCompanyByIdAction } from "@/actions/company/GetCompanyByIdAction";
 import { authOptions } from "@/lib/auth";
 import { IMemberSchema } from "@/schemas/MemberSchema";
 import { CardWithLogo } from "@/components/Cards/CardWithLogo";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
 
 const MembrosUnidade = async ({
   params,
@@ -25,18 +26,26 @@ const MembrosUnidade = async ({
   const idCompanyParams = id_company.split("-")[1];
   const idCorp = session?.id_corporation ?? "";
 
-  const { data: companyFound } = await getCompanyById(idCorp, idCompanyParams);
+  const { data: companyFound } = await GetCompanyByIdAction(
+    idCorp,
+    idCompanyParams,
+  );
 
   const { data: companyMembersFound } =
     await getMembersCompanyById(idCompanyParams);
 
+  const { data: corporations } = await GetAllCorporationsAction();
+
+  const corporationFound = corporations?.find(
+    (corporation) => corporation.id === idCorp,
+  );
   return (
     <div>
       {
         <CardDefault
           title={
             companyFound?.name !== undefined && companyFound?.name !== null
-              ? companyFound?.name + " / " + companyFound?.companyAddress?.city
+              ? companyFound?.name + " / " + corporationFound?.short_name_corp
               : "Unidade não encontrada!"
           }
           description="Membros da Unidade"

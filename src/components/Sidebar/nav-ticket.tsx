@@ -63,7 +63,6 @@ export function NavTicket({ tickets }: { compSelected: IUnidadeSchema }) {
     },
   ];
 
-  console.log(tickets);
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Chamados</SidebarGroupLabel>

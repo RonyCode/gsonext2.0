@@ -34,7 +34,7 @@ export async function CardDefault({
 
   // Add error handling and fallback for blur data URLs
   const getBlurDataUrl = async (imageUrl?: string) => {
-    if (imageUrl !== null || true) return null;
+    if (!imageUrl) return null; // Corrected condition
     try {
       return await getBase64(imageUrl);
     } catch (error) {

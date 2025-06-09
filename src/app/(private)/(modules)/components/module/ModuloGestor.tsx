@@ -5,6 +5,9 @@ import IconMembers from "@/icons/IconMembers";
 import IconOpenBook from "@/icons/IconOpenBook";
 import IconPrivileges from "@/icons/IconPrivileges";
 import IconPuzzle from "@/icons/IconPuzzle";
+import IconCalendar from "@/icons/IconCalendar";
+import IconSirene from "@/icons/IconSirene";
+import IconManager from "@/icons/IconManager";
 
 const ModuloGestor = async () => {
   return (
@@ -12,29 +15,47 @@ const ModuloGestor = async () => {
       <div className="grid grid-cols-2 gap-4 p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5">
         <div className="group">
           <CardModule
-            title="Adicionar Unidade"
-            subtitle="Add Unidade"
-            link={`/servicos/gestor/salvar-unidade`}
+            title="Gestão Unidade"
+            subtitle="Gerenciar Unidades"
+            link={`/servicos/gestor/unidade`}
             icon={<IconBuildPlus width={58} className="ml-1" />}
           />
         </div>
         <CardModule
-          title="Adicionar Organização"
-          subtitle="Add Organização"
-          link={`/servicos/gestor/salvar-organizacao`}
+          title="Gestão Corporacão"
+          subtitle="Gerenciar Corporacão"
+          link={`/servicos/gestor/corporacao`}
           icon={<IconBuildPlus width={58} className="ml-1" />}
         />
         <CardModule
-          title="Adicionar Membro"
-          subtitle="Add Membro Corporação"
-          link={`/servicos/gestor/salvar-membro`}
+          title="Gestão Membros"
+          subtitle="Gerenciar Membros"
+          link={`/servicos/gestor/membro`}
           icon={<IconMembers width={58} className="ml-1" />}
         />{" "}
         <CardModule
-          title="Adicionar Veículo"
-          subtitle="Add Veiculo Corporação"
-          link={`/servicos/gestor/salvar-veiculo`}
+          title="Gestão Veículos"
+          subtitle="Gerenciar Veiculo"
+          link={`/servicos/gestor/veiculo`}
           icon={<IconCarFrontal width={58} className="ml-1" />}
+        />
+        <CardModule
+          title="Gestão Escalas"
+          subtitle="Gerenciar Escala"
+          link={`/servicos/gestor/escala`}
+          icon={<IconCalendar width={58} className="ml-1" />}
+        />
+        <CardModule
+          title="Gestão Ocorrências"
+          subtitle="Gerenciar Ocorrência"
+          link={`/servicos/gestor/ocorrencia`}
+          icon={<IconSirene width={58} className="ml-1" />}
+        />
+        <CardModule
+          title="Gestão Usuários"
+          subtitle="Gerenciar Usuários"
+          link={`/servicos/gestor/usuario`}
+          icon={<IconManager width={58} className="ml-1" />}
         />
         <CardModule
           title="Privilégios"

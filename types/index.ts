@@ -242,6 +242,7 @@ export interface UserNotification {
   message: string;
   id_user: string;
   id_message: string;
+  date: string;
   url: string;
 }
 

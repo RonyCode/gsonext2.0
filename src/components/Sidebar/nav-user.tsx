@@ -1,9 +1,9 @@
 "use client";
 
 import {
-  Bell,
   CalendarCheck,
   ChevronsUpDown,
+  Headset,
   Landmark,
   LogOut,
 } from "lucide-react";
@@ -31,7 +31,6 @@ import { deleteCookies } from "@/components/Buttoms/SignOutButton/LogoutAction";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ModeToggle } from "../Buttoms/ModeTogle";
-import NotificationsChecker from "../Notification/NotificationsChecker";
 
 export function NavUser({
   user,
@@ -53,6 +52,7 @@ export function NavUser({
     });
     router.push("/");
   };
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -63,15 +63,7 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage
-                  src={
-                    process.env.NEXT_PUBLIC_API_GSO !== undefined &&
-                    user?.image !== undefined
-                      ? process.env.NEXT_PUBLIC_API_GSO + user?.image
-                      : process.env.NEXT_PUBLIC_API_GSO + "/images/avatar.svg"
-                  }
-                  alt={"img user"}
-                />
+                <AvatarImage src={user?.image ?? ""} alt={"img user"} />
                 <AvatarFallback className="rounded-lg">
                   {nameUser}
                 </AvatarFallback>
@@ -92,16 +84,10 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage
-                    src={
-                      process.env.NEXT_PUBLIC_API_GSO !== undefined &&
-                      user?.image !== undefined
-                        ? process.env.NEXT_PUBLIC_API_GSO + user?.image
-                        : process.env.NEXT_PUBLIC_API_GSO + "/images/avatar.svg"
-                    }
-                    alt={"img user"}
-                  />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarImage src={user?.image ?? ""} alt={"img user"} />
+                  <AvatarFallback className="rounded-lg">
+                    {nameUser}
+                  </AvatarFallback>{" "}
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{user?.name}</span>
@@ -121,24 +107,28 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <Link href={`/servicos/conta/unidade`}>
+              <Link
+                href={`/src/app/(private)/(modules)/servicos/usuarios/%5Bid_usuario%5D/unidade`}
+              >
                 <DropdownMenuItem>
                   <Landmark />
                   Minha Unidade
                 </DropdownMenuItem>
               </Link>
-              <Link href={`/servicos/conta/escala`}>
+              <Link
+                href={`/src/app/(private)/(modules)/servicos/usuarios/%5Bid_usuario%5D/escala`}
+              >
                 <DropdownMenuItem>
                   <CalendarCheck />
                   Minha Escala
                 </DropdownMenuItem>
               </Link>
-              <DropdownMenuItem className="m-0 p-0">
-                <div className="m-0 gap-0 border-none p-0">
-                  <NotificationsChecker className="m-0 gap-0 border-none p-0" />
-                </div>
-                Notifications
-              </DropdownMenuItem>
+              <Link href={`/suporte`}>
+                <DropdownMenuItem>
+                  <Headset />
+                  Suporte
+                </DropdownMenuItem>
+              </Link>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleClick}>

@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import { execPercentageStore } from "@/stores/percentageStore";
 import axios, { type AxiosProgressEvent } from "axios";
-import { TokenManager } from "@/functions/TokenManager";
+import { GetTokenCookie } from "@/functions/TokenManager";
 
 const onUploadProgress = (progressEvent: AxiosProgressEvent): void => {
   const { loaded, total } = progressEvent;

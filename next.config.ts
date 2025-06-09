@@ -2,15 +2,8 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    turbo: {
-      resolve: {
-        alias: {
-          "@": "./",
-          "@/components": "./components",
-        },
-      },
-    },
+  turbopack: {
+    resolveExtensions: [".mdx", ".tsx", ".ts", ".jsx", ".js", ".mjs", ".json"],
   },
   env: {
     BASE_URL: process.env.BASE_URL,

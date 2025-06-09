@@ -45,5 +45,6 @@ export const FileSchema = z.object({
       },
     )
     .nullable(),
+  image: z.string().optional().nullable(),
 });
 export type IFileSchema = z.infer<typeof FileSchema>;

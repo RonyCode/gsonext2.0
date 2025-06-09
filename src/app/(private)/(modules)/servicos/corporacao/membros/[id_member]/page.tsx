@@ -10,8 +10,9 @@ import { authOptions } from "@/lib/auth";
 import { IMemberSchema } from "@/schemas/MemberSchema";
 import { getMembersCorporation } from "@/lib/getMembersCorporation";
 import MemberDetail from "@/app/(private)/(modules)/components/MemberDetail";
-import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
-import { getAllCompanies } from "@/lib/getAllCompanies";
+import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
+import { GetAllCompaniesAction } from "@/actions/company/GetAllCompaniesAction";
+
 import { IOrganizacaoSchema } from "@/schemas/OrganizacaoSchema";
 
 const MembrosUnidade = async ({
@@ -26,8 +27,8 @@ const MembrosUnidade = async ({
   const idCorp = session?.id_corporation ?? "";
 
   const { data: corporationMembersFound } = await getMembersCorporation(idCorp);
-  const { data: corporations } = await getAllOrganizacoes();
-  const { data: companies } = await getAllCompanies(idCorp);
+  const { data: corporations } = await GetAllCorporationsAction();
+  const { data: companies } = await GetAllCompaniesAction(idCorp);
 
   const corporationsFounded = corporations?.find(
     (corporation: IOrganizacaoSchema) =>

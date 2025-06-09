@@ -4,14 +4,14 @@ import { LuBuilding2 } from "react-icons/lu";
 import OrganizacaoForm from "@/app/(private)/(modules)/components/OrganizacaoForm";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
-import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
 import { getAllStates } from "@/lib/getAllStates";
 import { CardWithLogo } from "@/components/Cards/CardWithLogo";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
 
 const Organizacao = async (): Promise<ReactNode> => {
-  const { data } = await getAllOrganizacoes();
+  const { data } = await GetAllCorporationsAction();
   const dataStates = await getAllStates();
   const session = await getServerSession(authOptions);
   const organizacaoFound = data?.find((organizacao) => {

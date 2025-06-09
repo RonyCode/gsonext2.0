@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { FileSchema } from "@/schemas/FileSchema";
 
 export const EditUserSchema = z.object({
   nome: z.string().min(3, {
@@ -6,6 +7,8 @@ export const EditUserSchema = z.object({
   }),
   id: z.string().min(1, { message: "id inválido" }).nullable(),
   image: z.string().optional().nullable(),
+  file_image:
+    typeof window === "undefined" ? z.any().optional() : FileSchema.optional(),
   cpf: z
     .string()
     .min(14, {

@@ -12,7 +12,7 @@ import {
   LuSearch,
 } from "react-icons/lu";
 
-import { saveMemberIntoCorporationAction } from "@/actions/saveMemberIntoCorporationAction";
+import { saveMemberIntoCorporationAction } from "@/actions/corporation/SaveMemberIntoCorporationAction";
 import { DataTableUsers } from "@/components/DataTables/DataTableUsers/data-table-users";
 import LoadingPage from "@/components/Loadings/LoadingPage";
 import { searchUsersWithoutCorporation } from "@/lib/searchUsersWithoutCorporation";

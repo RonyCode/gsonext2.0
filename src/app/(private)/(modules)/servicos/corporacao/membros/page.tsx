@@ -11,20 +11,17 @@ import { Button } from "@/ui/button";
 import { getMembersCorporation } from "@/lib/getMembersCorporation";
 import { IMemberSchema } from "@/schemas/MemberSchema";
 import { columnsMembers } from "@/components/DataTables/DataTableMembers/columnsMembers";
-import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
-import TabMembersDetails from "../../../components/TabMembersDetails";
-import SelectCompanyModule from "../../../components/SelectCompanyModule";
-import { SelectCorporationModuleSchema } from "@/schemas/SelectCorpoationModuleSchema";
-import SelectMembersCorporation from "../../../components/SelectMembersCorporation";
+import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
+import { GetAllMembersCorporationsAction } from "@/actions/member/GetAllMembersCorporationsAction";
 
 const MembrosUnidade = async () => {
   const session = await getServerSession(authOptions);
-  const { data: coporations } = await getAllOrganizacoes();
-  const { data: membersFound } = await getMembersCorporation(
+  const { data: corporations } = await GetAllCorporationsAction();
+  const { data: membersFound } = await GetAllMembersCorporationsAction(
     session?.id_corporation ?? "",
   );
 
-  const corpFound = coporations?.find((corp) => {
+  const corpFound = corporations?.find((corp) => {
     return corp?.id === session?.id_corporation;
   });
 

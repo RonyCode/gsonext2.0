@@ -6,12 +6,12 @@ import { MdOutlineSupervisorAccount } from "react-icons/md";
 import TabUnidadeDetails from "@/app/(private)/(modules)/components/ListaUnidadeDetails";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
-import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
+import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
 import { getAllStates } from "@/lib/getAllStates";
-import { getCompanyById } from "@/lib/GetCompanyById";
 import { CardWithLogo } from "@/components/Cards/CardWithLogo";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { GetCompanyByIdAction } from "@/actions/company/GetCompanyByIdAction";
 
 const MinhaUnidade = async ({
   params,
@@ -25,15 +25,21 @@ const MinhaUnidade = async ({
   const idCorporation = session?.id_corporation ?? "";
   const idCompany = id_company.split("-")[1] ?? "";
 
-  const { data: corporations } = await getAllOrganizacoes();
-  const { data: companyFound } = await getCompanyById(idCorporation, idCompany);
+  const { data: corporations } = await GetAllCorporationsAction();
+  const { data: companyFound } = await GetCompanyByIdAction(
+    idCorporation,
+    idCompany,
+  );
+  const corporationFound = corporations?.find(
+    (corporation) => corporation.id === idCorporation,
+  );
 
   return (
     <div>
       <CardDefault
         title={
           companyFound?.name !== undefined && companyFound?.name !== null
-            ? companyFound?.name + " / " + companyFound?.companyAddress?.city
+            ? companyFound?.name + " / " + corporationFound?.short_name_corp
             : "Unidade não encontrada!"
         }
         description={"Minha unidade"}
@@ -43,9 +49,9 @@ const MinhaUnidade = async ({
         iconDescription={<MdOutlineSupervisorAccount size={18} />}
       >
         {companyFound !== undefined ? (
-          <div className="md:overflow-none overflow-scroll">
+          <div>
             <TabUnidadeDetails
-              unidade={companyFound}
+              company={companyFound}
               corporations={corporations}
               states={states}
             />

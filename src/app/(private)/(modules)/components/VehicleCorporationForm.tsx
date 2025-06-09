@@ -17,7 +17,7 @@ import {
   LuSpellCheck2,
 } from "react-icons/lu";
 
-import { saveVehicleIntoCorporationAction } from "@/actions/saveVehicleIntoCorporationAction";
+import { saveVehicleIntoCorporationAction } from "@/actions/corporation/SaveVehicleIntoCorporationAction";
 import { EditPhoto } from "@/components/EditPhoto/EditPhoto";
 import LoadingPage from "@/components/Loadings/LoadingPage";
 import { getAllVehicles } from "@/lib/GetAllVehicles";

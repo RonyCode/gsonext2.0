@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { useForm, type UseFormReturn } from "react-hook-form";
 import { LuCamera, LuCircleCheck } from "react-icons/lu";
 
@@ -30,7 +30,8 @@ import { Input } from "@/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { type AxiosProgressEvent } from "axios";
 import { toast } from "@/hooks/use-toast";
-import { TokenManager } from "@/functions/TokenManager";
+import { GetTokenCookie } from "@/functions/TokenManager";
+import { getValidImageUrl } from "@/functions/checkImageUrl";
 
 type EditPhotoProps = {
   className?: string;
@@ -66,7 +67,7 @@ export const EditPhoto = ({
 
   const handleSubmit = (data: IFileSchema): void => {
     startTransition(async () => {
-      const token = await TokenManager("token");
+      const token = await GetTokenCookie("token");
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_GSO}/services/upload`,
@@ -92,6 +93,10 @@ export const EditPhoto = ({
         setOpen(false);
         handleResetValues();
         updateFormExternal?.setValue("image", response.data.data);
+        const imageUrlPromisse = getValidImageUrl(response.data.data);
+        imageUrlPromisse.then((item) => {
+          setPreviewUrl(item);
+        });
 
         router.refresh();
         toast({
@@ -119,7 +124,10 @@ export const EditPhoto = ({
     }
     if (file != null) {
       const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
+      const imageUrlPromisse = getValidImageUrl(url);
+      imageUrlPromisse.then((item) => {
+        setPreviewUrl(item);
+      });
     } else {
       setPreviewUrl(null);
     }
@@ -132,12 +140,34 @@ export const EditPhoto = ({
     form.resetField("file_image");
   };
 
+  useEffect(() => {
+    // Ensure userImage is null if session?.user?.image is undefined or null
+    const userImage = directoryFile || null;
+    const imageUrlPromisse = getValidImageUrl(userImage);
+    imageUrlPromisse.then((item) => {
+      setPreviewUrl(item);
+    });
+    // Use the same expression for the dependency
+  }, [directoryFile]);
+
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <div>
-            <LuCamera className="z-100 h-9 w-9 rounded-full border-2 border-foreground/50 bg-accent/50 p-1 text-foreground/50 backdrop-blur hover:border-foreground hover:text-foreground" />
+          <div className="relative mb-2 h-44 w-full rounded-sm border border-foreground/30 md:m-0 md:h-60">
+            <div className="absolute -left-3 -top-3 z-10">
+              <LuCamera className="z-10 h-9 w-9 rounded-full border-2 border-foreground/30 bg-accent/50 p-1 text-foreground/50 backdrop-blur hover:border-foreground hover:text-foreground" />
+            </div>
+            <Image
+              src={previewUrl ?? "/images/avatar.svg"}
+              quality="100"
+              priority={true}
+              fill
+              sizes="100"
+              alt="image"
+              className="rounded-[5px] object-cover brightness-[80%]"
+            />
+            ,
           </div>
         </DialogTrigger>
 
@@ -186,20 +216,21 @@ export const EditPhoto = ({
                           width: "100%",
                           height: "60vh",
                           objectFit: "contain",
-                        }} // optional
+                        }}
                       />
                     ) : null}
 
-                    <div className="mt-3 w-full rounded-full bg-background">
+                    <div className="mt-3 flex w-full items-center gap-1 rounded-full bg-background">
                       <div
-                        className="rounded-full bg-secondary p-0.5 text-center text-xs font-medium leading-none text-foreground"
+                        className="rounded-full bg-primary p-0.5 text-center text-sm font-medium leading-none text-foreground"
                         style={{ width: percent + "%" }}
                       >
                         {percent != null && percent <= 100 && `${percent}%`}
-                        <span className="absolute bottom-[100px] right-5 stroke-2 text-green-500">
-                          {percent === 100 && <LuCircleCheck size={30} />}
-                        </span>
                       </div>
+
+                      <span className="stroke-2 text-green-500">
+                        {percent === 100 && <LuCircleCheck size={21} />}
+                      </span>
                     </div>
                   </div>
                 )}

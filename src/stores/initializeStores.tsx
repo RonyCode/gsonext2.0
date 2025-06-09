@@ -1,26 +1,26 @@
-import React from 'react'
+import React from "react";
 
-import { stateStore } from './Address/stateStore'
-import StateStoreInitialize from './Address/StateStoreInitialize'
-import UserErrorRegisterInitializeStore from './user/UserErrorRegisterInitializeStore'
-import { userErrorRegisterStore } from './user/userErrorRegisterStore'
-import { useUserStore } from './user/userStore'
-import UserStoreInitialize from './user/userStoreInitialize'
-import { type AddressProps, type UserType } from '@/types/index'
+import { stateStore } from "./Address/stateStore";
+import StateStoreInitialize from "./Address/StateStoreInitialize";
+import {
+  type AddressProps,
+  UserNotification,
+  type UserType,
+} from "@/types/index";
+import { useNotificationStore } from "./user/useNotificationStore";
+import UserNotifcationStoreInitialize from "@/stores/user/userNotifcationStoreInitialize";
 
 const InitializeStores = () => {
-  const dataUserErro: UserType = userErrorRegisterStore.getState().user
-  const dataStates: AddressProps[] = stateStore.getState().states
-  const dataUser: UserType = useUserStore.getState().state.user
+  const dataStates: AddressProps[] = stateStore.getState().states;
+  const dataNotification: UserNotification[] =
+    useNotificationStore.getState().state.notification;
 
   return (
     <>
-      <UserErrorRegisterInitializeStore userError={dataUserErro} />
       <StateStoreInitialize states={dataStates} />
-      <UserStoreInitialize user={dataUser} />
-      {/* <OrganizacaoStoreInitialize corporacao={dataOrganizacao} /> */}
+      <UserNotifcationStoreInitialize userNotification={dataNotification} />
     </>
-  )
-}
+  );
+};
 
-export default InitializeStores
+export default InitializeStores;

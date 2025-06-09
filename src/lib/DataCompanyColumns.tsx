@@ -1,7 +1,7 @@
 "use client";
-import { getAllCompanies } from "@/lib/getAllCompanies";
 import React, { useEffect } from "react";
 import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
+import { GetAllCompaniesAction } from "@/actions/company/GetAllCompaniesAction";
 
 const DataCompanyColumns = ({
   idCompany,
@@ -14,7 +14,7 @@ const DataCompanyColumns = ({
 
   useEffect(() => {
     const fetchCompanies = async () => {
-      const { data } = await getAllCompanies(idCorporation);
+      const { data } = await GetAllCompaniesAction(idCorporation);
       setCompanies(data as IUnidadeSchema[]);
     };
     fetchCompanies();

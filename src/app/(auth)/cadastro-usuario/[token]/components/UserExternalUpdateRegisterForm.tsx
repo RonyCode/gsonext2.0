@@ -19,7 +19,7 @@ import {
   LuUser,
 } from "react-icons/lu";
 
-import { saveUserAction } from "@/actions/saveUserAction";
+import { saveUserAction } from "@/actions/user/saveUserAction";
 import { MyInputMask } from "@/components/Form/Input/myInputMask";
 import LoadingPage from "@/components/Loadings/LoadingPage";
 import {
@@ -61,6 +61,7 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
 import Image from "next/image";
 import Link from "next/link";
+import { DeleteTokenCookies } from "@/functions/TokenManager";
 
 enum Fields {
   email = "email",
@@ -73,25 +74,24 @@ enum Fields {
 }
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
-  session: {
+  user: {
     email: string;
-    image: string;
+    picture: string;
     name: string;
-    provider: string;
-    provider_user_id: string;
+    sub: string;
   } | null;
   states: AddressProps[] | null;
 };
 
 export const UserExternalUpdateRegisterForm = ({
-  session,
+  user,
   states,
   className,
   ...props
 }: UserRegisterFormProps): React.ReactElement => {
   const [file, setFile] = React.useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(
-    session?.image ?? null,
+    user?.picture ?? null,
   );
 
   const form = useForm<IRegisterUserSchema>({
@@ -99,8 +99,8 @@ export const UserExternalUpdateRegisterForm = ({
     criteriaMode: "all",
     resolver: zodResolver(RegisterUserSchema),
     defaultValues: {
-      nome: session?.name,
-      email: session?.email,
+      nome: user?.name,
+      email: user?.email,
       cpf: "",
       data_nascimento: "",
       telefone: "",
@@ -111,10 +111,10 @@ export const UserExternalUpdateRegisterForm = ({
       estado: "",
       cidade: "",
       bairro: "",
-      senha: session?.provider_user_id + "a",
-      confirmaSenha: session?.provider_user_id + "a",
-      provider: session?.provider,
-      provider_user_id: session?.provider_user_id,
+      senha: user?.sub + "a",
+      confirmaSenha: user?.sub + "a",
+      provider: user?.sub,
+      provider_user_id: user?.sub,
     },
   });
 
@@ -206,8 +206,19 @@ export const UserExternalUpdateRegisterForm = ({
     }
   };
 
+  const handleCancel = () => {
+    try {
+      startTransition(async () => {
+        await DeleteTokenCookies("user_external_to_confirm");
+        await DeleteTokenCookies("user_external_to_confirm");
+        redirect("/auth");
+      });
+    } catch (error) {
+      console.error("Error deleting token:", error);
+    }
+  };
+
   console.log(file);
-  console.log(form.getValues());
 
   return (
     <>
@@ -744,13 +755,14 @@ export const UserExternalUpdateRegisterForm = ({
               <div className="mb-4 mt-2 flex w-5/12 items-center gap-2 self-end">
                 <Link href="/" className="w-full hover:text-muted-foreground">
                   <Button
+                    onClick={handleCancel}
                     className={cn(
                       buttonVariants({ variant: "secondary" }),
                       "w-full hover:text-muted-foreground",
                     )}
                     type="button"
                   >
-                    volta
+                    Cancelar
                   </Button>{" "}
                 </Link>
                 <Button

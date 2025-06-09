@@ -1,3 +1,4 @@
+import { LoginAction } from "@/actions/user/LoginAction";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -29,17 +30,25 @@ export const confereLogado = async (payload: {
     ? (payload.subscription_user = JSON.parse(subscriptionsUser))
     : (payload.subscription_user = "");
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_NEXT_URL}/api/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
-
+  const res = await LoginAction(
+    payload?.email,
+    payload?.senha,
+    payload?.is_user_external,
+    payload?.subscription_user,
+  );
   if (res.ok) {
+    const refreshToken = res.headers.get("x-refresh-token");
+    const token = res.headers.get("authorization")?.replace("Bearer ", "");
+
+    const { data } = await res.json();
+    const UserLogged = {
+      ...data,
+      token: token,
+      refresh_token: refreshToken,
+    };
+
     // Retorna os dados do usuário junto com os tokens dos headers
-    return await res.json();
+    return UserLogged;
   } else {
     return null;
   }
@@ -122,6 +131,13 @@ export const authOptions: NextAuthOptions = {
           const userGoogle = await confereLogado(payload);
 
           if (userGoogle == null) {
+            cookieStore.set({
+              name: "user_external_to_confirm",
+              value: JSON.stringify(token),
+              httpOnly: true,
+              maxAge: 60 * 20,
+              path: "/",
+            });
             return {
               ...token,
               provider: account.provider,

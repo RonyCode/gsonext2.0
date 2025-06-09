@@ -1,8 +1,7 @@
 "use client";
-import Image from "next/image";
 import { redirect, useRouter } from "next/navigation";
 import React, { useEffect, useTransition } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormReturn } from "react-hook-form";
 import {
   LuBuilding2,
   LuCheck,
@@ -19,7 +18,7 @@ import {
   LuTrash2,
 } from "react-icons/lu";
 
-import { saveCorporationAction } from "@/actions/saveCorporationAction";
+import { saveCorporationAction } from "@/actions/corporation/SaveCorporationAction";
 import { EditPhoto } from "@/components/EditPhoto/EditPhoto";
 import { MyInputMask } from "@/components/Form/Input/myInputMask";
 import LoadingPage from "@/components/Loadings/LoadingPage";
@@ -82,7 +81,7 @@ type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
   states?: AddressProps[] | null;
 };
 
-export const OrganizacaoForm = ({
+const OrganizacaoForm = ({
   organizacao,
   className,
   states,
@@ -288,7 +287,7 @@ export const OrganizacaoForm = ({
             )}
           </div>
         </div>
-        <div className="my-8 p-6 md:px-28 md:py-10">
+        <div className="my-8 p-2 md:px-28 md:py-10">
           <Form {...form}>
             <LoadingPage pending={pending} />
             <form
@@ -297,40 +296,15 @@ export const OrganizacaoForm = ({
               })}
               className="w-full space-y-4"
             >
-              <div className="grid h-full w-full grid-cols-12">
-                <div className="relative col-start-1 col-end-6 mr-4 hidden h-60 justify-center md:flex">
-                  <div className="absolute -left-3 -top-3">
-                    <EditPhoto
-                      disabled={disabled}
-                      directoryFile={
-                        process.env.NEXT_PUBLIC_API_GSO &&
-                        form?.getValues("image")
-                          ? process.env.NEXT_PUBLIC_API_GSO +
-                            form?.getValues("image")
-                          : process.env.NEXT_PUBLIC_API_GSO +
-                            "/public/images/img.svg"
-                      }
-                      updateFormExternal={form}
-                    />
-                  </div>
-                  <Image
-                    src={
-                      process.env.NEXT_PUBLIC_API_GSO &&
-                      form?.getValues("image")
-                        ? process.env.NEXT_PUBLIC_API_GSO +
-                          form?.getValues("image")
-                        : process.env.NEXT_PUBLIC_API_GSO +
-                          "/public/images/img.svg"
-                    }
-                    width={500}
-                    height={500}
-                    quality={100}
-                    alt="imagem director"
-                    className="rounded-[5px] object-cover"
+              <div className="grid w-full grid-cols-12">
+                <div className="col-start-1 col-end-13 md:col-end-5 md:mr-3">
+                  <EditPhoto
+                    disabled={disabled}
+                    directoryFile={organizacao?.image}
+                    updateFormExternal={form as UseFormReturn}
                   />
                 </div>
-
-                <div className="col-start-1 col-end-13 flex h-full flex-col justify-evenly md:col-start-6">
+                <div className="col-start-1 col-end-13 flex h-full flex-col justify-evenly md:col-start-5">
                   <FormField
                     control={form.control}
                     name="name"

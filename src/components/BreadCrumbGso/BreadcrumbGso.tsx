@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { type ReactElement } from "react";
+import React, { type ReactElement, useEffect } from "react";
 import { LiaChevronRightSolid } from "react-icons/lia";
 import { LuHouse } from "react-icons/lu";
 import {
@@ -11,13 +11,14 @@ import {
   BreadcrumbSeparator,
 } from "@/ui/breadcrumb";
 import { usePathname } from "next/navigation";
-import NotificationsChecker from "@/components/Notification/NotificationsChecker";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu";
+import { NotificationsShow } from "@/components/Notification/NotiicationsShow";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface BreadcrumbSegment {
   label: string;
@@ -43,6 +44,7 @@ const formatPathSegment = (segment: string): string => {
 const BreadcrumbGso = (): ReactElement => {
   const pathname = usePathname();
   const segments = pathname?.split("/").filter(Boolean) || [];
+  const [isMobile, setIsMobile] = React.useState(false);
 
   const buildBreadcrumbSegments = (): BreadcrumbSegment[] => {
     return segments.map((segment, index) => ({
@@ -50,6 +52,17 @@ const BreadcrumbGso = (): ReactElement => {
       path: "/" + segments.slice(0, index + 1).join("/"),
     }));
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const breadcrumbSegments = buildBreadcrumbSegments();
   const middleSegments = breadcrumbSegments.slice(1, -1);
@@ -80,34 +93,54 @@ const BreadcrumbGso = (): ReactElement => {
             </>
           )}
 
-          {breadcrumbSegments.length > 3 && (
+          {breadcrumbSegments.length > 2 && (
             <>
-              <BreadcrumbSeparator>
-                <LiaChevronRightSolid />
-              </BreadcrumbSeparator>
-              <BreadcrumbItem>
-                <DropdownMenu>
-                  <DropdownMenuTrigger className="flex items-center text-[.825rem] font-light md:font-medium">
-                    <BreadcrumbEllipsis className="w-auto" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    align="start"
-                    className="z-100 text-[.825rem]"
-                  >
-                    {middleSegments.map((segment, index) => (
-                      <DropdownMenuItem
-                        key={index}
-                        className="text-[.825rem] font-light text-muted-foreground hover:text-foreground md:font-medium"
+              {!isMobile ? (
+                middleSegments.map((segment, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <BreadcrumbSeparator>
+                      <LiaChevronRightSolid />
+                    </BreadcrumbSeparator>
+                    <BreadcrumbItem key={index}>
+                      <Link
+                        href={segment.path}
+                        className="text-[.825rem] font-light md:font-medium"
                       >
-                        <LiaChevronRightSolid
-                          style={{ width: "5px!important" }}
-                        />
-                        <Link href={segment.path}>{segment.label}</Link>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </BreadcrumbItem>
+                        {segment.label}
+                      </Link>
+                    </BreadcrumbItem>
+                  </div>
+                ))
+              ) : (
+                <>
+                  <BreadcrumbSeparator>
+                    <LiaChevronRightSolid />
+                  </BreadcrumbSeparator>
+                  <BreadcrumbItem>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="flex items-center text-[.825rem] font-light md:font-medium">
+                        <BreadcrumbEllipsis className="w-auto" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        align="start"
+                        className="z-100 text-[.825rem]"
+                      >
+                        {middleSegments.map((segment, index) => (
+                          <DropdownMenuItem
+                            key={index}
+                            className="text-[.825rem] font-light text-muted-foreground hover:text-foreground md:font-medium"
+                          >
+                            <LiaChevronRightSolid
+                              style={{ width: "5px!important" }}
+                            />
+                            <Link href={segment.path}>{segment.label}</Link>
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </BreadcrumbItem>
+                </>
+              )}
             </>
           )}
 
@@ -128,9 +161,7 @@ const BreadcrumbGso = (): ReactElement => {
           )}
         </BreadcrumbList>
       </Breadcrumb>
-      <div className="fixed right-1">
-        <NotificationsChecker />
-      </div>
+      <NotificationsShow className="fixed right-3" />
     </>
   );
 };

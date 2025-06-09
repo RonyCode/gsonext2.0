@@ -1,10 +1,17 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { TokenManager } from "@/functions/TokenManager";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const body = await request.json();
 
+  // Acessando o cookie de forma segura
   const token = request.headers.get("authorization");
+
+  if (!token) {
+    return NextResponse.json(
+      { error: "Token não encontrado" },
+      { status: 401 },
+    );
+  }
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/save`,
     {

@@ -11,7 +11,7 @@ import {
 
 const SuporteAoCliente = (): ReactNode => {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto my-6 min-h-full w-full p-4 md:mt-16">
       <h1 className="mb-8 text-center text-3xl font-bold">
         Suporte ao Cliente
       </h1>
@@ -55,8 +55,9 @@ const SuporteAoCliente = (): ReactNode => {
           <AccordionItem value="item-1">
             <AccordionTrigger>Como posso resetar minha senha?</AccordionTrigger>
             <AccordionContent>
-              Para resetar sua senha, clique em "Esqueci minha senha" na tela de
-              login e siga as instruções enviadas ao seu email cadastrado.
+              Para resetar sua senha, clique em &quot;Esqueci minha senha&quot;
+              na tela de login e siga as instruções enviadas ao seu email
+              cadastrado.
             </AccordionContent>
           </AccordionItem>
 
@@ -73,8 +74,9 @@ const SuporteAoCliente = (): ReactNode => {
               Como atualizar meus dados cadastrais?
             </AccordionTrigger>
             <AccordionContent>
-              Acesse seu perfil no painel de controle e clique em "Editar
-              Informações" para atualizar seus dados cadastrais.
+              Acesse seu perfil na barra lateral ou na barra principal e clique
+              em &quot;Minha Conta Informa&ccedil;&otilde;es&quot; para
+              atualizar seus dados cadastrais.
             </AccordionContent>
           </AccordionItem>
         </Accordion>

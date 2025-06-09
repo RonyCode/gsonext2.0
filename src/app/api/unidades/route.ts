@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
   const idCorporation = searchParams.get("id_corporation");
-  if (idCorporation == null) {
+  if (idCorporation == null || idCorporation == undefined) {
     return NextResponse.json(
       { message: "id-corporation não informado" },
       { status: 400 },

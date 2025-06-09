@@ -3,19 +3,6 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { type ReactElement, useEffect, useRef, useState } from "react";
-import {
-  LuBuilding2,
-  LuCalendarCheck,
-  LuComponent,
-  LuContact,
-  LuDoorOpen,
-  LuHeadphones,
-  LuCircleHelp,
-  LuLogOut,
-  LuMenu,
-  LuUser,
-  LuMegaphone,
-} from "react-icons/lu";
 
 import Logo from "@/img/Logo";
 
@@ -35,14 +22,20 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu";
-// import {
-//   NavigationMenu,
-//   NavigationMenuContent,
-//   NavigationMenuItem,
-//   NavigationMenuLink,
-//   NavigationMenuList,
-//   NavigationMenuTrigger,
-// } from '@/ui/navigation-menu'
+import { getValidImageUrl } from "@/functions/checkImageUrl";
+import {
+  Building2,
+  CalendarCheck,
+  CircleHelp,
+  DoorOpen,
+  Headphones,
+  LogOut,
+  Megaphone,
+  Menu,
+  User,
+} from "lucide-react";
+import { LuComponent } from "react-icons/lu";
+import { NotificationsShow } from "@/components/Notification/NotiicationsShow";
 
 export function NavbarMain({
   className,
@@ -51,63 +44,20 @@ export function NavbarMain({
   const { data: session } = useSession();
 
   const [state, setState] = useState(false);
-  const [showNavBar, setShowNavBar] = useState(false);
   const router = useRouter();
   const myRef = useRef(null);
   const nameUser = GetFirstLettersNameUser();
-
-  // const components: Array<{
-  //   title: string
-  //   href: string
-  //   description: string
-  // }> = [
-  //   {
-  //     title: 'Escala',
-  //     href: `/servicos/escalas`,
-  //     description: 'Serviço de escalas dos membros de cada unidade',
-  //   },
-  //   {
-  //     title: 'Ocorrência',
-  //     href: `/servicos/ocorrencias`,
-  //     description: 'Serviço de ocorrência.',
-  //   },
-  //   {
-  //     title: 'Dashboard',
-  //     href: `/servicos/estatisticas`,
-  //     description: 'Serviço para obter estatísticas do sistema.',
-  //   },
-  //   {
-  //     title: 'Aplicativo',
-  //     href: `/servicos/aplicativo`,
-  //     description: 'Novidades de nossos aplicativos',
-  //   },
-  //   {
-  //     title: 'Dashboard',
-  //     href: `/servicos/historico`,
-  //     description: 'Busque a ocorrência mais recente através do histórico .',
-  //   },
-  //   {
-  //     title: 'Área do Gestor',
-  //     href: `/servicos/gestor`,
-  //     description:
-  //       'Serviço para gerenciar o sistema de unidades, escalas e afins.',
-  //   },
-  //   {
-  //     title: 'corporacao',
-  //     href: `/servicos/organizacao`,
-  //     description: 'Serviço para gerenciar a corporação.',
-  //   },
-  // ]
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 100) {
-        setShowNavBar(true);
-      } else {
-        setShowNavBar(false);
-      }
+    // Ensure userImage is null if session?.user?.image is undefined or null
+    const userImage = session?.user?.image || null;
+    const imageUrlPromisse = getValidImageUrl(userImage);
+    imageUrlPromisse.then((item) => {
+      setImageUrl(item);
     });
-  }, [session?.id_message]);
+    // Use the same expression for the dependency
+  }, [session?.user?.image]);
 
   const handleClick = async (): Promise<void> => {
     await deleteCookies();
@@ -132,7 +82,7 @@ export function NavbarMain({
     },
     {
       title: "Atendimento",
-      icon: <LuMegaphone />,
+      icon: <Megaphone />,
       path: "/suporte",
     },
   ];
@@ -142,8 +92,8 @@ export function NavbarMain({
       {...props}
       ref={myRef}
       className={
-        "fixed left-0 top-0 z-10 w-screen border-b bg-background/95 text-foreground/70 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:text-foreground/70 " +
-        `${!showNavBar && " text-foreground/70 md:bg-background/60"}`
+        "fixed left-0 top-0 z-10 w-screen border-b bg-background/95 text-foreground/70 backdrop-blur " +
+        "supports-[backdrop-filter]:bg-background/60 dark:text-foreground/70"
       }
     >
       <div
@@ -169,7 +119,7 @@ export function NavbarMain({
                 setState(!state);
               }}
             >
-              <LuMenu />
+              <Menu />
             </button>
           </div>
         </div>
@@ -192,10 +142,6 @@ export function NavbarMain({
                 className="text-[#e5e7eb]/60 transition-colors hover:text-[#e5e7eb]/80"
               >
                 <div className="flex items-center space-x-1 transition-colors hover:text-primary/80">
-                  {/* <NavigationMenu className=" m-0  p-0"> */}
-                  {/*  <NavigationMenuList className=" m-0  p-0"> */}
-                  {/*    <NavigationMenuItem className=" m-0  p-0"> */}
-                  {/*      <NavigationMenuTrigger className="m-0 gap-1 space-x-0 bg-transparent p-0 outline-none hover:bg-transparent focus:bg-transparent md:flex md:text-sm "> */}
                   <Link
                     className="flex items-center justify-center gap-1 text-foreground/60 hover:text-foreground/80 md:space-x-6 md:space-y-0"
                     href={item.path}
@@ -207,26 +153,6 @@ export function NavbarMain({
                     </label>{" "}
                     {item.title}
                   </Link>
-                  {/* </NavigationMenuTrigger> */}
-
-                  {/* <NavigationMenuContent> */}
-                  {/*  {item.title === 'Serviços' && ( */}
-                  {/*    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] "> */}
-                  {/*      {components.map((component) => ( */}
-                  {/*        <ListItem */}
-                  {/*          key={component.title} */}
-                  {/*          title={component.title} */}
-                  {/*          href={component.href} */}
-                  {/*        > */}
-                  {/*          {component.description} */}
-                  {/*        </ListItem> */}
-                  {/*      ))} */}
-                  {/*    </ul> */}
-                  {/*  )} */}
-                  {/* </NavigationMenuContent> */}
-                  {/*    </NavigationMenuItem> */}
-                  {/*  </NavigationMenuList> */}
-                  {/* </NavigationMenu> */}
                 </div>
               </li>
             ))}
@@ -239,6 +165,7 @@ export function NavbarMain({
               state ? "flex flex-col-reverse items-stretch gap-2" : "md:flex"
             }`}
           >
+            <NotificationsShow className="mr-1" />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -247,12 +174,7 @@ export function NavbarMain({
                 >
                   <Avatar className="h-10 w-10 lg:h-12 lg:w-12">
                     <AvatarImage
-                      src={
-                        (process?.env?.NEXT_PUBLIC_API_GSO &&
-                          process?.env?.NEXT_PUBLIC_API_GSO +
-                            session?.user?.image) ??
-                        "/images/avatar.svg"
-                      }
+                      src={imageUrl ?? ""}
                       alt="@shadcn"
                       style={{ objectFit: "cover" }}
                     />
@@ -278,23 +200,27 @@ export function NavbarMain({
                     <DropdownMenuItem className="group-hover">
                       Minha Conta
                       <DropdownMenuShortcut className="hover:scale-125">
-                        <LuUser style={{ fontSize: "20px" }} />
+                        <User style={{ fontSize: "20px" }} />
                       </DropdownMenuShortcut>
                     </DropdownMenuItem>
                   </Link>
-                  <Link href={`/servicos/conta/escala`}>
+                  <Link
+                    href={`/src/app/(private)/(modules)/servicos/usuarios/%5Bid_usuario%5D/escala`}
+                  >
                     <DropdownMenuItem>
                       Minha Escala
                       <DropdownMenuShortcut>
-                        <LuCalendarCheck style={{ fontSize: "20px" }} />
+                        <CalendarCheck style={{ fontSize: "20px" }} />
                       </DropdownMenuShortcut>
                     </DropdownMenuItem>
                   </Link>
-                  <Link href={`/servicos/conta/unidade`}>
+                  <Link
+                    href={`/src/app/(private)/(modules)/servicos/usuarios/%5Bid_usuario%5D/unidade`}
+                  >
                     <DropdownMenuItem>
                       Minha Unidade
                       <DropdownMenuShortcut>
-                        <LuBuilding2 size={20} />
+                        <Building2 size={20} />
                       </DropdownMenuShortcut>
                     </DropdownMenuItem>
                   </Link>
@@ -302,7 +228,7 @@ export function NavbarMain({
                     <DropdownMenuItem>
                       Suporte
                       <DropdownMenuShortcut>
-                        <LuHeadphones style={{ fontSize: "20px" }} />
+                        <Headphones style={{ fontSize: "20px" }} />
                       </DropdownMenuShortcut>
                     </DropdownMenuItem>{" "}
                   </Link>
@@ -310,7 +236,7 @@ export function NavbarMain({
                   <DropdownMenuItem>
                     Ajuda
                     <DropdownMenuShortcut>
-                      <LuCircleHelp style={{ fontSize: "20px" }} />
+                      <CircleHelp style={{ fontSize: "20px" }} />
                     </DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
@@ -320,7 +246,7 @@ export function NavbarMain({
                 <DropdownMenuItem onClick={handleClick}>
                   Sair
                   <DropdownMenuShortcut>
-                    <LuLogOut style={{ fontSize: "20px" }} />
+                    <LogOut style={{ fontSize: "20px" }} />
                   </DropdownMenuShortcut>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -332,7 +258,7 @@ export function NavbarMain({
               href="/auth"
               className="flex items-center space-x-1 text-[#e5e7eb]/60 hover:text-primary/80"
             >
-              <LuDoorOpen />{" "}
+              <DoorOpen />{" "}
               <span className="hidden text-[#e5e7eb]/60 hover:text-[#e5e7eb]/80 md:block">
                 Area de acesso
               </span>
@@ -349,11 +275,11 @@ const ListItem = React.forwardRef<
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>
-      {/* <NavigationMenuLink asChild> */}
       <a
         ref={ref}
         className={cn(
-          "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+          "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors " +
+            "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
           className,
         )}
         {...props}
@@ -363,7 +289,6 @@ const ListItem = React.forwardRef<
           {children}
         </p>
       </a>
-      {/* </NavigationMenuLink> */}
     </li>
   );
 });

@@ -1,27 +1,27 @@
+import { GetAllVehiclesCorporationsAction } from "@/actions/vehicle/GetAllVehiclesCorporationsAction";
+
 export const dynamic = "force-dynamic";
 
 import { getServerSession } from "next-auth";
 import React from "react";
 import { LuBuilding, LuCarFront, LuSearchX } from "react-icons/lu";
-import { MdOutlineSupervisorAccount } from "react-icons/md";
 
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import TabCarsDetails from "@/app/(private)/(modules)/components/TabCarsDetails";
-import { getAllVehiclesCorporation } from "@/lib/getAllVehiclesCorporation";
-import { getAllOrganizacoes } from "@/lib/GetAllOrganizacoes";
+import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
 import { CardWithLogo } from "@/components/Cards/CardWithLogo";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 const VehicleCompany = async () => {
   const session = await getServerSession(authOptions);
-  const { data: vehicles } = await getAllVehiclesCorporation(
+  const { data: vehicles } = await GetAllVehiclesCorporationsAction(
     session?.id_corporation ?? "",
   );
-  const { data } = await getAllOrganizacoes();
+  const { data: corporations } = await GetAllCorporationsAction();
 
-  const corpFound = data?.find((corp) => {
+  const corpFound = corporations?.find((corp) => {
     return corp?.id === session?.id_corporation;
   });
 

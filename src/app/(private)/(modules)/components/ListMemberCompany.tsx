@@ -4,7 +4,7 @@ import React, { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { LuBuilding2, LuLoaderCircle, LuSearch } from "react-icons/lu";
 
-import { saveMemberIntoCompanyAction } from "@/actions/saveMemberIntoCompanyAction";
+import { SaveMemberIntoCompanyAction } from "@/actions/member/SaveMemberIntoCompanyAction";
 import { columnsWithCheckboxMembers } from "@/components/DataTables/DataTableMembers/columnsWithCheckboxMembers";
 import { DataTableMembers } from "@/components/DataTables/DataTableMembers/data-table-members";
 import LoadingPage from "@/components/Loadings/LoadingPage";
@@ -63,7 +63,7 @@ export const ListMemberCompany = ({
   const handleSubmit = (formData: ISaveMemberCompanySchema) => {
     if (formData.id_user !== "" && formData.id_corporation !== "") {
       startTransition(async () => {
-        const result = await saveMemberIntoCompanyAction(formData);
+        const result = await SaveMemberIntoCompanyAction(formData);
 
         if (result?.code !== 200) {
           toast({

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ComponentProps, useState } from "react";
+import React, { ComponentProps, useEffect, useState } from "react";
 
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
@@ -19,6 +19,7 @@ import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
 import { NavAdmin } from "@/components/Sidebar/nav-admin";
 import { useParams } from "next/navigation";
 import { NavTicket } from "./nav-ticket";
+import { getValidImageUrl } from "@/functions/checkImageUrl";
 
 interface AppSidebarProps {
   corp?: IOrganizacaoSchema;
@@ -38,6 +39,7 @@ export function AppSidebar({
   const idCompanyParam = params.id_company;
   const idCompany =
     (idCompanyParam?.slice(-24) as string) ?? (session?.id_company as string);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   React.useEffect(() => {
     if (idCompany) {
@@ -45,6 +47,16 @@ export function AppSidebar({
       setCompSelected(comp as IUnidadeSchema);
     }
   }, [idCompany, session?.id_company, companies]);
+
+  useEffect(() => {
+    // Ensure userImage is null if session?.user?.image is undefined or null
+    const userImage = session?.user?.image || null;
+    const imageUrlPromisse = getValidImageUrl(userImage);
+    imageUrlPromisse.then((item) => {
+      setImageUrl(item);
+    });
+    // Use the same expression for the dependency
+  }, [session?.user?.image]);
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -66,10 +78,10 @@ export function AppSidebar({
       <SidebarFooter>
         <NavUser
           user={{
-            ...session?.user,
+            ...session,
             name: session?.user?.name ?? "",
             email: session?.user?.email ?? "",
-            image: session?.user?.image ?? "",
+            image: imageUrl ?? "",
           }}
         />
       </SidebarFooter>

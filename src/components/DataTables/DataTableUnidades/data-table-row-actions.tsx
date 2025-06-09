@@ -12,6 +12,7 @@ import {
 import { UnidadeSchema } from "@/schemas/UnidadeSchema";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { type Row } from "@tanstack/react-table";
+import { LucideEdit3 } from "lucide-react";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -37,7 +38,14 @@ export function DataTableRowActions<TData>({
           <DropdownMenuItem>
             {" "}
             <LuEye size={18} className="mr-1" />
-            Detalhes
+            Visualizar
+          </DropdownMenuItem>
+        </Link>
+        <Link href={`/servicos/gestor/unidade/${task.name}-${task.id}`}>
+          <DropdownMenuItem>
+            {" "}
+            <LucideEdit3 size={18} className="mr-1" />
+            Editar
           </DropdownMenuItem>
         </Link>
       </DropdownMenuContent>

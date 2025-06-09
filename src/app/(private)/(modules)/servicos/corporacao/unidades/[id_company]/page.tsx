@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import React from "react";
-import { LuBuilding } from "react-icons/lu";
-import { MdOutlineSupervisorAccount } from "react-icons/md";
+import { LuBuilding, LuTextSearch } from "react-icons/lu";
 
 import ModuleMinhaUnidade from "@/app/(private)/(modules)/components/module/ModuleMinhaUnidade";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
-import { getCompanyById } from "@/lib/GetCompanyById";
+import { GetCompanyByIdAction } from "@/actions/company/GetCompanyByIdAction";
+import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
 
 export const metadata: Metadata = {
-  title: "GSO | unidade",
-  description: "Página de escalas do site GSO.",
+  title: "GSO | Unidades",
+  description: "Módulo de unidades do site GSO.",
 };
 const MinhaUnidade = async ({
   params,
@@ -24,18 +24,25 @@ const MinhaUnidade = async ({
 
   const id_compParams = id_company.split("-")[1] ?? "";
   const id_corporation = session?.id_corporation ?? "";
+  const { data: corporations } = await GetAllCorporationsAction();
+  const corporationFound = corporations?.find(
+    (corporation) => corporation.id === id_corporation,
+  );
 
-  const { data } = await getCompanyById(id_corporation, id_compParams);
+  const { data: companyFound } = await GetCompanyByIdAction(
+    id_corporation,
+    id_compParams,
+  );
   return (
     <div>
       {
         <CardDefault
-          title={data?.name + " / " + data?.companyAddress?.city}
-          description={"CMD : "}
-          image={data?.image}
-          imageMobile={data?.image}
+          title={companyFound?.name + " / " + corporationFound?.short_name_corp}
+          description={"Serviços da Unidade"}
+          image={companyFound?.image}
+          imageMobile={companyFound?.image}
           icon={<LuBuilding size={28} />}
-          iconDescription={<MdOutlineSupervisorAccount size={18} />}
+          iconDescription={<LuTextSearch size={18} />}
         >
           <div className="p-4">
             <ModuleMinhaUnidade params={resolvedParams} />

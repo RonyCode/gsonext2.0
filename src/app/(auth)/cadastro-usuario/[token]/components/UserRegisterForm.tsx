@@ -17,7 +17,7 @@ import {
 } from "react-icons/fa6";
 import { LuCheck, LuChevronsUpDown } from "react-icons/lu";
 
-import { saveUserAction } from "@/actions/saveUserAction";
+import { saveUserAction } from "@/actions/user/saveUserAction";
 import { MyInputMask } from "@/components/Form/Input/myInputMask";
 import LoadingPage from "@/components/Loadings/LoadingPage";
 import {

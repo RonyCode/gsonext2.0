@@ -1,19 +1,15 @@
-import './IconManager.css'
-import * as React from 'react'
+import "./IconManager.css";
+import * as React from "react";
 
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils";
 
 type SVGProps = {
-  width?: number
-  className?: string
+  width?: number;
+  className?: string;
 } & React.SVGProps<SVGSVGElement> &
-  React.HTMLAttributes<HTMLDivElement>
+  React.HTMLAttributes<HTMLDivElement>;
 
-export default function IconManager({
-  width,
-  className,
-  ...props
-}: SVGProps) {
+export default function IconManager({ width, className, ...props }: SVGProps) {
   return (
     <svg
       version="1.0"
@@ -21,7 +17,7 @@ export default function IconManager({
       width={width ?? 512}
       viewBox="0 0 122.88 111.81"
       preserveAspectRatio="xMidYMid meet"
-      className={cn(' ', className)}
+      className={cn(" ", className)}
       {...props}
     >
       <g>
@@ -31,5 +27,5 @@ export default function IconManager({
         />
       </g>
     </svg>
-  )
+  );
 }

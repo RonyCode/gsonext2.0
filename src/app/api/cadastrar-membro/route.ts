@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 import { type ISaveMemberSchema } from "@/schemas/SaveMemberSchema";
-import { TokenManager } from "@/functions/TokenManager";
+import { GetTokenCookie } from "@/functions/TokenManager";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const body: ISaveMemberSchema = await request.json();

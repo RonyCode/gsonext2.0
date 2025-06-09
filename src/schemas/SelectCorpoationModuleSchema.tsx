@@ -1,10 +1,11 @@
-import { z } from 'zod'
+import { z } from "zod";
+import { UnidadeSchema } from "./UnidadeSchema";
 
 export const SelectCorporationModuleSchema = z.object({
   id_company: z
     .string()
     .min(1, {
-      message: 'id inválido deve conter no mínimo 1 caracteres',
+      message: "id inválido deve conter no mínimo 1 caracteres",
     })
     .optional()
     .nullable(),
@@ -12,20 +13,22 @@ export const SelectCorporationModuleSchema = z.object({
   id_corporation: z
     .string()
     .min(1, {
-      message: 'id_corporation inválido deve conter no mínimo 1 caracteres',
+      message: "id_corporation inválido deve conter no mínimo 1 caracteres",
     })
     .optional()
     .nullable(),
+
+  company: UnidadeSchema.optional().nullable(),
 
   name_unidade: z
     .string()
     .min(1, {
-      message: 'name_unidade inválido deve conter no mínimo 1 caracteres',
+      message: "name_unidade inválido deve conter no mínimo 1 caracteres",
     })
     .optional()
     .nullable(),
-})
+});
 
 export type ISelectCorporationModuleSchema = z.infer<
   typeof SelectCorporationModuleSchema
->
+>;

@@ -7,6 +7,7 @@ import { fontSans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { Providers } from "@/providers";
 import { ThemeProvider } from "@/providers/ThemeProvider/ThemeProvider";
+import NotificationsChecker from "@/components/Notification/NotificationsChecker";
 
 const APP_NAME = "GSO";
 const APP_DEFAULT_TITLE = "GSO";
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: "#FFFFFF",
 };
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -75,9 +76,10 @@ export default function RootLayout({
           >
             <Providers>
               <div className="flex min-h-screen w-screen flex-col bg-gradient-to-t from-background to-secondary">
+                <NotificationsChecker />
                 <div className="m-auto h-full w-full">{children}</div>
               </div>
-            </Providers>{" "}
+            </Providers>
           </ThemeProvider>
         </Suspense>
       </body>

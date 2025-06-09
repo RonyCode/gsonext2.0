@@ -1,15 +1,20 @@
-'use client'
+"use client";
 
-import { useNotificationStore } from './useNotificationStore'
-import { type UserNotification } from '@/types/index'
+import { useNotificationStore } from "./useNotificationStore";
+import { type UserNotification } from "@/types/index";
 
 interface AppInitializerProps {
-  userNotification: UserNotification | null
+  userNotification: UserNotification[] | null;
 }
 
 export default function UserNotifcationStoreInitialize({
   userNotification,
 }: AppInitializerProps): null {
-  useNotificationStore.setState({ state: { notification: userNotification } })
-  return null
+  if (userNotification != null) {
+    useNotificationStore
+      .getState()
+      .actions.setAll(userNotification as UserNotification[]);
+    return null;
+  }
+  return null;
 }

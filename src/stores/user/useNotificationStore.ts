@@ -1,37 +1,55 @@
-import { type NotificationMessage, type UserNotification } from '@/types/index'
-import { create } from 'zustand'
+import { type UserNotification } from "@/types/index";
+import { create } from "zustand";
 
 interface ActionsProps {
-  add: (notification: UserNotification) => void
+  add: (newNotifications: UserNotification[]) => void; // Parâmetro renomeado para clareza
+  removeById: (id_message: string) => void; // Nova ação para remover
+  setAll: (notifications: UserNotification[]) => void; // Nova ação para definir todas as notificações
 }
 
 interface UserNotificationStore {
-  state: { notification: UserNotification | null }
-  actions: ActionsProps
+  state: { notification: UserNotification[] };
+  actions: ActionsProps;
 }
 
 export const useNotificationStore = create<UserNotificationStore>()((set) => {
   return {
     state: {
-      notification: {
-        messages: [] as NotificationMessage[],
-        id: '',
-        title: '',
-        type: '',
-        qtd: 0,
-        status: '',
-        code: 0,
-      },
+      notification: [],
     },
     actions: {
-      add: (notification: UserNotification) => {
-        set((state) => ({
-          ...state,
+      // Ação para definir/substituir todas as notificações
+      setAll: (notifications: UserNotification[]) => {
+        set((store) => ({
+          ...store,
           state: {
-            notification: { ...state.state.notification, ...notification },
+            ...store.state,
+            notification: notifications,
           },
-        }))
+        }));
+      },
+      // Ação 'add' corrigida para concatenar os novos items ao array existente
+      add: (newNotifications: UserNotification[]) => {
+        set((store) => ({
+          ...store,
+          state: {
+            ...store.state,
+            notification: [...store.state.notification, ...newNotifications],
+          },
+        }));
+      },
+      // Nova ação para remover uma notificação pelo id_message
+      removeById: (id_message_to_remove: string) => {
+        set((store) => ({
+          ...store,
+          state: {
+            ...store.state,
+            notification: store.state.notification.filter(
+              (item) => item.id_message !== id_message_to_remove,
+            ),
+          },
+        }));
       },
     },
-  }
-})
+  };
+});

@@ -5,7 +5,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { LuBuilding2, LuPhone, LuUser } from "react-icons/lu";
 import { maskPhone } from "@/functions/masks/maskphone";
 import { Badge } from "@/ui/badge";
-import { getAllCompanies } from "@/lib/getAllCompanies";
+import { GetAllCompaniesAction } from "@/actions/company/GetAllCompaniesAction";
+
 import { maskOcultaCpfCnpj } from "@/functions/masks/maskOcultaCpfCnpj";
 import { DataTableRowActions } from "@/components/DataTables/DataTableUsers/data-table-row-actions";
 
@@ -88,7 +89,7 @@ export const columnsWithMembersCompany = () => {
         <DataTableColumnHeader column={column} title="Unidade" />
       ),
       cell: ({ row }) => {
-        const test = getAllCompanies("FEFRF").then((response) => {
+        const test = GetAllCompaniesAction("FEFRF").then((response) => {
           console.log(response);
         });
         // const type = types.find((type) => type.value === row.getValue("type"));

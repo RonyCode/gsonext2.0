@@ -1,6 +1,5 @@
 "use client";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { redirect } from "next/navigation";
 import React, { useEffect, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -22,7 +21,7 @@ import {
   LuTrash2,
 } from "react-icons/lu";
 
-import { saveUnidadeAction } from "@/actions/saveUnidadeAction";
+import { saveUnidadeAction } from "@/actions/company/SaveUnidadeAction";
 import { EditPhoto } from "@/components/EditPhoto/EditPhoto";
 import { MyInputMask } from "@/components/Form/Input/myInputMask";
 import LoadingPage from "@/components/Loadings/LoadingPage";
@@ -81,14 +80,14 @@ enum Fields {
 }
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
-  unidade?: IUnidadeSchema | null;
+  company?: IUnidadeSchema | null;
   corporations?: IOrganizacaoSchema[] | null;
   className?: string;
   states?: AddressProps[] | null;
 };
 
 export const ListaUnidadeDetails = ({
-  unidade,
+  company,
   corporations,
   className,
   states,
@@ -100,12 +99,12 @@ export const ListaUnidadeDetails = ({
 
   useEffect(() => {
     startTransition(async () => {
-      if (unidade?.companyAddress?.short_name != null) {
-        await getAllCitiesByState(unidade?.companyAddress?.short_name);
+      if (company?.companyAddress?.short_name != null) {
+        await getAllCitiesByState(company?.companyAddress?.short_name);
       }
     });
-    if (unidade?.companyAddress?.short_name == null) setDisabled(false);
-  }, [unidade?.companyAddress?.short_name, disabled]);
+    if (company?.companyAddress?.short_name == null) setDisabled(false);
+  }, [company?.companyAddress?.short_name, disabled]);
 
   const form = useForm<IUnidadeSchema>({
     mode: "all",
@@ -113,24 +112,24 @@ export const ListaUnidadeDetails = ({
     resolver: zodResolver(UnidadeSchema),
 
     defaultValues: {
-      id: unidade?._id?.$oid ?? null,
-      id_corporation: unidade?.id_corporation ?? null,
-      name: unidade?.name ?? "",
-      short_name_corp: unidade?.short_name_corp ?? "",
-      cnpj: maskCpfCnpj(unidade?.cnpj) ?? "",
-      phone: maskPhone(unidade?.phone) ?? "",
-      image: unidade?.image ?? null,
-      companyAddress: unidade?.companyAddress
+      id: company?._id?.$oid ?? null,
+      id_corporation: company?.id_corporation ?? null,
+      name: company?.name ?? "",
+      short_name_corp: company?.short_name_corp ?? "",
+      cnpj: maskCpfCnpj(company?.cnpj) ?? "",
+      phone: maskPhone(company?.phone) ?? "",
+      image: company?.image ?? null,
+      companyAddress: company?.companyAddress
         ? {
-            ...unidade.companyAddress,
-            zipcode: maskZipcode(unidade?.companyAddress?.zipcode) ?? "",
+            ...company.companyAddress,
+            zipcode: maskZipcode(company?.companyAddress?.zipcode) ?? "",
           }
         : undefined,
-      date_creation: unidade?.date_creation ?? "",
-      type: unidade?.type ?? null,
-      manager: unidade?.manager ?? null,
-      director: unidade?.director ?? null,
-      director_company: unidade?.director_company ?? null,
+      date_creation: company?.date_creation ?? "",
+      type: company?.type ?? null,
+      manager: company?.manager ?? null,
+      director: company?.director ?? null,
+      director_company: company?.director_company ?? null,
       excluded: 0,
     },
   });
@@ -308,7 +307,7 @@ export const ListaUnidadeDetails = ({
                   )}
                 >
                   <LuClipboardPen
-                    className="text-foreground group-hover:text-muted-foreground"
+                    className="text-primary group-hover:text-primary/60"
                     size={24}
                   />
                 </Button>
@@ -326,38 +325,15 @@ export const ListaUnidadeDetails = ({
               className="w-full space-y-4"
             >
               <div className="grid h-full w-full grid-cols-12">
-                <div className="relative col-start-1 col-end-6 mr-4 hidden h-60 justify-center rounded-[8px] border border-muted-foreground/10 md:flex">
-                  <div className="absolute -left-3 -top-3">
-                    <EditPhoto
-                      disabled={disabled}
-                      directoryFile={
-                        process.env.NEXT_PUBLIC_API_GSO &&
-                        unidade?.image !== null
-                          ? process.env.NEXT_PUBLIC_API_GSO + unidade?.image
-                          : process.env.NEXT_PUBLIC_API_GSO +
-                            "/public/images/img.svg"
-                      }
-                      updateFormExternal={form}
-                    />
-                  </div>
-                  <Image
-                    src={
-                      process.env.NEXT_PUBLIC_API_GSO != null &&
-                      form?.getValues("image") != null
-                        ? process.env.NEXT_PUBLIC_API_GSO +
-                          form?.getValues("image")
-                        : process.env.NEXT_PUBLIC_API_GSO +
-                          "/public/images/img.svg"
-                    }
-                    width={500}
-                    height={500}
-                    quality={100}
-                    alt="imagem unidade"
-                    className="rounded-[5px] object-contain"
+                <div className="col-start-1 col-end-13 md:col-end-5 md:mr-3">
+                  <EditPhoto
+                    disabled={disabled}
+                    directoryFile={company?.image ?? ""}
+                    updateFormExternal={form}
                   />
                 </div>
 
-                <div className="col-start-1 col-end-13 flex h-full flex-col justify-evenly md:col-start-6">
+                <div className="col-start-1 col-end-13 flex h-full flex-col justify-evenly md:col-start-5">
                   <FormField
                     control={form.control}
                     name="id_corporation"
@@ -557,7 +533,7 @@ export const ListaUnidadeDetails = ({
                           </PopoverTrigger>
                           <PopoverContent className="w-auto p-0" align="start">
                             <Calendar
-                              captionLayout="dropdown-buttons"
+                              captionLayout="dropdown"
                               locale={ptBR}
                               toYear={2100}
                               fromYear={1900}
@@ -572,7 +548,6 @@ export const ListaUnidadeDetails = ({
                                 date > new Date() ||
                                 date < new Date("1900-01-01")
                               }
-                              initialFocus
                             />
                           </PopoverContent>
                         </Popover>

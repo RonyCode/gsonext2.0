@@ -12,6 +12,8 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import IconLogoRCode from "@/icons/IconLogoRCode";
+import Link from "next/link";
 
 type CardProps = React.ComponentProps<typeof Card> & {
   title?: string;
@@ -44,9 +46,17 @@ export const CardWithLogo = ({
         <CardContent className="grid w-full gap-4 text-foreground">
           <div>{children}</div>
         </CardContent>
-        <CardFooter>
-          <div className="text-center text-xs text-gray-500">
-            &copy;2025 RCode All rights reserved.
+        <CardFooter className="w-full">
+          <div className="flex w-full items-center justify-center text-center text-xs text-gray-500">
+            &copy;2025
+            <Link
+              href={"https://github.com/RonyCode"}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <IconLogoRCode width={80} className="fill-foreground px-2" />
+            </Link>
+            todos os direitos reservados
           </div>
         </CardFooter>
       </Card>

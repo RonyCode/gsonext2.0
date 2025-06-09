@@ -7,10 +7,11 @@ import { authOptions } from "@/lib/auth";
 import CalendarGsoV1 from "@/components/CalendarGso/CalendarGsoV1";
 import LoadingPage from "@/components/Loadings/LoadingPage";
 import { getAllSchedulesCompany } from "@/lib/getAllSchedulesCompany";
-import { getCompanyById } from "@/lib/GetCompanyById";
 import { CardWithLogo } from "@/components/Cards/CardWithLogo";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
+import { GetCompanyByIdAction } from "@/actions/company/GetCompanyByIdAction";
 
 const EscalasUnidade = async ({
   params,
@@ -29,9 +30,14 @@ const EscalasUnidade = async ({
     idCompany ?? "",
   );
 
-  const { data: companyFound } = await getCompanyById(
+  const { data: companyFound } = await GetCompanyByIdAction(
     idCorporation ?? "",
     idCompany ?? "",
+  );
+
+  const { data: corporations } = await GetAllCorporationsAction();
+  const corporationFound = corporations?.find(
+    (corporation) => corporation.id === idCorporation,
   );
 
   return (
@@ -39,7 +45,7 @@ const EscalasUnidade = async ({
       <CardDefault
         title={
           companyFound?.name !== undefined && companyFound?.name !== null
-            ? companyFound?.name + " / " + companyFound?.companyAddress?.city
+            ? companyFound?.name + " / " + corporationFound?.short_name_corp
             : "Unidade não encontrada!"
         }
         description={"Escalas da minha Unidade"}

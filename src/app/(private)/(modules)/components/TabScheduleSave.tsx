@@ -60,7 +60,7 @@ import moment from "moment";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { saveScheduleAction } from "@/actions/saveScheduleAction";
+import { saveScheduleAction } from "@/actions/schedule/saveScheduleAction";
 import { IScheduleSchema } from "@/schemas/ScheduleSchema";
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
@@ -444,6 +444,7 @@ export const TabScheduleSave = ({
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
                           <Calendar
+                            mode="single"
                             captionLayout="dropdown-buttons"
                             locale={ptBR}
                             toYear={2100}

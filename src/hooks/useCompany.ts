@@ -1,6 +1,7 @@
 import { toast } from "@/hooks/use-toast";
 
-import { getAllCompanies } from "@/lib/getAllCompanies";
+import { GetAllCompaniesAction } from "@/actions/company/GetAllCompaniesAction";
+
 import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
 import { ResponseApi } from "@/types/index";
 
@@ -9,7 +10,7 @@ export const useCompany = () => {
     id_corporation: string,
   ): Promise<ResponseApi<IUnidadeSchema[]> | undefined> {
     try {
-      return await getAllCompanies(id_corporation);
+      return await GetAllCompaniesAction(id_corporation);
     } catch (error) {
       console.error("Erro no login com Google:", error);
       toast({

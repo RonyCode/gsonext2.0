@@ -14,7 +14,6 @@ import {
   SignInSchema,
 } from "@/app/(auth)/auth/schemas/SignInSchema";
 import LoadingPage from "@/components/Loadings/LoadingPage";
-import { GetUserNotification } from "@/lib/GetNotificationUser";
 import { cn } from "@/lib/utils";
 import { Button } from "@/ui/button";
 import {
@@ -30,7 +29,7 @@ import { Input } from "@/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { setCookie } from "cookies-next";
-import md5 from "md5";
+import { subscribeUserToPush } from "@/functions/pushSubscription";
 
 type UserAuthFormProps = {
   className?: Element;
@@ -52,8 +51,6 @@ const SigInForm = ({ className, ...props }: UserAuthFormProps) => {
         });
       }
       if (result.ok) {
-        const idMessage = md5(data.email);
-        void GetUserNotification("auth", "user_logged", idMessage);
         toast({
           variant: "success",
           title: "Bem vindo de volta! 😍",
@@ -66,30 +63,25 @@ const SigInForm = ({ className, ...props }: UserAuthFormProps) => {
 
   const handleClickLogin = async (): Promise<void> => {
     if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
-      void navigator.serviceWorker
-        .register("/service-worker/index.js")
-        .then(async (serviceWorker) => {
-          let subscriptionResult =
-            await serviceWorker.pushManager.getSubscription();
-          if (subscriptionResult == null) {
-            subscriptionResult = await serviceWorker.pushManager.subscribe({
-              userVisibleOnly: true,
-              applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
-            });
-          }
-          console.log(JSON.stringify(subscriptionResult));
-          setCookie("subscription", JSON.stringify(subscriptionResult));
-        });
+      await navigator.serviceWorker.register("/service-worker/index.js", {
+        scope: "/service-worker/",
+        updateViaCache: "none",
+      });
+
+      const subscription = await subscribeUserToPush();
+      console.log(subscription);
+
+      setCookie("subscription", subscription);
     }
   };
 
   const handleSubmitLoginWithGoogle = async (): Promise<void> => {
-    await handleClickLogin();
-
     startTransition(async (): Promise<void> => {
       await signInWithGoogle();
+      await handleClickLogin();
     });
   };
+
   const form = useForm<ISignInSchema>({
     resolver: zodResolver(SignInSchema),
     mode: "all",

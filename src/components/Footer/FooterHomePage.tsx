@@ -164,6 +164,7 @@ const FooterHomePage = ({ className, ...props }: FooterLayoutProps) => {
             <Link
               href="https://github.com/RonyCode"
               className="text-foreground hover:text-primary/60"
+              target="_blank"
             >
               <IconLogoRCode
                 width={60}

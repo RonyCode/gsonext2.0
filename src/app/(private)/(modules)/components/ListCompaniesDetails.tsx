@@ -26,7 +26,7 @@ export const ListCompaniesDetails = ({
         <div className="flex items-center">
           <div className="flex w-full items-center justify-between gap-4 space-y-2 p-6">
             <h1 className="ml-4 mr-auto pt-2 text-xl font-bold">Unidades</h1>
-            <Link href="/servicos/gestor/salvar-unidade">
+            <Link href="/servicos/gestor/unidade/nova-unidade">
               <Button
                 className={cn(buttonVariants({ variant: "outline" }), "group")}
               >

@@ -1,17 +1,18 @@
 "use client";
-import { useSession } from "next-auth/react";
-import React, { useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { LuCheck, LuChevronsUpDown, LuLandmark } from "react-icons/lu";
 
-import LoadingPage from "@/components/Loadings/LoadingPage";
+import {
+  LuCheck,
+  LuChevronsUpDown,
+  LuCirclePlus,
+  LuLandmark,
+} from "react-icons/lu";
 import { cn } from "@/lib/utils";
 import {
   type ISelectCorporationModuleSchema,
   SelectCorporationModuleSchema,
 } from "@/schemas/SelectCorpoationModuleSchema";
 import { type IUnidadeSchema } from "@/schemas/UnidadeSchema";
-import { Button } from "@/ui/button";
+import { Button, buttonVariants } from "@/ui/button";
 import { Card } from "@/ui/card";
 import {
   Command,
@@ -31,34 +32,37 @@ import {
 } from "@/ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
 import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
+import { useForm } from "react-hook-form";
+import ModuloGestorUnidade from "@/app/(private)/(modules)/components/module/ModuloGestorUnidade";
+import { Avatar } from "@radix-ui/react-avatar";
+import { AvatarImage } from "@/ui/avatar";
+import { TeamSwitcher } from "@/components/Sidebar/team-switcher";
+import { CompanySwitcher } from "@/components/Sidebar/company-switcher";
+import Link from "next/link";
 
 type SelectCompanyModuleProps = React.HTMLAttributes<HTMLDivElement> & {
-  unidades?: IUnidadeSchema[];
+  companies?: IUnidadeSchema[];
   className?: string;
 };
 
 export const SelectCompanyModule = ({
-  unidades,
+  companies,
   className,
   ...props
 }: SelectCompanyModuleProps) => {
-  const [pending, startTransition] = useTransition();
-  const disabled = false;
-  const { data: session } = useSession();
-
+  const [companySelected, setCompanySelected] =
+    React.useState<IUnidadeSchema | null>(null);
   const form = useForm<ISelectCorporationModuleSchema>({
     mode: "all",
     criteriaMode: "all",
     resolver: zodResolver(SelectCorporationModuleSchema),
     defaultValues: {
-      id_company: session?.id_company ?? "",
-      name_unidade: "",
+      company: null,
+      id_company: "",
     },
   });
 
-  const handleSubmit = (): void => {
-    startTransition(async () => {});
-  };
   return (
     <>
       <Card
@@ -66,12 +70,30 @@ export const SelectCompanyModule = ({
         className={cn("bg-background p-6", className)}
         {...props}
       >
-        <div className="flex items-center">
-          <Card className="flex w-full flex-col items-center justify-between gap-2 p-4">
-            <h1 className="mr-auto pb-4 text-xl font-bold">Minhas unidades</h1>
+        <Card>
+          <div className="flex flex-col items-center">
+            <div className="flex w-full items-center justify-between p-4">
+              <h1 className="mr-auto text-xl font-bold">Minhas unidades</h1>
+              <Link href="/servicos/corporacao/unidades">
+                <Button
+                  className={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "group",
+                  )}
+                >
+                  <div className="flex items-center gap-1">
+                    <LuCirclePlus
+                      size={16}
+                      className="text-foreground group-hover:text-muted-foreground"
+                    />
+                    Adicionar{" "}
+                  </div>
+                </Button>
+              </Link>
+            </div>
+
             <Form {...form}>
-              <LoadingPage pending={pending} />
-              <form className="w-full space-y-4">
+              <form className="w-full p-4">
                 <FormField
                   control={form.control}
                   name="id_company"
@@ -89,49 +111,73 @@ export const SelectCompanyModule = ({
                             <Button
                               variant="outline"
                               role="combobox"
-                              className={cn(
-                                "w-full justify-between",
-                                disabled && "text-muted-foreground",
-                              )}
+                              className={cn("w-full justify-between")}
                             >
                               {field?.value !== ""
-                                ? unidades?.find(
-                                    (state) =>
-                                      state.id?.toString() === field.value,
+                                ? companies?.find(
+                                    (company) =>
+                                      company.id?.toString() === field.value,
                                   )?.name
                                 : "Selecione uma unidade"}
                               <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className="min-w-[200px] p-0">
+                        <PopoverContent className="min-w-[400px] p-0">
                           <Command>
                             <CommandInput placeholder="Procurando unidades..." />
                             <CommandEmpty>Unidade não encontrada.</CommandEmpty>
                             <CommandGroup>
                               <CommandList>
-                                {unidades?.map((state, index) => (
+                                {companies?.map((company, index) => (
                                   <CommandItem
-                                    disabled={disabled}
-                                    value={state?.id?.toString()}
+                                    value={company?.name?.toString()}
                                     key={index}
                                     onSelect={() => {
-                                      handleSubmit();
+                                      setCompanySelected(company);
                                       form.setValue(
                                         "id_company",
-                                        state?.id?.toString(),
+                                        company?.id?.toString() ?? "",
                                       );
                                     }}
+                                    className="group"
                                   >
                                     <LuCheck
                                       className={cn(
                                         "mr-2 h-4 w-4",
-                                        state?.id?.toString() === field.value
+                                        company?.id?.toString() === field.value
                                           ? "opacity-100"
                                           : "opacity-0",
                                       )}
                                     />
-                                    {state.name}
+
+                                    <div className="flex aspect-square items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground group-hover:scale-[140%]">
+                                      <Avatar className="group h-10 w-10 rounded-lg">
+                                        <AvatarImage
+                                          src={
+                                            process.env.NEXT_PUBLIC_API_GSO !==
+                                              null &&
+                                            company?.image !== null &&
+                                            company?.image !== undefined
+                                              ? process.env
+                                                  .NEXT_PUBLIC_API_GSO +
+                                                company?.image
+                                              : process.env
+                                                  .NEXT_PUBLIC_API_GSO +
+                                                "/images/img.svg"
+                                          }
+                                          alt={"img user"}
+                                        />
+                                      </Avatar>
+                                    </div>
+                                    <div className="grid flex-1 text-left text-sm leading-tight">
+                                      <span className="truncate font-semibold">
+                                        {company?.name}
+                                      </span>
+                                      <span className="truncate text-xs">
+                                        {company?.companyAddress?.city}
+                                      </span>
+                                    </div>
                                   </CommandItem>
                                 ))}
                               </CommandList>
@@ -145,8 +191,12 @@ export const SelectCompanyModule = ({
                 />
               </form>
             </Form>
-          </Card>
-        </div>
+          </div>
+        </Card>
+
+        {companySelected && (
+          <ModuloGestorUnidade company={companySelected as IUnidadeSchema} />
+        )}
       </Card>
     </>
   );
