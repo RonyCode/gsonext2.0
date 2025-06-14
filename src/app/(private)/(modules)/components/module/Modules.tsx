@@ -47,7 +47,7 @@ const Modules = () => {
             icon={<IconBuild width={54} />}
           />{" "}
           <CardModule
-            title="Dashboard"
+            title="Estastísticas"
             subtitle="Estatítiscas gerais"
             link={`/servicos/dashboard`}
             icon={<IconGrafico width={58} />}
@@ -61,7 +61,7 @@ const Modules = () => {
           <CardModule
             title="Área do Gestor"
             subtitle="Serviço de gestão"
-            link={`/servicos/corporacao/gestor`}
+            link={`/servicos/gestor`}
             icon={<IconCog width={58} />}
           />{" "}
           <CardModule

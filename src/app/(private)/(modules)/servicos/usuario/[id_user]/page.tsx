@@ -9,15 +9,22 @@ import { GetUserById } from "@/lib/GetUserById";
 import { EditProfileForm } from "../../../components/EditProfileForm";
 import { UserType } from "@/types/index";
 
-const ProfileUser = async () => {
+const ProfileUser = async ({
+  params,
+}: {
+  params: Promise<{ id_user: string }>;
+}) => {
+  const resolvedParams = await params;
+  const { id_user } = resolvedParams;
+  const IdUser = id_user.split("-")[1] ?? "";
+
   const session = await getServerSession(authOptions);
   const state = await getAllStates();
-  const { data: user } = await GetUserById(session?.id);
+  const { data: user } = await GetUserById(IdUser);
   const image =
     user?.account?.image ||
-    session?.user?.image ||
-    session?.image ||
     process?.env?.NEXT_PUBLIC_API_GSO + "/public/images/img.svg";
+
   return (
     <>
       <CardDefault

@@ -41,14 +41,12 @@ export const confereLogado = async (payload: {
     const token = res.headers.get("authorization")?.replace("Bearer ", "");
 
     const { data } = await res.json();
-    const UserLogged = {
+    // Retorna os dados do usuário junto com os tokens dos headers
+    return {
       ...data,
       token: token,
       refresh_token: refreshToken,
     };
-
-    // Retorna os dados do usuário junto com os tokens dos headers
-    return UserLogged;
   } else {
     return null;
   }
@@ -235,7 +233,7 @@ export const authOptions: NextAuthOptions = {
         token.id_corporation = session.id_corporation;
         token.id_company = session.id_company;
         token.name = session.name;
-        token.image = session.image;
+        token.image = session.image || session.picture;
       }
 
       return token;
@@ -269,6 +267,7 @@ export const authOptions: NextAuthOptions = {
         session.id_corporation = newSession.id_corporation;
         session.id_company = newSession.id_company;
         session.name = newSession.name;
+        session.image = newSession.image || newSession.picture;
       }
 
       return session;

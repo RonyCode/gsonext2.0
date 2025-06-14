@@ -51,13 +51,6 @@ type MemberType = React.HTMLAttributes<HTMLDivElement> & {
   className?: string;
 };
 
-const roles = [
-  { value: "admin", label: "Administrador" },
-  { value: "supervisor", label: "Supervisor" },
-  { value: "manager", label: "Gerente" },
-  { value: "user", label: "Usuário" },
-];
-
 const functions = [
   { value: "comandante", label: "Comandante" },
   { value: "subcomandante", label: "Sub-Comandante" },
@@ -70,6 +63,19 @@ const functions = [
   { value: "cmt_gu", label: "Comandante de guarnição" },
   { value: "escalante", label: "Escalante" },
   { value: "comunicacao", label: "Comunicação" },
+];
+
+const competencias = [
+  { value: "coronel", label: "Coronel" },
+  { value: "ten-coronel", label: "Ten-Coronel" },
+  { value: "capitao", label: "Capitão" },
+  { value: "major", label: "Major" },
+  { value: "tenente", label: "Tenente" },
+  { value: "sub-tenente", label: "Sub Tenente" },
+  { value: "1_sargento", label: "1º Sargento" },
+  { value: "2_sargento", label: "2º Sargento" },
+  { value: "cabo", label: "Cabo" },
+  { value: "soldado", label: "Soldado" },
 ];
 
 const MemberDetail = ({
@@ -97,16 +103,15 @@ const MemberDetail = ({
   };
 
   return (
-    <div className={cn("mx-auto w-full max-w-4xl p-6", className)}>
+    <div className={cn("px-4 2xl:px-20", className)}>
       <h2 className="mb-6 text-2xl font-bold">Detalhes do Membro</h2>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(async (data) => {
             onSubmit(data);
           })}
-          className="w-full space-y-4"
         >
-          <div className="col-start-1 col-end-13 flex h-full flex-col justify-evenly md:col-start-6">
+          <div className="flex w-full flex-col gap-2 py-2 md:flex-row">
             <FormField
               control={form.control}
               name="name"
@@ -122,6 +127,7 @@ const MemberDetail = ({
                     <Input
                       {...field}
                       id="name"
+                      disabled
                       placeholder="Digite nome da Corporação"
                       autoCapitalize="none"
                       autoComplete="name"
@@ -134,7 +140,7 @@ const MemberDetail = ({
             />
           </div>
 
-          <div className="flex w-full flex-col gap-2 md:flex-row">
+          <div className="flex w-full flex-col gap-2 py-2 md:flex-row">
             <FormField
               control={form.control}
               name="id_company"
@@ -228,63 +234,124 @@ const MemberDetail = ({
               )}
             />
           </div>
-          <FormField
-            control={form.control}
-            name="role"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Função</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione uma função" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {functions.map((role) => (
-                      <SelectItem key={role.value} value={role.value}>
-                        {role.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
 
-          <FormField
-            control={form.control}
-            name="function"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Competencia</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione uma atribuição" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {functions.map((func) => (
-                      <SelectItem key={func.value} value={func.value}>
-                        {func.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="flex w-full flex-col gap-2 py-2 md:flex-row">
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Competência</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione uma Competência" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {competencias.map((role) => (
+                        <SelectItem key={role.value} value={role.value}>
+                          {role.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Button type="submit" className="w-full">
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Função</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione uma função" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {functions.map((role) => (
+                        <SelectItem key={role.value} value={role.value}>
+                          {role.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="flex w-full flex-col gap-2 py-2 md:flex-row">
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Função</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione uma função" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {functions.map((role) => (
+                        <SelectItem key={role.value} value={role.value}>
+                          {role.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="function"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Competencia</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione uma atribuição" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {functions.map((func) => (
+                        <SelectItem key={func.value} value={func.value}>
+                          {func.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <Button className="float-right mt-2" variant="default" type="submit">
             Salvar Alterações
           </Button>
         </form>

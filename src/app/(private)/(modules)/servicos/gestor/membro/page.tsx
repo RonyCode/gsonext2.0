@@ -1,46 +1,79 @@
-import { type Metadata } from "next";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
-import React, { type ReactNode } from "react";
-import { LuSaveAll } from "react-icons/lu";
+import React from "react";
+import { LuListChecks, LuSearchX, LuUsers } from "react-icons/lu";
 
-import MemberForm from "@/app/(private)/(modules)/components/ListMemberCorporation";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { CardWithLogo } from "@/components/Cards/CardWithLogo";
-import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
+import { DataTableMembers } from "@/components/DataTables/DataTableMembers/data-table-members";
+import { authOptions } from "@/lib/auth";
 import { Button } from "@/ui/button";
+import { IMemberSchema } from "@/schemas/MemberSchema";
+import { columnsMembers } from "@/components/DataTables/DataTableMembers/columnsMembers";
+import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
+import { GetAllMembersCorporationsAction } from "@/actions/member/GetAllMembersCorporationsAction";
 
-export const metadata: Metadata = {
-  title: "GSO | Membros",
-  description: "Página de unidades do site GSO.",
-};
+const MembrosCorporacao = async () => {
+  const session = await getServerSession(authOptions);
+  const { data: corporations } = await GetAllCorporationsAction();
+  const { data: membersFound } = await GetAllMembersCorporationsAction(
+    session?.id_corporation ?? "",
+  );
 
-const SalvarMembro = async (): Promise<ReactNode> => {
-  const { data } = await GetAllCorporationsAction();
+  const corpFound = corporations?.find((corp) => {
+    return corp?.id === session?.id_corporation;
+  });
+
   return (
-    <>
-      <CardDefault
-        title="Salvar Membro Corporação"
-        description="Gerenciar Membros"
-        image={"/public/images/members.jpg"}
-        imageMobile={"/public/images/members.jpg"}
-        icon={<LuSaveAll size={28} />}
-      >
-        <div className="overflow-scroll lg:overflow-hidden">
-          {data !== null && data !== undefined ? (
-            <MemberForm corporations={data} />
+    <div>
+      {
+        <CardDefault
+          title={
+            corpFound?.name !== undefined && corpFound?.name !== null
+              ? corpFound?.short_name_corp + " / " + corpFound?.address?.city
+              : "Corporação não encontrada!"
+          }
+          description="Membros"
+          image={"/public/images/members.jpg"}
+          imageMobile={"/public/images/members.jpg"}
+          icon={<LuUsers size={28} />}
+          iconDescription={<LuListChecks size={18} />}
+        >
+          {membersFound !== undefined ? (
+            <div className="overflow-scroll p-4 lg:overflow-hidden">
+              {membersFound != null && (
+                <DataTableMembers
+                  columns={columnsMembers}
+                  data={membersFound as unknown as IMemberSchema[]}
+                />
+              )}
+            </div>
           ) : (
-            <CardWithLogo
-              title="Usuário sem corporacao"
-              description="É necessário solicitar inclusão em uma corporação para acessar nossos módulos"
-            >
-              <Link href="/contact">
-                <Button>Solicitar inclusão</Button>
-              </Link>
-            </CardWithLogo>
+            <div className="flex h-full w-full items-center justify-center">
+              {session?.id_corporation === undefined ||
+              session?.id_corporation == null ? (
+                <CardWithLogo
+                  title="Usuário sem Corporação"
+                  description="É necessário solicitar inclusão em uma corporação para acessar nossos módulos"
+                >
+                  <Link
+                    href="/contact"
+                    className="flex w-full items-center justify-center"
+                  >
+                    <Button>Solicitar inclusão</Button>
+                  </Link>
+                </CardWithLogo>
+              ) : (
+                <span className="flex items-center justify-center gap-1">
+                  <LuSearchX size={28} className="text-primary/60" /> SEM
+                  UNIDADE CADASTRADA 🤯
+                </span>
+              )}
+            </div>
           )}
-        </div>
-      </CardDefault>
-    </>
+        </CardDefault>
+      }
+    </div>
   );
 };
-export default SalvarMembro;
+export default MembrosCorporacao;

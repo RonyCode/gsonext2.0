@@ -16,7 +16,7 @@ export const routePermissions: RoutePermission[] = [
   {
     paths: [
       /^\/servicos\/corporacao\/membros\/.*/,
-      /^\/servicos\/corporacao\/gestor.*/,
+      /^\/servicos\/gestor.*/,
       /^\/servicos\/corporacao\/veiculos\/.*/,
       /^\/servicos\/corporacao\/usuarios\/.*/,
     ],
@@ -31,7 +31,7 @@ export const routePermissions: RoutePermission[] = [
   {
     // Cuidado com paths que não são regex, como este.
     // Se a intenção é uma correspondência exata, não precisa de regex.
-    // Se for um prefixo, use /^\/servicos\/usuarios.*/
+    // Se for um prefixo, use /^\/servicos\/usuario.*/
     paths: [/^\/servicos\/usuarios.*/],
     roles: ["admin", "manager"],
     methods: ["GET", "POST", "PUT", "DELETE"],

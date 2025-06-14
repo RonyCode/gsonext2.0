@@ -37,6 +37,7 @@ export function NavUser({
 }: {
   user?: {
     name: string | null | undefined;
+    id: string | null | undefined;
     email: string | null | undefined;
     image: string | null | undefined;
   };
@@ -98,7 +99,7 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <Link href={`/servicos/conta`}>
+              <Link href={`/servicos/usuario/${user?.name + "-" + user?.id}`}>
                 <DropdownMenuItem>
                   <LuIdCard />
                   Minha Conta
@@ -108,7 +109,7 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <Link
-                href={`/src/app/(private)/(modules)/servicos/usuarios/%5Bid_usuario%5D/unidade`}
+                href={`/src/app/(private)/(modules)/servicos/usuario/%5Bid_usuario%5D/unidade`}
               >
                 <DropdownMenuItem>
                   <Landmark />
@@ -116,7 +117,7 @@ export function NavUser({
                 </DropdownMenuItem>
               </Link>
               <Link
-                href={`/src/app/(private)/(modules)/servicos/usuarios/%5Bid_usuario%5D/escala`}
+                href={`/src/app/(private)/(modules)/servicos/usuario/%5Bid_usuario%5D/escala`}
               >
                 <DropdownMenuItem>
                   <CalendarCheck />

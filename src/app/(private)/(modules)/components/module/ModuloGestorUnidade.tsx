@@ -11,13 +11,13 @@ const ModuloGestorUnidade = ({ company }: { company: IUnidadeSchema }) => {
           <CardModule
             title="Editar / Salvar"
             subtitle="Salvar Unidade"
-            link={`/servicos/gestor/unidade/${company?.name?.toLowerCase() + "-" + company?.id?.toLowerCase()}/editar`}
+            link={`/servicos/gestor/unidade/${company?.name?.toLowerCase() + "-" + company?.id?.toLowerCase()}`}
             icon={<IconEditSave width={58} className="ml-1" />}
           />
         </div>
         <CardModule
           title="Adicionar Unidade"
-          subtitle="Add veiculo"
+          subtitle="Nova Unidade"
           link={`/servicos/gestor/unidade/nova-unidade`}
           icon={<IconBuildPlus width={58} className="ml-1" />}
         />

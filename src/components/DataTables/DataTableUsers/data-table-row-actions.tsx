@@ -21,6 +21,8 @@ export function DataTableRowActions<TData>({
 }: DataTableRowActionsProps<TData>): ReactElement {
   const task = UserSchema.parse(row.original);
 
+  console.log(task);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -34,7 +36,7 @@ export function DataTableRowActions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <Link
-          href={`/src/app/(private)/(modules)/servicos/usuarios/${task?.account?.name?.toLowerCase() + "-" + task?.id}`}
+          href={`/servicos/usuario/${task?.account?.name?.toLowerCase() + "-" + task?.id}`}
         >
           <DropdownMenuItem>Detalhes</DropdownMenuItem>
         </Link>

@@ -12,17 +12,16 @@ export async function saveUserAction(
   try {
     if (formData != null) {
       const token = GetTokenCookie("token");
-      return await fetchWrapper<ResultUserRegistered>(
-        `${process?.env?.NEXT_PUBLIC_NEXT_URL}/api/cadastrar-usuario`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ ...formData }),
+      const url = `${process.env.NEXT_PUBLIC_API_GSO}/api/auth/cadastro`;
+
+      return await fetchWrapper<ResultUserRegistered>(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-      );
+        body: JSON.stringify({ ...formData }),
+      });
     }
     return {
       code: 400,

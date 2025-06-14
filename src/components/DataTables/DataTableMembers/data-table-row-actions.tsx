@@ -11,6 +11,8 @@ import {
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { type Row } from "@tanstack/react-table";
 import { MemberSchema } from "@/schemas/MemberSchema";
+import { LuEye } from "react-icons/lu";
+import { LucideEdit3 } from "lucide-react";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -34,10 +36,23 @@ export function DataTableRowActions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <Link
-          aria-disabled={task?.role === "user"}
           href={`/servicos/corporacao/membros/${task?.name?.toLowerCase() + "-" + task?.id_user}`}
         >
-          <DropdownMenuItem>Detalhes</DropdownMenuItem>
+          <DropdownMenuItem>
+            {" "}
+            <LuEye size={18} className="mr-1" />
+            Visualizar
+          </DropdownMenuItem>
+        </Link>
+
+        <Link
+          href={`/servicos/gestor/membro/${task?.name?.toLowerCase() + "-" + task?.id_user}`}
+        >
+          <DropdownMenuItem>
+            {" "}
+            <LucideEdit3 size={18} className="mr-1" />
+            Editar
+          </DropdownMenuItem>
         </Link>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -50,7 +50,7 @@ export function AppSidebar({
 
   useEffect(() => {
     // Ensure userImage is null if session?.user?.image is undefined or null
-    const userImage = session?.user?.image || null;
+    const userImage = session?.image || session?.user?.image;
     const imageUrlPromisse = getValidImageUrl(userImage);
     imageUrlPromisse.then((item) => {
       setImageUrl(item);
@@ -78,7 +78,7 @@ export function AppSidebar({
       <SidebarFooter>
         <NavUser
           user={{
-            ...session,
+            id: session?.id ?? "",
             name: session?.user?.name ?? "",
             email: session?.user?.email ?? "",
             image: imageUrl ?? "",

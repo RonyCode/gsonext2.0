@@ -51,13 +51,13 @@ export function NavbarMain({
 
   useEffect(() => {
     // Ensure userImage is null if session?.user?.image is undefined or null
-    const userImage = session?.user?.image || null;
+    const userImage = session?.image || session?.user?.image;
     const imageUrlPromisse = getValidImageUrl(userImage);
     imageUrlPromisse.then((item) => {
       setImageUrl(item);
     });
     // Use the same expression for the dependency
-  }, [session?.user?.image]);
+  }, [session?.image, session?.user?.image]);
 
   const handleClick = async (): Promise<void> => {
     await deleteCookies();
@@ -165,7 +165,7 @@ export function NavbarMain({
               state ? "flex flex-col-reverse items-stretch gap-2" : "md:flex"
             }`}
           >
-            <NotificationsShow className="mr-1" />
+            <NotificationsShow className="mr-2" />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -196,7 +196,9 @@ export function NavbarMain({
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <Link href={`/servicos/conta`}>
+                  <Link
+                    href={`/servicos/usuario/${session?.user?.name + "-" + session?.id}`}
+                  >
                     <DropdownMenuItem className="group-hover">
                       Minha Conta
                       <DropdownMenuShortcut className="hover:scale-125">
@@ -205,7 +207,7 @@ export function NavbarMain({
                     </DropdownMenuItem>
                   </Link>
                   <Link
-                    href={`/src/app/(private)/(modules)/servicos/usuarios/%5Bid_usuario%5D/escala`}
+                    href={`/servicos/usuario/${session?.user?.name + "-" + session?.id}/escala`}
                   >
                     <DropdownMenuItem>
                       Minha Escala
@@ -215,7 +217,7 @@ export function NavbarMain({
                     </DropdownMenuItem>
                   </Link>
                   <Link
-                    href={`/src/app/(private)/(modules)/servicos/usuarios/%5Bid_usuario%5D/unidade`}
+                    href={`/servicos/usuario/${session?.user?.name + "-" + session?.id}/unidade`}
                   >
                     <DropdownMenuItem>
                       Minha Unidade

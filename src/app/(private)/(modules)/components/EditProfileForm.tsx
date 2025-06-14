@@ -55,10 +55,9 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
 import { toast } from "@/hooks/use-toast";
-import axios from "axios";
-import { getCookie } from "cookies-next";
-import { GetTokenCookie } from "@/functions/TokenManager";
 import { EditPhoto } from "@/components/EditPhoto/EditPhoto";
+import { useRouter } from "next/navigation";
+import { getValidImageUrl } from "@/functions/checkImageUrl";
 
 enum Fields {
   cep = "cep",
@@ -91,6 +90,8 @@ export const EditProfileForm = ({
   const [pending, startTransition] = useTransition();
   const [date, setDate] = React.useState<Date>();
   const { update } = useSession();
+  const router = useRouter();
+  const [directory, setDirectory] = React.useState<string | null>(null);
 
   useEffect(() => {
     startTransition(async () => {
@@ -141,12 +142,11 @@ export const EditProfileForm = ({
           description: "Tudo certo, dados do usuário salvos com sucesso 🚀 ",
         });
         await update({
-          ...user,
           name: dataForm?.nome,
           image: dataForm?.image,
         });
 
-        // redirect("/servicos/conta");
+        router.refresh();
       }
     });
   };
@@ -196,6 +196,17 @@ export const EditProfileForm = ({
     }
   };
 
+  const userImage = form.getValues("image") || image;
+
+  useEffect(() => {
+    // Ensure userImage is null if session?.user?.image is undefined or null
+    const imageUrlPromisse = getValidImageUrl(userImage);
+    imageUrlPromisse.then((item) => {
+      setDirectory(item);
+    });
+    // Use the same expression for the dependency
+  }, [userImage]);
+
   return (
     <>
       <div className="px-4 2xl:px-20">
@@ -211,13 +222,7 @@ export const EditProfileForm = ({
               <div className="flex w-full flex-col gap-2 md:flex-row">
                 <div className="relative h-60 w-full justify-center rounded-[6px] bg-secondary md:flex md:w-6/12">
                   <EditPhoto
-                    directoryFile={
-                      process.env.NEXT_PUBLIC_API_GSO &&
-                      user?.account?.image !== null
-                        ? process.env.NEXT_PUBLIC_API_GSO + user?.account?.image
-                        : process.env.NEXT_PUBLIC_API_GSO +
-                          "/public/images/img.svg"
-                    }
+                    directoryFile={directory ?? ""}
                     updateFormExternal={form as unknown as UseFormReturn}
                   />
 

@@ -54,7 +54,7 @@ const ModuloGestor = async () => {
         <CardModule
           title="Gestão Usuários"
           subtitle="Gerenciar Usuários"
-          link={`/servicos/gestor/usuario`}
+          link={`/servicos/usuario`}
           icon={<IconManager width={58} className="ml-1" />}
         />
         <CardModule

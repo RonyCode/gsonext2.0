@@ -6,7 +6,6 @@ import { MdOutlineSupervisorAccount } from "react-icons/md";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import { IMemberSchema } from "@/schemas/MemberSchema";
-import { getMembersCorporation } from "@/lib/getMembersCorporation";
 import MemberDetail from "@/app/(private)/(modules)/components/MemberDetail";
 import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
 import { GetAllCompaniesAction } from "@/actions/company/GetAllCompaniesAction";
@@ -24,8 +23,6 @@ const MembrosUnidade = async ({
   const session = await getServerSession(authOptions);
   const idMemberParams = id_member.split("-")[1];
   const idCorp = session?.id_corporation ?? "";
-
-  console.log(id_member);
 
   const { data: corporationMembersFound } =
     await GetMemberCorporationByIdAction(idCorp);
@@ -46,7 +43,7 @@ const MembrosUnidade = async ({
       {
         <CardDefault
           title={memberFound?.name ?? ""}
-          description={memberFound?.competence ?? ""}
+          description={memberFound?.email ?? ""}
           image={memberFound?.image}
           imageMobile={memberFound?.image}
           icon={<LuBuilding size={28} />}
