@@ -12,7 +12,7 @@ export async function saveUserAction(
   try {
     if (formData != null) {
       const token = GetTokenCookie("token");
-      const url = `${process.env.NEXT_PUBLIC_API_GSO}/api/auth/cadastro`;
+      const url = `${process.env.NEXT_PUBLIC_API_GSO}/api/auth/save`;
 
       return await fetchWrapper<ResultUserRegistered>(url, {
         method: "POST",

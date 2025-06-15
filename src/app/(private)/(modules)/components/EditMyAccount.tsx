@@ -1,13 +1,11 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import * as React from "react";
 import { useEffect, useTransition } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import {
   LuCalendar,
-  LuCamera,
   LuCheck,
   LuChevronsUpDown,
   LuHash,
@@ -80,7 +78,7 @@ type UserRegisterFormProps = {
   className?: string;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-export const EditProfileForm = ({
+export const EditMyAccount = ({
   user,
   image,
   states,
@@ -142,6 +140,7 @@ export const EditProfileForm = ({
           description: "Tudo certo, dados do usuário salvos com sucesso 🚀 ",
         });
         await update({
+          ...user,
           name: dataForm?.nome,
           image: dataForm?.image,
         });
@@ -199,12 +198,10 @@ export const EditProfileForm = ({
   const userImage = form.getValues("image") || image;
 
   useEffect(() => {
-    // Ensure userImage is null if session?.user?.image is undefined or null
     const imageUrlPromisse = getValidImageUrl(userImage);
     imageUrlPromisse.then((item) => {
       setDirectory(item);
     });
-    // Use the same expression for the dependency
   }, [userImage]);
 
   return (
@@ -225,20 +222,6 @@ export const EditProfileForm = ({
                     directoryFile={directory ?? ""}
                     updateFormExternal={form as unknown as UseFormReturn}
                   />
-
-                  {/*<Image*/}
-                  {/*  src={*/}
-                  {/*    process.env.NEXT_PUBLIC_API_GSO &&*/}
-                  {/*    user?.account?.image !== null*/}
-                  {/*      ? process.env.NEXT_PUBLIC_API_GSO + user?.account?.image*/}
-                  {/*      : process.env.NEXT_PUBLIC_API_GSO +*/}
-                  {/*        "/public/images/img.svg"*/}
-                  {/*  }*/}
-                  {/*  fill*/}
-                  {/*  quality={100}*/}
-                  {/*  alt="imagem director"*/}
-                  {/*  className="aspect-square rounded-lg object-cover"*/}
-                  {/*/>*/}
                 </div>
                 <div className="w-full">
                   <div className="flex w-full flex-col gap-2 pb-2 md:flex-row">

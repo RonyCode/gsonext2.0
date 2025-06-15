@@ -1,66 +1,71 @@
-import Link from "next/link";
-import React, { type ReactNode, Suspense } from "react";
-import { LuCar } from "react-icons/lu";
+import { GetAllVehiclesCorporationsAction } from "@/actions/vehicle/GetAllVehiclesCorporationsAction";
 
-import VehicleCorporationForm from "@/app/(private)/(modules)/components/VehicleCorporationForm";
+import { getServerSession } from "next-auth";
+import React from "react";
+import { LuBuilding, LuCarFront, LuSearchX } from "react-icons/lu";
+
 import { CardDefault } from "@/components/Cards/CardDefault";
-import { CardWithLogo } from "@/components/Cards/CardWithLogo";
-import LoadingPage from "@/components/Loadings/LoadingPage";
+import { authOptions } from "@/lib/auth";
+import TabCarsDetails from "@/app/(private)/(modules)/components/TabCarsDetails";
 import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
-import { Button } from "@/ui/button";
-import { getAllVehiclesCorporation } from "@/lib/getAllVehiclesCorporation";
+import { CardWithLogo } from "@/components/Cards/CardWithLogo";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
-const SalvarUnidade = async ({
-  searchParams,
-}: {
-  searchParams: Promise<{ id_corporation: string; id_vehicle: string }>;
-}): Promise<ReactNode> => {
-  const resolvedSearchParams = await searchParams;
-  const { id_vehicle } = resolvedSearchParams;
-
-  const { data } = await GetAllCorporationsAction();
-
-  const corpFound = data?.find((corp) =>
-    corp.vehicles?.find((vehicle) => vehicle?.id === id_vehicle),
+const VehicleCompany = async () => {
+  const session = await getServerSession(authOptions);
+  const { data: vehicles } = await GetAllVehiclesCorporationsAction(
+    session?.id_corporation ?? "",
   );
+  const { data: corporations } = await GetAllCorporationsAction();
 
-  const { data: vehicles } = await getAllVehiclesCorporation(
-    corpFound?.id ?? "",
-  );
+  const corpFound = corporations?.find((corp) => {
+    return corp?.id === session?.id_corporation;
+  });
 
-  const myVehicle = vehicles?.find((vehicle) => vehicle?.id === id_vehicle);
+  console.log(session?.id_corporation);
 
   return (
-    <>
-      <CardDefault
-        title="Veículos"
-        description="Gerenciar Veículos"
-        image={"/public/images/frota-cars.jpg"}
-        imageMobile={"/public/images/frota-cars.jpg"}
-        icon={<LuCar size={28} />}
-      >
-        <div>
-          {data !== null && data !== undefined ? (
-            <Suspense fallback={<LoadingPage pending={true} />}>
-              <VehicleCorporationForm
-                corporations={data}
-                myVehicle={myVehicle ?? null}
-                idCorporation={corpFound?.id}
-              />
-            </Suspense>
-          ) : (
-            <CardWithLogo
-              title="Usuário sem corporacao"
-              description="É necessário solicitar inclusão em uma corporação para acessar nossos módulos"
-            >
-              <Link href="/contact">
-                <Button>Solicitar inclusão</Button>
-              </Link>
-            </CardWithLogo>
-          )}
-        </div>
-      </CardDefault>
-    </>
+    <CardDefault
+      title={
+        corpFound?.name !== undefined && corpFound?.name !== null
+          ? corpFound?.short_name_corp + " / " + corpFound?.address?.city
+          : "Corporação não encontrada!"
+      }
+      description={"Veículos Corporação"}
+      image={corpFound?.image}
+      imageMobile={corpFound?.image}
+      icon={<LuBuilding size={28} />}
+      iconDescription={<LuCarFront size={18} />}
+    >
+      <div className="md:overflow-none overflow-scroll">
+        {vehicles !== null || true ? (
+          <TabCarsDetails vehicles={vehicles} />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            {session?.id_corporation === undefined ||
+            session?.id_corporation == null ? (
+              <CardWithLogo
+                title="Usuário sem Corporação"
+                description="É necessário solicitar inclusão em uma corporação para acessar nossos módulos"
+              >
+                <Link
+                  href="/contact"
+                  className="flex w-full items-center justify-center"
+                >
+                  <Button>Solicitar inclusão</Button>
+                </Link>
+              </CardWithLogo>
+            ) : (
+              <span className="flex items-center justify-center gap-1">
+                <LuSearchX size={28} className="text-primary/60" /> SEM UNIDADE
+                CADASTRADA 🤯
+              </span>
+            )}
+          </div>
+        )}
+      </div>
+    </CardDefault>
   );
 };
-export default SalvarUnidade;
+export default VehicleCompany;

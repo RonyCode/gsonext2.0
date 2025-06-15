@@ -5,37 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4de5031-80c2-4cc7-8968-8fb03cd1922c" name="Changes" comment="fix routes">
-      <change afterPath="$PROJECT_DIR$/src/actions/member/GetMemberCorporationByIdAction.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/membro/[id_member]/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/membro/[id_member]/salvar-na-corporacao/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/EditUserForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/conta/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/veiculo/[id_veiculo]/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/member/GetAllMembersCorporationsAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/member/GetAllMembersCorporationsAction.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/actions/user/saveUserAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/user/saveUserAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/EditProfileForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/EditProfileForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/MemberDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/MemberDetail.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/module/Modules.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/module/Modules.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/module/ModuloGestor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/module/ModuloGestor.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/module/ModuloGestorUnidade.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/module/ModuloGestorUnidade.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/membros/[id_member]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/membros/[id_member]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/EditProfileForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/EditMyAccount.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/membro/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/membro/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/membro/salvar-membro/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/membro/[id_member]/salvar-na-unidade/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuarios/[id_usuario]/corporacao/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuario/[id_user]/corporacao/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuarios/[id_usuario]/escala/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuario/[id_user]/escala/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuarios/[id_usuario]/notificacoes/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuarios/[id_usuario]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuario/[id_user]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuarios/[id_usuario]/unidade/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuario/[id_user]/unidade/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuarios/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuario/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableMembers/data-table-row-actions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableMembers/data-table-row-actions.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableUsers/data-table-row-actions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableUsers/data-table-row-actions.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Nav/NavbarMain.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Nav/NavbarMain.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Sidebar/app-sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar/app-sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Sidebar/nav-user.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar/nav-user.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/use-mobile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/use-mobile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middlewares/permissionUserMiddleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/permissionUserMiddleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/UsersSchema.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/UsersSchema.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/veiculo/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/veiculo/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuario/[id_user]/corporacao/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/conta/corporacao/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuario/[id_user]/escala/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/conta/escala/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuario/[id_user]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuario/[id_user]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuario/[id_user]/unidade/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/conta/unidade/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +72,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
     &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/rony/Sites/gso-next2.0/src/app/(private)/(modules)/servicos/gestor/membro/[id_member]&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/rony/Sites/gso-next2.0/src/app/(private)/(modules)/servicos/gestor/veiculo&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -118,18 +99,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/membro/[id_member]" />
+      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/veiculo" />
+      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/conta" />
+      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/components" />
       <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/membro" />
-      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/membro/editar" />
-      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/membro/salvar-na-corporacao" />
-      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/unidade/[id_company]" />
+      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/membro/[id_member]" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/veiculo/[id_veiculo]" />
+      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/conta" />
       <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/membro/[id_member]" />
       <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/unidade/[id_company]/editar" />
       <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/unidade/[id_company]" />
-      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/corporacao/[id_corporation]" />
-      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/corporacao" />
     </key>
   </component>
   <component name="RunManager" selected="npm.Next.js: server-side">
@@ -302,7 +283,8 @@
       <workItem from="1749758154644" duration="2248000" />
       <workItem from="1749838442649" duration="6061000" />
       <workItem from="1749860269800" duration="1677000" />
-      <workItem from="1749900654511" duration="15004000" />
+      <workItem from="1749900654511" duration="16788000" />
+      <workItem from="1749991553694" duration="3666000" />
     </task>
     <task id="LOCAL-00001" summary="update google login">
       <option name="closed" value="true" />
@@ -440,7 +422,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749477264591</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="fix routes">
+      <option name="closed" value="true" />
+      <created>1749938993713</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1749938993713</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -8,12 +8,13 @@ import { CardWithLogo } from "@/components/Cards/CardWithLogo";
 import { DataTableMembers } from "@/components/DataTables/DataTableMembers/data-table-members";
 import { authOptions } from "@/lib/auth";
 import { Button } from "@/ui/button";
+import { getMembersCorporation } from "@/lib/getMembersCorporation";
 import { IMemberSchema } from "@/schemas/MemberSchema";
 import { columnsMembers } from "@/components/DataTables/DataTableMembers/columnsMembers";
 import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
 import { GetAllMembersCorporationsAction } from "@/actions/member/GetAllMembersCorporationsAction";
 
-const MembrosCorporacao = async () => {
+const MembrosUnidade = async () => {
   const session = await getServerSession(authOptions);
   const { data: corporations } = await GetAllCorporationsAction();
   const { data: membersFound } = await GetAllMembersCorporationsAction(
@@ -76,4 +77,4 @@ const MembrosCorporacao = async () => {
     </div>
   );
 };
-export default MembrosCorporacao;
+export default MembrosUnidade;

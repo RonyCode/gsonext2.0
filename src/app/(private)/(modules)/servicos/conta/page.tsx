@@ -7,22 +7,17 @@ import { authOptions } from "@/lib/auth";
 import { getAllStates } from "@/lib/getAllStates";
 import { GetUserById } from "@/lib/GetUserById";
 import { UserType } from "@/types/index";
-import { EditUserForm } from "@/app/(private)/(modules)/components/EditUserForm";
+import { EditMyAccount } from "@/app/(private)/(modules)/components/EditMyAccount";
 
-const ProfileUser = async ({
-  params,
-}: {
-  params: Promise<{ id_user: string }>;
-}) => {
-  const resolvedParams = await params;
-  const { id_user } = resolvedParams;
-  const IdUser = id_user.split("-")[1] ?? "";
-
+const ProfileUser = async () => {
   const session = await getServerSession(authOptions);
   const state = await getAllStates();
-  const { data: user } = await GetUserById(IdUser);
+  const { data: user } = await GetUserById(session?.id ?? "");
   const image =
     user?.account?.image ||
+    session?.image ||
+    session?.user?.image ||
+    session?.picture ||
     process?.env?.NEXT_PUBLIC_API_GSO + "/public/images/img.svg";
 
   return (
@@ -35,7 +30,7 @@ const ProfileUser = async ({
         icon={<LuUserCheck size={28} />}
         iconDescription={<LuMail />}
       >
-        <EditUserForm user={user as UserType} image={image} states={state} />
+        <EditMyAccount user={user as UserType} image={image} states={state} />
       </CardDefault>
     </>
   );
