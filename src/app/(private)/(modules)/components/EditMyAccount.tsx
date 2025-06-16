@@ -321,6 +321,7 @@ export const EditMyAccount = ({
                               align="start"
                             >
                               <Calendar
+                                captionLayout="dropdown"
                                 locale={ptBR}
                                 mode="single"
                                 selected={date}
@@ -333,7 +334,6 @@ export const EditMyAccount = ({
                                   date > new Date() ||
                                   date < new Date("1900-01-01")
                                 }
-                                initialFocus
                               />
                             </PopoverContent>
                           </Popover>

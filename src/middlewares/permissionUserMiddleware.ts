@@ -51,9 +51,9 @@ export function permissionUserMiddleware(
     const path = request.nextUrl.pathname;
     const method = request.method;
 
-    const tokenCookie = request.cookies.get("token");
+    const tokenCookie = request.cookies.get("token")?.value;
 
-    if (!tokenCookie?.value) {
+    if (tokenCookie == undefined) {
       // Se não há token, e a rota é protegida, redirecionar para login ou retornar 401
       // Esta lógica pode depender se o withAuthMiddleware já lidou com isso.
       // Por simplicidade, vamos assumir que o withAuthMiddleware já tratou a ausência total de token.
@@ -76,7 +76,7 @@ export function permissionUserMiddleware(
 
     let userRole: UserRole | undefined;
     try {
-      const payloadToken = decodeJwt(tokenCookie.value);
+      const payloadToken = decodeJwt(tokenCookie);
       // Validação mais segura do payload do token seria ideal aqui (ex: com Zod)
       const dataPayload = payloadToken.data as JWTPayload | undefined;
       if (dataPayload && isValidUserRole(dataPayload.role as string)) {

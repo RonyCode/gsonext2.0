@@ -24,7 +24,7 @@ export async function handleTokenRefresh(
       name: "token",
       value: tokenRes.token,
       httpOnly: true,
-      maxAge: 60 * 20,
+      maxAge: 60 * 60,
       path: "/",
     });
 

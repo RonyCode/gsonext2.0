@@ -3,15 +3,15 @@
 import { fetchWrapper } from "@/functions/fetch";
 import { type ResponseApi } from "@/types/index";
 import { GetTokenCookie } from "@/functions/TokenManager";
-import { IMemberSchema } from "@/schemas/MemberSchema";
+import { IScheduleSchema } from "@/schemas/ScheduleSchema";
 
-export async function GetAllMembersCompanyAction(
-  id_company?: string,
-): Promise<ResponseApi<IMemberSchema[]>> {
+export async function SearchScheduleAction(
+  $idUser?: string,
+): Promise<ResponseApi<IScheduleSchema[]>> {
   const token = await GetTokenCookie("token");
-  const url = `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/company/members/${id_company}`;
+  const url = `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/company/schedule/search?id_schedule=${$idUser}`;
 
-  return await fetchWrapper<ResponseApi<IMemberSchema[]>>(url, {
+  return await fetchWrapper<ResponseApi<IScheduleSchema[]>>(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

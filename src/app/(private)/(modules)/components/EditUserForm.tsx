@@ -219,20 +219,6 @@ export const EditUserForm = ({
                     directoryFile={directory ?? ""}
                     updateFormExternal={form as unknown as UseFormReturn}
                   />
-
-                  {/*<Image*/}
-                  {/*  src={*/}
-                  {/*    process.env.NEXT_PUBLIC_API_GSO &&*/}
-                  {/*    user?.account?.image !== null*/}
-                  {/*      ? process.env.NEXT_PUBLIC_API_GSO + user?.account?.image*/}
-                  {/*      : process.env.NEXT_PUBLIC_API_GSO +*/}
-                  {/*        "/public/images/img.svg"*/}
-                  {/*  }*/}
-                  {/*  fill*/}
-                  {/*  quality={100}*/}
-                  {/*  alt="imagem director"*/}
-                  {/*  className="aspect-square rounded-lg object-cover"*/}
-                  {/*/>*/}
                 </div>
                 <div className="w-full">
                   <div className="flex w-full flex-col gap-2 pb-2 md:flex-row">
@@ -332,6 +318,7 @@ export const EditUserForm = ({
                               align="start"
                             >
                               <Calendar
+                                captionLayout="dropdown"
                                 locale={ptBR}
                                 mode="single"
                                 selected={date}
@@ -344,7 +331,6 @@ export const EditUserForm = ({
                                   date > new Date() ||
                                   date < new Date("1900-01-01")
                                 }
-                                initialFocus
                               />
                             </PopoverContent>
                           </Popover>

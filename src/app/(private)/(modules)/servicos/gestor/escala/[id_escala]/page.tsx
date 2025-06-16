@@ -12,34 +12,30 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
 import { GetCompanyByIdAction } from "@/actions/company/GetCompanyByIdAction";
+import { SearchScheduleAction } from "@/actions/schedule/SearchScheduleAction";
 
 const EscalasUnidade = async ({
-  params,
+  searchParams,
 }: {
-  params: Promise<{ id_company: string }>;
+  searchParams: Promise<{
+    id_escala: string;
+  }>;
 }) => {
-  const resolvedParams = await params;
   const session = await getServerSession(authOptions);
+  const resolvedSearchParams = await searchParams;
+  const { id_escala } = resolvedSearchParams;
+  const idSchedule = id_escala?.split("-")[1];
 
-  const { id_company } = resolvedParams;
-  const idCorporation = session?.id_corporation;
-  const idCompany = id_company?.split("-")[1];
-
-  const { data: schedules } = await getAllSchedulesCompany(
-    idCorporation ?? "",
-    idCompany ?? "",
-  );
-
-  console.log(schedules);
+  const { data: schedules } = await SearchScheduleAction(idSchedule?.id ?? "");
 
   const { data: companyFound } = await GetCompanyByIdAction(
-    idCorporation ?? "",
-    idCompany ?? "",
+    session?.id_corporation ?? "",
+    schedules?.find((schedule) => schedule.id === idSchedule)?.id_company ?? "",
   );
 
   const { data: corporations } = await GetAllCorporationsAction();
   const corporationFound = corporations?.find(
-    (corporation) => corporation.id === idCorporation,
+    (corporation) => corporation.id === session?.id_corporation,
   );
 
   return (

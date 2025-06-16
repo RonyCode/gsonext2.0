@@ -444,11 +444,8 @@ export const TabScheduleSave = ({
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
                           <Calendar
-                            mode="single"
-                            captionLayout="dropdown-buttons"
+                            captionLayout="dropdown"
                             locale={ptBR}
-                            toYear={2100}
-                            fromYear={1900}
                             mode="single"
                             selected={dateStart}
                             onSelect={(date) => {
@@ -818,7 +815,7 @@ export const TabScheduleSave = ({
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[200px] p-0">
+                        <PopoverContent className="w-full p-0">
                           <Command>
                             <CommandInput placeholder="procurando membro.." />
                             <CommandEmpty>Membro não encontrado.</CommandEmpty>
@@ -840,20 +837,24 @@ export const TabScheduleSave = ({
                                       className={cn(
                                         "mr-2 h-4 w-4",
                                         member?.id_user === field.value
-                                          ? "opacity-100"
+                                          ? "text-primary opacity-100"
                                           : "opacity-0",
                                       )}
                                     />
-
-                                    {member?.name}
-                                    <LuCar
-                                      className={cn(
-                                        "mr-2 h-4 w-4",
-                                        disableItem(member)
-                                          ? "opacity-100"
-                                          : "opacity-0",
-                                      )}
-                                    />
+                                    <div className="flex w-full items-center justify-between">
+                                      {member?.name}
+                                      <LuCar
+                                        className={cn(
+                                          "mr-2 h-4 w-4",
+                                          member?.id_user === field.value
+                                            ? "text-primary"
+                                            : "",
+                                          disableItem(member)
+                                            ? "opacity-100"
+                                            : "opacity-0",
+                                        )}
+                                      />
+                                    </div>
                                   </CommandItem>
                                 ))}
                               </CommandList>
@@ -900,7 +901,7 @@ export const TabScheduleSave = ({
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[200px] p-0">
+                        <PopoverContent className="w-full p-0">
                           <Command>
                             <CommandInput placeholder="procurando membro.." />
                             <CommandEmpty>Membro não encontrado.</CommandEmpty>
@@ -922,20 +923,24 @@ export const TabScheduleSave = ({
                                       className={cn(
                                         "mr-2 h-4 w-4",
                                         member?.id_user === field.value
-                                          ? "opacity-100"
+                                          ? "text-primary opacity-100"
                                           : "opacity-0",
                                       )}
                                     />
-
-                                    {member?.name}
-                                    <LuCar
-                                      className={cn(
-                                        "mr-2 h-4 w-4",
-                                        disableItem(member)
-                                          ? "opacity-100"
-                                          : "opacity-0",
-                                      )}
-                                    />
+                                    <div className="flex w-full items-center justify-between">
+                                      {member?.name}
+                                      <LuCar
+                                        className={cn(
+                                          "mr-2 h-4 w-4",
+                                          member?.id_user === field.value
+                                            ? "text-primary"
+                                            : "",
+                                          disableItem(member)
+                                            ? "opacity-100"
+                                            : "opacity-0",
+                                        )}
+                                      />
+                                    </div>
                                   </CommandItem>
                                 ))}
                               </CommandList>

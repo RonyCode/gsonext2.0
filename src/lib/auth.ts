@@ -105,7 +105,7 @@ export const authOptions: NextAuthOptions = {
 
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 24, // 1 day
+    maxAge: 60 * 50, // 50 min
   },
 
   pages: {
@@ -133,7 +133,7 @@ export const authOptions: NextAuthOptions = {
               name: "user_external_to_confirm",
               value: JSON.stringify(token),
               httpOnly: true,
-              maxAge: 60 * 20,
+              maxAge: 60 * 50,
               path: "/",
             });
             return {
@@ -151,7 +151,7 @@ export const authOptions: NextAuthOptions = {
             name: "token",
             value: userGoogle?.token,
             httpOnly: true,
-            maxAge: 60 * 20,
+            maxAge: 60 * 50,
             path: "/",
           });
 
@@ -191,7 +191,7 @@ export const authOptions: NextAuthOptions = {
             name: "token",
             value: user?.token,
             httpOnly: true,
-            maxAge: 60 * 20,
+            maxAge: 60 * 50,
             path: "/",
           });
 
