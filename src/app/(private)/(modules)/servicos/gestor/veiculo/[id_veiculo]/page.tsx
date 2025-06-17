@@ -6,46 +6,53 @@ import VehicleCorporationForm from "@/app/(private)/(modules)/components/Vehicle
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { CardWithLogo } from "@/components/Cards/CardWithLogo";
 import LoadingPage from "@/components/Loadings/LoadingPage";
-import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
 import { Button } from "@/ui/button";
-import { getAllVehiclesCorporation } from "@/lib/getAllVehiclesCorporation";
+import { GetAllVehiclesCorporationsAction } from "@/actions/vehicle/GetAllVehiclesCorporationsAction";
+import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 const SalvarUnidade = async ({
-  searchParams,
+  params,
 }: {
-  searchParams: Promise<{ id_corporation: string; id_vehicle: string }>;
+  params: Promise<{ id_veiculo: string }>;
 }): Promise<ReactNode> => {
-  const resolvedSearchParams = await searchParams;
-  const { id_vehicle } = resolvedSearchParams;
+  const resolvedSearchParams = await params;
+  const { id_veiculo } = resolvedSearchParams;
+  const idVeiculo = id_veiculo?.split("-")[1];
+  const session = await getServerSession(authOptions);
+  const { data: corporations } = await GetAllCorporationsAction();
 
-  const { data } = await GetAllCorporationsAction();
-
-  const corpFound = data?.find((corp) =>
-    corp.vehicles?.find((vehicle) => vehicle?.id === id_vehicle),
+  const { data: vehicles } = await GetAllVehiclesCorporationsAction(
+    session?.id_corporation ?? "",
   );
 
-  const { data: vehicles } = await getAllVehiclesCorporation(
-    corpFound?.id ?? "",
-  );
-
-  const myVehicle = vehicles?.find((vehicle) => vehicle?.id === id_vehicle);
+  const myVehicle = vehicles?.find((vehicle) => vehicle?.id === idVeiculo);
 
   return (
     <>
       <CardDefault
         title="Veículos"
         description="Gerenciar Veículos"
-        image={"/public/images/frota-cars.jpg"}
-        imageMobile={"/public/images/frota-cars.jpg"}
+        image={
+          process.env.NEXT_PUBLIC_API_GSO != null
+            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/frota-cars.jpg"
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
+        }
+        imageMobile={
+          process.env.NEXT_PUBLIC_API_GSO != null
+            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/frota-cars.jpg"
+            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
+        }
         icon={<LuCar size={28} />}
       >
         <div>
-          {data !== null && data !== undefined ? (
+          {corporations !== null && corporations !== undefined ? (
             <Suspense fallback={<LoadingPage pending={true} />}>
               <VehicleCorporationForm
-                corporations={data}
+                corporations={corporations}
                 myVehicle={myVehicle ?? null}
-                idCorporation={corpFound?.id}
+                idCorporation={session?.id_corporation ?? ""}
               />
             </Suspense>
           ) : (

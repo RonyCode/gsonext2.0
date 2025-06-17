@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useParams } from "next/navigation";
 
 import { Button } from "@/ui/button";
 import {
@@ -21,8 +20,6 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const params: { id_company: string } = useParams();
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -38,7 +35,7 @@ export function DataTableRowActions<TData>({
       <DropdownMenuContent align="end" className="w-[160px]">
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         <Link // @ts-expect-error
-          href={`/servicos/unidades/${params.id_company}/gestor-unidade/escala-unidade-salvar?id_schedule=${row.original?.id}&date_schedule=${moment(row.original?.date_start, "DD/MM/YYYY").format("YYYY/MM/DD")}`}
+          href={`/servicos/gestor/escala/detalhes-${row.original?.id}?id_company=${row.original?.id_company}&date_schedule=${moment(row.original?.date_start, "DD/MM/YYYY").format("YYYY/MM/DD")}`}
         >
           <DropdownMenuItem>Editar</DropdownMenuItem>
         </Link>

@@ -193,11 +193,9 @@ const CalendarGsoV1 = ({ schedules, company }: CalendarGsoV1Props) => {
                   <Link
                     className="mb-2 self-end"
                     href={
-                      "/servicos/unidades/" +
-                      company?.name?.toLowerCase() +
-                      "-" +
+                      "/servicos/gestor/escala/detalhes-escala?id_company=" +
                       company?.id +
-                      "/gestor/salvar-escala?date_schedule=" +
+                      "&date_schedule=" +
                       selectedDay.year +
                       "-" +
                       selectedDay.month +
@@ -233,8 +231,17 @@ const CalendarGsoV1 = ({ schedules, company }: CalendarGsoV1Props) => {
                     Nova escala
                   </h2>
                   <Link
+                    href={
+                      "/servicos/gestor/escala/detalhes-escala?id_company=" +
+                      company?.id +
+                      "&date_schedule=" +
+                      selectedDay.year +
+                      "-" +
+                      selectedDay.month +
+                      "-" +
+                      selectedDay.day
+                    }
                     className="flex h-full w-full flex-col justify-evenly text-center"
-                    href={`/servicos/unidades/${company?.name}-${company?.id}/gestor-unidade/escala-unidade-salvar?date_schedule=${selectedDay.year}-${selectedDay.month + 1}-${selectedDay.day}`}
                   >
                     <p>
                       Não existe escala para esta data. Deseja criar escala?

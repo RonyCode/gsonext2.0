@@ -8,6 +8,7 @@ import { authOptions } from "@/lib/auth";
 import { searchVehicleWithoutCompany } from "@/lib/searchVehicleWithoutCompany";
 import { Building } from "lucide-react";
 import { GetCompanyByIdAction } from "@/actions/company/GetCompanyByIdAction";
+import { GetAllVehiclesWithoutCompanyAction } from "@/actions/vehicle/GetAllVehiclesWithoutCompanyAction";
 const MembrosUnidade = async ({
   params,
 }: {
@@ -19,9 +20,11 @@ const MembrosUnidade = async ({
   const idCompany = id_company?.split("-")[1];
   const idCorporation = session?.id_corporation ?? "";
 
-  const { data: vehicles } = await searchVehicleWithoutCompany(
-    session?.id_corporation,
+  const { data: vehicles } = await GetAllVehiclesWithoutCompanyAction(
+    session?.id_corporation ?? "",
   );
+
+  console.log(vehicles);
 
   const { data: companyFound } = await GetCompanyByIdAction(
     idCorporation,
@@ -43,9 +46,7 @@ const MembrosUnidade = async ({
           icon={<Building size={28} />}
           iconDescription={<LuCar />}
         >
-          {companyFound?.id_corporation != null &&
-          vehicles != null &&
-          id_company != null ? (
+          {vehicles != null ? (
             <div className="overflow-scroll">
               <VehicleCompanyForm
                 vehicles={vehicles}

@@ -46,6 +46,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
 import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputMask } from "@react-input/mask";
+import { getValidImageUrl } from "@/functions/checkImageUrl";
 
 type VehicleCorporationFormProps = React.HTMLAttributes<HTMLDivElement> & {
   corporations?: IOrganizacaoSchema[] | null;
@@ -62,6 +63,7 @@ export const VehicleCorporationForm = ({
   const [detailVehicle, setDetailVehicle] = useState<IVehicleSchema[]>([]);
   const [modeloVehicle, setModeloVehicle] = useState<IVehicleSchema[]>([]);
   const [modeloAno, setModeloAno] = useState<IVehicleSchema[]>([]);
+  const [directory, setDirectory] = useState<string | null>(null);
 
   const form = useForm<IVehicleSchema>({
     mode: "all",
@@ -216,6 +218,15 @@ export const VehicleCorporationForm = ({
     });
   };
 
+  const userImage = form.getValues("image");
+
+  useEffect(() => {
+    const imageUrlPromisse = getValidImageUrl(userImage);
+    imageUrlPromisse.then((item) => {
+      setDirectory(item);
+    });
+  }, [userImage]);
+
   return (
     <>
       <Card x-chunk="dashboard-06-chunk-0" className="p-4 md:p-6">
@@ -239,32 +250,12 @@ export const VehicleCorporationForm = ({
                 <div className="col-span-12 flex w-full md:col-start-1 md:col-end-5 md:mt-4">
                   <div className="flex h-full w-full flex-col items-center justify-center rounded-[8px]">
                     <div className="relative aspect-square h-48 w-full items-center justify-center rounded-[8px] border border-foreground/10 md:flex md:h-56">
-                      <div className="absolute -left-3 -top-3 z-10">
+                      <div className="w-full">
                         <EditPhoto
-                          directoryFile={
-                            process?.env?.NEXT_PUBLIC_API_GSO != null &&
-                            form.getValues("image") != null
-                              ? process?.env?.NEXT_PUBLIC_API_GSO +
-                                form.getValues("image")
-                              : process.env.NEXT_PUBLIC_API_GSO +
-                                "/public/images/img.svg"
-                          }
+                          directoryFile={directory ?? ""}
                           updateFormExternal={form as unknown as UseFormReturn}
                         />
                       </div>
-                      <Image
-                        src={
-                          process?.env?.NEXT_PUBLIC_API_GSO != null &&
-                          form.getValues("image") != null
-                            ? process?.env?.NEXT_PUBLIC_API_GSO +
-                              form.getValues("image")
-                            : process.env.NEXT_PUBLIC_API_GSO +
-                              "/public/images/img.svg"
-                        }
-                        fill
-                        alt="imagem veiculo"
-                        className="rounded-[5px] object-cover"
-                      />
                     </div>
                   </div>
                 </div>

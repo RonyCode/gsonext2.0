@@ -1,25 +1,25 @@
-import Link from 'next/link'
-import { type ReactElement } from 'react'
+import Link from "next/link";
+import { type ReactElement } from "react";
 
-import { Button } from '../../ui/button'
+import { Button } from "@/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '../../ui/dropdown-menu'
-import { VehicleSchema } from '@/schemas/CarsSchema'
-import { DotsHorizontalIcon } from '@radix-ui/react-icons'
-import { type Row } from '@tanstack/react-table'
+} from "@/ui/dropdown-menu";
+import { VehicleSchema } from "@/schemas/CarsSchema";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { type Row } from "@tanstack/react-table";
 
 interface DataTableRowActionsProps<TData> {
-  row: Row<TData>
+  row: Row<TData>;
 }
 
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>): ReactElement {
-  const task = VehicleSchema.parse(row.original)
+  const task = VehicleSchema.parse(row.original);
 
   return (
     <DropdownMenu>
@@ -33,10 +33,10 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <Link href={`/servicos/gestor/salvar-veiculo?id_vehicle=${task.id}`}>
+        <Link href={`/servicos/gestor/veiculo/detalhes-${task.id}`}>
           <DropdownMenuItem>Detalhes</DropdownMenuItem>
         </Link>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

@@ -1,88 +1,66 @@
 import { type Metadata } from "next";
 import { getServerSession } from "next-auth";
-import React, { type ReactNode } from "react";
-import { LuSaveAll, LuSearchX } from "react-icons/lu";
+import React from "react";
+import { LuCalendarDays, LuSearchX } from "react-icons/lu";
 
+import SelectCompanySchedule from "@/app/(private)/(modules)/components/SelectCompanySchedule";
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
-import TabScheduleSave from "@/app/(private)/(modules)/components/TabScheduleSave";
-import { cookies } from "next/headers";
-import { GetCompanyByIdAction } from "@/actions/company/GetCompanyByIdAction";
-import { GetAllVehiclesCompanyAction } from "@/actions/vehicle/GetAllVehiclesCompanyAction";
-import { GetAllMembersCompanyAction } from "@/actions/member/GetAllMembersCompanyAction";
-import { SearchScheduleAction } from "@/actions/schedule/SearchScheduleAction";
+import { GetAllCompaniesAction } from "@/actions/company/GetAllCompaniesAction";
+
+import { CardWithLogo } from "@/components/Cards/CardWithLogo";
+import Link from "next/link";
+import { Button } from "@/ui/button";
 
 export const metadata: Metadata = {
-  title: "GSO | salvar escala",
+  title: "GSO | Escalas",
   description: "Página de escalas do site GSO.",
 };
 
-const SalvarEscala = async ({
-  searchParams,
-}: {
-  params: Promise<{ id_company: string }>;
-  searchParams: Promise<{
-    date_schedule: string;
-    id_escala: string;
-  }>;
-}): Promise<ReactNode> => {
-  const resolvedSearchParams = await searchParams;
-  const { date_schedule } = resolvedSearchParams;
-  const { id_escala } = resolvedSearchParams;
-
-  const idSchedule = id_escala ?? "";
-  const dateScheduleParams = date_schedule;
-
-  const { data: schedules } = await SearchScheduleAction(idSchedule);
-  const scheduleFound = schedules?.find(
-    (schedule) => schedule.id === idSchedule,
-  );
-  const { data: membersFound } = await GetAllMembersCompanyAction(
-    scheduleFound?.id_company ?? "",
-  );
-
-  const { data: companyFound } = await GetCompanyByIdAction(
-    scheduleFound?.id_corporation ?? "",
-    scheduleFound?.id_company ?? "",
-  );
-  const { data: vehiclesFound } = await GetAllVehiclesCompanyAction(
-    scheduleFound?.id_corporation ?? "",
-    scheduleFound?.id_company ?? "",
-  );
-
-  const subscriptionsUser = (await cookies()).get("subscription")?.value;
+const Escala = async () => {
+  const session = await getServerSession(authOptions);
+  if (session === null) return <> </>;
+  const idCorporation = session?.id_corporation ?? "";
+  const { data: companies } = await GetAllCompaniesAction(idCorporation);
 
   return (
-    <>
+    <div>
       <CardDefault
-        title={"Salvar Escala em: " + companyFound?.name}
-        image={"/public/images/escala.png"}
-        imageMobile={"/public/images/escala.png"}
-        icon={<LuSaveAll size={28} />}
+        title="Escalas"
+        description="Serviço de escala"
+        image={"/public/images/calendar.jpg"}
+        imageMobile={"/public/images/calendar.jpg"}
+        icon={<LuCalendarDays size={28} />}
       >
-        <div className="overflow-scroll lg:overflow-hidden">
-          {companyFound !== null && companyFound !== undefined ? (
-            <TabScheduleSave
-              subscriptionsUser={JSON.stringify(subscriptionsUser)}
-              idCompany={scheduleFound?.id_company ?? ""}
-              idCorporation={scheduleFound?.id_corporation ?? ""}
-              dateSchedule={dateScheduleParams}
-              scheduleCompany={scheduleFound}
-              membersCompany={membersFound}
-              vehiclesCompany={vehiclesFound}
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center">
-              {" "}
+        {companies !== undefined ? (
+          <div className="md:p-4">
+            <SelectCompanySchedule unidades={companies} />
+          </div>
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            {session?.id_corporation === undefined ||
+            session?.id_corporation == null ? (
+              <CardWithLogo
+                title="Usuário sem Corporação"
+                description="É necessário solicitar inclusão em uma corporação para acessar nossos módulos"
+              >
+                <Link
+                  href="/contact"
+                  className="flex w-full items-center justify-center"
+                >
+                  <Button>Solicitar inclusão</Button>
+                </Link>
+              </CardWithLogo>
+            ) : (
               <span className="flex items-center justify-center gap-1">
                 <LuSearchX size={28} className="text-primary/60" /> SEM UNIDADE
-                PARA ADICIONAR ESCALA 🤯
+                CADASTRADA 🤯
               </span>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </CardDefault>
-    </>
+    </div>
   );
 };
-export default SalvarEscala;
+export default Escala;

@@ -471,7 +471,6 @@ export const TabScheduleSave = ({
                                 new Date().setHours(0, 0, 0, 0) ||
                               date < new Date("1900-01-01")
                             }
-                            initialFocus
                           />
                         </PopoverContent>
                       </Popover>
@@ -972,7 +971,7 @@ export const TabScheduleSave = ({
                   control={form.control}
                   name="vehicle"
                   render={({ field }) => (
-                    <FormItem className="flex w-full flex-col md:w-11/12">
+                    <FormItem className="flex w-full flex-col">
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -988,7 +987,7 @@ export const TabScheduleSave = ({
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[200px] p-0">
+                        <PopoverContent className="w-full p-0">
                           <Command>
                             <CommandInput placeholder="procurando veículo ..." />
                             <CommandEmpty>Veículo não encontrado.</CommandEmpty>
@@ -1005,6 +1004,7 @@ export const TabScheduleSave = ({
                                             vehiclelist?.id === veihcle.id,
                                         ) ?? veihcle,
                                       );
+                                      handleAddListVehicle();
                                     }}
                                   >
                                     <LuCheck
@@ -1031,18 +1031,6 @@ export const TabScheduleSave = ({
                     </FormItem>
                   )}
                 />
-                <Button
-                  asChild
-                  className="w-full p-1 md:w-1/12"
-                  type="button"
-                  onClick={handleAddListVehicle}
-                  variant="secondary"
-                >
-                  <AddCar
-                    width={70}
-                    className="fill-foreground hover:fill-foreground/60"
-                  />
-                </Button>
               </div>
 
               <div className="flex w-full flex-row flex-wrap justify-evenly">
@@ -1064,11 +1052,10 @@ export const TabScheduleSave = ({
                         <PopoverTrigger>
                           <CardModule
                             title={vehicle.prefix}
-                            className={
-                              isMobile
-                                ? "flex h-28 w-32 flex-col"
-                                : "flex h-32 w-44 flex-col"
-                            }
+                            className={cn(
+                              "justify-ce flex w-full flex-row items-center gap-1",
+                              isMobile ? "flex h-28 w-32" : "flex h-32 w-44",
+                            )}
                             icon={
                               vehicle.image ? (
                                 <Image

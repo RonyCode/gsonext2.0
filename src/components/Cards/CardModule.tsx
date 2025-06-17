@@ -39,7 +39,7 @@ export function CardModule({
           </CardHeader>
         </Link>
       ) : (
-        <CardHeader className="h-full w-full cursor-pointer rounded-[5px] border p-2 hover:border-primary/60 hover:bg-foreground/10">
+        <CardHeader className="2 h-full w-full cursor-pointer rounded-[5px] border px-4 hover:border-primary/60 hover:bg-foreground/10">
           <div className="flex h-full w-full flex-col items-center justify-center p-0 xl:flex-row xl:justify-between">
             {/* <span className=" md h-2 w-2 translate-y-1 rounded-full bg-sky-500"></span> */}
             <div>

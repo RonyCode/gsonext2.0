@@ -164,6 +164,7 @@ export const columnsDetalheEscala: Array<ColumnDef<IScheduleSchema>> = [
         return null;
       }
       const date = `${row?.original?.year}-${row?.original?.month}-${row?.original?.day}`;
+
       return (
         <div className="flex w-full text-[.8rem]">
           <span className="flex items-center truncate font-medium">

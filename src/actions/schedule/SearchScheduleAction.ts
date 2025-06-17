@@ -6,10 +6,11 @@ import { GetTokenCookie } from "@/functions/TokenManager";
 import { IScheduleSchema } from "@/schemas/ScheduleSchema";
 
 export async function SearchScheduleAction(
-  $idUser?: string,
+  $idSchedule?: string,
+  type?: string,
 ): Promise<ResponseApi<IScheduleSchema[]>> {
   const token = await GetTokenCookie("token");
-  const url = `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/company/schedule/search?id_schedule=${$idUser}`;
+  const url = `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/company/schedule/search?${type}=${$idSchedule}`;
 
   return await fetchWrapper<ResponseApi<IScheduleSchema[]>>(url, {
     method: "GET",
