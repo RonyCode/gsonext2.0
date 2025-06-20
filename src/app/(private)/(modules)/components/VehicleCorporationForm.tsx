@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { redirect } from "next/navigation";
 import React, { useEffect, useState, useTransition } from "react";
 import { useForm, type UseFormReturn } from "react-hook-form";
@@ -47,15 +46,19 @@ import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputMask } from "@react-input/mask";
 import { getValidImageUrl } from "@/functions/checkImageUrl";
+import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
+import { Input } from "@/ui/input";
 
 type VehicleCorporationFormProps = React.HTMLAttributes<HTMLDivElement> & {
   corporations?: IOrganizacaoSchema[] | null;
+  companies?: IUnidadeSchema[] | null;
   myVehicle?: IVehicleSchema | null;
   idCorporation?: string | undefined | null;
 };
 
 export const VehicleCorporationForm = ({
   corporations,
+  companies,
   myVehicle,
   idCorporation,
 }: VehicleCorporationFormProps) => {
@@ -73,9 +76,10 @@ export const VehicleCorporationForm = ({
     defaultValues: {
       id: myVehicle?.id ?? null,
       id_corporation: idCorporation ?? undefined,
-      id_brand: myVehicle?.id_brand ?? undefined,
-      id_model: myVehicle?.id_model ?? undefined,
-      id_year: myVehicle?.id_year ?? undefined,
+      id_company: myVehicle?.id_company ?? "",
+      id_brand: myVehicle?.id_brand ?? "",
+      id_model: myVehicle?.id_model ?? "",
+      id_year: myVehicle?.id_year ?? "",
       model: myVehicle?.model ?? undefined,
       members: myVehicle?.members ?? [
         { position: 1, member: null },
@@ -119,6 +123,9 @@ export const VehicleCorporationForm = ({
 
   const handleSubmit = (formData: IVehicleSchema): void => {
     startTransition(async () => {
+      if (!form.formState.isValid) {
+        return;
+      }
       const result = await saveVehicleIntoCorporationAction(formData);
 
       if (result?.code !== 200) {
@@ -134,60 +141,72 @@ export const VehicleCorporationForm = ({
           title: `Ok! Veiculo salvo na corporação com sucesso! 🚀`,
           description: "Tudo certo veículo salvo",
         });
-        redirect(`/servicos/veiculos`);
+        redirect(`/servicos/corporacao/veiculos`);
       }
     });
   };
   useEffect(() => {
-    handleSelectTypeVehicle();
-    handleSelectBrandVehicle();
-    handleSelectModel();
-    handleSelectYearVehicle();
-  }, [
-    form?.getValues("type"),
-    form?.getValues("id_brand"),
-    form?.getValues("id_model"),
-    form?.getValues("id_year"),
-  ]);
+    handleSelectTypeVehicle(myVehicle?.type ?? "");
+    handleSelectBrandVehicle(myVehicle?.id_brand ?? "");
+    handleSelectModel(myVehicle?.id_model ?? "");
+    handleSelectYearVehicle(myVehicle?.id_year?.toString() ?? "");
+  }, []);
 
-  const handleSelectTypeVehicle = (): void => {
+  const handleSelectTypeVehicle = (type: string | undefined): void => {
     startTransition(async () => {
-      if (form?.getValues("type") !== undefined) {
+      if (type) {
+        form.setValue("type", type);
+        form.setValue("id_brand", "");
+        form.setValue("id_model", "");
+        form.setValue("id_year", "");
+        form.setValue("model", "");
+        form.setValue("year", "");
+
         const result1 = await getAllVehicles(
-          `https://parallelum.com.br/fipe/api/v1/${form?.getValues("type")}/marcas`,
+          `https://parallelum.com.br/fipe/api/v1/${type}/marcas`,
         );
         if (result1 !== undefined && result1 !== null) {
           setDetailVehicle(result1 as unknown as IVehicleSchema[]);
+          setModeloVehicle([]);
+          setModeloAno([]);
         }
       }
     });
   };
 
-  const handleSelectBrandVehicle = (): void => {
+  const handleSelectBrandVehicle = (id_brand: string | undefined): void => {
     startTransition(async () => {
-      if (
-        form?.getValues("type") !== undefined &&
-        form?.getValues("id_brand") !== undefined
-      ) {
+      if (id_brand !== undefined) {
+        form.setValue("id_brand", id_brand);
+        form.setValue("id_model", "");
+        form.setValue("id_year", "");
+        form.setValue("model", "");
+        form.setValue("year", "");
+
         const result2 = await getAllVehicles(
-          `https://parallelum.com.br/fipe/api/v1/${form?.getValues("type")}/marcas/${form?.getValues("id_brand")}/modelos`,
+          `https://parallelum.com.br/fipe/api/v1/${form?.watch("type")}/marcas/${id_brand}/modelos`,
         );
         if (result2?.modelos !== undefined) {
           setModeloVehicle(result2?.modelos as unknown as IVehicleSchema[]);
+          setModeloAno([]);
         }
       }
     });
   };
 
-  const handleSelectModel = (): void => {
+  const handleSelectModel = (id_model: string | undefined): void => {
     startTransition(async () => {
       if (
-        form?.getValues("type") !== undefined &&
-        form?.getValues("id_brand") !== undefined &&
-        form?.getValues("id_model") !== undefined
+        form?.watch("type") !== "" &&
+        form?.watch("id_brand") !== "" &&
+        id_model !== undefined
       ) {
+        form.setValue("id_model", id_model);
+        form.setValue("id_year", "");
+        form.setValue("model", "");
+        form.setValue("year", "");
         const result3 = await getAllVehicles(
-          `https://parallelum.com.br/fipe/api/v1/${form?.getValues("type")}/marcas/${form?.getValues("id_brand")}/modelos/${form?.getValues("id_model")}/anos`,
+          `https://parallelum.com.br/fipe/api/v1/${form?.watch("type")}/marcas/${form?.watch("id_brand")}/modelos/${id_model}/anos`,
         );
         if (result3 !== undefined && result3 !== null) {
           setModeloAno(result3 as unknown as IVehicleSchema[]);
@@ -196,16 +215,17 @@ export const VehicleCorporationForm = ({
     });
   };
 
-  const handleSelectYearVehicle = (): void => {
+  const handleSelectYearVehicle = (id_year: string | undefined): void => {
     startTransition(async () => {
       if (
-        form?.getValues("type") !== undefined &&
-        form?.getValues("id_brand") !== undefined &&
-        form?.getValues("id_model") !== undefined &&
-        form?.getValues("id_year") !== undefined
+        form?.watch("type") !== "" &&
+        form?.watch("id_brand") !== "" &&
+        form?.watch("id_model") !== "" &&
+        id_year !== undefined
       ) {
+        form.setValue("id_year", id_year);
         const result4 = await getAllVehicles(
-          `https://parallelum.com.br/fipe/api/v1/${form?.getValues("type")}/marcas/${form?.getValues("id_brand")}/modelos/${form?.getValues("id_model")}/anos/${form?.getValues("id_year")}`,
+          `https://parallelum.com.br/fipe/api/v1/${form?.watch("type")}/marcas/${form?.watch("id_brand")}/modelos/${form?.watch("id_model")}/anos/${form?.watch("id_year")}`,
         );
 
         if (result4 !== undefined && result4 !== null) {
@@ -259,6 +279,7 @@ export const VehicleCorporationForm = ({
                     </div>
                   </div>
                 </div>
+
                 <div className="col-start-1 col-end-13 mb-8 flex h-full w-full md:my-4 md:ml-3 lg:col-start-5">
                   <div className="flex w-full grid-cols-1 flex-col md:grid md:grid-cols-2 md:gap-4">
                     <div className="flex w-full flex-col justify-evenly">
@@ -284,7 +305,8 @@ export const VehicleCorporationForm = ({
                                         "w-full justify-between text-muted-foreground",
                                       )}
                                     >
-                                      {field.value !== undefined
+                                      {field.value !== undefined &&
+                                      typeVehicle?.length > 0
                                         ? typeVehicle?.find(
                                             (vehicleItem) =>
                                               vehicleItem?.type === field.value,
@@ -310,9 +332,7 @@ export const VehicleCorporationForm = ({
                                               }
                                               key={index}
                                               onSelect={() => {
-                                                handleSelectTypeVehicle();
-                                                form.setValue(
-                                                  "type",
+                                                handleSelectTypeVehicle(
                                                   vehicleItem?.type,
                                                 );
                                               }}
@@ -362,8 +382,8 @@ export const VehicleCorporationForm = ({
                                         "w-full justify-between text-muted-foreground",
                                       )}
                                     >
-                                      {field.value !== undefined &&
-                                      modeloVehicle !== undefined
+                                      {field.value !== "" &&
+                                      modeloVehicle?.length > 0
                                         ? modeloVehicle?.find((corp) => {
                                             return (
                                               corp?.codigo?.toString() ===
@@ -388,9 +408,7 @@ export const VehicleCorporationForm = ({
                                             value={car?.codigo ?? undefined}
                                             key={index}
                                             onSelect={() => {
-                                              handleSelectModel();
-                                              form.setValue(
-                                                "id_model",
+                                              handleSelectModel(
                                                 car?.codigo?.toString() ?? "",
                                               );
                                             }}
@@ -433,6 +451,7 @@ export const VehicleCorporationForm = ({
                                 <PopoverTrigger asChild>
                                   <FormControl>
                                     <Button
+                                      disabled
                                       variant="outline"
                                       role="combobox"
                                       className={cn(
@@ -440,7 +459,8 @@ export const VehicleCorporationForm = ({
                                       )}
                                     >
                                       {field.value !== undefined &&
-                                      corporations !== undefined
+                                      corporations !== undefined &&
+                                      corporations?.length
                                         ? corporations?.find((corp) => {
                                             return corp?.id === field.value;
                                           })?.short_name_corp
@@ -459,6 +479,7 @@ export const VehicleCorporationForm = ({
                                       <CommandList>
                                         {corporations?.map((corp, index) => (
                                           <CommandItem
+                                            disabled
                                             value={corp?.id ?? undefined}
                                             key={index}
                                             onSelect={() => {
@@ -573,7 +594,6 @@ export const VehicleCorporationForm = ({
                                             value={car?.id_condition}
                                             key={index}
                                             onSelect={() => {
-                                              handleSelectYearVehicle();
                                               form.setValue(
                                                 "condition",
                                                 +car?.id_condition,
@@ -602,7 +622,35 @@ export const VehicleCorporationForm = ({
                           )}
                         />
                       </div>
+                      <div className="py-2">
+                        <FormField
+                          control={form.control}
+                          name="fuel_type"
+                          render={({ field }) => (
+                            <FormItem className="w-full">
+                              <FormLabel
+                                htmlFor="fuel_type"
+                                className="flex items-center gap-1"
+                              >
+                                <LuHash /> Combustível
+                              </FormLabel>
+                              <FormControl>
+                                <Input
+                                  {...field}
+                                  value={field.value ?? ""}
+                                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                  id="fuel_type"
+                                  placeholder="Diesel/Gasolina/Alcool"
+                                  disabled
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
+
                     <div className="flex w-full flex-col justify-evenly">
                       <div className="py-2">
                         <FormField
@@ -626,8 +674,8 @@ export const VehicleCorporationForm = ({
                                         "w-full justify-between text-muted-foreground",
                                       )}
                                     >
-                                      {field.value !== undefined &&
-                                      detailVehicle !== undefined
+                                      {field.value !== "" &&
+                                      detailVehicle?.length > 0
                                         ? detailVehicle?.find((corp) => {
                                             return corp?.codigo === field.value;
                                           })?.nome
@@ -646,12 +694,10 @@ export const VehicleCorporationForm = ({
                                       <CommandList>
                                         {detailVehicle?.map((car, index) => (
                                           <CommandItem
-                                            value={car?.id_brand ?? undefined}
+                                            value={car?.nome ?? undefined}
                                             key={index}
                                             onSelect={() => {
-                                              handleSelectBrandVehicle();
-                                              form.setValue(
-                                                "id_brand",
+                                              handleSelectBrandVehicle(
                                                 car?.codigo ?? "",
                                               );
                                             }}
@@ -699,10 +745,10 @@ export const VehicleCorporationForm = ({
                                         "w-full justify-between text-muted-foreground",
                                       )}
                                     >
-                                      {field.value !== undefined &&
-                                      modeloAno !== undefined
-                                        ? modeloAno?.find((corp) => {
-                                            return corp?.codigo === field.value;
+                                      {field.value !== "" &&
+                                      modeloAno?.length > 0
+                                        ? modeloAno?.find((ano) => {
+                                            return ano?.codigo === field.value;
                                           })?.nome
                                         : "Selecione o ano do veículo"}
                                       <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -717,27 +763,99 @@ export const VehicleCorporationForm = ({
                                     </CommandEmpty>
                                     <CommandGroup>
                                       <CommandList>
-                                        {modeloAno?.map((car, index) => (
+                                        {modeloAno?.length > 0 &&
+                                          modeloAno?.map((ano, index) => (
+                                            <CommandItem
+                                              value={ano?.codigo ?? ""}
+                                              key={index}
+                                              onSelect={() => {
+                                                handleSelectYearVehicle(
+                                                  ano?.codigo ?? "",
+                                                );
+                                              }}
+                                            >
+                                              <LuCheck
+                                                className={cn(
+                                                  "mr-2 h-4 w-4",
+                                                  ano?.codigo === field.value
+                                                    ? "opacity-100"
+                                                    : "opacity-0",
+                                                )}
+                                              />
+
+                                              {ano?.nome}
+                                            </CommandItem>
+                                          ))}
+                                      </CommandList>
+                                    </CommandGroup>
+                                  </Command>
+                                </PopoverContent>
+                              </Popover>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="py-2">
+                        <FormField
+                          control={form.control}
+                          name="id_company"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel
+                                htmlFor="id_company"
+                                className="flex w-full items-center gap-1"
+                              >
+                                <LuBuilding2 /> Unidade
+                              </FormLabel>{" "}
+                              <Popover>
+                                <PopoverTrigger asChild>
+                                  <FormControl>
+                                    <Button
+                                      variant="outline"
+                                      role="combobox"
+                                      className={cn(
+                                        "w-full justify-between text-muted-foreground",
+                                      )}
+                                    >
+                                      {field.value !== undefined &&
+                                      companies !== undefined
+                                        ? companies?.find((comp) => {
+                                            return comp?.id === field.value;
+                                          })?.name
+                                        : "Selecione a unidade"}
+                                      <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                    </Button>
+                                  </FormControl>
+                                </PopoverTrigger>
+                                <PopoverContent className="min-w-[200px] p-0">
+                                  <Command>
+                                    <CommandInput placeholder="Procurando unidade..." />
+                                    <CommandEmpty>
+                                      Unidade não encontrada.
+                                    </CommandEmpty>
+                                    <CommandGroup>
+                                      <CommandList>
+                                        {companies?.map((company, index) => (
                                           <CommandItem
-                                            value={car?.codigo ?? undefined}
+                                            value={company?.id ?? undefined}
                                             key={index}
                                             onSelect={() => {
-                                              handleSelectYearVehicle();
                                               form.setValue(
-                                                "id_year",
-                                                car?.codigo ?? "",
+                                                "id_company",
+                                                company?.id ?? "",
                                               );
                                             }}
                                           >
                                             <LuCheck
                                               className={cn(
                                                 "mr-2 h-4 w-4",
-                                                car?.codigo === field.value
+                                                company?.id === field.value
                                                   ? "opacity-100"
                                                   : "opacity-0",
                                               )}
                                             />
-                                            {car?.nome}
+                                            {company?.name}
                                           </CommandItem>
                                         ))}
                                       </CommandList>
@@ -870,7 +988,6 @@ export const VehicleCorporationForm = ({
                                             value={car?.id_status ?? undefined}
                                             key={index}
                                             onSelect={() => {
-                                              handleSelectYearVehicle();
                                               form.setValue(
                                                 "status",
                                                 Number(car?.id_status) ?? 0,
@@ -902,9 +1019,10 @@ export const VehicleCorporationForm = ({
                   </div>
                 </div>
               </div>
-              {pending}
+
               <div className="flex w-full flex-col justify-end md:flex-row">
                 <Button
+                  disabled={!form.formState.isValid}
                   className={cn(
                     buttonVariants({ variant: "default" }),
                     "w-full animate-fadeIn md:w-1/3",

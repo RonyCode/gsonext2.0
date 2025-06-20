@@ -209,7 +209,7 @@ const CalendarGsoV1 = ({ schedules, company }: CalendarGsoV1Props) => {
                     </Button>
                   </Link>
 
-                  <div className="flex h-full w-full overflow-scroll">
+                  <div className="flex h-full w-full">
                     <DataTableDetalheEscala
                       columns={columnsDetailsSchedule(company)}
                       data={eventsOnDay}

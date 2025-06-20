@@ -17,5 +17,6 @@ export async function GetAllMembersCompanyAction(
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
+    next: { revalidate: 1, tags: ["update-members"] },
   });
 }

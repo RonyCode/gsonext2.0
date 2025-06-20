@@ -20,7 +20,6 @@ import {
 import { AddVehicleSchedule } from "@/components/Buttoms/AddVehicleSchedule";
 import { CardModule } from "@/components/Cards/CardModule";
 import LoadingPage from "@/components/Loadings/LoadingPage";
-import AddCar from "@/icons/AddCar";
 import IconCarFrontal from "@/icons/IconCarFrontal";
 import { cn } from "@/lib/utils";
 import type { IVehicleSchema } from "@/schemas/CarsSchema";
@@ -89,7 +88,6 @@ export const TabScheduleSave = ({
   const [dayWeekPrint, setDayWeekPrint] = React.useState("");
   const params = useParams();
   const { data: session } = useSession();
-  const isMobile = useIsMobile();
   const [dateStart, setDateStart] = React.useState<Date>(
     dateSchedule != null ? new Date(dateSchedule) : new Date(),
   );
@@ -351,7 +349,7 @@ export const TabScheduleSave = ({
         description: "Tudo certo Escala salva",
       });
 
-      redirect(`/servicos/unidades/${(await params)?.id_company}/escalas`);
+      redirect(`/servicos/corporacao/unidades/${params.id_company}/escalas`);
     });
   };
 
@@ -962,10 +960,7 @@ export const TabScheduleSave = ({
             </div>
 
             {/*VEÍCULOS*/}
-            <div
-              style={{ marginTop: "4px" }}
-              className="m-0 w-full rounded-sm border border-foreground/10 p-0"
-            >
+            <div className="m-0 w-full rounded-sm border border-foreground/10 p-0">
               <div className="flex flex-col items-center justify-between gap-2 p-2 md:flex-row">
                 <FormField
                   control={form.control}
@@ -1033,10 +1028,10 @@ export const TabScheduleSave = ({
                 />
               </div>
 
-              <div className="flex w-full flex-row flex-wrap justify-evenly">
+              <div className="flex w-full flex-row flex-wrap justify-evenly pb-4 pt-2">
                 {listVehicles?.map((vehicle, index) => (
                   <div key={index}>
-                    <div className="relative pb-2">
+                    <div className="relative flex items-center justify-center">
                       <LuTrash2
                         onClick={() => {
                           setListVehicles((prevState: IVehicleSchema[]) => {
@@ -1046,21 +1041,16 @@ export const TabScheduleSave = ({
                           });
                         }}
                         size={20}
-                        className="absolute left-2 top-2 cursor-pointer hover:text-primary/60"
+                        className="absolute left-1 top-1 z-10 cursor-pointer text-primary hover:text-foreground"
                       />
                       <Popover>
                         <PopoverTrigger>
                           <CardModule
-                            title={vehicle.prefix}
-                            className={cn(
-                              "justify-ce flex w-full flex-row items-center gap-1",
-                              isMobile ? "flex h-28 w-32" : "flex h-32 w-44",
-                            )}
+                            className={cn("flex h-20 w-32")}
                             icon={
-                              vehicle.image ? (
+                              vehicle.image != null ? (
                                 <Image
-                                  width={isMobile ? 70 : 80}
-                                  height={isMobile ? 70 : 80}
+                                  fill
                                   src={
                                     process.env.NEXT_PUBLIC_API_GSO &&
                                     vehicle.image
@@ -1069,15 +1059,17 @@ export const TabScheduleSave = ({
                                       : process.env.NEXT_PUBLIC_API_GSO +
                                         "/public/images/img.svg"
                                   }
-                                  className="m-2 aspect-square rounded-sm border border-foreground bg-background object-contain transition-all duration-300 ease-in-out hover:scale-[250%] xl:mt-4"
+                                  className="aspect-square rounded-sm border border-foreground bg-background object-contain"
                                   sizes="100"
                                   alt="image icone"
                                 />
                               ) : (
-                                <IconCarFrontal
-                                  className="fill-foreground stroke-foreground"
-                                  width={isMobile ? 30 : 40}
-                                />
+                                <div className="flex items-center justify-center">
+                                  <IconCarFrontal
+                                    width={50}
+                                    className="m-0 flex items-center justify-center p-0"
+                                  />
+                                </div>
                               )
                             }
                           />

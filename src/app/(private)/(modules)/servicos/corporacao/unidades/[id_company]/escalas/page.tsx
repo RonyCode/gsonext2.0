@@ -30,8 +30,6 @@ const EscalasUnidade = async ({
     idCompany ?? "",
   );
 
-  console.log(schedules);
-
   const { data: companyFound } = await GetCompanyByIdAction(
     idCorporation ?? "",
     idCompany ?? "",
@@ -54,10 +52,10 @@ const EscalasUnidade = async ({
         image={companyFound?.image}
         imageMobile={companyFound?.image}
         icon={<LuBuilding size={28} />}
-        iconDescription={<LuCalendar1 size={18} />}
+        iconDescription={<LuCalendar1 size={18} className="m-0 p-0" />}
       >
         {schedules != null ? (
-          <div className="m-0 min-h-screen w-full md:p-6">
+          <div className="m-0 min-h-screen w-full p-2 md:p-6">
             <Suspense fallback={<LoadingPage pending={true} />}>
               <CalendarGsoV1 company={companyFound} schedules={schedules} />
             </Suspense>

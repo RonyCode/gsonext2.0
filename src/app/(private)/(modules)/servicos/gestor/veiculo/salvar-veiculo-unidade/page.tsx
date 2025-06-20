@@ -10,21 +10,19 @@ import { Building } from "lucide-react";
 import { GetCompanyByIdAction } from "@/actions/company/GetCompanyByIdAction";
 import { GetAllVehiclesWithoutCompanyAction } from "@/actions/vehicle/GetAllVehiclesWithoutCompanyAction";
 const MembrosUnidade = async ({
-  params,
+  searchParams,
 }: {
-  params: Promise<{ sigla: string; id_company: string }>;
+  searchParams: Promise<{ id_company: string }>;
 }) => {
-  const resolvedParams = await params;
-  const { id_company } = resolvedParams;
+  const resolvedSearchParams = await searchParams;
+  const { id_company } = resolvedSearchParams;
   const session = await getServerSession(authOptions);
-  const idCompany = id_company?.split("-")[1];
+  const idCompany = id_company;
   const idCorporation = session?.id_corporation ?? "";
 
   const { data: vehicles } = await GetAllVehiclesWithoutCompanyAction(
     session?.id_corporation ?? "",
   );
-
-  console.log(vehicles);
 
   const { data: companyFound } = await GetCompanyByIdAction(
     idCorporation,
@@ -38,7 +36,7 @@ const MembrosUnidade = async ({
           title={
             companyFound?.name && companyFound?.companyAddress?.city
               ? companyFound?.name + " / " + companyFound?.companyAddress?.city
-              : "Veículos Unidade"
+              : "Veículos Disponíveis para " + companyFound?.name
           }
           description={"Salvar Veículos Unidade"}
           image={companyFound?.image}

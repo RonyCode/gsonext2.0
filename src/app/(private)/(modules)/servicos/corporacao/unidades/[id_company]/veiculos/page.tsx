@@ -15,7 +15,7 @@ import { GetCompanyByIdAction } from "@/actions/company/GetCompanyByIdAction";
 const CarsUnidade = async ({
   params,
 }: {
-  params: Promise<{ sigla: string; id_company: string }>;
+  params: Promise<{ id_company: string }>;
 }) => {
   const resolvedParams = await params;
   const { id_company } = resolvedParams;
@@ -69,10 +69,19 @@ const CarsUnidade = async ({
                     </Link>
                   </CardWithLogo>
                 ) : (
-                  <span className="flex items-center justify-center gap-1">
-                    <LuSearchX size={28} className="text-primary/60" /> SEM
-                    UNIDADE CADASTRADA 🤯
-                  </span>
+                  <div className="flex flex-col items-center justify-center gap-1">
+                    <span className="flex items-center justify-center gap-1">
+                      <LuSearchX size={28} className="text-primary/60" />
+                      SEM VEÍCULOS CADASTRADOS NA UNIDADE 🤯. SOLICITAR INCLUSÃO
+                      ?
+                    </span>
+                    <Link
+                      href="/contact"
+                      className="flex w-full items-center justify-center"
+                    >
+                      <Button>Solicitar inclusão</Button>
+                    </Link>
+                  </div>
                 )}
               </div>
             )}

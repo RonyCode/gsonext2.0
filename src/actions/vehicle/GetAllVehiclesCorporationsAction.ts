@@ -17,5 +17,7 @@ export async function GetAllVehiclesCorporationsAction(
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
+    cache: "force-cache",
+    next: { tags: ["update-vehicles"] },
   });
 }

@@ -83,14 +83,14 @@ export const NotificationsShow = ({
             )}
           >
             {notifications && notifications?.length > 0 && (
-              <div className="absolute -right-1 top-0 m-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary p-0 text-[.7rem] font-semibold text-foreground">
-                <span className="ml-[2px]flex items-center justify-center px-[3px]">
+              <div className="absolute -right-1 top-0 z-10 m-0 flex h-4 min-w-4 animate-bounce items-center justify-center rounded-full bg-primary p-0 text-[.750rem] font-bold text-foreground">
+                <span className="ml-1 flex items-center justify-center px-[1px]">
                   {notifications?.length > 9 ? "9+" : notifications?.length}
                 </span>
               </div>
             )}
             <LuBell
-              size={24}
+              size={28}
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition delay-150 duration-300 ease-in-out group-hover:text-foreground/60"
             />
           </div>

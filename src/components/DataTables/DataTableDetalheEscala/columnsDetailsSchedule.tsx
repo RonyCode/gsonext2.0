@@ -19,7 +19,6 @@ import { Card } from "@/ui/card";
 import { DetailsVehicleSchedule } from "@/components/Buttoms/DetailsVehicleSchedule";
 import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
 import Image from "next/image";
-import { useCheckMobile } from "@/functions/IsMobile";
 
 export function columnsDetailsSchedule(
   company: Partial<IUnidadeSchema> | undefined,
@@ -98,31 +97,40 @@ export function columnsDetailsSchedule(
       ),
       cell: ({ row }) => {
         return (
-          <div className="flex gap-1">
+          <div className="m-0 p-0">
             {row?.original?.vehicles?.map((vehicle, index) => (
-              <div key={index} className="m-0 flex p-0">
+              <div
+                key={index}
+                className="m-0 flex h-full w-full items-center justify-center p-0"
+              >
                 <Popover>
-                  <PopoverTrigger className="m-0 p-0">
+                  <PopoverTrigger>
                     <CardModule
-                      // title={vehicle.prefix}
-                      className={"m-0 h-full w-full space-x-0 space-y-0 p-0"}
+                      className="m-0 flex h-12 w-20 items-center justify-center border-none p-0"
                       icon={
-                        vehicle.image ? (
-                          <Image
-                            width={50}
-                            height={50}
-                            src={
-                              process.env.NEXT_PUBLIC_API_GSO + vehicle.image
-                            }
-                            className="aspect-square rounded-sm border border-foreground bg-background object-contain transition-all duration-300 ease-in-out hover:z-100 hover:scale-[250%]"
-                            sizes="100"
-                            alt="image icone"
-                          />
+                        vehicle.image != null ? (
+                          <div className="relative m-0 flex h-12 w-20 border-none p-0">
+                            <Image
+                              fill
+                              src={
+                                process.env.NEXT_PUBLIC_API_GSO && vehicle.image
+                                  ? process.env.NEXT_PUBLIC_API_GSO +
+                                    vehicle.image
+                                  : process.env.NEXT_PUBLIC_API_GSO +
+                                    "/public/images/img.svg"
+                              }
+                              className="m-0 aspect-video rounded-md border border-foreground bg-background object-contain p-0 hover:scale-[120%]"
+                              sizes="100"
+                              alt="image icone"
+                            />
+                          </div>
                         ) : (
-                          <IconCarFrontal
-                            className="fill-foreground stroke-foreground"
-                            width={useCheckMobile() ? 30 : 40}
-                          />
+                          <div className="flex h-full w-full items-center justify-center">
+                            <IconCarFrontal
+                              width={50}
+                              className="m-0 flex items-center justify-center p-0"
+                            />
+                          </div>
                         )
                       }
                     />

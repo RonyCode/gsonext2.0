@@ -16,7 +16,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     },
   );
-  console.log(token);
+
   if (!res.ok) {
     return NextResponse.json(
       { message: res.statusText },

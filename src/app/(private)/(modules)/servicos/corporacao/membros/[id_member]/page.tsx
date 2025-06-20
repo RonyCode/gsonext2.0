@@ -25,8 +25,6 @@ const MembrosUnidade = async ({
   const idMemberParams = id_member.split("-")[1];
   const idCorp = session?.id_corporation ?? "";
 
-  console.log(id_member);
-
   const { data: corporationMembersFound } =
     await GetMemberCorporationByIdAction(idCorp);
   const { data: corporations } = await GetAllCorporationsAction();

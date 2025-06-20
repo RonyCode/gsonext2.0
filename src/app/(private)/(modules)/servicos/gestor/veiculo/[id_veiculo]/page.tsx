@@ -11,6 +11,7 @@ import { GetAllVehiclesCorporationsAction } from "@/actions/vehicle/GetAllVehicl
 import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { GetAllCompaniesAction } from "@/actions/company/GetAllCompaniesAction";
 
 const SalvarUnidade = async ({
   params,
@@ -26,6 +27,9 @@ const SalvarUnidade = async ({
   const { data: vehicles } = await GetAllVehiclesCorporationsAction(
     session?.id_corporation ?? "",
   );
+  const { data: companies } = await GetAllCompaniesAction(
+    session?.id_corporation ?? "",
+  );
 
   const myVehicle = vehicles?.find((vehicle) => vehicle?.id === idVeiculo);
 
@@ -34,16 +38,8 @@ const SalvarUnidade = async ({
       <CardDefault
         title="Veículos"
         description="Gerenciar Veículos"
-        image={
-          process.env.NEXT_PUBLIC_API_GSO != null
-            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/frota-cars.jpg"
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-        }
-        imageMobile={
-          process.env.NEXT_PUBLIC_API_GSO != null
-            ? process.env.NEXT_PUBLIC_API_GSO + "/public/images/frota-cars.jpg"
-            : process.env.NEXT_PUBLIC_API_GSO + "/public/images/img.svg"
-        }
+        image={myVehicle?.image}
+        imageMobile={myVehicle?.image}
         icon={<LuCar size={28} />}
       >
         <div>
@@ -51,6 +47,7 @@ const SalvarUnidade = async ({
             <Suspense fallback={<LoadingPage pending={true} />}>
               <VehicleCorporationForm
                 corporations={corporations}
+                companies={companies}
                 myVehicle={myVehicle ?? null}
                 idCorporation={session?.id_corporation ?? ""}
               />

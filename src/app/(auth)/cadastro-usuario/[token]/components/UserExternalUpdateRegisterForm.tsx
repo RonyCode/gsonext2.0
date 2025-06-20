@@ -218,8 +218,6 @@ export const UserExternalUpdateRegisterForm = ({
     }
   };
 
-  console.log(file);
-
   return (
     <>
       <div className="flex h-full flex-col">

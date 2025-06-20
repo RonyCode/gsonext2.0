@@ -23,8 +23,6 @@ const VehicleCompany = async () => {
     return corp?.id === session?.id_corporation;
   });
 
-  console.log(session?.id_corporation);
-
   return (
     <CardDefault
       title={

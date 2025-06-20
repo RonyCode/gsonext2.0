@@ -18,5 +18,7 @@ export async function SearchScheduleAction(
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
+    cache: "no-store",
+    next: { revalidate: 1, tags: ["update-schedule"] },
   });
 }

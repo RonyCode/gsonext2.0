@@ -17,8 +17,6 @@ export async function GetBlurImage(
 
     const { base64 } = await getPlaiceholder(Buffer.from(buffer));
 
-    console.log(`base64: ${base64}`);
-
     return base64;
 
     // });

@@ -1,16 +1,16 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 import { fetchWrapper } from "@/functions/fetch";
 import type { IVehicleSchema } from "@/schemas/CarsSchema";
 import { type ResponseApi, type UserNotification } from "@/types/index";
+import { GetTokenCookie } from "@/functions/TokenManager";
 
 export async function saveVehicleIntoCorporationAction(
   formData?: IVehicleSchema,
 ): Promise<ResponseApi<UserNotification> | undefined> {
-  revalidatePath("/");
   try {
     const cookiesInstance = await cookies();
 
@@ -22,17 +22,20 @@ export async function saveVehicleIntoCorporationAction(
       } else {
         formData.subscription = "";
       }
-
-      return await fetchWrapper<ResponseApi<UserNotification>>(
+      const token = await GetTokenCookie("token");
+      const resp = await fetchWrapper<ResponseApi<UserNotification>>(
         `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/vehicle/save`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(formData),
         },
       );
+      revalidateTag("update-vehicles");
+      return resp;
     }
   } catch (error) {
     console.log(error);

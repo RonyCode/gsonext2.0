@@ -73,8 +73,8 @@ const SalvarEscala = async ({
           {companyFound !== null && companyFound !== undefined ? (
             <TabScheduleSave
               subscriptionsUser={JSON.stringify(subscriptionsUser)}
-              idCompany={scheduleFound?.id_company ?? ""}
-              idCorporation={scheduleFound?.id_corporation ?? ""}
+              idCompany={idCompany}
+              idCorporation={idCorporation}
               dateSchedule={dateScheduleParams}
               scheduleCompany={scheduleFound}
               membersCompany={membersFound}

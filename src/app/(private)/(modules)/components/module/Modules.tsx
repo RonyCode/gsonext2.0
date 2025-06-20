@@ -24,7 +24,7 @@ const Modules = () => {
             <CardModule
               title="Escalas"
               subtitle="Serviço de escala"
-              link={`/servicos/escalas`}
+              link={`/servicos/corporacao/escalas`}
               icon={<IconCalendar width={54} />}
             />{" "}
           </div>

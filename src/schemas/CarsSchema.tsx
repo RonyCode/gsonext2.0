@@ -5,8 +5,8 @@ const regexPlate = /[A-Z]{2,3}[0-9]{4}|[A-Z]{3,4}[0-9]{3}|[A-Z0-9]{7}/;
 const regexChassis = /[A-HJ-NPR-Z0-9]{17}/;
 export const VehicleSchema = z.object({
   id: z.string().optional().nullable(),
-  id_company: z.string().optional().nullable(),
-  id_corporation: z.string().optional().nullable(),
+  id_company: z.string().nullable().optional(),
+  id_corporation: z.string().min(1, { message: "id_corporation inválido" }),
   type_vehicle: z.string().optional().nullable(),
   prefix: z.string().min(1, { message: "id inválido" }),
   color: z.string().nullable().optional(),
@@ -28,15 +28,9 @@ export const VehicleSchema = z.object({
   fuel_type: z.string().nullable().optional(),
   codigo: z.string().nullable().optional(),
   nome: z.string().optional().nullable(),
-  id_brand: z.string().min(1, {
-    message: "Marca não pode estar vazio",
-  }),
-  id_model: z.string().min(1, {
-    message: "Modelo não pode estar vazio",
-  }),
-  id_year: z.string().min(1, {
-    message: "Ano do veiculo não pode estar vazio",
-  }),
+  id_brand: z.string().min(1, { message: "id_brand inválido" }),
+  id_model: z.string().min(1, { message: "id_model inválido" }),
+  id_year: z.string().min(2, { message: "id_year inválido" }),
   type: z.string().min(1, {
     message: "Categoria não pode estar vazio",
   }),

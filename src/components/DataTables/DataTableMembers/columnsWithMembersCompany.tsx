@@ -89,9 +89,6 @@ export const columnsWithMembersCompany = () => {
         <DataTableColumnHeader column={column} title="Unidade" />
       ),
       cell: ({ row }) => {
-        const test = GetAllCompaniesAction("FEFRF").then((response) => {
-          console.log(response);
-        });
         // const type = types.find((type) => type.value === row.getValue("type"));
         // if (type == null) {
         //   return null;
