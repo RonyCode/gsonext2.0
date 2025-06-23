@@ -25,6 +25,8 @@ import LoadingPage from "../Loadings/LoadingPage";
 import { useSession } from "next-auth/react";
 import { DeleteAllNotificationUser } from "@/lib/DeleteAllNotificationUser";
 import { DeleteNotificationUser } from "@/lib/DeleteNotificationUser";
+import moment from "moment";
+import { Badge } from "@/ui/badge";
 
 type NotificationProps = {
   className?: string;
@@ -69,6 +71,13 @@ export const NotificationsShow = ({
     });
   };
 
+  const notificationsOrdened = notifications.sort((a, b) => {
+    const dataA = moment(a.date, "DD/MM/YYYY HH:mm:ss");
+    const dataB = moment(b.date, "DD/MM/YYYY HH:mm:ss");
+
+    return dataB.valueOf() - dataA.valueOf();
+  });
+
   return (
     <>
       <LoadingPage pending={pending} />
@@ -82,10 +91,12 @@ export const NotificationsShow = ({
               className,
             )}
           >
-            {notifications && notifications?.length > 0 && (
+            {notificationsOrdened && notificationsOrdened?.length > 0 && (
               <div className="absolute -right-1 top-0 z-10 m-0 flex h-4 min-w-4 animate-bounce items-center justify-center rounded-full bg-primary p-0 text-[.750rem] font-bold text-foreground">
                 <span className="ml-1 flex items-center justify-center px-[1px]">
-                  {notifications?.length > 9 ? "9+" : notifications?.length}
+                  {notificationsOrdened?.length > 9
+                    ? "9+"
+                    : notificationsOrdened?.length}
                 </span>
               </div>
             )}
@@ -109,7 +120,7 @@ export const NotificationsShow = ({
                     Você tem{" "}
                     <strong className="text-sm font-extrabold text-foreground">
                       {" "}
-                      {notifications?.length}
+                      {notificationsOrdened?.length}
                     </strong>{" "}
                     notificações
                   </CardDescription>
@@ -128,7 +139,7 @@ export const NotificationsShow = ({
                     <NotificationToggle />
                   </div>
                   <div>
-                    {notifications?.map((notification, indexNoti) => (
+                    {notificationsOrdened?.map((notification, indexNoti) => (
                       <div
                         key={indexNoti}
                         className="relative my-1 rounded-md border border-foreground/15"
@@ -136,13 +147,19 @@ export const NotificationsShow = ({
                         <Link passHref href={notification?.url}>
                           <div className="animate trasnsition group grid grid-cols-[25px_1fr] items-center justify-center rounded-2xl p-4 duration-300 hover:bg-background/90">
                             <span className="flex h-2 w-2 rounded-full bg-primary group-hover:bg-foreground" />
-                            <div>
+                            <div className="flex w-full flex-col items-center justify-center gap-1">
                               <p className="mb-2 text-sm font-medium leading-none">
                                 {notification?.title}
                               </p>
-                              <p className="text-sm text-muted-foreground">
+                              <p className="text-sm text-muted-foreground group-hover:text-foreground">
                                 {notification?.message}
                               </p>
+                              <Badge
+                                variant="outline"
+                                className="m-0 self-end px-2 text-[.650rem] text-muted-foreground"
+                              >
+                                {notification?.date}
+                              </Badge>
                             </div>
                           </div>
                         </Link>
@@ -162,17 +179,18 @@ export const NotificationsShow = ({
                   </div>
                 </CardContent>
 
-                {notifications !== undefined && notifications?.length > 0 && (
-                  <CardFooter>
-                    <Button
-                      onClick={async (e) => handleDeleteAllNotification(e)}
-                      className="w-full"
-                    >
-                      <LuCheck className="mr-2 h-4 w-4" /> Marcar todas como
-                      lidas
-                    </Button>
-                  </CardFooter>
-                )}
+                {notificationsOrdened !== undefined &&
+                  notificationsOrdened?.length > 0 && (
+                    <CardFooter>
+                      <Button
+                        onClick={async (e) => handleDeleteAllNotification(e)}
+                        className="w-full"
+                      >
+                        <LuCheck className="mr-2 h-4 w-4" /> Marcar todas como
+                        lidas
+                      </Button>
+                    </CardFooter>
+                  )}
               </Card>
             </DropdownMenuItem>
           </DropdownMenuGroup>

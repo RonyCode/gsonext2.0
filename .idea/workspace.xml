@@ -4,38 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c4de5031-80c2-4cc7-8968-8fb03cd1922c" name="Changes" comment="fix Links dataTables">
+    <list default="true" id="c4de5031-80c2-4cc7-8968-8fb03cd1922c" name="Changes" comment="fix Links schedule">
+      <change afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/DetalesEscalaForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/unidades/[id_company]/escalas/[id_escala]/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/corporation/SaveVehicleIntoCorporationAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/corporation/SaveVehicleIntoCorporationAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/member/GetAllMembersCompanyAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/member/GetAllMembersCompanyAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/schedule/SearchScheduleAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/schedule/SearchScheduleAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/schedule/saveScheduleAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/schedule/saveScheduleAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/vehicle/GetAllVehiclesCompanyAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/vehicle/GetAllVehiclesCompanyAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/vehicle/GetAllVehiclesCorporationsAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/vehicle/GetAllVehiclesCorporationsAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(auth)/cadastro-usuario/[token]/components/UserExternalUpdateRegisterForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/cadastro-usuario/[token]/components/UserExternalUpdateRegisterForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/notification/GetUserNotificationAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/notification/GetUserNotificationAction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/schedule/saveScheduleAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/schedule/SaveScheduleAction.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/TabScheduleSave.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/TabScheduleSave.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/VehicleCompanyForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/VehicleCompanyForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/VehicleCorporationForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/VehicleCorporationForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/module/Modules.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/module/Modules.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/membros/[id_member]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/membros/[id_member]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/unidades/[id_company]/escalas/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/unidades/[id_company]/escalas/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/unidades/[id_company]/escalas/salvar/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/unidades/[id_company]/veiculos/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/unidades/[id_company]/veiculos/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/escala/[id_escala]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/escala/[id_escala]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/veiculo/[id_veiculo]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/veiculo/[id_veiculo]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/veiculo/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/veiculo/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/veiculo/salvar-veiculo/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/veiculo/salvar-veiculo-unidade/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/escalas/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/escalas/route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/CalendarGso/CalendarGsoV1.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CalendarGso/CalendarGsoV1.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableDetalheEscala/columnsDetailsSchedule.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableDetalheEscala/columnsDetailsSchedule.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableMembers/columnsWithMembersCompany.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableMembers/columnsWithMembersCompany.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableUsers/data-table-row-actions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableUsers/data-table-row-actions.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableDetalheEscala/data-table-row-actions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableDetalheEscala/data-table-row-actions.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Notification/NotiicationsShow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Notification/NotiicationsShow.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/popover.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/popover.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/functions/GetBlurImage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/functions/GetBlurImage.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/getAllSchedulesCompany.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/getAllSchedulesCompany.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/CarsSchema.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/CarsSchema.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +69,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
     &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/rony/Sites/gso-next2.0/src/app/(private)/(modules)/servicos/gestor/escala&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/rony/Sites/gso-next2.0/src/app/(private)/(modules)/components&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -117,18 +96,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/components" />
+      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/escalas/[id_escala]" />
       <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/escala" />
       <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/escala/[id_escala]" />
       <recent name="$PROJECT_DIR$/src/actions/vehicle" />
-      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/veiculo" />
-      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/conta" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/unidades/[id_company]/escalas" />
       <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/escala/[id_escala]" />
       <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/escala" />
       <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/veiculo/[id_veiculo]" />
       <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/conta" />
-      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/membro/[id_member]" />
     </key>
   </component>
   <component name="RunManager" selected="npm.Next.js: server-side">
@@ -312,7 +291,10 @@
       <workItem from="1750349228211" duration="50000" />
       <workItem from="1750349295094" duration="11637000" />
       <workItem from="1750370093367" duration="10209000" />
-      <workItem from="1750417898854" duration="14176000" />
+      <workItem from="1750417898854" duration="15134000" />
+      <workItem from="1750444736618" duration="2749000" />
+      <workItem from="1750463311016" duration="2829000" />
+      <workItem from="1750466897308" duration="11372000" />
     </task>
     <task id="LOCAL-00001" summary="update google login">
       <option name="closed" value="true" />
@@ -482,7 +464,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750131916871</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="fix Links schedule">
+      <option name="closed" value="true" />
+      <created>1750434337447</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1750434337447</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -573,6 +563,7 @@
     <MESSAGE value="fix profile" />
     <MESSAGE value="fix calendar" />
     <MESSAGE value="fix Links dataTables" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix Links dataTables" />
+    <MESSAGE value="fix Links schedule" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix Links schedule" />
   </component>
 </project>

@@ -35,7 +35,7 @@ export function DataTableRowActions<TData>({
       <DropdownMenuContent align="end" className="w-[160px]">
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         <Link // @ts-expect-error
-          href={`/servicos/gestor/escala/detalhes-${row.original?.id}?id_company=${row.original?.id_company}&date_schedule=${moment(row.original?.date_start, "DD/MM/YYYY").format("YYYY/MM/DD")}`}
+          href={`/servicos/gestor/escala/detalhes-${row.original?.id}?id_company=${row.original?.id_company}&date_schedule=${moment(row.original?.date_start, "DD/MM/YYYY").format("YYYY-MM-DD")}`}
         >
           <DropdownMenuItem>Editar</DropdownMenuItem>
         </Link>

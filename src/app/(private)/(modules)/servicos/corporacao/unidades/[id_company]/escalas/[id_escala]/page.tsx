@@ -5,37 +5,36 @@ import { LuSaveAll, LuSearchX } from "react-icons/lu";
 
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
-import TabScheduleSave from "@/app/(private)/(modules)/components/TabScheduleSave";
 import { cookies } from "next/headers";
 import { GetCompanyByIdAction } from "@/actions/company/GetCompanyByIdAction";
 import { GetAllVehiclesCompanyAction } from "@/actions/vehicle/GetAllVehiclesCompanyAction";
 import { GetAllMembersCompanyAction } from "@/actions/member/GetAllMembersCompanyAction";
 import { SearchScheduleAction } from "@/actions/schedule/SearchScheduleAction";
+import DetalhesEscalaForm from "@/app/(private)/(modules)/components/DetalesEscalaForm";
 
 export const metadata: Metadata = {
   title: "GSO | salvar escala",
   description: "Página de escalas do site GSO.",
 };
 
-const SalvarEscala = async ({
+const DetalhesEscala = async ({
   params,
   searchParams,
 }: {
-  params: Promise<{ id_escala: string }>;
+  params: Promise<{ id_escala: string; id_company: string }>;
   searchParams: Promise<{
     date_schedule: string;
-    id_company: string;
   }>;
 }): Promise<ReactNode> => {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
   const session = await getServerSession(authOptions);
-  const { date_schedule, id_company } = resolvedSearchParams;
-  const { id_escala } = resolvedParams;
+  const { date_schedule } = resolvedSearchParams;
+  const { id_escala, id_company } = resolvedParams;
   const idCorporation = session?.id_corporation ?? "";
 
   const idSchedule = id_escala.split("-")[1] ?? "";
-  const idCompany = id_company ?? "";
+  const idCompany = id_company.split("-")[1] ?? "";
   const dateScheduleParams = date_schedule;
 
   const { data: schedules } = await SearchScheduleAction(
@@ -64,17 +63,15 @@ const SalvarEscala = async ({
   return (
     <>
       <CardDefault
-        title={"Salvar Escala em: " + companyFound?.name}
-        image={"/public/images/escala.png"}
-        imageMobile={"/public/images/escala.png"}
+        title={"Escala da unidade: " + companyFound?.name}
+        image={companyFound?.image}
+        imageMobile={companyFound?.image}
         icon={<LuSaveAll size={28} />}
       >
         <div className="overflow-scroll lg:overflow-hidden">
           {companyFound !== null && companyFound !== undefined ? (
-            <TabScheduleSave
-              subscriptionsUser={
-                subscriptionsUser ? JSON.stringify(subscriptionsUser) : null
-              }
+            <DetalhesEscalaForm
+              subscriptionsUser={JSON.stringify(subscriptionsUser)}
               idCompany={idCompany}
               idCorporation={idCorporation}
               dateSchedule={dateScheduleParams}
@@ -96,4 +93,4 @@ const SalvarEscala = async ({
     </>
   );
 };
-export default SalvarEscala;
+export default DetalhesEscala;

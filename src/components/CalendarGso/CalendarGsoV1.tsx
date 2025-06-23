@@ -196,11 +196,17 @@ const CalendarGsoV1 = ({ schedules, company }: CalendarGsoV1Props) => {
                       "/servicos/gestor/escala/detalhes-escala?id_company=" +
                       company?.id +
                       "&date_schedule=" +
-                      selectedDay.year +
-                      "-" +
-                      selectedDay.month +
-                      "-" +
-                      selectedDay.day
+                      format(
+                        new Date(
+                          selectedDay.year,
+                          selectedDay.month,
+                          selectedDay.day,
+                        ),
+                        "yyyy-MM-dd",
+                        {
+                          locale: ptBR,
+                        },
+                      )
                     }
                   >
                     <Button variant="default">
@@ -235,11 +241,17 @@ const CalendarGsoV1 = ({ schedules, company }: CalendarGsoV1Props) => {
                       "/servicos/gestor/escala/detalhes-escala?id_company=" +
                       company?.id +
                       "&date_schedule=" +
-                      selectedDay.year +
-                      "-" +
-                      selectedDay.month +
-                      "-" +
-                      selectedDay.day
+                      format(
+                        new Date(
+                          selectedDay.year,
+                          selectedDay.month,
+                          selectedDay.day,
+                        ),
+                        "yyyy-MM-dd",
+                        {
+                          locale: ptBR,
+                        },
+                      )
                     }
                     className="flex h-full w-full flex-col justify-evenly text-center"
                   >

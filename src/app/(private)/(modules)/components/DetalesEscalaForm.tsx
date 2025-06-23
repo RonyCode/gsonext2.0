@@ -10,9 +10,7 @@ import {
   LuClipboardPen,
   LuClock1,
   LuCrown,
-  LuLoaderCircle,
   LuMegaphone,
-  LuSave,
   LuTrash2,
   LuUsers,
 } from "react-icons/lu";
@@ -58,11 +56,11 @@ import { ptBR } from "date-fns/locale/pt-BR";
 import moment from "moment";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { SaveScheduleAction } from "@/actions/schedule/SaveScheduleAction";
 import { IScheduleSchema } from "@/schemas/ScheduleSchema";
+import { SaveScheduleAction } from "@/actions/schedule/SaveScheduleAction";
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
-  subscriptionsUser?: string | null;
+  subscriptionsUser: string;
   idCompany: string;
   idCorporation: string;
   membersCompany?: IMemberSchema[];
@@ -72,7 +70,7 @@ type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
   className?: string;
 };
 
-export const TabScheduleSave = ({
+export const DetalhesEscalaForm = ({
   subscriptionsUser,
   idCompany,
   idCorporation,
@@ -192,7 +190,7 @@ export const TabScheduleSave = ({
       date_start:
         scheduleCompany?.date_start ??
         (dateSchedule != null
-          ? moment(dateSchedule).format("DD/MM/YYYY")
+          ? new Date(dateSchedule).toLocaleDateString("pt-BR")
           : new Date().toLocaleDateString("pt-BR")),
       date_finish: scheduleCompany?.date_finish ?? "",
       obs:
@@ -427,6 +425,7 @@ export const TabScheduleSave = ({
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
+                              disabled
                               variant={"outline"}
                               className={cn(
                                 "min-w-[240px] pl-3 text-left font-normal",
@@ -468,7 +467,7 @@ export const TabScheduleSave = ({
                               dateSchedule != null ||
                               date.setHours(0, 1, 1, 1) <
                                 new Date().setHours(0, 0, 0, 0) ||
-                              date < new Date()
+                              date < new Date("1900-01-01")
                             }
                           />
                         </PopoverContent>
@@ -493,6 +492,7 @@ export const TabScheduleSave = ({
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
+                              disabled
                               variant="outline"
                               role="combobox"
                               className={cn("w-full justify-between")}
@@ -560,6 +560,7 @@ export const TabScheduleSave = ({
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
+                              disabled
                               variant="outline"
                               role="combobox"
                               className={cn("w-full justify-between")}
@@ -628,6 +629,7 @@ export const TabScheduleSave = ({
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
+                              disabled
                               variant="outline"
                               role="combobox"
                               className={cn("w-full justify-between")}
@@ -689,6 +691,7 @@ export const TabScheduleSave = ({
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
+                              disabled
                               variant="outline"
                               role="combobox"
                               className={cn("w-full justify-between")}
@@ -746,6 +749,7 @@ export const TabScheduleSave = ({
                         Encerramento
                       </FormLabel>
                       <Input
+                        disabled
                         type="text"
                         readOnly={true}
                         {...field}
@@ -769,6 +773,7 @@ export const TabScheduleSave = ({
                     </FormLabel>
                     <FormControl>
                       <Textarea
+                        disabled
                         placeholder="Obrigatório relatar detalhes"
                         className="resize-none bg-transparent"
                         {...field}
@@ -799,6 +804,7 @@ export const TabScheduleSave = ({
                         >
                           <FormControl>
                             <Button
+                              disabled
                               variant="outline"
                               role="combobox"
                               className={cn("w-full justify-between")}
@@ -885,6 +891,7 @@ export const TabScheduleSave = ({
                         >
                           <FormControl>
                             <Button
+                              disabled
                               variant="outline"
                               role="combobox"
                               className={cn("w-full justify-between")}
@@ -972,6 +979,7 @@ export const TabScheduleSave = ({
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
+                              disabled
                               variant="outline"
                               role="combobox"
                               className={cn("w-full justify-between")}
@@ -1091,26 +1099,10 @@ export const TabScheduleSave = ({
                 ))}
               </div>
             </div>
-
-            <div className="flex w-full flex-col justify-end md:flex-row">
-              <Button
-                size="sm"
-                variant="default"
-                disabled={pending}
-                className={cn("animate-fadeIn gap-1 md:mr-4")}
-                type="submit"
-              >
-                {pending && (
-                  <LuLoaderCircle className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                <LuSave size={20} />
-                Salvar
-              </Button>
-            </div>
           </form>
         </Form>
       </Card>
     </>
   );
 };
-export default TabScheduleSave;
+export default DetalhesEscalaForm;

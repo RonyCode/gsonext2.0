@@ -5,23 +5,21 @@ import { IScheduleFormSave } from "@/schemas/ScheduleFormSave";
 import { GetTokenCookie } from "@/functions/TokenManager";
 import { revalidateTag } from "next/cache";
 
-export async function saveScheduleAction(
+export async function SaveScheduleAction(
   formData: IScheduleFormSave,
-): Promise<ResponseApi> {
+): Promise<ResponseApi<IScheduleFormSave[]>> {
   try {
     const token = await GetTokenCookie("token");
+    const url = `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/company/schedule/save`;
 
-    const res = await fetchWrapper<ResponseApi>(
-      `${process.env.NEXT_PUBLIC_NEXT_URL}/api/cadastrar-escala`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
+    const res = await fetchWrapper<ResponseApi<IScheduleFormSave[]>>(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-    );
+      body: JSON.stringify(formData),
+    });
 
     revalidateTag("save-schedules");
     return res;
