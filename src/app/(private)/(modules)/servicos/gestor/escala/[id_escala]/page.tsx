@@ -5,7 +5,7 @@ import { LuSaveAll, LuSearchX } from "react-icons/lu";
 
 import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
-import TabScheduleSave from "@/app/(private)/(modules)/components/TabScheduleSave";
+import { TabScheduleSave } from "@/app/(private)/(modules)/components/TabScheduleSave";
 import { cookies } from "next/headers";
 import { GetCompanyByIdAction } from "@/actions/company/GetCompanyByIdAction";
 import { GetAllVehiclesCompanyAction } from "@/actions/vehicle/GetAllVehiclesCompanyAction";
@@ -75,7 +75,7 @@ const SalvarEscala = async ({
               subscriptionsUser={
                 subscriptionsUser ? JSON.stringify(subscriptionsUser) : null
               }
-              idCompany={idCompany}
+              company={companyFound}
               idCorporation={idCorporation}
               dateSchedule={dateScheduleParams}
               scheduleCompany={scheduleFound}

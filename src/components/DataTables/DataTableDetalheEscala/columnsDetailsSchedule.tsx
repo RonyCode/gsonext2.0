@@ -97,7 +97,7 @@ export function columnsDetailsSchedule(
       ),
       cell: ({ row }) => {
         return (
-          <div className="m-0 p-0">
+          <div className="m-0 flex gap-2 p-0">
             {row?.original?.vehicles?.map((vehicle, index) => (
               <div
                 key={index}
@@ -108,14 +108,15 @@ export function columnsDetailsSchedule(
                     <CardModule
                       className="m-0 flex h-12 w-20 items-center justify-center border-none p-0"
                       icon={
-                        vehicle.image != null ? (
+                        vehicle?.image != null ? (
                           <div className="relative m-0 flex h-12 w-20 border-none p-0">
                             <Image
                               fill
                               src={
-                                process.env.NEXT_PUBLIC_API_GSO && vehicle.image
+                                process.env.NEXT_PUBLIC_API_GSO &&
+                                vehicle?.image
                                   ? process.env.NEXT_PUBLIC_API_GSO +
-                                    vehicle.image
+                                    vehicle?.image
                                   : process.env.NEXT_PUBLIC_API_GSO +
                                     "/public/images/img.svg"
                               }

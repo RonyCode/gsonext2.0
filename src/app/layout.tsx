@@ -50,6 +50,9 @@ export const metadata: Metadata = {
   },
 };
 
+// Mantenha esta importação!
+import "highlight.js/styles/monokai-sublime.css";
+
 export const viewport: Viewport = {
   themeColor: "#FFFFFF",
 };

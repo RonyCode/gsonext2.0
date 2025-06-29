@@ -19,7 +19,7 @@ import { columnsDetailsSchedule } from "@/components/DataTables/DataTableDetalhe
 import { useCheckMobile } from "@/functions/IsMobile";
 
 type CalendarGsoV1Props = {
-  schedules?: Partial<IScheduleSchema>[];
+  schedules?: IScheduleSchema[];
   company?: Partial<IUnidadeSchema>;
 };
 

@@ -5,16 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4de5031-80c2-4cc7-8968-8fb03cd1922c" name="Changes" comment="fix Links schedule">
-      <change afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/DetalesEscalaForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/unidades/[id_company]/escalas/[id_escala]/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/cadastro.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/actions/DEV/logs/GetAllLogsWorksAction.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/actions/schedule/GetAllSchedulesAction.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/(dev)/log/logViewer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/(dev)/log/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Sidebar/nav-dev.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/RefreshTokenLayout.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/notification/GetUserNotificationAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/notification/GetUserNotificationAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/schedule/saveScheduleAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/schedule/SaveScheduleAction.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/schedule/SearchScheduleAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/schedule/SearchScheduleAction.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(auth)/auth/components/LoginFormSlice.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/auth/components/LoginFormSlice.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/DetalesEscalaForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/DetalesEscalaForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/TabScheduleSave.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/TabScheduleSave.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/unidades/[id_company]/escalas/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/unidades/[id_company]/escalas/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/escala/[id_escala]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/escala/[id_escala]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Buttoms/AddVehicleSchedule.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Buttoms/AddVehicleSchedule.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/CalendarGso/CalendarGsoV1.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CalendarGso/CalendarGsoV1.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableDetalheEscala/data-table-row-actions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableDetalheEscala/data-table-row-actions.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableDetalheEscala/columnsDetailsSchedule.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableDetalheEscala/columnsDetailsSchedule.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Notification/NotiicationsShow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Notification/NotiicationsShow.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Sidebar/app-sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar/app-sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Sidebar/nav-ticket.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar/nav-ticket.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/functions/GetBlurImage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/functions/GetBlurImage.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/functions/TokenManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/functions/TokenManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middlewares/permissionUserMiddleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/permissionUserMiddleware.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/CarsSchema.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/CarsSchema.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/SaveMemberCompanySchema.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/SaveMemberCompanySchema.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/ScheduleFormSave.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/ScheduleFormSave.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/ScheduleSchema.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/ScheduleSchema.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,8 +47,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -57,34 +77,35 @@
   <component name="ProjectId" id="2tGgu2QzzL4Ti1xJelDZfVnxylH" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
-    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/rony/Sites/gso-next2.0/src/app/(private)/(modules)/components&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;npm.Next.js: server-side.executor&quot;: &quot;Debug&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/rony/Sites/gso-next2.0/node_modules/prettier&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/rony/Sites/gso-next2.0/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.codeium.enabled": "true",
+    "git-widget-placeholder": "main",
+    "js.debugger.nextJs.config.created.client": "true",
+    "js.debugger.nextJs.config.created.server": "true",
+    "last_opened_file_path": "/Users/rony/Sites/gso-next2.0/src/components/Sidebar",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "npm.Next.js: server-side.executor": "Debug",
+    "prettierjs.PrettierConfiguration.Package": "/Users/rony/Sites/gso-next2.0/node_modules/prettier",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie",
+    "ts.external.directory.path": "/Users/rony/Sites/gso-next2.0/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -96,11 +117,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/components" />
-      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/escalas/[id_escala]" />
-      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/escala" />
-      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/escala/[id_escala]" />
-      <recent name="$PROJECT_DIR$/src/actions/vehicle" />
+      <recent name="$PROJECT_DIR$/src/components/Sidebar" />
+      <recent name="$PROJECT_DIR$/src/actions/DEV/logs" />
+      <recent name="$PROJECT_DIR$/src/lib" />
+      <recent name="$PROJECT_DIR$/public/assets" />
+      <recent name="$PROJECT_DIR$/src/actions/schedule" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/unidades/[id_company]/escalas" />
@@ -128,7 +149,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-WS-251.26094.131" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-WS-251.26927.40" />
       </set>
     </attachedChunks>
   </component>
@@ -294,7 +315,23 @@
       <workItem from="1750417898854" duration="15134000" />
       <workItem from="1750444736618" duration="2749000" />
       <workItem from="1750463311016" duration="2829000" />
-      <workItem from="1750466897308" duration="11372000" />
+      <workItem from="1750466897308" duration="11996000" />
+      <workItem from="1750677920302" duration="1575000" />
+      <workItem from="1750693292149" duration="1092000" />
+      <workItem from="1750714729719" duration="3375000" />
+      <workItem from="1750723110713" duration="6360000" />
+      <workItem from="1750763198474" duration="66000" />
+      <workItem from="1750763282811" duration="3268000" />
+      <workItem from="1750766589847" duration="12433000" />
+      <workItem from="1750801448043" duration="3903000" />
+      <workItem from="1750850508821" duration="17000" />
+      <workItem from="1750879679401" duration="1145000" />
+      <workItem from="1750880860297" duration="5633000" />
+      <workItem from="1750943812277" duration="28000" />
+      <workItem from="1750943852076" duration="994000" />
+      <workItem from="1750945150513" duration="24372000" />
+      <workItem from="1751209022481" duration="216000" />
+      <workItem from="1751209972938" duration="6339000" />
     </task>
     <task id="LOCAL-00001" summary="update google login">
       <option name="closed" value="true" />
@@ -472,7 +509,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750434337447</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="fix Links schedule">
+      <option name="closed" value="true" />
+      <created>1750637931757</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1750637931757</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -20,6 +20,7 @@ import { NavAdmin } from "@/components/Sidebar/nav-admin";
 import { useParams } from "next/navigation";
 import { NavTicket } from "./nav-ticket";
 import { getValidImageUrl } from "@/functions/checkImageUrl";
+import { NavDev } from "@/components/Sidebar/nav-dev";
 
 interface AppSidebarProps {
   corp?: IOrganizacaoSchema;
@@ -56,7 +57,7 @@ export function AppSidebar({
       setImageUrl(item);
     });
     // Use the same expression for the dependency
-  }, [session?.user?.image]);
+  }, [session?.image, session?.user?.image]);
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -72,8 +73,16 @@ export function AppSidebar({
       </SidebarHeader>
       <SidebarContent>
         <NavMain compSelected={compSelected} session={session} />
-        {session?.role === "admin" && <NavAdmin compSelected={compSelected} />}
-        <NavTicket compSelected={compSelected} />
+        {(session?.role === "admin" || session?.role === "dev") && (
+          <NavAdmin compSelected={compSelected} />
+        )}
+
+        {session?.role === "dev" && <NavDev compSelected={compSelected} />}
+        {(session?.role === "dev" ||
+          session?.role === "admin" ||
+          session?.role === "manager") && (
+          <NavTicket compSelected={compSelected} />
+        )}
       </SidebarContent>
       <SidebarFooter>
         <NavUser

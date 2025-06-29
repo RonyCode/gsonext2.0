@@ -2,7 +2,7 @@ import { decodeJwt, JWTPayload } from "jose"; // Adicionar JWTInvalid para checa
 import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 import { CustomMiddleware } from "./chain";
 
-export type UserRole = "admin" | "user" | "manager";
+export type UserRole = "dev" | "admin" | "user" | "manager";
 
 interface RoutePermission {
   paths: RegExp[]; // Usar RegExp pré-compiladas para performance e clareza
@@ -15,12 +15,13 @@ interface RoutePermission {
 export const routePermissions: RoutePermission[] = [
   {
     paths: [
+      /^\/log\/.*/,
       /^\/servicos\/corporacao\/membros\/.*/,
       /^\/servicos\/gestor.*/,
       /^\/servicos\/corporacao\/veiculos\/.*/,
       /^\/servicos\/corporacao\/usuarios\/.*/,
     ],
-    roles: ["admin"],
+    roles: ["dev", "admin"],
     methods: ["GET", "POST", "PUT", "DELETE"],
   },
   {
@@ -40,7 +41,7 @@ export const routePermissions: RoutePermission[] = [
 
 // Função auxiliar para validar o UserRole
 function isValidUserRole(role: string): role is UserRole {
-  return ["admin", "user", "manager"].includes(role);
+  return ["dev", "admin", "user", "manager"].includes(role);
 }
 
 export function permissionUserMiddleware(
@@ -54,14 +55,6 @@ export function permissionUserMiddleware(
     const tokenCookie = request.cookies.get("token")?.value;
 
     if (tokenCookie == undefined) {
-      // Se não há token, e a rota é protegida, redirecionar para login ou retornar 401
-      // Esta lógica pode depender se o withAuthMiddleware já lidou com isso.
-      // Por simplicidade, vamos assumir que o withAuthMiddleware já tratou a ausência total de token.
-      // Se chegar aqui sem token, mas a rota requer permissão, é um problema.
-      // Considerar redirecionar para /auth ou /permissao dependendo da política.
-      console.warn(
-        "Middleware de permissão: Token não encontrado nos cookies.",
-      );
       // Se a rota não estiver em routePermissions, permite passar. Caso contrário, nega.
       const isProtectedRoute = routePermissions.some((route) =>
         route.paths.some((regex) => regex.test(path)),

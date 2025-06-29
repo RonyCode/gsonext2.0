@@ -38,6 +38,7 @@ type AddVehicleScheduleProps = {
   >;
   form?: UseFormReturn<IScheduleFormSave>;
   membersCompany?: IMemberSchema[];
+  disabled?: boolean;
 } & React.SVGProps<SVGSVGElement> &
   React.HTMLAttributes<HTMLDivElement>;
 export const AddVehicleSchedule = ({
@@ -45,6 +46,7 @@ export const AddVehicleSchedule = ({
   setListVehiclesAction,
   form,
   membersCompany,
+  disabled,
 }: AddVehicleScheduleProps) => {
   const [memberAvailable, setMemberAvailable] = React.useState(
     [] as IMemberSchema[],
@@ -61,10 +63,10 @@ export const AddVehicleSchedule = ({
     if (setListVehiclesAction) {
       setListVehiclesAction((prevState) => {
         return prevState.map((item) => {
-          if (item.id === vehicle?.id) {
-            return {
+          if (item?.id === vehicle?.id) {
+            const updatedItem = {
               ...item,
-              members: item.members?.map((member) => {
+              members: item?.members?.map((member) => {
                 if (member?.position === seatForm.position) {
                   return {
                     ...member,
@@ -74,6 +76,7 @@ export const AddVehicleSchedule = ({
                 return member;
               }),
             };
+            return updatedItem as IVehicleSchema;
           }
           return item;
         });
@@ -96,10 +99,10 @@ export const AddVehicleSchedule = ({
     if (setListVehiclesAction) {
       setListVehiclesAction((prevState) => {
         return prevState.map((item) => {
-          if (item.id === vehicle?.id) {
-            return {
+          if (item?.id === vehicle?.id) {
+            const updatedItem = {
               ...item,
-              members: item.members?.map((member) => {
+              members: item?.members?.map((member) => {
                 if (member?.position === position) {
                   return {
                     ...member,
@@ -109,6 +112,7 @@ export const AddVehicleSchedule = ({
                 return member;
               }),
             };
+            return updatedItem as IVehicleSchema;
           }
           return item;
         });
@@ -171,6 +175,7 @@ export const AddVehicleSchedule = ({
             {vehicle?.members?.map((item, index) => (
               <div key={index} className="z-50 h-full md:w-[97%]">
                 <ModalGso
+                  disabled={disabled}
                   childrenButton={
                     <div
                       className="z-50 m-0 w-[85%] p-0 md:w-[97%]"

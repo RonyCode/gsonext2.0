@@ -3,7 +3,7 @@ import { getPlaiceholder } from "plaiceholder";
 
 export async function GetBlurImage(
   url: string | undefined | null,
-): string | null | undefined {
+): Promise<string | null | undefined> {
   let test: string | null | undefined;
   // getValidImageUrl(url).then((res) => {
 

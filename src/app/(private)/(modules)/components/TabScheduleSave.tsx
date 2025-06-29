@@ -1,5 +1,5 @@
 "use client";
-import { redirect, useParams } from "next/navigation";
+import { redirect } from "next/navigation";
 import React, { useEffect, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -60,10 +60,11 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { SaveScheduleAction } from "@/actions/schedule/SaveScheduleAction";
 import { IScheduleSchema } from "@/schemas/ScheduleSchema";
+import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
 
 type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
   subscriptionsUser?: string | null;
-  idCompany: string;
+  company: IUnidadeSchema;
   idCorporation: string;
   membersCompany?: IMemberSchema[];
   vehiclesCompany?: IVehicleSchema[];
@@ -74,7 +75,7 @@ type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
 
 export const TabScheduleSave = ({
   subscriptionsUser,
-  idCompany,
+  company,
   idCorporation,
   membersCompany,
   vehiclesCompany,
@@ -85,12 +86,11 @@ export const TabScheduleSave = ({
 }: UserRegisterFormProps) => {
   const [pending, startTransition] = useTransition();
   const [dayWeekPrint, setDayWeekPrint] = React.useState("");
-  const params = useParams();
   const { data: session } = useSession();
   const [dateStart, setDateStart] = React.useState<Date>(
     dateSchedule != null
-      ? moment(dateSchedule, "YYYY/MM/DD").toDate()
-      : new Date(),
+      ? moment(dateSchedule).toDate()
+      : moment(scheduleCompany?.date_start).toDate(),
   );
   const [dateFinish, setDateFinish] = React.useState<string>();
   const [listVehicles, setListVehicles] = React.useState<IVehicleSchema[]>(
@@ -168,7 +168,7 @@ export const TabScheduleSave = ({
     defaultValues: {
       day:
         scheduleCompany?.day ??
-        (dateSchedule != null ? new Date(dateSchedule).getDate() : undefined),
+        (dateSchedule != null ? moment(dateSchedule).date() : undefined),
       month:
         scheduleCompany?.month ??
         (dateSchedule ? new Date(dateSchedule).getMonth() : undefined),
@@ -176,14 +176,16 @@ export const TabScheduleSave = ({
         scheduleCompany?.year ??
         (dateSchedule ? new Date(dateSchedule).getFullYear() : undefined),
       id: scheduleCompany?.id ?? null,
-      id_company: scheduleCompany?.id_company ?? idCompany,
+      id_company: scheduleCompany?.id_company || company?.id || "",
       id_corporation: scheduleCompany?.id_corporation ?? idCorporation,
       id_period: Number(scheduleCompany?.id_period) ?? undefined,
-      id_member_creator: scheduleCompany?.id_member_creator ?? session?.id,
+      id_member_creator:
+        scheduleCompany?.id_member_creator || session?.id || "",
       id_cmt_sos: scheduleCompany?.id_cmt_sos ?? undefined,
       id_member_comunication:
         scheduleCompany?.id_member_comunication ?? undefined,
       hour_start: scheduleCompany?.hour_start ?? undefined,
+      hour_finish: scheduleCompany?.hour_finish ?? undefined,
       team: scheduleCompany?.team ?? undefined,
       type: scheduleCompany?.type ?? undefined,
       date_creation:
@@ -194,7 +196,7 @@ export const TabScheduleSave = ({
         (dateSchedule != null
           ? moment(dateSchedule).format("DD/MM/YYYY")
           : new Date().toLocaleDateString("pt-BR")),
-      date_finish: scheduleCompany?.date_finish ?? "",
+      date_finish: scheduleCompany?.date_finish ?? null,
       obs:
         scheduleCompany?.obs ??
         `escala de serviço do dia ${
@@ -202,8 +204,10 @@ export const TabScheduleSave = ({
             ? new Date(dateSchedule).toLocaleDateString("pt-BR")
             : new Date().toLocaleDateString("pt-BR")
         } para o dia ${dateFinish}`,
-      vehicle: scheduleCompany?.vehicle ?? undefined,
-      vehicles: scheduleCompany?.vehicles ?? [],
+      vehicle: scheduleCompany?.vehicles?.length
+        ? scheduleCompany?.vehicles[0]
+        : null,
+      vehicles: scheduleCompany?.vehicles ?? null,
       excluded: scheduleCompany?.excluded ?? 0,
       subscription: subscriptionsUser ?? "",
     },
@@ -237,17 +241,20 @@ export const TabScheduleSave = ({
       const dateFinish = data.toLocaleString("pt-BR", {
         timeZone: "America/Sao_Paulo",
       });
+      const hourFinish = data
+        .toLocaleString("pt-BR", {
+          timeZone: "America/Sao_Paulo",
+        })
+        .split(",")[1];
 
       form.setValue("date_finish", dateFinish);
+      form.setValue("hour_finish", hourFinish);
       form.setValue(
         "obs",
         `Escala de serviço do dia ${form.getValues("date_start")} para o dia ${dateFinish}`,
       );
 
       setDateFinish(dateFinish);
-      form.setValue("day", data.getDate());
-      form.setValue("month", data.getMonth());
-      form.setValue("year", data.getFullYear());
     },
     [form, setDateFinish],
   );
@@ -259,9 +266,10 @@ export const TabScheduleSave = ({
     }
 
     if (listVehicles?.length > 0) {
-      form.setValue("id_member_creator", session?.id);
       form.setValue("vehicles", listVehicles);
     }
+
+    form.setValue("id_member_creator", session?.id ?? "");
   }, [
     form,
     listVehicles,
@@ -271,37 +279,34 @@ export const TabScheduleSave = ({
   ]);
 
   // Filtra membros disponíveis para escala
-  const handlerCalculateMemberAvailable = React.useCallback(() => {
-    const assignedMembers = [
-      form.getValues("id_member_comunication"),
-      form.getValues("id_cmt_sos"),
-    ].filter(Boolean);
+  const handlerCalculateMemberAvailable = React.useCallback(
+    (idUser: string) => {
+      // Filtra membros que não estão como comunicação ou comandante
+      const initialMembers =
+        membersCompany?.filter(
+          (member) => member?.id_user != null && idUser !== member?.id_user,
+        ) || [];
 
-    // Filtra membros que não estão como comunicação ou comandante
-    const initialMembers =
-      membersCompany?.filter(
-        (member) =>
-          member?.id_user != null && !assignedMembers.includes(member.id_user),
-      ) || [];
-
-    // Encontra membros já atribuídos a veículos
-    const vehicleAssignedMembers: Set<string> = new Set();
-    listVehicles.forEach((vehicle) => {
-      vehicle?.members?.forEach((memberVehicle) => {
-        if (memberVehicle?.member?.id_user) {
-          vehicleAssignedMembers.add(memberVehicle.member.id_user);
-        }
+      // Encontra membros já atribuídos a veículos
+      const vehicleAssignedMembers: Set<string> = new Set();
+      listVehicles.forEach((vehicle) => {
+        vehicle?.members?.forEach((memberVehicle) => {
+          if (memberVehicle?.member?.id_user) {
+            vehicleAssignedMembers.add(memberVehicle.member.id_user);
+          }
+        });
       });
-    });
 
-    // Filtra membros que não estão em veículos
-    const availableMembers = initialMembers.filter(
-      (member) =>
-        member?.id_user && !vehicleAssignedMembers.has(member.id_user),
-    );
+      // Filtra membros que não estão em veículos
+      const availableMembers = initialMembers.filter(
+        (member) =>
+          member?.id_user && !vehicleAssignedMembers.has(member.id_user),
+      );
 
-    setListMembersAvailable(availableMembers);
-  }, [form, listVehicles, membersCompany]);
+      setListMembersAvailable(availableMembers);
+    },
+    [listVehicles, membersCompany],
+  );
 
   // Verifica se um membro está indisponível (já atribuído)
   const disableItem = React.useCallback(
@@ -331,7 +336,7 @@ export const TabScheduleSave = ({
   );
 
   // Submissão do formulário
-  const handleSubmit = async (formData: IScheduleFormSave): Promise<void> => {
+  const handleSubmit = (formData: IScheduleFormSave): void => {
     startTransition(async () => {
       const result = await SaveScheduleAction(formData);
 
@@ -341,6 +346,7 @@ export const TabScheduleSave = ({
           title: "Erro ao salvar Escala! 🤯",
           description: result?.message,
         });
+
         return;
       }
 
@@ -350,37 +356,39 @@ export const TabScheduleSave = ({
         description: "Tudo certo Escala salva",
       });
 
-      redirect(`/servicos/corporacao/unidades/${params.id_company}/escalas`);
+      redirect(
+        `/servicos/corporacao/unidades/${company.name + "-" + company?.id}/escalas`,
+      );
     });
   };
 
   // Adiciona veículo à lista
-  const handleAddListVehicle = React.useCallback(() => {
-    const vehicle = form.getValues("vehicle");
+  const handleAddListVehicle = React.useCallback(
+    (vehicle?: IVehicleSchema) => {
+      if (!vehicle) {
+        toast({
+          variant: "warning",
+          title: "Selecione um veículo para adicionar! 🤯",
+          description: "É preciso selecionar um veículo para adicionar",
+        });
+        return;
+      }
 
-    if (!vehicle) {
-      toast({
-        variant: "warning",
-        title: "Selecione um veículo para adicionar! 🤯",
-        description: "É preciso selecionar um veículo para adicionar",
-      });
-      return;
-    }
+      const isVehicleSelected = listVehicles.some((v) => v?.id === vehicle?.id);
 
-    const isVehicleSelected = listVehicles.some((v) => v.id === vehicle.id);
+      if (isVehicleSelected) {
+        toast({
+          variant: "danger",
+          title: "Erro ao adicionar veículo! 🤯",
+          description: "Veículo já adicionado",
+        });
+        return;
+      }
 
-    if (isVehicleSelected) {
-      toast({
-        variant: "danger",
-        title: "Erro ao adicionar veículo! 🤯",
-        description: "Veículo já adicionado",
-      });
-      return;
-    }
-
-    setListVehicles((prevState) => [...prevState, vehicle]);
-    form.resetField("vehicle");
-  }, [form, listVehicles]);
+      setListVehicles((prevState) => [...prevState, vehicle]);
+    },
+    [listVehicles],
+  );
 
   return (
     <>
@@ -407,8 +415,8 @@ export const TabScheduleSave = ({
           <LoadingPage pending={pending} />
 
           <form
-            onSubmit={form.handleSubmit(async (data) => {
-              await handleSubmit(data);
+            onSubmit={form.handleSubmit((data) => {
+              handleSubmit(data);
             })}
             className="w-full md:space-y-4"
           >
@@ -450,26 +458,19 @@ export const TabScheduleSave = ({
                             onSelect={(date) => {
                               if (date == null) return;
                               setDateStart(date);
-                              form.setValue("day", new Date(date)?.getDate());
-                              form.setValue(
-                                "month",
-                                new Date(date)?.getMonth(),
-                              );
-                              form.setValue(
-                                "year",
-                                new Date(date)?.getFullYear(),
-                              );
+                              form.setValue("day", moment(date)?.date());
+                              form.setValue("month", moment(date)?.month());
+                              form.setValue("year", moment(date)?.year());
                               form.setValue(
                                 "date_start",
-                                new Date(date)?.toLocaleDateString("pt-BR"),
+                                moment(date)?.format("DD/MM/YYYY"),
                               );
                             }}
-                            disabled={(date) =>
-                              dateSchedule != null ||
-                              date.setHours(0, 1, 1, 1) <
-                                new Date().setHours(0, 0, 0, 0) ||
-                              date < new Date()
-                            }
+                            disabled={(date) => {
+                              const today = new Date();
+                              today.setDate(today.getDate() - 1);
+                              return date < today;
+                            }}
                           />
                         </PopoverContent>
                       </Popover>
@@ -749,6 +750,7 @@ export const TabScheduleSave = ({
                         type="text"
                         readOnly={true}
                         {...field}
+                        value={field.value ?? ""}
                         placeholder="Data de Encerramento"
                       />
                     </FormItem>
@@ -793,10 +795,7 @@ export const TabScheduleSave = ({
                   render={({ field }) => (
                     <FormItem className="m-0 flex w-full flex-col">
                       <Popover>
-                        <PopoverTrigger
-                          asChild
-                          onClick={handlerCalculateMemberAvailable}
-                        >
+                        <PopoverTrigger asChild>
                           <FormControl>
                             <Button
                               variant="outline"
@@ -827,7 +826,10 @@ export const TabScheduleSave = ({
                                     onSelect={() => {
                                       form?.setValue(
                                         "id_cmt_sos",
-                                        member?.id_user ?? undefined,
+                                        member?.id_user ?? "",
+                                      );
+                                      handlerCalculateMemberAvailable(
+                                        member?.id_user ?? "",
                                       );
                                     }}
                                   >
@@ -866,6 +868,7 @@ export const TabScheduleSave = ({
                 />
               </div>
             </div>
+
             <div className="flex w-full flex-col text-sm">
               <div className="flex items-center gap-1 text-muted-foreground">
                 <LuMegaphone className="cursor-pointer" />
@@ -879,10 +882,7 @@ export const TabScheduleSave = ({
                   render={({ field }) => (
                     <FormItem className="m-0 flex w-full flex-col">
                       <Popover>
-                        <PopoverTrigger
-                          asChild
-                          onClick={handlerCalculateMemberAvailable}
-                        >
+                        <PopoverTrigger asChild>
                           <FormControl>
                             <Button
                               variant="outline"
@@ -913,7 +913,10 @@ export const TabScheduleSave = ({
                                     onSelect={() => {
                                       form?.setValue(
                                         "id_member_comunication",
-                                        member?.id_user ?? undefined,
+                                        member?.id_user ?? "",
+                                      );
+                                      handlerCalculateMemberAvailable(
+                                        member?.id_user ?? "",
                                       );
                                     }}
                                   >
@@ -954,7 +957,6 @@ export const TabScheduleSave = ({
             </div>
 
             {/*VEÍCULOS TITULO*/}
-
             <div className="flex items-center gap-1 text-sm text-muted-foreground">
               <LuCar className="m-0 cursor-pointer" />
               Veículos
@@ -976,7 +978,9 @@ export const TabScheduleSave = ({
                               role="combobox"
                               className={cn("w-full justify-between")}
                             >
-                              {field.value !== undefined
+                              {vehiclesCompany?.find(
+                                (vehicle) => vehicle?.id === field.value?.id,
+                              )
                                 ? field.value?.prefix
                                 : "Selecione um veículo"}
                               <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -993,24 +997,14 @@ export const TabScheduleSave = ({
                                   <CommandItem
                                     key={index}
                                     onSelect={() => {
-                                      form?.setValue(
-                                        "vehicle",
-                                        listVehicles?.find(
-                                          (vehiclelist: IVehicleSchema) =>
-                                            vehiclelist?.id === veihcle.id,
-                                        ) ?? veihcle,
-                                      );
-                                      handleAddListVehicle();
+                                      form?.setValue("vehicle", veihcle);
+                                      handleAddListVehicle(veihcle);
                                     }}
                                   >
                                     <LuCheck
                                       className={cn(
                                         "mr-2 h-4 w-4",
-                                        veihcle?.id ===
-                                          listVehicles?.find(
-                                            (vehiclelist: IVehicleSchema) =>
-                                              vehiclelist?.id === veihcle?.id,
-                                          )?.id
+                                        veihcle?.id === field.value?.id
                                           ? "opacity-100"
                                           : "opacity-0",
                                       )}
@@ -1036,6 +1030,11 @@ export const TabScheduleSave = ({
                       <LuTrash2
                         onClick={() => {
                           setListVehicles((prevState: IVehicleSchema[]) => {
+                            if (
+                              vehicle?.id === form?.getValues("vehicle")?.id
+                            ) {
+                              form?.setValue("vehicle", null);
+                            }
                             return prevState.filter(
                               (item, idx) => idx !== index,
                             );
@@ -1049,14 +1048,14 @@ export const TabScheduleSave = ({
                           <CardModule
                             className={cn("flex h-20 w-32")}
                             icon={
-                              vehicle.image != null ? (
+                              vehicle?.image != null ? (
                                 <Image
                                   fill
                                   src={
                                     process.env.NEXT_PUBLIC_API_GSO &&
-                                    vehicle.image
+                                    vehicle?.image
                                       ? process.env.NEXT_PUBLIC_API_GSO +
-                                        vehicle.image
+                                        vehicle?.image
                                       : process.env.NEXT_PUBLIC_API_GSO +
                                         "/public/images/img.svg"
                                   }
@@ -1096,7 +1095,6 @@ export const TabScheduleSave = ({
               <Button
                 size="sm"
                 variant="default"
-                disabled={pending}
                 className={cn("animate-fadeIn gap-1 md:mr-4")}
                 type="submit"
               >
@@ -1113,4 +1111,3 @@ export const TabScheduleSave = ({
     </>
   );
 };
-export default TabScheduleSave;

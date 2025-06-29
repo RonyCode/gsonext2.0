@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const ScheduleSchema = z.object({
   id: z.string().nullable().optional(),
-  id_period: z.string().nullable().optional(),
+  id_period: z.number().nullable().optional(),
   id_company: z.string().nullable().optional(),
   id_corporation: z.string().nullable().optional(),
   id_cmt_sos: z.string().nullable().optional(),
@@ -34,7 +34,7 @@ export const ScheduleSchema = z.object({
   isMuted: z.boolean().optional().nullable(),
   description: z.string().optional().nullable(),
   vehicle: VehicleSchema.optional(),
-  vehicles: z.array(VehicleSchema).nullable().optional(),
+  vehicles: z.array(VehicleSchema.optional()).nullable().optional(),
   excluded: z.number().optional(),
 });
 

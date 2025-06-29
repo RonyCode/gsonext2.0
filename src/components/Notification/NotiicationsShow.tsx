@@ -4,7 +4,7 @@ import { LuBell, LuBellRing, LuCheck, LuTrash2 } from "react-icons/lu";
 
 import { cn } from "@/lib/utils";
 import { useNotificationStore } from "@/stores/user/useNotificationStore";
-import { Button } from "../ui/button";
+import { Button } from "@/ui/button";
 import {
   Card,
   CardContent,

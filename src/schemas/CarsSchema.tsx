@@ -3,50 +3,60 @@ import { z } from "zod";
 
 const regexPlate = /[A-Z]{2,3}[0-9]{4}|[A-Z]{3,4}[0-9]{3}|[A-Z0-9]{7}/;
 const regexChassis = /[A-HJ-NPR-Z0-9]{17}/;
-export const VehicleSchema = z.object({
-  id: z.string().optional().nullable(),
-  id_company: z.string().nullable().optional(),
-  id_corporation: z.string().min(1, { message: "id_corporation inválido" }),
-  type_vehicle: z.string().optional().nullable(),
-  prefix: z.string().min(1, { message: "id inválido" }),
-  color: z.string().nullable().optional(),
-  image: z.string().optional().nullable(),
-  plate: z.string().toUpperCase().trim().regex(regexPlate, {
-    message: "Placa deve conter no mínimo 7 caracteres com letras e números ",
-  }),
-  chassi: z.string().toUpperCase().regex(regexChassis, {
-    message: "Placa deve conter no mínimo 17 caracteres com letras e números ",
-  }),
-  local: z.string().nullable().optional(),
-  members: z
-    .array(z.object({ position: z.number(), member: MemberSchema.nullable() }))
-    .optional(),
-  excluded: z.number(),
-  brand: z.string().nullable().optional(),
-  model: z.string().nullable().optional(),
-  year: z.string().nullable().optional(),
-  fuel_type: z.string().nullable().optional(),
-  codigo: z.string().nullable().optional(),
-  nome: z.string().optional().nullable(),
-  id_brand: z.string().min(1, { message: "id_brand inválido" }),
-  id_model: z.string().min(1, { message: "id_model inválido" }),
-  id_year: z.string().min(2, { message: "id_year inválido" }),
-  type: z.string().min(1, {
-    message: "Categoria não pode estar vazio",
-  }),
-  status: z.number().optional().nullable(),
-  condition: z.number().optional().nullable(),
-  AnoModelo: z.string().optional().nullable(),
-  CodigoFipe: z.string().optional().nullable(),
-  Combustivel: z.string().optional().nullable(),
-  Marca: z.string().optional().nullable(),
-  MesReferencia: z.string().optional().nullable(),
-  Modelo: z.string().optional().nullable(),
-  modelos: z.array(z.object({})).optional().nullable(),
-  SiglaCombustivel: z.string().optional().nullable(),
-  TipoVeiculo: z.number().optional().nullable(),
-  Valor: z.string().optional().nullable(),
-  subscription: z.string().optional().nullable(),
-});
+export const VehicleSchema = z
+  .object({
+    id: z.string().optional().nullable(),
+    id_company: z.string().nullable().optional(),
+    id_corporation: z.string().min(1, { message: "id_corporation inválido" }),
+    type_vehicle: z.string().optional().nullable(),
+    prefix: z.string().min(1, { message: "id inválido" }),
+    color: z.string().nullable().optional(),
+    image: z.string().optional().nullable(),
+    plate: z.string().toUpperCase().trim().regex(regexPlate, {
+      message: "Placa deve conter no mínimo 7 caracteres com letras e números ",
+    }),
+    chassi: z.string().toUpperCase().regex(regexChassis, {
+      message:
+        "Placa deve conter no mínimo 17 caracteres com letras e números ",
+    }),
+    local: z.string().nullable().optional(),
+    members: z
+      .array(
+        z
+          .object({
+            position: z.number().optional().nullable(),
+            member: MemberSchema.nullable().optional(),
+          })
+          .optional(),
+      )
+      .optional(),
+    excluded: z.number(),
+    brand: z.string().nullable().optional(),
+    model: z.string().nullable().optional(),
+    year: z.string().nullable().optional(),
+    fuel_type: z.string().nullable().optional(),
+    codigo: z.string().nullable().optional(),
+    nome: z.string().optional().nullable(),
+    id_brand: z.string().min(1, { message: "id_brand inválido" }),
+    id_model: z.string().min(1, { message: "id_model inválido" }),
+    id_year: z.string().min(2, { message: "id_year inválido" }),
+    type: z.string().min(1, {
+      message: "Categoria não pode estar vazio",
+    }),
+    status: z.number().optional().nullable(),
+    condition: z.number().optional().nullable(),
+    AnoModelo: z.string().optional().nullable(),
+    CodigoFipe: z.string().optional().nullable(),
+    Combustivel: z.string().optional().nullable(),
+    Marca: z.string().optional().nullable(),
+    MesReferencia: z.string().optional().nullable(),
+    Modelo: z.string().optional().nullable(),
+    modelos: z.array(z.object({})).optional().nullable(),
+    SiglaCombustivel: z.string().optional().nullable(),
+    TipoVeiculo: z.number().optional().nullable(),
+    Valor: z.string().optional().nullable(),
+    subscription: z.string().optional().nullable(),
+  })
+  .optional();
 
 export type IVehicleSchema = z.infer<typeof VehicleSchema>;

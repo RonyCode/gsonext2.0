@@ -6,12 +6,12 @@ import { CardDefault } from "@/components/Cards/CardDefault";
 import { authOptions } from "@/lib/auth";
 import CalendarGsoV1 from "@/components/CalendarGso/CalendarGsoV1";
 import LoadingPage from "@/components/Loadings/LoadingPage";
-import { getAllSchedulesCompany } from "@/lib/getAllSchedulesCompany";
 import { CardWithLogo } from "@/components/Cards/CardWithLogo";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
 import { GetCompanyByIdAction } from "@/actions/company/GetCompanyByIdAction";
+import { GetAllSchedulesAction } from "@/actions/schedule/GetAllSchedulesAction";
 
 const EscalasUnidade = async ({
   params,
@@ -25,7 +25,7 @@ const EscalasUnidade = async ({
   const idCorporation = session?.id_corporation;
   const idCompany = id_company?.split("-")[1];
 
-  const { data: schedules } = await getAllSchedulesCompany(
+  const { data: schedules } = await GetAllSchedulesAction(
     idCorporation ?? "",
     idCompany ?? "",
   );

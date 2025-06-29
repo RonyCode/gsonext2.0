@@ -87,13 +87,13 @@ export const DetalhesEscalaForm = ({
   const { data: session } = useSession();
   const [dateStart, setDateStart] = React.useState<Date>(
     dateSchedule != null
-      ? moment(dateSchedule, "YYYY/MM/DD").toDate()
-      : new Date(),
+      ? moment(dateSchedule).toDate()
+      : moment(scheduleCompany?.date_start).toDate(),
   );
+
+  console.log(dateStart);
   const [dateFinish, setDateFinish] = React.useState<string>();
-  const [listVehicles, setListVehicles] = React.useState<IVehicleSchema[]>(
-    scheduleCompany?.vehicles ?? [],
-  );
+  const [listVehicles, setListVehicles] = React.useState<IVehicleSchema[]>([]);
   const [listMembersAvailable, setListMembersAvailable] = React.useState<
     IMemberSchema[]
   >(membersCompany ?? []);
@@ -177,7 +177,8 @@ export const DetalhesEscalaForm = ({
       id_company: scheduleCompany?.id_company ?? idCompany,
       id_corporation: scheduleCompany?.id_corporation ?? idCorporation,
       id_period: Number(scheduleCompany?.id_period) ?? undefined,
-      id_member_creator: scheduleCompany?.id_member_creator ?? session?.id,
+      id_member_creator:
+        scheduleCompany?.id_member_creator || session?.id || "",
       id_cmt_sos: scheduleCompany?.id_cmt_sos ?? undefined,
       id_member_comunication:
         scheduleCompany?.id_member_comunication ?? undefined,
@@ -212,7 +213,7 @@ export const DetalhesEscalaForm = ({
     setDayWeekPrint(
       format(new Date(dateStart), "eeeeee", { locale: ptBR }) +
         "  | " +
-        format(new Date(dateStart), "dd/MM", { locale: ptBR }),
+        format(new Date(dateStart), "MM/dd", { locale: ptBR }),
     );
   }, [dateStart]);
 
@@ -257,7 +258,7 @@ export const DetalhesEscalaForm = ({
     }
 
     if (listVehicles?.length > 0) {
-      form.setValue("id_member_creator", session?.id);
+      form.setValue("id_member_creator", session?.id ?? "");
       form.setValue("vehicles", listVehicles);
     }
   }, [
@@ -833,7 +834,7 @@ export const DetalhesEscalaForm = ({
                                     onSelect={() => {
                                       form?.setValue(
                                         "id_cmt_sos",
-                                        member?.id_user ?? undefined,
+                                        member?.id_user ?? "",
                                       );
                                     }}
                                   >
@@ -920,7 +921,7 @@ export const DetalhesEscalaForm = ({
                                     onSelect={() => {
                                       form?.setValue(
                                         "id_member_comunication",
-                                        member?.id_user ?? undefined,
+                                        member?.id_user ?? "",
                                       );
                                     }}
                                   >
@@ -1086,6 +1087,7 @@ export const DetalhesEscalaForm = ({
                         <PopoverContent className="m-0 h-full w-full md:p-0">
                           <Card className={cn("", className)} {...props}>
                             <AddVehicleSchedule
+                              disabled={true}
                               vehicle={vehicle}
                               setListVehiclesAction={setListVehicles}
                               membersCompany={listMembersAvailable}

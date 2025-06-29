@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight, Megaphone, type LucideIcon } from "lucide-react";
+import { ChevronRight, type LucideIcon, CogIcon, Palette } from "lucide-react";
 
 import {
   Collapsible,
@@ -19,11 +19,12 @@ import {
 } from "@/components/ui/sidebar";
 import { ReactNode } from "react";
 import Link from "next/link";
-import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
-import IconList from "@/icons/IconList";
-import { Badge } from "../ui/badge";
 
-type NavConfigProps = {
+import IconManager from "@/icons/IconManager";
+import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
+import IconEditSave from "@/icons/IconEditSave";
+
+type NavMainProps = {
   items: {
     title: string;
     url: string;
@@ -37,27 +38,39 @@ type NavConfigProps = {
   }[];
 };
 
-export function NavTicket({ items }: { compSelected: IUnidadeSchema }) {
-  const data: NavConfigProps["items"] = [
+export function NavDev({ compSelected }: { compSelected: IUnidadeSchema }) {
+  const data: NavMainProps["items"] = [
     {
-      title: "Chamados",
+      title: "Logs",
       url: "#",
-      icon: Megaphone,
+      icon: CogIcon,
       items: [
         {
-          title: "Abertos",
-          icon: <IconList width={32} className="fill-foreground/60" />,
-          url: "/servicos/gestor/salvar-organizacao",
+          title: "Works Logs",
+          icon: <IconManager width={32} className="fill-foreground/60" />,
+          url: "/log",
         },
         {
-          title: "Em Andamento",
-          icon: <IconList width={32} className="fill-foreground/60" />,
-          url: "/servicos/gestor/salvar-organizacao",
+          title: "Erros Logs",
+          icon: <IconManager width={32} className="fill-foreground/60" />,
+          url: "/log",
         },
         {
-          title: "Finalizados",
-          icon: <IconList width={32} className="fill-foreground/60" />,
-          url: "/servicos/gestor/salvar-organizacao",
+          title: "Security Logs",
+          icon: <IconManager width={32} className="fill-foreground/60" />,
+          url: "/log",
+        },
+      ],
+    },
+    {
+      title: "Temas",
+      url: "#",
+      icon: Palette,
+      items: [
+        {
+          title: "Editar Unidade",
+          icon: <IconEditSave width={32} className="fill-foreground/60" />,
+          url: `/servicos/corporacao/unidades/${compSelected?.name}-${compSelected?.id}/detalhes`,
         },
       ],
     },
@@ -65,7 +78,7 @@ export function NavTicket({ items }: { compSelected: IUnidadeSchema }) {
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Chamados</SidebarGroupLabel>
+      <SidebarGroupLabel>Configurações Gerais</SidebarGroupLabel>
       <SidebarMenu>
         {data.map((item) => (
           <Collapsible
@@ -79,12 +92,7 @@ export function NavTicket({ items }: { compSelected: IUnidadeSchema }) {
                 <SidebarMenuButton tooltip={item.title}>
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
-                  <div className="ml-auto flex items-center">
-                    <Badge className="m-0 flex h-4 w-4 items-center justify-center p-0 text-[.7rem]">
-                      4
-                    </Badge>
-                    <ChevronRight className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />{" "}
-                  </div>
+                  <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                 </SidebarMenuButton>
               </CollapsibleTrigger>
               <CollapsibleContent>
@@ -98,18 +106,10 @@ export function NavTicket({ items }: { compSelected: IUnidadeSchema }) {
                         <div className="m-0 h-full w-full p-0" id="cardModule">
                           <Link
                             href={subItem.url}
-                            className="flex w-full items-center gap-2 text-[.7rem]"
+                            className="flex items-center gap-2 text-[.7rem]"
                           >
                             <span> {subItem.icon}</span>
-                            <div className="flex w-full items-center justify-between">
-                              <span>{subItem.title}</span>
-                              <Badge
-                                variant="secondary"
-                                className="m-0 flex h-4 w-4 items-center justify-center p-0 text-[.7rem]"
-                              >
-                                2
-                              </Badge>
-                            </div>
+                            <span>{subItem.title}</span>
                           </Link>
                         </div>
                       </SidebarMenuSubButton>
