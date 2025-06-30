@@ -104,6 +104,7 @@ export const UserRegisterForm = ({
       cidade: "",
       bairro: "",
       senha: "",
+      role: "user",
       confirmaSenha: "",
     },
   });
@@ -317,6 +318,7 @@ export const UserRegisterForm = ({
                         <PopoverContent className="w-auto p-0" align="start">
                           <Calendar
                             locale={ptBR}
+                            captionLayout="dropdown"
                             mode="single"
                             selected={date}
                             onSelect={(date) => {
@@ -338,7 +340,7 @@ export const UserRegisterForm = ({
                   control={form.control}
                   name="telefone"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="w-full">
                       <FormLabel
                         htmlFor="telefone"
                         className="flex items-center gap-1"
@@ -651,7 +653,7 @@ export const UserRegisterForm = ({
                           placeholder="******"
                           type="password"
                           autoCapitalize="none"
-                          autoComplete="senha"
+                          autoComplete="off"
                           autoCorrect="off"
                           disabled={pending}
                         />
@@ -678,7 +680,7 @@ export const UserRegisterForm = ({
                           placeholder="******"
                           type="password"
                           autoCapitalize="none"
-                          autoComplete="confirmaSenha"
+                          autoComplete="off"
                           autoCorrect="off"
                           disabled={pending}
                         />

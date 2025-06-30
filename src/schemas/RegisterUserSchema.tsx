@@ -64,6 +64,7 @@ export const RegisterUserSchema = z
     provider: z.string().optional(),
     provider_user_id: z.string().optional(),
     image: z.string().min(1, { message: "Imagem inválido" }).optional(),
+    role: z.string().optional(),
     senha: z
       .string()
       .min(8, {

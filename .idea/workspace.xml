@@ -4,37 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c4de5031-80c2-4cc7-8968-8fb03cd1922c" name="Changes" comment="fix Links schedule">
-      <change afterPath="$PROJECT_DIR$/public/assets/cadastro.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/actions/DEV/logs/GetAllLogsWorksAction.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/actions/schedule/GetAllSchedulesAction.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/(dev)/log/logViewer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/(dev)/log/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Sidebar/nav-dev.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/RefreshTokenLayout.ts" afterDir="false" />
+    <list default="true" id="c4de5031-80c2-4cc7-8968-8fb03cd1922c" name="Changes" comment="implements logs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/schedule/SearchScheduleAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/schedule/SearchScheduleAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(auth)/auth/components/LoginFormSlice.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/auth/components/LoginFormSlice.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/DetalesEscalaForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/DetalesEscalaForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/TabScheduleSave.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/TabScheduleSave.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/unidades/[id_company]/escalas/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/unidades/[id_company]/escalas/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/escala/[id_escala]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/gestor/escala/[id_escala]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Buttoms/AddVehicleSchedule.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Buttoms/AddVehicleSchedule.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CalendarGso/CalendarGsoV1.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CalendarGso/CalendarGsoV1.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableDetalheEscala/columnsDetailsSchedule.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableDetalheEscala/columnsDetailsSchedule.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Notification/NotiicationsShow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Notification/NotiicationsShow.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Sidebar/app-sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar/app-sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Sidebar/nav-ticket.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar/nav-ticket.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/functions/GetBlurImage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/functions/GetBlurImage.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/functions/TokenManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/functions/TokenManager.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middlewares/permissionUserMiddleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/permissionUserMiddleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/CarsSchema.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/CarsSchema.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/SaveMemberCompanySchema.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/SaveMemberCompanySchema.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/ScheduleFormSave.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/ScheduleFormSave.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/ScheduleSchema.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/ScheduleSchema.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(auth)/cadastro-usuario/[token]/components/UserRegisterForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/cadastro-usuario/[token]/components/UserRegisterForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(auth)/cadastro-usuario/[token]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/cadastro-usuario/[token]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/RegisterUserSchema.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/RegisterUserSchema.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,32 +54,32 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "com.codeium.enabled": "true",
-    "git-widget-placeholder": "main",
-    "js.debugger.nextJs.config.created.client": "true",
-    "js.debugger.nextJs.config.created.server": "true",
-    "last_opened_file_path": "/Users/rony/Sites/gso-next2.0/src/components/Sidebar",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "npm.Next.js: server-side.executor": "Debug",
-    "prettierjs.PrettierConfiguration.Package": "/Users/rony/Sites/gso-next2.0/node_modules/prettier",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie",
-    "ts.external.directory.path": "/Users/rony/Sites/gso-next2.0/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
+    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/rony/Sites/gso-next2.0/src/components/Sidebar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;npm.Next.js: server-side.executor&quot;: &quot;Debug&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/rony/Sites/gso-next2.0/node_modules/prettier&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/rony/Sites/gso-next2.0/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -331,7 +305,8 @@
       <workItem from="1750943852076" duration="994000" />
       <workItem from="1750945150513" duration="24372000" />
       <workItem from="1751209022481" duration="216000" />
-      <workItem from="1751209972938" duration="6339000" />
+      <workItem from="1751209972938" duration="6640000" />
+      <workItem from="1751245701578" duration="2907000" />
     </task>
     <task id="LOCAL-00001" summary="update google login">
       <option name="closed" value="true" />
@@ -517,7 +492,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750637931757</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="implements logs">
+      <option name="closed" value="true" />
+      <created>1751217036444</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1751217036444</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -609,6 +592,7 @@
     <MESSAGE value="fix calendar" />
     <MESSAGE value="fix Links dataTables" />
     <MESSAGE value="fix Links schedule" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix Links schedule" />
+    <MESSAGE value="implements logs" />
+    <option name="LAST_COMMIT_MESSAGE" value="implements logs" />
   </component>
 </project>
