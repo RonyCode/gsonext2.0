@@ -9,7 +9,7 @@ export async function GetAllCompaniesAction(
   IdCorporation: string,
 ): Promise<ResponseApi<IUnidadeSchema[]>> {
   const token = await GetTokenCookie("token");
-  const url = `${process.env.NEXT_PUBLIC_NEXT_URL}/api/unidades?id_corporation=${IdCorporation}`;
+  const url = `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/company/get-all/${IdCorporation}`;
 
   return await fetchWrapper<ResponseApi<IUnidadeSchema[]>>(url, {
     method: "GET",

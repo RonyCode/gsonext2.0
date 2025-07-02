@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4de5031-80c2-4cc7-8968-8fb03cd1922c" name="Changes" comment="implements logs">
+      <change afterPath="$PROJECT_DIR$/src/components/Notification/PushSubscriptionManager.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(auth)/cadastro-usuario/[token]/components/UserRegisterForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/cadastro-usuario/[token]/components/UserRegisterForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(auth)/cadastro-usuario/[token]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/cadastro-usuario/[token]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/RegisterUserSchema.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/RegisterUserSchema.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/company/GetAllCompaniesAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/company/GetAllCompaniesAction.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(dev)/log/logViewer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(dev)/log/logViewer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(public)/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(public)/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -306,7 +307,9 @@
       <workItem from="1750945150513" duration="24372000" />
       <workItem from="1751209022481" duration="216000" />
       <workItem from="1751209972938" duration="6640000" />
-      <workItem from="1751245701578" duration="2907000" />
+      <workItem from="1751245701578" duration="2933000" />
+      <workItem from="1751378279046" duration="6991000" />
+      <workItem from="1751414282864" duration="3311000" />
     </task>
     <task id="LOCAL-00001" summary="update google login">
       <option name="closed" value="true" />
@@ -500,7 +503,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751217036444</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="implements logs">
+      <option name="closed" value="true" />
+      <created>1751249540927</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1751249540927</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -30,19 +30,20 @@ export default function LogViewer() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchLogs = async () => {
+  const fetchLogs = async (url: string) => {
     const token = await GetTokenCookie("token");
     setIsLoading(true);
     try {
-      const url = process.env.NEXT_PUBLIC_API_GSO + "/services/logs?lines=50";
       const response = await fetch(url, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
+
       if (!response.ok) throw new Error(`Erro na API: ${response.statusText}`);
       const data: LogEntry[] = await response.json();
+
       setLogs(data.reverse());
       setError(null);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -61,12 +62,14 @@ export default function LogViewer() {
   };
 
   useEffect(() => {
-    fetchLogs();
+    fetchLogs(process.env.NEXT_PUBLIC_API_GSO + "/services/logs?lines=80");
   }, []);
 
   useEffect(() => {
     hljs.highlightAll();
   }, [logs]);
+
+  console.log(logs);
 
   return (
     <div className="flex h-screen flex-col bg-gray-900 font-mono text-gray-200">
@@ -86,12 +89,31 @@ export default function LogViewer() {
               )}
             </Link>
             <Button
-              onClick={fetchLogs}
+              onClick={async () => {
+                setLogs([]);
+                await fetchLogs(
+                  process.env.NEXT_PUBLIC_API_GSO + "/services/logs?lines=80",
+                );
+              }}
               disabled={isLoading}
               variant="secondary"
             >
-              {isLoading ? "Carregando..." : "Atualizar Agora"}
+              {isLoading ? "Carregando..." : "Logs Principais"}
             </Button>
+            <Button
+              onClick={async () => {
+                setLogs([]);
+                await fetchLogs(
+                  process.env.NEXT_PUBLIC_API_GSO +
+                    "/services/logs-notifications",
+                );
+              }}
+              disabled={isLoading}
+              variant="secondary"
+            >
+              {isLoading ? "Carregando..." : "Logs de Notificação"}
+            </Button>
+
             <Button onClick={handleClearLogs} variant="destructive">
               Limpar Visualização
             </Button>
@@ -126,13 +148,14 @@ export default function LogViewer() {
               <span className={`mr-4 font-bold uppercase`}>{entry.level}:</span>
               <span className="text-gray-100">{entry.message}</span>
             </div>
-            {Object.keys(entry.context).length > 0 && (
-              <pre className="mt-3 rounded-md border border-gray-700 bg-black/20 p-3">
-                <code className="language-json">
-                  {JSON.stringify(entry.context, null, 2)}
-                </code>
-              </pre>
-            )}
+            {/*{Object.keys(entry.context).length > 0 && (*/}
+            <pre className="mt-3 rounded-md border border-gray-700 bg-black/20 p-3">
+              <code className="language-json">
+                {JSON.stringify(entry, null, 2)}
+                {/*{JSON.stringify(entry.context, null, 2)}*/}
+              </code>
+            </pre>
+            {/*)}*/}
           </div>
         ))}
       </main>
