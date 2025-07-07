@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -25,23 +24,21 @@ const LoginFormSlice = () => {
               : "h-screen w-full lg:relative lg:col-start-1 lg:col-end-2 lg:h-full lg:place-content-center lg:place-items-center"
           }`}
         >
-          <div className="flex lg:justify-center">
-            <div className="opacity-1 h-full w-full items-center justify-center lg:absolute lg:flex">
-              <div className="container relative grid h-[800px] items-center lg:h-full lg:w-full lg:max-w-none lg:grid-cols-1 lg:px-0">
-                <Button
-                  className={cn(
-                    buttonVariants({ variant: "default" }),
-                    "fixed left-3 top-20 ease-in-out lg:absolute lg:left-3 lg:top-3",
-                  )}
-                  onClick={() => {
-                    setSliceLoagin("animate-sliceRegister");
-                  }}
-                >
-                  Cadastre-se
-                </Button>
-                <div className="justify-self-center">
-                  <SigInForm />
-                </div>
+          <div className="opacity-1 flex h-full w-full items-center justify-center lg:absolute">
+            <div className="relative flex h-full w-full flex-col items-center justify-center">
+              <Button
+                className={cn(
+                  buttonVariants({ variant: "default" }),
+                  "fixed left-3 top-20 ease-in-out lg:absolute lg:left-3 lg:top-3",
+                )}
+                onClick={() => {
+                  setSliceLoagin("animate-sliceRegister");
+                }}
+              >
+                Cadastre-se
+              </Button>
+              <div className="justify-self-center">
+                <SigInForm />
               </div>
             </div>
           </div>

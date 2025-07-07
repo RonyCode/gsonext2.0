@@ -19,15 +19,14 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu";
 import { getValidImageUrl } from "@/functions/checkImageUrl";
 import {
   Building2,
   CalendarCheck,
-  CircleHelp,
   DoorOpen,
+  Edit3Icon,
   Headphones,
   LogOut,
   Megaphone,
@@ -172,7 +171,7 @@ export function NavbarMain({
                   variant="ghost"
                   className="relative h-10 w-10 rounded-full border hover:border-foreground/20 lg:h-12 lg:w-12"
                 >
-                  <Avatar className="h-10 w-10 lg:h-12 lg:w-12">
+                  <Avatar className="h-10 w-10 hover:scale-125">
                     <AvatarImage
                       src={imageUrl ?? ""}
                       alt="@shadcn"
@@ -195,61 +194,57 @@ export function NavbarMain({
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <Link
-                    href={`/servicos/usuario/${session?.user?.name + "-" + session?.id}`}
-                  >
-                    <DropdownMenuItem className="group-hover">
-                      Minha Conta
-                      <DropdownMenuShortcut className="hover:scale-125">
-                        <User style={{ fontSize: "20px" }} />
-                      </DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                  </Link>
-                  <Link
-                    href={`/servicos/usuario/${session?.user?.name + "-" + session?.id}/escala`}
-                  >
-                    <DropdownMenuItem>
-                      Minha Escala
-                      <DropdownMenuShortcut>
-                        <CalendarCheck style={{ fontSize: "20px" }} />
-                      </DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                  </Link>
-                  <Link
-                    href={`/servicos/usuario/${session?.user?.name + "-" + session?.id}/unidade`}
-                  >
-                    <DropdownMenuItem>
-                      Minha Unidade
-                      <DropdownMenuShortcut>
-                        <Building2 size={20} />
-                      </DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                  </Link>
-                  <Link href={`/suporte`}>
-                    <DropdownMenuItem>
-                      Suporte
-                      <DropdownMenuShortcut>
-                        <Headphones style={{ fontSize: "20px" }} />
-                      </DropdownMenuShortcut>
-                    </DropdownMenuItem>{" "}
-                  </Link>
-
-                  <DropdownMenuItem>
-                    Ajuda
-                    <DropdownMenuShortcut>
-                      <CircleHelp style={{ fontSize: "20px" }} />
-                    </DropdownMenuShortcut>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
+                {session?.is_profile_complete === false ? (
+                  <>
+                    <DropdownMenuGroup>
+                      <Link href={`/completar-cadastro`}>
+                        <DropdownMenuItem>
+                          <Edit3Icon />
+                          Completar Cadastro
+                        </DropdownMenuItem>
+                      </Link>
+                    </DropdownMenuGroup>
+                  </>
+                ) : (
+                  <>
+                    <DropdownMenuGroup>
+                      <Link
+                        href={`/servicos/usuario/${session?.user?.name + "-" + session?.id}`}
+                      >
+                        <DropdownMenuItem className="group-hover">
+                          <User />
+                          Minha Conta
+                        </DropdownMenuItem>
+                      </Link>
+                      <Link
+                        href={`/servicos/usuario/${session?.user?.name + "-" + session?.id}/escala`}
+                      >
+                        <DropdownMenuItem>
+                          <CalendarCheck />
+                          Minha Escala
+                        </DropdownMenuItem>
+                      </Link>
+                      <Link
+                        href={`/servicos/usuario/${session?.user?.name + "-" + session?.id}/unidade`}
+                      >
+                        <DropdownMenuItem>
+                          <Building2 />
+                          Minha Unidade
+                        </DropdownMenuItem>
+                      </Link>
+                      <Link href={`/suporte`}>
+                        <DropdownMenuItem>
+                          <Headphones />
+                          Suporte
+                        </DropdownMenuItem>{" "}
+                      </Link>
+                    </DropdownMenuGroup>
+                  </>
+                )}
                 <DropdownMenuSeparator />
-
-                {}
                 <DropdownMenuItem onClick={handleClick}>
+                  <LogOut />
                   Sair
-                  <DropdownMenuShortcut>
-                    <LogOut style={{ fontSize: "20px" }} />
-                  </DropdownMenuShortcut>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

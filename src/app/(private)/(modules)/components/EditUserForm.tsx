@@ -18,7 +18,6 @@ import {
   LuUser,
 } from "react-icons/lu";
 
-import { saveUserAction } from "@/actions/user/saveUserAction";
 import { MyInputMask } from "@/components/Form/Input/myInputMask";
 import LoadingPage from "@/components/Loadings/LoadingPage";
 import { maskCpfCnpj } from "@/functions/masks/maskCpfCnpj";
@@ -58,6 +57,7 @@ import { toast } from "@/hooks/use-toast";
 import { EditPhoto } from "@/components/EditPhoto/EditPhoto";
 import { redirect, useRouter } from "next/navigation";
 import { getValidImageUrl } from "@/functions/checkImageUrl";
+import SaveUserAction from "@/actions/user/SaveUserAction";
 
 enum Fields {
   cep = "cep",
@@ -125,7 +125,7 @@ export const EditUserForm = ({
 
   const handleSubmit = (dataForm: IEditUserSchema): void => {
     startTransition(async () => {
-      const { data, message } = await saveUserAction(dataForm);
+      const { data, message } = await SaveUserAction(dataForm);
       if (data?.id == null) {
         toast({
           variant: "danger",

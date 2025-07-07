@@ -3,18 +3,18 @@
 import { fetchWrapper } from "@/functions/fetch";
 import { type IEditUserSchema } from "@/schemas/EditUserSchema";
 import { type IRegisterUserSchema } from "@/schemas/RegisterUserSchema";
-import { type ResultUserRegistered } from "@/types/index";
+import { ResponseApi } from "@/types/index";
 import { GetTokenCookie } from "@/functions/TokenManager";
 
-export async function saveUserAction(
-  formData?: IEditUserSchema | IRegisterUserSchema,
-): Promise<ResultUserRegistered> {
+async function SaveUserAction(
+  formData?: Partial<IEditUserSchema> | Partial<IRegisterUserSchema>,
+): Promise<ResponseApi | undefined> {
   try {
     if (formData != null) {
       const token = GetTokenCookie("token");
       const url = `${process.env.NEXT_PUBLIC_API_GSO}/api/auth/save`;
 
-      return await fetchWrapper<ResultUserRegistered>(url, {
+      const resp = await fetchWrapper<ResponseApi>(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -22,20 +22,17 @@ export async function saveUserAction(
         },
         body: JSON.stringify({ ...formData }),
       });
+
+      return resp;
     }
-    return {
-      code: 400,
-      status: "failure",
-      data: null,
-      message: "Erro ao cadastrar usuário! 🤯 ",
-    };
   } catch (error) {
     console.log(error);
     return {
       code: 400,
       status: "failure",
-      data: null,
       message: "Erro ao cadastrar usuário! 🤯 ",
     };
   }
 }
+
+export default SaveUserAction;

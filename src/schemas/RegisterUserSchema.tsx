@@ -65,6 +65,8 @@ export const RegisterUserSchema = z
     provider_user_id: z.string().optional(),
     image: z.string().min(1, { message: "Imagem inválido" }).optional(),
     role: z.string().optional(),
+    is_notification_enabled: z.boolean().optional(),
+    is_profile_complete: z.boolean().optional(),
     senha: z
       .string()
       .min(8, {
@@ -79,6 +81,7 @@ export const RegisterUserSchema = z
   .refine((data) => data.senha === data.confirmaSenha, {
     message: "Passwords não confere",
     path: ["confirmaSenha"],
-  });
+  })
+  .optional();
 
 export type IRegisterUserSchema = z.infer<typeof RegisterUserSchema>;

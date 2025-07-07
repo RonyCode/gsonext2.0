@@ -3,6 +3,7 @@
 import {
   CalendarCheck,
   ChevronsUpDown,
+  Edit3Icon,
   Headset,
   Landmark,
   LogOut,
@@ -40,6 +41,7 @@ export function NavUser({
     id: string | null | undefined;
     email: string | null | undefined;
     image: string | null | undefined;
+    is_profile_complete: boolean | null | undefined;
   };
 }) {
   const router = useRouter();
@@ -82,60 +84,83 @@ export function NavUser({
             align="end"
             sideOffset={4}
           >
-            <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user?.image ?? ""} alt={"img user"} />
-                  <AvatarFallback className="rounded-lg">
-                    {nameUser}
-                  </AvatarFallback>{" "}
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user?.name}</span>
-                  <span className="truncate text-xs">{user?.email}</span>
-                </div>
-                <ModeToggle />
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <Link href={`/servicos/usuario/${user?.name + "-" + user?.id}`}>
-                <DropdownMenuItem>
-                  <LuIdCard />
-                  Minha Conta
+            {user?.is_profile_complete === true ? (
+              <>
+                <DropdownMenuLabel className="p-0 font-normal">
+                  <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                    <Avatar className="h-8 w-8 rounded-lg">
+                      <AvatarImage src={user?.image ?? ""} alt={"img user"} />
+                      <AvatarFallback className="rounded-lg">
+                        {nameUser}
+                      </AvatarFallback>{" "}
+                    </Avatar>
+                    <div className="grid flex-1 text-left text-sm leading-tight">
+                      <span className="truncate font-semibold">
+                        {user?.name}
+                      </span>
+                      <span className="truncate text-xs">{user?.email}</span>
+                    </div>
+                    <ModeToggle />
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <Link
+                    href={`/servicos/usuario/${user?.name + "-" + user?.id}`}
+                  >
+                    <DropdownMenuItem>
+                      <LuIdCard />
+                      Minha Conta
+                    </DropdownMenuItem>
+                  </Link>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <Link
+                    href={`/src/app/(private)/(modules)/servicos/usuario/%5Bid_usuario%5D/unidade`}
+                  >
+                    <DropdownMenuItem>
+                      <Landmark />
+                      Minha Unidade
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link
+                    href={`/src/app/(private)/(modules)/servicos/usuario/%5Bid_usuario%5D/escala`}
+                  >
+                    <DropdownMenuItem>
+                      <CalendarCheck />
+                      Minha Escala
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link href={`/suporte`}>
+                    <DropdownMenuItem>
+                      <Headset />
+                      Suporte
+                    </DropdownMenuItem>
+                  </Link>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleClick}>
+                  <LogOut />
+                  Sair
                 </DropdownMenuItem>
-              </Link>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <Link
-                href={`/src/app/(private)/(modules)/servicos/usuario/%5Bid_usuario%5D/unidade`}
-              >
-                <DropdownMenuItem>
-                  <Landmark />
-                  Minha Unidade
-                </DropdownMenuItem>
-              </Link>
-              <Link
-                href={`/src/app/(private)/(modules)/servicos/usuario/%5Bid_usuario%5D/escala`}
-              >
-                <DropdownMenuItem>
-                  <CalendarCheck />
-                  Minha Escala
-                </DropdownMenuItem>
-              </Link>
-              <Link href={`/suporte`}>
-                <DropdownMenuItem>
-                  <Headset />
-                  Suporte
-                </DropdownMenuItem>
-              </Link>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleClick}>
-              <LogOut />
-              Sair
-            </DropdownMenuItem>
+              </>
+            ) : (
+              <>
+                <DropdownMenuGroup>
+                  <Link href={`/completar-cadastro`}>
+                    <DropdownMenuItem>
+                      <Edit3Icon />
+                      Completar Cadastro
+                    </DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuItem onClick={handleClick}>
+                    <LogOut />
+                    Sair
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

@@ -1,38 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import {
   subscribeUserToPush,
   unsubscribeUserFromPush,
 } from "@/functions/pushSubscription"; // Certifique-se que o caminho está correto
-import { setCookie, deleteCookie, getCookie } from "cookies-next";
+import { setCookie, deleteCookie } from "cookies-next";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { useNotificationStore } from "@/stores/user/useNotificationStore";
+import SaveUserAction from "@/actions/user/SaveUserAction";
+import { Session } from "inspector/promises";
+import LoadingPage from "@/components/Loadings/LoadingPage";
 
-export default function NotificationToggle() {
+export default function NotificationToggle(session: Session) {
   const [isEnabled, setIsEnabled] = useState(
-    getCookie("pushEnabled") === "true",
+    session?.is_notification_enabled ?? false,
   );
+  const [pending, startTransition] = useTransition();
   const router = useRouter();
   const setAllNotifications = useNotificationStore(
     (state) => state.actions.setAll,
   );
+
+  console.log(isEnabled);
+
   const handleToggle = async () => {
     try {
       setIsEnabled(!isEnabled);
-      setCookie("pushEnabled", !isEnabled, {
-        maxAge: 60 * 60 * 24 * 30, // 30 dias
-      });
 
-      if (getCookie("pushEnabled") === "false") {
+      if (!isEnabled) {
         setAllNotifications([]);
       }
 
       if (!isEnabled) {
         const subscription = await subscribeUserToPush();
-        console.log(JSON.stringify(subscription));
-
+        if (session?.id) {
+          startTransition(async () => {
+            const payload = {
+              id: session?.id,
+              is_notification_enabled: isEnabled,
+            };
+            const data = await SaveUserAction({ ...payload });
+            console.log(payload);
+          });
+        }
         if (subscription) {
           setCookie("subscription", JSON.stringify(subscription)); // Stringify a subscrição
           toast({
@@ -90,6 +102,7 @@ export default function NotificationToggle() {
 
   return (
     <div>
+      <LoadingPage pending={pending} />
       <label
         className="flex cursor-pointer items-center space-x-2"
         onClick={(e) => {

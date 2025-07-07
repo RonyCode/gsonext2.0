@@ -52,6 +52,10 @@ export const metadata: Metadata = {
 
 // Mantenha esta importação!
 import "highlight.js/styles/monokai-sublime.css";
+import PushSubscriptionManager from "@/components/Notification/PushSubscriptionManager";
+import { AllowCookie } from "@/components/AllowCookies/AllowCookie";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { SideProfileAlertBanner } from "@/components/Sidebar/sideProfileAlertBanner/side-profile-alert-banner";
 
 export const viewport: Viewport = {
   themeColor: "#FFFFFF",
@@ -80,7 +84,14 @@ export default async function RootLayout({
             <Providers>
               <div className="flex min-h-screen w-screen flex-col bg-gradient-to-t from-background to-secondary">
                 <NotificationsChecker />
+                <PushSubscriptionManager />
+                <AllowCookie />
+                <SideProfileAlertBanner />
+
                 <div className="m-auto h-full w-full">{children}</div>
+                <GoogleAnalytics
+                  gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID as string}
+                />
               </div>
             </Providers>
           </ThemeProvider>

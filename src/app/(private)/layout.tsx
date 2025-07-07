@@ -29,6 +29,8 @@ export default async function PrivateLayout({
   const { data: companies } = await GetAllCompaniesAction(
     session?.id_corporation ?? "",
   );
+  console.log(corpFound);
+  console.log(companies);
 
   return (
     <div className="w-full">

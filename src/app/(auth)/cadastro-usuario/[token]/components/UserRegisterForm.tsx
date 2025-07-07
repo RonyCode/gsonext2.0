@@ -17,7 +17,6 @@ import {
 } from "react-icons/fa6";
 import { LuCheck, LuChevronsUpDown } from "react-icons/lu";
 
-import { saveUserAction } from "@/actions/user/saveUserAction";
 import { MyInputMask } from "@/components/Form/Input/myInputMask";
 import LoadingPage from "@/components/Loadings/LoadingPage";
 import {
@@ -58,6 +57,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
+import SaveUserAction from "@/actions/user/SaveUserAction";
 
 enum Fields {
   email = "email",
@@ -115,7 +115,7 @@ export const UserRegisterForm = ({
 
   const handleSubmit = (formData: IRegisterUserSchema): void => {
     startTransition(async () => {
-      const result: ResultUserRegistered = await saveUserAction(formData);
+      const result = await SaveUserAction(formData);
       if (result?.data?.id == null) {
         toast({
           variant: "danger",

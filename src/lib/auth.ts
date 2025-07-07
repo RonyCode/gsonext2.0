@@ -3,6 +3,7 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { cookies } from "next/headers";
+import { LoginUserExternalAction } from "@/actions/user/LoginUserExternalAction";
 
 function getGoogleCredentials(): { clientId: string; clientSecret: string } {
   const googleClientId = process.env.GOOGLE_CLIENT_ID;
@@ -21,7 +22,7 @@ function getGoogleCredentials(): { clientId: string; clientSecret: string } {
 export const confereLogado = async (payload: {
   email?: string;
   senha?: string;
-  is_user_external?: number;
+  is_profile_complete?: boolean;
   subscription_user?: string;
 }) => {
   const subscriptionsUser = (await cookies()).get("subscription")?.value;
@@ -33,15 +34,30 @@ export const confereLogado = async (payload: {
   const res = await LoginAction(
     payload?.email,
     payload?.senha,
-    payload?.is_user_external,
     payload?.subscription_user,
   );
   if (res.ok) {
-    const refreshToken = res.headers.get("x-refresh-token");
-    const token = res.headers.get("authorization")?.replace("Bearer ", "");
+    const refreshToken = res.headers?.get("x-refresh-token");
+    const token = res.headers?.get("authorization")?.replace("Bearer ", "");
 
     const { data } = await res.json();
-    // Retorna os dados do usuário junto com os tokens dos headers
+    return {
+      ...data,
+      token: token,
+      refresh_token: refreshToken,
+    };
+  } else {
+    return null;
+  }
+};
+
+export const loginExterno = async (payload: { provider_user_id?: string }) => {
+  const res = await LoginUserExternalAction(payload?.provider_user_id);
+  if (res.ok) {
+    const refreshToken = res.headers?.get("x-refresh-token");
+    const token = res.headers?.get("authorization")?.replace("Bearer ", "");
+
+    const { data } = await res.json();
     return {
       ...data,
       token: token,
@@ -72,14 +88,12 @@ export const authOptions: NextAuthOptions = {
           placeholder: "exemplo@email.com",
         },
         senha: { label: "Senha", type: "password" },
-        is_user_external: { label: "User Externo", type: "text" },
       },
 
       async authorize(credentials) {
         const payload = {
           email: credentials?.email,
           senha: credentials?.senha,
-          is_user_external: 0,
         };
 
         if (payload.email == null || payload.senha == null) {
@@ -121,21 +135,12 @@ export const authOptions: NextAuthOptions = {
       if (account != null && user != null) {
         if (account.provider === "google") {
           const payload = {
-            email: token?.email,
-            senha: String(token.sub) + "a",
-            is_user_external: 1,
+            provider_user_id: token.sub,
           };
 
-          const userGoogle = await confereLogado(payload);
+          const userGoogle = await loginExterno(payload);
 
           if (userGoogle == null) {
-            cookieStore.set({
-              name: "user_external_to_confirm",
-              value: JSON.stringify(token),
-              httpOnly: true,
-              maxAge: 60 * 50,
-              path: "/",
-            });
             return {
               ...token,
               provider: account.provider,
@@ -143,6 +148,7 @@ export const authOptions: NextAuthOptions = {
               email: token?.email,
               name: token?.name,
               image: token?.picture,
+              is_profile_complete: false,
             };
           }
 
@@ -184,6 +190,8 @@ export const authOptions: NextAuthOptions = {
             date_expires_token: userGoogle?.date_expires_token,
             date_creation_token: userGoogle?.date_creation_token,
             expires_at: userGoogle?.date_expires_token,
+            is_profile_complete: userGoogle?.is_profile_complete,
+            is_notification_enabled: userGoogle?.is_notification_enabled,
           };
         } else {
           // Save the access token and refresh token in the JWT on the initial login
@@ -224,13 +232,17 @@ export const authOptions: NextAuthOptions = {
             date_expires_token: user?.date_expires_token,
             date_creation_token: user?.date_creation_token,
             expires_at: user?.date_expires_token,
+            is_profile_complete: user?.is_profile_complete,
+            is_notification_enabled: user?.is_notification_enabled,
           };
         }
       }
 
       if (trigger === "update") {
         // Note, that `session` can be any arbitrary object, remember to validate it!
+        token.id = session.id;
         token.id_corporation = session.id_corporation;
+        token.is_profile_complete = session.is_profile_complete;
         token.id_company = session.id_company;
         token.name = session.name;
         token.image = session.image || session.picture;
@@ -258,14 +270,18 @@ export const authOptions: NextAuthOptions = {
       session.date_expires_token = token?.date_expires_token;
       session.date_creation_token = token?.date_creation_token;
       session.expires_at = token?.expires_at;
+      session.is_profile_complete = token?.is_profile_complete;
+      session.is_notification_enabled = token?.is_notification_enabled;
 
       if (trigger === "update") {
         // You can update the session in the database if it's not already updated.
         // await adapter.updateUser(session.user.id, { name: newSession.name })
 
         // Make sure the updated value is reflected on the client
+        session.id = newSession.id;
         session.id_corporation = newSession.id_corporation;
         session.id_company = newSession.id_company;
+        session.is_profile_complete = newSession.is_profile_complete;
         session.name = newSession.name;
         session.image = newSession.image || newSession.picture;
       }

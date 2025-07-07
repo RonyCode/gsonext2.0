@@ -16,6 +16,23 @@ export interface UserAuth {
   dateCriation: string;
 }
 
+export interface UserLogged {
+  id: string | null;
+  provider_user_id: string | null;
+  provider: string | null;
+  id_message: string | null;
+  id_corporation: string | null;
+  id_company: string | null;
+  short_name_corp: string | null;
+  role: string | null;
+  is_profile_complete: boolean | null;
+  is_notification_enabled: boolean | null;
+  email: string | null;
+  image: string | null;
+  name: string | null;
+  date_creation_token: number | null;
+  date_expires_token: number | null;
+}
 export type ModalProps = {
   title?: string;
   description?: string;
@@ -79,6 +96,15 @@ export interface Member {
   email: string;
   function: string;
   imageMember: string;
+}
+
+export interface PayloaduserExternal {
+  id: string | null;
+  id_user: string;
+  email: string;
+  provider: string;
+  provider_user_id: string;
+  subscription: string;
 }
 
 export interface Car {
@@ -227,6 +253,7 @@ export interface UserType {
   id: string;
   _id: object;
   excluded: number;
+  isProfileComplete: boolean;
 }
 
 export interface NotificationMessage {
@@ -380,6 +407,8 @@ declare module "next-auth" {
     date_expires_token?: number | null;
     date_creation_token: number;
     expires_at?: number | null;
+    is_profile_complete: boolean;
+    is_notification_enabled: boolean;
   }
 
   interface User {
@@ -403,6 +432,8 @@ declare module "next-auth" {
     date_expires_token: number;
     date_creation_token: number;
     expires_at: number;
+    is_profile_complete: boolean;
+    is_notification_enabled: boolean;
   }
 }
 
@@ -428,5 +459,7 @@ declare module "next-auth/jwt" {
     date_expires_token: number;
     date_creation_token: number;
     expires_at: number;
+    is_profile_complete: boolean;
+    is_notification_enabled: boolean;
   }
 }

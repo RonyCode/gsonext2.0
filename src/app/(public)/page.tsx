@@ -8,7 +8,6 @@ import BannerHome2 from "@/components/Headers/banner/BannerHome2";
 import MaxWidthWrapper from "@/components/Pages/MaxWidthWrapper";
 import { Button } from "@/ui/button";
 import { FaRocket, FaShieldAlt, FaUsers } from "react-icons/fa";
-import PushSubscriptionManager from "@/components/Notification/PushSubscriptionManager";
 
 export const metadata: Metadata = {
   title: "GSO | Home",
@@ -19,8 +18,6 @@ export default async function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <MaxWidthWrapper>
-        <PushSubscriptionManager />
-
         <div className="flex-1 bg-gradient-to-t from-background to-secondary">
           <header className="z-0 h-full min-h-screen">
             <BannerHome1 />

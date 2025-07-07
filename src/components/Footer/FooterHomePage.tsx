@@ -130,7 +130,7 @@ const FooterHomePage = ({ className, ...props }: FooterLayoutProps) => {
                   <li>
                     <Link
                       className="block pb-2 text-sm font-semibold text-foreground hover:text-primary/60"
-                      href="/src/app/(public)/privacy/page.tsx"
+                      href="/src/app/(public)/politica-de-privacidade/privacy/page.tsx"
                     >
                       Políticas de privacidade
                     </Link>

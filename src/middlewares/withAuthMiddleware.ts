@@ -38,16 +38,6 @@ export function withAuthMiddleware(
 
     const token = request.cookies.get("token")?.value;
     const refreshToken = request.cookies.get("refresh_token")?.value;
-    const userExternalToConfirm = request.cookies.get(
-      "user_external_to_confirm",
-    )?.value;
-
-    // CONFIRMA SE O USUÁRIO EXTERNO ESTÁ SE CADASTRANDO
-    if (userExternalToConfirm && request.nextUrl.pathname !== "/") {
-      // Garante que a URL de redirecionamento esteja formada corretamente
-      const redirectUrl = new URL("/cadastro-usuario", request.url);
-      return NextResponse.redirect(redirectUrl);
-    }
 
     const sessaoToken =
       request.cookies.get("next-auth.session-token")?.value ??
@@ -55,30 +45,25 @@ export function withAuthMiddleware(
 
     const response = NextResponse.next();
 
-    // Lida com token ausente, mas token de sessão existente (ex: após login social)
     if (!token && sessaoToken && refreshToken) {
-      return handleTokenRefresh(refreshToken, response); // Passa a URL original
+      return handleTokenRefresh(refreshToken, response);
     }
 
-    // Lida com usuários não autenticados
     if (!sessaoToken) {
       const isAuthPage = request.nextUrl.pathname === "/auth";
       const isRootPage = request.nextUrl.pathname === "/";
       if (isAuthPage || isRootPage) {
-        return middleware(request, event, response); // Permite acesso à página de autenticação e à página raiz
+        return middleware(request, event, response);
       }
-      // Para outras páginas, redireciona para autenticação
       const authRedirectUrl = new URL("/auth", request.url);
       return NextResponse.redirect(authRedirectUrl);
     }
 
-    // Lida com usuários autenticados tentando acessar a página /auth
     if (sessaoToken && request.nextUrl.pathname === "/auth") {
       const homeRedirectUrl = new URL("/", request.url);
       return NextResponse.redirect(homeRedirectUrl);
     }
 
-    // Define cabeçalhos de autorização para requisições downstream se o token existir
     if (token) {
       response.headers.set("Authorization", `Bearer ${token}`);
     }

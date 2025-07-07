@@ -36,7 +36,7 @@ export async function subscribeUserToPush() {
     // Inscreve o usuário para as notificações push
     return await registration.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY, // Certifique-se que esta chave está correta
+      applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
     });
   } catch (error) {
     toast({

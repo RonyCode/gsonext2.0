@@ -19,7 +19,6 @@ import {
   LuUser,
 } from "react-icons/lu";
 
-import { saveUserAction } from "@/actions/user/saveUserAction";
 import { MyInputMask } from "@/components/Form/Input/myInputMask";
 import LoadingPage from "@/components/Loadings/LoadingPage";
 import {
@@ -30,12 +29,9 @@ import {
 import { getAllCitiesByState } from "@/lib/getAllCitiesByState";
 import { getCep } from "@/lib/getCep";
 import { cn } from "@/lib/utils";
-import {
-  type IRegisterUserSchema,
-  RegisterUserSchema,
-} from "@/schemas/RegisterUserSchema";
+
 import { cityStore } from "@/stores/Address/CityByStateStore";
-import { type AddressProps, type ResultUserRegistered } from "@/types/index";
+import { type AddressProps, ResultUserRegistered } from "@/types/index";
 import { Button, buttonVariants } from "@/ui/button";
 import { Calendar } from "@/ui/calendar";
 import {
@@ -61,7 +57,17 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
 import Image from "next/image";
 import Link from "next/link";
-import { DeleteTokenCookies } from "@/functions/TokenManager";
+import { GetUserByCpfEmailNonUserExternalAction } from "@/actions/user/GetUserByCpfEmailNonUserExternalAction";
+import { LinkAccountModal } from "@/components/Modal/LinkAccountModal";
+import { IUserSchema } from "@/schemas/UsersSchema";
+import UserExternalMergeAction from "@/actions/user/UserExternalMergeAction";
+import { GetTokenCookie } from "@/functions/TokenManager";
+import SaveUserAction from "@/actions/user/SaveUserAction";
+import {
+  IRegisterUserExternalSchema,
+  RegisterUserExternalSchema,
+} from "@/schemas/RegisterUserExternalSchema";
+import { signIn, signOut } from "next-auth/react";
 
 enum Fields {
   email = "email",
@@ -78,7 +84,9 @@ type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
     email: string;
     picture: string;
     name: string;
-    sub: string;
+    provider_user_id: string;
+    provider: string;
+    image: string;
   } | null;
   states: AddressProps[] | null;
 };
@@ -90,15 +98,24 @@ export const UserExternalUpdateRegisterForm = ({
   ...props
 }: UserRegisterFormProps): React.ReactElement => {
   const [file, setFile] = React.useState<File | null>(null);
+
+  const [isUserExistsDialogOpen, setIsUserExistsDialogOpen] =
+    React.useState(false);
+  const [userInternoCpf, setUserInternoCpf] = React.useState<IUserSchema>({});
+  const [userInternoEmail, setUserInternoEmail] = React.useState<IUserSchema>(
+    {},
+  );
+
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(
     user?.picture ?? null,
   );
 
-  const form = useForm<IRegisterUserSchema>({
+  const form = useForm<IRegisterUserExternalSchema>({
     mode: "all",
     criteriaMode: "all",
-    resolver: zodResolver(RegisterUserSchema),
+    resolver: zodResolver(RegisterUserExternalSchema),
     defaultValues: {
+      id: null,
       nome: user?.name,
       email: user?.email,
       cpf: "",
@@ -111,20 +128,18 @@ export const UserExternalUpdateRegisterForm = ({
       estado: "",
       cidade: "",
       bairro: "",
-      senha: user?.sub + "a",
-      confirmaSenha: user?.sub + "a",
-      provider: user?.sub,
-      provider_user_id: user?.sub,
+      provider: user?.provider,
+      provider_user_id: user?.provider_user_id,
     },
   });
 
   const [pending, startTransition] = useTransition();
-
   const [date, setDate] = React.useState<Date>();
 
-  const handleSubmit = (formData: IRegisterUserSchema): void => {
+  const handleSubmit = (formData: IRegisterUserExternalSchema): void => {
     startTransition(async () => {
-      const result: ResultUserRegistered = await saveUserAction(formData);
+      const result: ResultUserRegistered | undefined =
+        await SaveUserAction(formData);
       if (result?.data?.id == null) {
         toast({
           variant: "danger",
@@ -135,10 +150,15 @@ export const UserExternalUpdateRegisterForm = ({
       if (result?.data?.id != null) {
         toast({
           variant: "success",
-          title: "Ok! Usuário Cadastrado! 🤯 ",
-          description: "Tudo certo usuário cadastrado",
+          title: "tudo certo ao completar o cadastro de usuário! 🚀",
+          description:
+            "Por favor realize o login novamente para atualizar seus dados pessoais.",
+          duration: 8000,
         });
-        redirect("/auth");
+        await signIn("google", {
+          redirect: false, // Evita redirecionamento automático
+          callbackUrl: "/", // URL final após login bem-sucedido
+        });
       }
     });
   };
@@ -188,29 +208,46 @@ export const UserExternalUpdateRegisterForm = ({
     }
   };
 
-  const handleCheckUserExists = async (cpf: string) => {
+  const handleCheckUserExists = (cpf: string, email: string) => {
     const cpfLimpo = cpf.replace(/[^0-9]/g, "");
-    if (cpfLimpo.length === 11) {
-      await form.trigger("cpf"); //ATUALIZA O FORM COM OS ERROS OU NAO
-      const cpfState = form.getFieldState("cpf");
 
-      if (!cpfState.invalid) {
-        console.log("fazer submit");
-      } else {
-        toast({
-          variant: "danger",
-          title: "CPF Incorreto! 🤯",
-          description: "CPF inválido, verifique se digitou corretamente",
-        });
-      }
+    if (cpfLimpo.length === 11) {
+      startTransition(async () => {
+        await form.trigger("cpf"); //ATUALIZA O FORM COM OS ERROS OU NAO
+        const cpfState = form.getFieldState("cpf");
+
+        if (!cpfState.invalid) {
+          const $userFound = await GetUserByCpfEmailNonUserExternalAction(
+            cpfLimpo,
+            email,
+          );
+          if ($userFound["code"] == 200) {
+            setIsUserExistsDialogOpen(true);
+            setUserInternoCpf(
+              $userFound?.data?.find(
+                (user: IUserSchema) => user?.account?.cpf === cpfLimpo,
+              ) ?? {},
+            );
+            setUserInternoEmail(
+              $userFound?.data?.find(
+                (user: IUserSchema) => user?.auth?.email === email,
+              ) ?? {},
+            );
+          }
+        } else {
+          toast({
+            variant: "danger",
+            title: "CPF Incorreto! 🤯",
+            description: "CPF inválido, verifique se digitou corretamente",
+          });
+        }
+      });
     }
   };
 
   const handleCancel = () => {
     try {
       startTransition(async () => {
-        await DeleteTokenCookies("user_external_to_confirm");
-        await DeleteTokenCookies("user_external_to_confirm");
         redirect("/auth");
       });
     } catch (error) {
@@ -218,8 +255,54 @@ export const UserExternalUpdateRegisterForm = ({
     }
   };
 
+  const handleLinkAccount = async (data: IUserSchema) => {
+    const subscription = await GetTokenCookie("subscription");
+    const result = await UserExternalMergeAction({
+      id: null,
+      id_user: data.id ?? "",
+      email: data?.auth?.email ?? "",
+      provider: user?.provider ?? "",
+      provider_user_id: user?.provider_user_id ?? "",
+      subscription: JSON.parse(subscription) ?? "",
+    });
+    //
+    if (result && result["code"] == 200) {
+      setIsUserExistsDialogOpen(false); // Fecha o modal
+      toast({
+        variant: "success",
+        title: "tudo certo ao completar o cadastro de usuário! 🚀",
+        description:
+          "Por favor realize o login novamente para atualizar seus dados pessoais.",
+        duration: 8000,
+      });
+      await signIn("google", {
+        redirect: false, // Evita redirecionamento automático
+        callbackUrl: "/", // URL final após login bem-sucedido
+      });
+    } else {
+      toast({
+        variant: "danger",
+        title: "Erro na Vinculação",
+        description:
+          (result && result["message"]) ||
+          "Senha incorreta ou erro inesperado.",
+        duration: 8000,
+      });
+    }
+  };
+
+  // 2. Função que será passada para o modal para lidar com a lógica
+
   return (
     <>
+      <LinkAccountModal
+        isOpen={isUserExistsDialogOpen}
+        onOpenChange={setIsUserExistsDialogOpen}
+        userEmail={userInternoEmail}
+        userCpfEmail={userInternoCpf}
+        onLinkAccount={handleLinkAccount}
+      />
+
       <div className="flex h-full flex-col">
         <div className="flex flex-col space-y-2 text-center">
           <span className="text-2xl font-semibold tracking-tight">
@@ -234,7 +317,6 @@ export const UserExternalUpdateRegisterForm = ({
           className={cn("grid place-items-center pt-4 lg:pt-12", className)}
           {...props}
         >
-          <LoadingPage pending={pending} />
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(async (data) => {
@@ -242,6 +324,8 @@ export const UserExternalUpdateRegisterForm = ({
               })}
               className="flex w-full flex-col space-y-4"
             >
+              <LoadingPage pending={pending} />
+
               <div className="flex h-full w-full flex-col gap-2 md:flex-row">
                 <div className="relative flex w-full justify-center rounded-2xl md:w-5/12">
                   <div>
@@ -321,9 +405,12 @@ export const UserExternalUpdateRegisterForm = ({
                               autoComplete="cpf"
                               autoCorrect="off"
                               disabled={pending}
-                              onChange={async (e) => {
+                              onChange={(e) => {
                                 field.onChange(e);
-                                await handleCheckUserExists(e.target.value);
+                                handleCheckUserExists(
+                                  e.target.value,
+                                  user?.email ?? "",
+                                );
                               }}
                             />
                           </FormControl>
@@ -764,7 +851,6 @@ export const UserExternalUpdateRegisterForm = ({
                   </Button>{" "}
                 </Link>
                 <Button
-                  disabled={!form.formState.isValid}
                   className={cn(
                     buttonVariants({ variant: "default" }),
                     "w-full",

@@ -1,19 +1,21 @@
-import { z } from 'zod'
+import { z } from "zod";
 
 export const ProfileSchema = z.object({
   role: z.string().min(1, {
-    message: 'role inválido deve conter no mínimo 1 caracteres',
+    message: "role inválido deve conter no mínimo 1 caracteres",
   }),
   date_granted: z.string().min(1, {
-    message: 'date_granted inválida',
+    message: "date_granted inválida",
   }),
   date_expires: z.string().min(1, {
-    message: 'date_expires inválida',
+    message: "date_expires inválida",
   }),
 
   granted_by_iduser: z.string().min(1, {
-    message: 'granted_by_iduser inválida',
+    message: "granted_by_iduser inválida",
   }),
-})
+  is_notification_enabled: z.boolean().optional(),
+  is_profile_complete: z.boolean().optional(),
+});
 
-export type IProfileSchema = z.infer<typeof ProfileSchema>
+export type IProfileSchema = z.infer<typeof ProfileSchema>;

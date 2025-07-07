@@ -1,24 +1,22 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-
 import { fetchWrapper } from "@/functions/fetch";
 import { type ResponseApi } from "@/types/index";
+import { GetTokenCookie } from "@/functions/TokenManager";
 
-export async function searchUserAction(
-  idCorpoation: string | null,
+export async function SearchUserByCriteriaAction(
   nested: string | null,
 ): Promise<ResponseApi> {
-  revalidatePath("/");
-
   try {
     if (nested != null) {
+      const token = await GetTokenCookie("token");
       return await fetchWrapper<ResponseApi>(
-        `${process.env.NEXT_PUBLIC_API_GSO}/api/user/get-all-without-corp?id_corporation=${idCorpoation}&criteria=${nested}`,
+        `${process.env.NEXT_PUBLIC_API_GSO}/api/user/search-user/${nested}`,
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         },
       );

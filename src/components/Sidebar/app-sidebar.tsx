@@ -90,6 +90,7 @@ export function AppSidebar({
             id: session?.id ?? "",
             name: session?.user?.name ?? "",
             email: session?.user?.email ?? "",
+            is_profile_complete: session?.is_profile_complete ?? null,
             image: imageUrl ?? "",
           }}
         />

@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import React from "react";
-import { LuBuilding, LuSearchX } from "react-icons/lu";
+import { LuBuilding } from "react-icons/lu";
 import { MdOutlineSupervisorAccount } from "react-icons/md";
 
 import TabUnidadeDetails from "@/app/(private)/(modules)/components/ListaUnidadeDetails";
