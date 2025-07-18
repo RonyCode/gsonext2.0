@@ -1,17 +1,34 @@
-import { isValidJSON } from "./isValidJson";
+import { ResponseApi } from "@/types/index";
+import { signOut } from "next-auth/react";
+import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 
 export async function fetchWrapper<T = unknown>(
   input: RequestInfo | URL,
-  init: RequestInit | NextRequest | undefined,
-): Promise<T | undefined> {
+  init?: RequestInit | NextRequest | undefined,
+): Promise<ResponseApi<T>> {
   try {
-    const dataResponse = await fetch(input, init);
-    if (!dataResponse.ok) {
-      console.log(dataResponse.statusText);
+    const response = await fetch(input, init);
+
+    const data = (await response.json()) as ResponseApi<T>;
+
+    if (data.code === 401) {
+      console.log("Sessão expirada!");
+      await signOut({ redirect: false });
+      redirect("/login");
     }
-    return (await isValidJSON(dataResponse)) as T;
+
+    if (data.code === 400) {
+      console.log(data.message);
+    }
+
+    if (!response.ok) {
+      console.log(data.message);
+    }
+
+    return data as ResponseApi<T>;
   } catch (error) {
-    console.log(error);
+    console.error("Erro na requisição:", error);
+    throw error;
   }
 }

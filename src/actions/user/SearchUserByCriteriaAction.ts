@@ -10,7 +10,7 @@ export async function SearchUserByCriteriaAction(
   try {
     if (nested != null) {
       const token = await GetTokenCookie("token");
-      return await fetchWrapper<ResponseApi>(
+      return await fetchWrapper(
         `${process.env.NEXT_PUBLIC_API_GSO}/api/user/search-user/${nested}`,
         {
           method: "GET",

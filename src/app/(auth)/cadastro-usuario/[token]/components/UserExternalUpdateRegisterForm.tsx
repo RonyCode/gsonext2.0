@@ -31,7 +31,7 @@ import { getCep } from "@/lib/getCep";
 import { cn } from "@/lib/utils";
 
 import { cityStore } from "@/stores/Address/CityByStateStore";
-import { type AddressProps, ResultUserRegistered } from "@/types/index";
+import { UserLogged, type AddressProps } from "@/types/index";
 import { Button, buttonVariants } from "@/ui/button";
 import { Calendar } from "@/ui/calendar";
 import {
@@ -67,7 +67,9 @@ import {
   IRegisterUserExternalSchema,
   RegisterUserExternalSchema,
 } from "@/schemas/RegisterUserExternalSchema";
-import { signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { setCookie } from "cookies-next";
+import { getValidImageUrl } from "@/functions/checkImageUrl";
 
 enum Fields {
   email = "email",
@@ -97,17 +99,17 @@ export const UserExternalUpdateRegisterForm = ({
   className,
   ...props
 }: UserRegisterFormProps): React.ReactElement => {
-  const [file, setFile] = React.useState<File | null>(null);
-
   const [isUserExistsDialogOpen, setIsUserExistsDialogOpen] =
     React.useState(false);
   const [userInternoCpf, setUserInternoCpf] = React.useState<IUserSchema>({});
   const [userInternoEmail, setUserInternoEmail] = React.useState<IUserSchema>(
     {},
   );
-
+  const [pending, startTransition] = useTransition();
+  const { data: session, update } = useSession();
+  const [date, setDate] = React.useState<Date>();
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(
-    user?.picture ?? null,
+    user?.picture || user?.image || null,
   );
 
   const form = useForm<IRegisterUserExternalSchema>({
@@ -125,21 +127,20 @@ export const UserExternalUpdateRegisterForm = ({
       endereco: "",
       numero: "",
       complemento: "",
+      image: previewUrl ?? "",
       estado: "",
       cidade: "",
       bairro: "",
+      is_profile_complete: true,
       provider: user?.provider,
       provider_user_id: user?.provider_user_id,
     },
   });
 
-  const [pending, startTransition] = useTransition();
-  const [date, setDate] = React.useState<Date>();
-
   const handleSubmit = (formData: IRegisterUserExternalSchema): void => {
     startTransition(async () => {
-      const result: ResultUserRegistered | undefined =
-        await SaveUserAction(formData);
+      const result = await SaveUserAction(formData);
+
       if (result?.data?.id == null) {
         toast({
           variant: "danger",
@@ -152,13 +153,44 @@ export const UserExternalUpdateRegisterForm = ({
           variant: "success",
           title: "tudo certo ao completar o cadastro de usuário! 🚀",
           description:
-            "Por favor realize o login novamente para atualizar seus dados pessoais.",
+            "Bem vindo ao nosso sistema de gestão de sistemas e operações.",
           duration: 8000,
         });
-        await signIn("google", {
-          redirect: false, // Evita redirecionamento automático
-          callbackUrl: "/", // URL final após login bem-sucedido
+
+        if (
+          result?.data?.token != null &&
+          result?.data?.refresh_token != null
+        ) {
+          setCookie("token", result?.data?.token, {
+            expires: new Date(Date.now() + 60 * 60 * 1000),
+            maxAge: 3600,
+            path: "/",
+            sameSite: "lax",
+            secure: process.env.NODE_ENV === "production",
+          });
+          setCookie("refresh_token", result?.data?.refresh_token, {
+            expires: new Date(Date.now() + 60 * 60 * 24 * 7),
+            maxAge: 60 * 60 * 24 * 7,
+            path: "/",
+            sameSite: "lax",
+            secure: process.env.NODE_ENV === "production",
+          });
+        }
+        await update({
+          ...session,
+          id: result?.data.id,
+          is_profile_complete: true,
+          id_corporation: result?.data?.id_corporation ?? "",
+          id_company: result?.data?.id_company ?? "",
+          email: result?.data?.email ?? "",
+          role: result?.data?.role ?? "",
+          short_name_corp: result?.data?.short_name_corp ?? "",
+          name: result?.data?.name ?? "",
+          token: result?.data?.token ?? "",
+          access_token: result?.data?.token ?? "",
+          refresh_token: result?.data?.refresh_token ?? "",
         });
+        redirect("/servicos");
       }
     });
   };
@@ -255,18 +287,50 @@ export const UserExternalUpdateRegisterForm = ({
     }
   };
 
-  const handleLinkAccount = async (data: IUserSchema) => {
+  const handleLinkAccount = async (data: UserLogged) => {
     const subscription = await GetTokenCookie("subscription");
+
     const result = await UserExternalMergeAction({
       id: null,
       id_user: data.id ?? "",
-      email: data?.auth?.email ?? "",
+      email: data?.email ?? "",
       provider: user?.provider ?? "",
       provider_user_id: user?.provider_user_id ?? "",
       subscription: JSON.parse(subscription) ?? "",
     });
-    //
+
     if (result && result["code"] == 200) {
+      if (data?.access_token != null && data?.refresh_token != null) {
+        setCookie("token", data?.access_token, {
+          expires: new Date(Date.now() + 60 * 60 * 1000),
+          maxAge: 3600,
+          path: "/",
+          sameSite: "lax",
+          secure: process.env.NODE_ENV === "production",
+        });
+        setCookie("refresh_token", data?.refresh_token, {
+          expires: new Date(Date.now() + 60 * 60 * 1000),
+          maxAge: 60 * 60 * 24 * 7,
+          path: "/",
+          sameSite: "lax",
+          secure: process.env.NODE_ENV === "production",
+        });
+      }
+
+      await update({
+        ...session,
+        id: data.id,
+        is_profile_complete: true,
+        id_corporation: data?.id_corporation ?? "",
+        id_company: data?.id_company ?? "",
+        email: data?.email ?? "",
+        role: data?.role ?? "",
+        short_name_corp: data?.short_name_corp ?? "",
+        name: data?.name ?? "",
+        token: data?.access_token ?? "",
+        access_token: data?.access_token ?? "",
+        refresh_token: data?.refresh_token ?? "",
+      });
       setIsUserExistsDialogOpen(false); // Fecha o modal
       toast({
         variant: "success",
@@ -275,10 +339,7 @@ export const UserExternalUpdateRegisterForm = ({
           "Por favor realize o login novamente para atualizar seus dados pessoais.",
         duration: 8000,
       });
-      await signIn("google", {
-        redirect: false, // Evita redirecionamento automático
-        callbackUrl: "/", // URL final após login bem-sucedido
-      });
+      redirect("/servicos");
     } else {
       toast({
         variant: "danger",
@@ -291,8 +352,12 @@ export const UserExternalUpdateRegisterForm = ({
     }
   };
 
-  // 2. Função que será passada para o modal para lidar com a lógica
-
+  React.useEffect(() => {
+    const fetchFunc = async () => {
+      setPreviewUrl(await getValidImageUrl(user?.image ?? user?.picture ?? ""));
+    };
+    fetchFunc();
+  }, [user?.image, user?.picture]);
   return (
     <>
       <LinkAccountModal
@@ -344,7 +409,6 @@ export const UserExternalUpdateRegisterForm = ({
                             <Input
                               onChange={(e) => {
                                 const file = e.target.files?.[0] ?? null;
-                                setFile(file);
                                 if (file != null) {
                                   const url = URL.createObjectURL(file);
                                   setPreviewUrl(url);
@@ -370,7 +434,7 @@ export const UserExternalUpdateRegisterForm = ({
                   <div className="border_primary h-52 w-full border-2 md:h-72">
                     <Image
                       alt="Imagem de perfil"
-                      src={previewUrl ?? "/images/user1.jpg"}
+                      src={previewUrl ?? "/images/avatar.svg"}
                       fill
                       sizes="100%"
                       className="rounded-lg object-cover"

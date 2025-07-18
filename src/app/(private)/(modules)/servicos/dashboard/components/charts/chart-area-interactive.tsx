@@ -909,8 +909,6 @@ export function ChartAreaInteractive() {
     });
   });
 
-  console.log(teet);
-
   return (
     <Card className="@container/card">
       <CardHeader className="relative">

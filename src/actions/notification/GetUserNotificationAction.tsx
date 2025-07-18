@@ -12,7 +12,7 @@ export async function GetUserNotificationAction(
   const token = await GetTokenCookie("token");
   const url = `${process.env.NEXT_PUBLIC_API_GSO}/services/amqp/view-notifications?queue_name=${nameQueue}&exchange_name=${exchangeName}&routing_key=${routingKey}`;
 
-  return await fetchWrapper<ResponseApi>(url, {
+  return await fetchWrapper(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

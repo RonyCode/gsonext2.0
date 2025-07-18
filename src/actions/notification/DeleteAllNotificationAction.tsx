@@ -13,7 +13,7 @@ export async function DeleteAllNotificationAction(
   const token = await GetTokenCookie("token");
   const url = `${process.env.NEXT_PUBLIC_API_GSO}/services/amqp/delete-all-notifications?queue_name=${nameQueue}&exchange_name=${exchangeName}&routing_key=${routingKey}`;
 
-  return await fetchWrapper<ResponseApi<Partial<IOrganizacaoSchema[]>>>(url, {
+  return await fetchWrapper<Partial<IOrganizacaoSchema[]>>(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

@@ -6,12 +6,12 @@ import { fetchWrapper } from "@/functions/fetch";
 import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
 
 export async function GetAllCompaniesAction(
-  IdCorporation: string,
+  IdCorporation: string | undefined | null,
 ): Promise<ResponseApi<IUnidadeSchema[]>> {
   const token = await GetTokenCookie("token");
-  const url = `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/company/get-all/${IdCorporation}`;
+  const url = `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/company/get-all/${IdCorporation || undefined}`;
 
-  return await fetchWrapper<ResponseApi<IUnidadeSchema[]>>(url, {
+  return await fetchWrapper<IUnidadeSchema[]>(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

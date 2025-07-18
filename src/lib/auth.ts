@@ -246,6 +246,17 @@ export const authOptions: NextAuthOptions = {
         token.id_company = session.id_company;
         token.name = session.name;
         token.image = session.image || session.picture;
+        token.email = session.email;
+        token.role = session.role;
+        token.short_name_corp = session.short_name_corp;
+        token.token = session.token;
+        token.access_token = session.access_token;
+        token.refresh_token = session.refresh_token;
+        token.date_expires_token = session.date_expires_token;
+        token.date_creation_token = session.date_creation_token;
+        token.expires_at = session.expires_at;
+        token.is_profile_complete = session.is_profile_complete;
+        token.is_notification_enabled = session.is_notification_enabled;
       }
 
       return token;
@@ -284,6 +295,17 @@ export const authOptions: NextAuthOptions = {
         session.is_profile_complete = newSession.is_profile_complete;
         session.name = newSession.name;
         session.image = newSession.image || newSession.picture;
+        session.email = newSession.email;
+        session.role = newSession.role;
+        session.short_name_corp = newSession.short_name_corp;
+        session.token = newSession.token;
+        session.access_token = newSession.access_token;
+        session.refresh_token = newSession.refresh_token;
+        session.date_expires_token = newSession.date_expires_token;
+        session.date_creation_token = newSession.date_creation_token;
+        session.expires_at = newSession.expires_at;
+        session.is_profile_complete = newSession.is_profile_complete;
+        session.is_notification_enabled = newSession.is_notification_enabled;
       }
 
       return session;

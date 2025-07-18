@@ -23,7 +23,7 @@ export async function saveVehicleIntoCorporationAction(
         formData.subscription = "";
       }
       const token = await GetTokenCookie("token");
-      const resp = await fetchWrapper<ResponseApi<UserNotification>>(
+      const resp = await fetchWrapper<UserNotification>(
         `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/vehicle/save`,
         {
           method: "POST",

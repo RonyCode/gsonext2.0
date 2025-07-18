@@ -9,6 +9,6 @@ export const config = {
   matcher: [
     "/auth/:path*",
     "/servicos/:path*",
-    "/((?!api|public|images|assets|cadastro-usuario|suporte|politica-de-privacidade|termos-de-uso|recuperar-senha|recuperar-senha|_next/static|favicon.ico).*)",
+    "/((?!api|public|images|assets|manifest.json|cadastro-usuario|suporte|politica-de-privacidade|termos-de-uso|recuperar-senha|recuperar-senha|_next/static|favicon.ico).*)",
   ],
 };

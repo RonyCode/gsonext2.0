@@ -1,13 +1,10 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-import Image from "next/image";
 import * as React from "react";
 import { useEffect, useTransition } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import {
   LuCalendar,
-  LuCamera,
   LuCheck,
   LuChevronsUpDown,
   LuHash,
@@ -55,7 +52,7 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
 import { toast } from "@/hooks/use-toast";
 import { EditPhoto } from "@/components/EditPhoto/EditPhoto";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { getValidImageUrl } from "@/functions/checkImageUrl";
 import SaveUserAction from "@/actions/user/SaveUserAction";
 
@@ -125,15 +122,15 @@ export const EditUserForm = ({
 
   const handleSubmit = (dataForm: IEditUserSchema): void => {
     startTransition(async () => {
-      const { data, message } = await SaveUserAction(dataForm);
-      if (data?.id == null) {
+      const $result = await SaveUserAction(dataForm);
+      if ($result?.data?.id == null) {
         toast({
           variant: "danger",
           title: "Erro ao salvar dados do usuário! 🤯 ",
-          description: message,
+          description: $result?.message,
         });
       }
-      if (data?.id != null) {
+      if ($result?.data?.id != null) {
         toast({
           variant: "success",
           title: "Ok! Dados do Usuário salvos!  ",

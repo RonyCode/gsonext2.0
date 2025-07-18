@@ -37,7 +37,7 @@ import { useForm } from "react-hook-form";
 import ModuloGestorUnidade from "@/app/(private)/(modules)/components/module/ModuloGestorUnidade";
 import { Avatar } from "@radix-ui/react-avatar";
 import { AvatarImage } from "@/ui/avatar";
-import { TeamSwitcher } from "@/components/Sidebar/team-switcher";
+import { CorporationSwitcher } from "@/components/Sidebar/corporation-switcher";
 import { CompanySwitcher } from "@/components/Sidebar/company-switcher";
 import Link from "next/link";
 

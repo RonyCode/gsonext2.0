@@ -10,7 +10,7 @@ export async function saveUnidadeAction(
   formData?: Partial<IUnidadeSchema>,
 ): Promise<ResponseApi<Partial<IUnidadeSchema>>> {
   revalidateTag("unidadesFetch");
-  return await fetchWrapper<ResponseApi<Partial<IUnidadeSchema>>>(
+  return await fetchWrapper<Partial<IUnidadeSchema>>(
     `${process.env.NEXT_PUBLIC_NEXT_URL}/api/unidade-save`,
     {
       method: "POST",

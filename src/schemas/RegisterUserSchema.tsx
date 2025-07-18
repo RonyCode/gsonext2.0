@@ -7,7 +7,12 @@ export const RegisterUserSchema = z
     nome: z.string().min(3, {
       message: "nome inválido deve conter no mínimo 3 caracteres",
     }),
-
+    id: z.string().optional().nullable(),
+    id_corporation: z.string().optional().nullable(),
+    id_company: z.string().optional().nullable(),
+    id_member: z.string().optional().nullable(),
+    short_name_corp: z.string().optional().nullable(),
+    name: z.string().optional().nullable(),
     cpf: z
       .string()
       .min(14, {
@@ -66,6 +71,8 @@ export const RegisterUserSchema = z
     image: z.string().min(1, { message: "Imagem inválido" }).optional(),
     role: z.string().optional(),
     is_notification_enabled: z.boolean().optional(),
+    token: z.string().optional(),
+    refresh_token: z.string().optional(),
     is_profile_complete: z.boolean().optional(),
     senha: z
       .string()

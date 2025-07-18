@@ -10,7 +10,7 @@ export async function GetAllMembersCorporationsAction(
 ): Promise<ResponseApi<IMemberSchema[]>> {
   const token = await GetTokenCookie("token");
 
-  return await fetchWrapper<ResponseApi<IMemberSchema[]>>(
+  return await fetchWrapper<IMemberSchema[]>(
     `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/members/${id_corporation}`,
     {
       method: "GET",

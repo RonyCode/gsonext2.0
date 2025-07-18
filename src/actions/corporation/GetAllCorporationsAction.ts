@@ -11,7 +11,7 @@ export async function GetAllCorporationsAction(): Promise<
   const token = await GetTokenCookie("token");
   const url = `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/get-all`;
 
-  return await fetchWrapper<ResponseApi<IOrganizacaoSchema[]>>(url, {
+  return await fetchWrapper<IOrganizacaoSchema[]>(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

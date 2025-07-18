@@ -23,8 +23,6 @@ export default function NotificationToggle(session: Session) {
     (state) => state.actions.setAll,
   );
 
-  console.log(isEnabled);
-
   const handleToggle = async () => {
     try {
       setIsEnabled(!isEnabled);

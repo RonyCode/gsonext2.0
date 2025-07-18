@@ -12,7 +12,7 @@ export async function GetAllVehiclesCompanyAction(
   const token = await GetTokenCookie("token");
   const url = `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/company/vehicles?id_corporation=${idCorporation}&id_company=${idCompany}`;
 
-  return await fetchWrapper<ResponseApi<IVehicleSchema[]>>(url, {
+  return await fetchWrapper<IVehicleSchema[]>(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

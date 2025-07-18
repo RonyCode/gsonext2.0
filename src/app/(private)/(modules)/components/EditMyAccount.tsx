@@ -107,7 +107,7 @@ export const EditMyAccount = ({
       id: user?.id?.toString(),
       nome: user?.account?.name,
       image: user?.account?.image ?? image,
-      email: user?.userAuth?.email,
+      email: user?.auth?.email,
       cpf: maskCpfCnpj(user?.account?.cpf) ?? "",
       data_nascimento: user?.account?.birthday,
       telefone: maskPhone(user?.account?.phone) ?? "",
@@ -125,7 +125,8 @@ export const EditMyAccount = ({
 
   const handleSubmit = (dataForm: IEditUserSchema): void => {
     startTransition(async () => {
-      const data = await SaveUserAction(dataForm);
+      const { data, message } = await SaveUserAction(dataForm);
+
       if (data?.id == null) {
         toast({
           variant: "danger",
@@ -144,8 +145,6 @@ export const EditMyAccount = ({
           name: dataForm?.nome,
           image: dataForm?.image,
         });
-
-        router.refresh();
       }
     });
   };

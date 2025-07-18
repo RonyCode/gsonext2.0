@@ -8,7 +8,7 @@ export async function GetUserByCpfEmailNonUserExternalAction(
 ): Promise<ResponseApi<IUserSchema[]>> {
   try {
     if (cpf != null) {
-      const result = await fetchWrapper<ResponseApi<IUserSchema[]>>(
+      const result = await fetchWrapper<IUserSchema[]>(
         `${process.env.NEXT_PUBLIC_API_GSO}/api/user/user-external?cpf=${cpf}&email=${email}`,
         {
           method: "GET",

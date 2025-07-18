@@ -11,7 +11,7 @@ export async function GetUserByEmailAction(
   try {
     if ($email != null) {
       const token = await GetTokenCookie("token");
-      return await fetchWrapper<ResponseApi<IUserSchema>>(
+      return await fetchWrapper<IUserSchema>(
         `${process.env.NEXT_PUBLIC_API_GSO}/api/user/user-email/${$email}`,
         {
           method: "GET",

@@ -30,6 +30,9 @@ export interface UserLogged {
   email: string | null;
   image: string | null;
   name: string | null;
+  token: string | null;
+  access_token: string | null;
+  refresh_token: string | null;
   date_creation_token: number | null;
   date_expires_token: number | null;
 }
@@ -181,6 +184,8 @@ export interface Profile {
   dateGranted: string;
   dateExpires: string;
   grantedByIdUser: number;
+  is_profile_complete: boolean;
+  is_notification_enabled: boolean;
 }
 
 export interface TokenUser {
@@ -233,6 +238,7 @@ export interface Unidade {
 
 export interface UserType {
   userAuth: UserAuth | null;
+  auth: UserAuth | null;
   account: Account | null;
   address: Address | null;
   profile: Profile | null;

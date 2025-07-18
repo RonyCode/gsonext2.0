@@ -13,7 +13,7 @@ export async function SearchUserWithoutCorpAction(
 
   try {
     if (nested != null) {
-      return await fetchWrapper<ResponseApi>(
+      return await fetchWrapper(
         `${process.env.NEXT_PUBLIC_API_GSO}/api/user/get-all-without-corp?id_corporation=${idCorporation}&criteria=${nested}`,
         {
           method: "GET",

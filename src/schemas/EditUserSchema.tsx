@@ -7,6 +7,7 @@ export const EditUserSchema = z.object({
   }),
   id: z.string().min(1, { message: "id inválido" }).nullable(),
   image: z.string().optional().nullable(),
+  is_profile_complete: z.boolean().optional(),
   file_image:
     typeof window === "undefined" ? z.any().optional() : FileSchema.optional(),
   cpf: z

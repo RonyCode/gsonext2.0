@@ -13,7 +13,7 @@ export async function SaveMemberIntoCompanyAction(
 
   try {
     if (formData != null) {
-      return await fetchWrapper<ResponseApi>(
+      return await fetchWrapper(
         `${process.env.NEXT_PUBLIC_NEXT_URL}/api/cadastrar-membro-unidade`,
         {
           method: "POST",

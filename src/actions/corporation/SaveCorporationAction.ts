@@ -10,7 +10,7 @@ export async function saveCorporationAction(
 ): Promise<ResponseApi<Partial<IOrganizacaoSchema>>> {
   const token = await GetTokenCookie("token");
 
-  return await fetchWrapper<ResponseApi<Partial<IOrganizacaoSchema>>>(
+  return await fetchWrapper<Partial<IOrganizacaoSchema>>(
     `${process.env.NEXT_PUBLIC_NEXT_URL}/api/corporation-save`,
     {
       method: "POST",

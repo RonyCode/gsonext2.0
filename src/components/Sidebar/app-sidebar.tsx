@@ -1,10 +1,13 @@
 "use client";
 
 import React, { ComponentProps, useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useParams } from "next/navigation";
 
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
-import { TeamSwitcher } from "./team-switcher";
+import { CorporationSwitcher } from "./corporation-switcher";
+import { CompanySwitcher } from "./company-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -12,58 +15,73 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { useSession } from "next-auth/react";
-import { IOrganizacaoSchema } from "@/schemas/OrganizacaoSchema";
-import { CompanySwitcher } from "@/components/Sidebar/company-switcher";
 import { IUnidadeSchema } from "@/schemas/UnidadeSchema";
 import { NavAdmin } from "@/components/Sidebar/nav-admin";
-import { useParams } from "next/navigation";
 import { NavTicket } from "./nav-ticket";
 import { getValidImageUrl } from "@/functions/checkImageUrl";
 import { NavDev } from "@/components/Sidebar/nav-dev";
+import { GetAllCorporationsAction } from "@/actions/corporation/GetAllCorporationsAction";
+import { GetAllCompaniesAction } from "@/actions/company/GetAllCompaniesAction";
+import { IOrganizacaoSchema } from "@/schemas/OrganizacaoSchema";
 
-interface AppSidebarProps {
-  corp?: IOrganizacaoSchema;
-  companies?: IUnidadeSchema[];
-}
-
-export function AppSidebar({
-  corp,
-  companies,
-  ...props
-}: AppSidebarProps & ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   const { data: session } = useSession();
   const params = useParams();
-  const [compSelected, setCompSelected] = useState(
-    companies ? companies[0] : {},
+
+  const [corp, setCorp] = useState<IOrganizacaoSchema>(
+    {} as IOrganizacaoSchema,
   );
-  const idCompanyParam = params.id_company;
-  const idCompany =
-    (idCompanyParam?.slice(-24) as string) ?? (session?.id_company as string);
+  const [companies, setCompanies] = useState<IUnidadeSchema[]>([]);
+  const [compSelected, setCompSelected] = useState<IUnidadeSchema>(
+    {} as IUnidadeSchema,
+  );
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
-  React.useEffect(() => {
-    if (idCompany) {
-      const comp = companies?.find((comp) => comp?.id === idCompany);
-      setCompSelected(comp as IUnidadeSchema);
-    }
-  }, [idCompany, session?.id_company, companies]);
+  const idCompany =
+    (params.id_company as string)?.slice(-24) ??
+    (session?.id_company as string);
 
   useEffect(() => {
-    // Ensure userImage is null if session?.user?.image is undefined or null
+    if (session?.id_corporation) {
+      const fetchData = async () => {
+        const [corporationResponse, companiesResponse] = await Promise.all([
+          GetAllCorporationsAction(),
+          GetAllCompaniesAction(session.id_corporation),
+        ]);
+
+        setCorp(
+          corporationResponse.data?.find(
+            (c) => c.id === session.id_corporation,
+          ) ?? ({} as IOrganizacaoSchema),
+        );
+        setCompanies(companiesResponse.data ?? []);
+      };
+
+      fetchData();
+    }
+  }, [session?.id_corporation]);
+
+  useEffect(() => {
+    if (idCompany && companies.length > 0) {
+      const companyFound = companies.find((c) => c.id === idCompany);
+      setCompSelected(companyFound ?? {});
+    }
+  }, [idCompany, companies]);
+
+  useEffect(() => {
     const userImage = session?.image || session?.user?.image;
-    const imageUrlPromisse = getValidImageUrl(userImage);
-    imageUrlPromisse.then((item) => {
-      setImageUrl(item);
-    });
-    // Use the same expression for the dependency
+    if (userImage) {
+      getValidImageUrl(userImage).then(setImageUrl);
+    } else {
+      setImageUrl(null);
+    }
   }, [session?.image, session?.user?.image]);
 
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        {corp && <TeamSwitcher corp={corp} />}
-        {companies && (
+        {corp?.id && <CorporationSwitcher corp={corp} />}
+        {companies.length > 0 && (
           <CompanySwitcher
             companies={companies}
             setCompSelectedAction={setCompSelected}
@@ -72,11 +90,11 @@ export function AppSidebar({
         )}
       </SidebarHeader>
       <SidebarContent>
+        {/* ...seu conteúdo ... */}
         <NavMain compSelected={compSelected} session={session} />
         {(session?.role === "admin" || session?.role === "dev") && (
           <NavAdmin compSelected={compSelected} />
         )}
-
         {session?.role === "dev" && <NavDev compSelected={compSelected} />}
         {(session?.role === "dev" ||
           session?.role === "admin" ||

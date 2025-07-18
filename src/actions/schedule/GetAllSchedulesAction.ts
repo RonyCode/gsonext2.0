@@ -12,7 +12,7 @@ export async function GetAllSchedulesAction(
     const token = await GetTokenCookie("token");
     const url = `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/company/schedules?id_corporation=${idCorporation}&id_company=${idCompany}`;
 
-    const res = await fetchWrapper<ResponseApi<IScheduleFormSave[]>>(url, {
+    const res = await fetchWrapper<IScheduleFormSave[]>(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -11,7 +11,7 @@ export async function GetAllMembersCompanyAction(
   const token = await GetTokenCookie("token");
   const url = `${process.env.NEXT_PUBLIC_API_GSO}/api/corporation/company/members/${id_company}`;
 
-  return await fetchWrapper<ResponseApi<IMemberSchema[]>>(url, {
+  return await fetchWrapper<IMemberSchema[]>(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

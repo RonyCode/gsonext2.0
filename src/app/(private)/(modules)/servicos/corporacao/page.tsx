@@ -18,8 +18,6 @@ const Organizacao = async (): Promise<ReactNode> => {
     return organizacao?.id === session?.id_corporation;
   });
 
-  console.log(session);
-
   return (
     <CardDefault
       title="Minha Corporação"

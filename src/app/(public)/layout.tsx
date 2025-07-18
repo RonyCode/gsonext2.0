@@ -3,8 +3,6 @@ import React from "react";
 
 import FooterLayout from "@/components/Footer/FooterLayout";
 import { NavbarMain } from "@/components/Nav/NavbarMain";
-import PushSubscriptionManager from "@/components/Notification/PushSubscriptionManager";
-import { AllowCookie } from "@/components/AllowCookies/AllowCookie";
 
 export default function PublicLayout({
   children,

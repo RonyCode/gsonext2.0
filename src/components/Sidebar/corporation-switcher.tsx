@@ -23,7 +23,7 @@ import { IOrganizacaoSchema } from "@/schemas/OrganizacaoSchema";
 import { Avatar, AvatarImage } from "@/ui/avatar";
 import Link from "next/link";
 
-export function TeamSwitcher(corp?: { corp: IOrganizacaoSchema }) {
+export function CorporationSwitcher(corp?: { corp: IOrganizacaoSchema }) {
   const { isMobile } = useSidebar();
 
   return (
@@ -44,7 +44,7 @@ export function TeamSwitcher(corp?: { corp: IOrganizacaoSchema }) {
                       process.env.NEXT_PUBLIC_API_GSO !== undefined &&
                       corp?.corp?.image !== undefined
                         ? process.env.NEXT_PUBLIC_API_GSO + corp?.corp?.image
-                        : process.env.NEXT_PUBLIC_API_GSO + "/images/avatar.svg"
+                        : process.env.NEXT_PUBLIC_API_GSO + "/images/img.svg"
                     }
                     alt={"img user"}
                   />

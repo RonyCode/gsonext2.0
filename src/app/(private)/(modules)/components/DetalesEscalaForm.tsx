@@ -91,7 +91,6 @@ export const DetalhesEscalaForm = ({
       : moment(scheduleCompany?.date_start).toDate(),
   );
 
-  console.log(dateStart);
   const [dateFinish, setDateFinish] = React.useState<string>();
   const [listVehicles, setListVehicles] = React.useState<IVehicleSchema[]>([]);
   const [listMembersAvailable, setListMembersAvailable] = React.useState<
