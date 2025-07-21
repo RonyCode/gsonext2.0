@@ -5,55 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4de5031-80c2-4cc7-8968-8fb03cd1922c" name="Changes" comment="refatorando">
-      <change afterPath="$PROJECT_DIR$/src/actions/user/GetUserByIdAction.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/company/GetAllCompaniesAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/company/GetAllCompaniesAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/company/GetCompanyByIdAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/company/GetCompanyByIdAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/company/SaveUnidadeAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/company/SaveUnidadeAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/corporation/GetAllCorporationsAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/corporation/GetAllCorporationsAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/corporation/SaveCorporationAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/corporation/SaveCorporationAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/corporation/SaveMemberIntoCorporationAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/corporation/SaveMemberIntoCorporationAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/corporation/SaveVehicleIntoCorporationAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/corporation/SaveVehicleIntoCorporationAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/member/GetAllMembersCompanyAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/member/GetAllMembersCompanyAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/member/GetAllMembersCorporationsAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/member/GetAllMembersCorporationsAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/member/GetMemberCorporationByIdAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/member/GetMemberCorporationByIdAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/member/SaveMemberIntoCompanyAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/member/SaveMemberIntoCompanyAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/notification/DeleteAllNotificationAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/notification/DeleteAllNotificationAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/notification/GetUserNotificationAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/notification/GetUserNotificationAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/schedule/GetAllSchedulesAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/schedule/GetAllSchedulesAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/schedule/SaveScheduleAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/schedule/SaveScheduleAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/schedule/SearchScheduleAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/schedule/SearchScheduleAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/user/GetUserByCpfEmailNonUserExternalAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/user/GetUserByCpfEmailNonUserExternalAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/user/GetUserByEmailAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/user/GetUserByEmailAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/user/SearchUserByCriteriaAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/user/SearchUserByCriteriaAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/user/SearchUserWithoutCorpAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/user/SearchUserWithoutCorpAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/user/UserExternalMergeAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/user/UserExternalMergeAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/user/saveUserAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/user/saveUserAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/vehicle/GetAllVehiclesCompanyAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/vehicle/GetAllVehiclesCompanyAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/vehicle/GetAllVehiclesCorporationsAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/vehicle/GetAllVehiclesCorporationsAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/vehicle/GetAllVehiclesWithoutCompanyAction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/vehicle/GetAllVehiclesWithoutCompanyAction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(auth)/cadastro-usuario/[token]/components/UserExternalUpdateRegisterForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/cadastro-usuario/[token]/components/UserExternalUpdateRegisterForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/DetalesEscalaForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/DetalesEscalaForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/EditMyAccount.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/EditMyAccount.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/EditUserForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/EditUserForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/SelectCompanyModule.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/SelectCompanyModule.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/conta/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/conta/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/dashboard/components/charts/chart-area-interactive.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/dashboard/components/charts/chart-area-interactive.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuario/[id_user]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/usuario/[id_user]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(public)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(public)/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableUsers/data-table-row-actions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableUsers/data-table-row-actions.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Notification/NotificationToggle.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Notification/NotificationToggle.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Notification/NotiicationsShow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Notification/NotiicationsShow.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Sidebar/app-sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar/app-sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Sidebar/team-switcher.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar/corporation-switcher.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/functions/fetch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/functions/fetch.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useCompany.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/GetUserById.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/EditUserSchema.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/EditUserSchema.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/RegisterUserSchema.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/RegisterUserSchema.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/AuthUserSchema.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/AuthUserSchema.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -376,7 +334,9 @@
       <workItem from="1752506404629" duration="7604000" />
       <workItem from="1752610031140" duration="7004000" />
       <workItem from="1752669044242" duration="78000" />
-      <workItem from="1752860725512" duration="6090000" />
+      <workItem from="1752860725512" duration="6287000" />
+      <workItem from="1753103060772" duration="7293000" />
+      <workItem from="1753114042265" duration="2495000" />
     </task>
     <task id="LOCAL-00001" summary="update google login">
       <option name="closed" value="true" />
@@ -594,7 +554,23 @@
       <option name="project" value="LOCAL" />
       <updated>1751926881704</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="refatorando">
+      <option name="closed" value="true" />
+      <created>1752870413507</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1752870413507</updated>
+    </task>
+    <task id="LOCAL-00029" summary="refatorando">
+      <option name="closed" value="true" />
+      <created>1752870449523</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1752870449523</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

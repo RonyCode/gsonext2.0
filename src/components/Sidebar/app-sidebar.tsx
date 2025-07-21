@@ -69,13 +69,15 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   }, [idCompany, companies]);
 
   useEffect(() => {
-    const userImage = session?.image || session?.user?.image;
+    console.log(session);
+    const userImage =
+      session?.image || session?.picture || session?.user?.image;
     if (userImage) {
       getValidImageUrl(userImage).then(setImageUrl);
     } else {
       setImageUrl(null);
     }
-  }, [session?.image, session?.user?.image]);
+  }, [session?.image, session?.picture, session?.user?.image]);
 
   return (
     <Sidebar collapsible="icon" {...props}>

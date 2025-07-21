@@ -34,7 +34,7 @@ export function DataTableRowActions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <Link
-          href={`/servicos/usuario/${task?.account?.name?.toLowerCase() + "-" + task?.id}`}
+          href={`/servicos/usuario/${task?.account?.name?.toLowerCase() + "-" + task?._id?.$oid}`}
         >
           <DropdownMenuItem>Detalhes</DropdownMenuItem>
         </Link>

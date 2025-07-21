@@ -136,7 +136,7 @@ export const NotificationsShow = ({
                         Aceitar notificações neste dispositivo.
                       </p>
                     </div>
-                    <NotificationToggle session={session} />
+                    <NotificationToggle />
                   </div>
                   <div>
                     {notificationsOrdened?.map((notification, indexNoti) => (

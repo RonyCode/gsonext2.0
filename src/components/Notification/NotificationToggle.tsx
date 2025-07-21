@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import {
   subscribeUserToPush,
   unsubscribeUserFromPush,
@@ -10,10 +10,11 @@ import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { useNotificationStore } from "@/stores/user/useNotificationStore";
 import SaveUserAction from "@/actions/user/SaveUserAction";
-import { Session } from "inspector/promises";
 import LoadingPage from "@/components/Loadings/LoadingPage";
+import { useSession } from "next-auth/react";
 
-export default function NotificationToggle(session: Session) {
+export default function NotificationToggle() {
+  const { data: session, update } = useSession();
   const [isEnabled, setIsEnabled] = useState(
     session?.is_notification_enabled ?? false,
   );
@@ -24,6 +25,7 @@ export default function NotificationToggle(session: Session) {
   );
 
   const handleToggle = async () => {
+    console.log(!isEnabled);
     try {
       setIsEnabled(!isEnabled);
 
@@ -34,42 +36,59 @@ export default function NotificationToggle(session: Session) {
       if (!isEnabled) {
         const subscription = await subscribeUserToPush();
         if (session?.id) {
-          startTransition(async () => {
-            const payload = {
-              id: session?.id,
-              is_notification_enabled: isEnabled,
-            };
-            const data = await SaveUserAction({ ...payload });
-            console.log(payload);
-          });
-        }
-        if (subscription) {
-          setCookie("subscription", JSON.stringify(subscription)); // Stringify a subscrição
-          toast({
-            variant: "success",
-            title: "Você ativou as notificações",
-            description: "Notificações ativadas. 🚀 ",
-          });
-        } else {
-          deleteCookie("subscription");
-
-          toast({
-            variant: "danger",
-            title: "Você desativou as notificações",
-            description: "Notificações desativadas. ",
-          });
-          // subscribeUserToPush já deve ter lidado com o toast de erro/aviso
+          if (subscription) {
+            startTransition(async () => {
+              const payload = {
+                id: session?.id,
+                is_notification_enabled: true,
+              };
+              const data = await SaveUserAction({ ...payload });
+              if (data.code === 202) {
+                await update({
+                  ...session,
+                  is_notification_enabled: true,
+                });
+                setCookie("subscription", JSON.stringify(subscription)); // Stringify a subscrição
+                toast({
+                  variant: "success",
+                  title: "Você ativou as notificações",
+                  description: "Notificações ativadas. 🚀 ",
+                });
+              }
+            });
+          } else {
+            deleteCookie("subscription");
+            toast({
+              variant: "danger",
+              title: "Você desativou as notificações",
+              description: "Notificações desativadas. ",
+            });
+            // subscribeUserToPush já deve ter lidado com o toast de erro/aviso
+          }
         }
       }
 
       if (isEnabled) {
         const unsubscribed = await unsubscribeUserFromPush();
         if (unsubscribed) {
-          deleteCookie("subscription");
-          toast({
-            variant: "alert", // Usar 'default' ou 'info' para desativação
-            title: "Notificações desativadas",
-            description: "Você não receberá mais notificações push. 😢",
+          startTransition(async () => {
+            const payload = {
+              id: session?.id,
+              is_notification_enabled: false,
+            };
+            const data = await SaveUserAction({ ...payload });
+            if (data.code === 202) {
+              await update({
+                ...session,
+                is_notification_enabled: false,
+              });
+              deleteCookie("subscription");
+              toast({
+                variant: "alert", // Usar 'default' ou 'info' para desativação
+                title: "Notificações desativadas",
+                description: "Você não receberá mais notificações push. 😢",
+              });
+            }
           });
         } else {
           // unsubscribeUserFromPush já deve ter lidado com o toast de erro

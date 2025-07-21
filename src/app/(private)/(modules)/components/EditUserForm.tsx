@@ -104,7 +104,7 @@ export const EditUserForm = ({
       id: user?.id?.toString(),
       nome: user?.account?.name,
       image: user?.account?.image ?? image,
-      email: user?.userAuth?.email,
+      email: user?.auth?.email,
       cpf: maskCpfCnpj(user?.account?.cpf) ?? "",
       data_nascimento: user?.account?.birthday,
       telefone: maskPhone(user?.account?.phone) ?? "",
