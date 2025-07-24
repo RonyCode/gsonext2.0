@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import React from "react";
+import React, { Suspense } from "react";
 import { LuBuilding } from "react-icons/lu";
 import { MdOutlineSupervisorAccount } from "react-icons/md";
 
@@ -12,6 +12,7 @@ import { CardWithLogo } from "@/components/Cards/CardWithLogo";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { GetCompanyByIdAction } from "@/actions/company/GetCompanyByIdAction";
+import SkeletonCardDefault from "@/components/skeleton/skeletonCardDefault";
 
 const MinhaUnidade = async ({
   params,

@@ -1,11 +1,12 @@
 import Image from "next/image";
-import React from "react";
+import React, { Suspense } from "react";
 
 import getBase64 from "@/lib/getLocalBase64";
 import { Card, CardContent, CardDescription, CardTitle } from "@/ui/card";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/ui/separator";
 import { getValidImageUrl } from "@/functions/checkImageUrl";
+import SkeletonCardDefault from "@/components/skeleton/skeletonCardDefault";
 
 type CardProps = {
   title?: string;

@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import {
   subscribeUserToPush,
   unsubscribeUserFromPush,
-} from "@/functions/pushSubscription"; // Certifique-se que o caminho está correto
+} from "@/functions/pushSubscription";
 import { setCookie, deleteCookie } from "cookies-next";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,6 @@ export default function NotificationToggle() {
   );
 
   const handleToggle = async () => {
-    console.log(!isEnabled);
     try {
       setIsEnabled(!isEnabled);
 
@@ -48,7 +47,7 @@ export default function NotificationToggle() {
                   ...session,
                   is_notification_enabled: true,
                 });
-                setCookie("subscription", JSON.stringify(subscription)); // Stringify a subscrição
+                setCookie("subscription", JSON.stringify(subscription));
                 toast({
                   variant: "success",
                   title: "Você ativou as notificações",
@@ -63,7 +62,6 @@ export default function NotificationToggle() {
               title: "Você desativou as notificações",
               description: "Notificações desativadas. ",
             });
-            // subscribeUserToPush já deve ter lidado com o toast de erro/aviso
           }
         }
       }
@@ -84,15 +82,13 @@ export default function NotificationToggle() {
               });
               deleteCookie("subscription");
               toast({
-                variant: "alert", // Usar 'default' ou 'info' para desativação
+                variant: "alert",
                 title: "Notificações desativadas",
                 description: "Você não receberá mais notificações push. 😢",
               });
             }
           });
         } else {
-          // unsubscribeUserFromPush já deve ter lidado com o toast de erro
-          // Se a inscrição falhar, o estado isEnabled não deve mudar
         }
       }
     } catch (error) {
@@ -103,10 +99,6 @@ export default function NotificationToggle() {
         description:
           "Ocorreu um problema ao tentar atualizar suas preferências de notificação.",
       });
-      // Considerar reverter o estado visual de isEnabled se a operação falhou
-      // e o estado mudou otimisticamente.
-    } finally {
-      router.refresh();
     }
   };
 
@@ -119,12 +111,9 @@ export default function NotificationToggle() {
 
   return (
     <div>
-      <LoadingPage pending={pending} />
       <label
         className="flex cursor-pointer items-center space-x-2"
         onClick={(e) => {
-          // Impede que o clique na label propague para o DropdownMenuItem,
-          // evitando que o menu feche.
           e.stopPropagation();
         }}
       >

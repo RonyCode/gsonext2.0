@@ -80,8 +80,6 @@ export const NotificationsShow = ({
 
   return (
     <>
-      <LoadingPage pending={pending} />
-
       <DropdownMenu>
         {/* <AllowCookie /> */}
         <DropdownMenuTrigger asChild>

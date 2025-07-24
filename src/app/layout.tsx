@@ -74,28 +74,26 @@ export default async function RootLayout({
           fontSans.className,
         )}
       >
-        <Suspense fallback={<LoadingPage pending={true} />}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Providers>
-              <div className="flex min-h-screen w-screen flex-col bg-gradient-to-t from-background to-secondary">
-                <NotificationsChecker />
-                <PushSubscriptionManager />
-                <AllowCookie />
-                <SideProfileAlertBanner />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Providers>
+            <div className="flex min-h-screen w-screen flex-col bg-gradient-to-t from-background to-secondary">
+              <NotificationsChecker />
+              <PushSubscriptionManager />
+              <AllowCookie />
+              <SideProfileAlertBanner />
 
-                <div className="m-auto h-full w-full">{children}</div>
-                <GoogleAnalytics
-                  gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID as string}
-                />
-              </div>
-            </Providers>
-          </ThemeProvider>
-        </Suspense>
+              <div className="m-auto h-full w-full">{children}</div>
+              <GoogleAnalytics
+                gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID as string}
+              />
+            </div>
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

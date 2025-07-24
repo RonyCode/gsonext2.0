@@ -7,6 +7,7 @@ import ToastProvider from "./ToastProvider/ToastProvider";
 import InitializeStores from "@/stores/initializeStores";
 import { Toaster } from "@/ui/toaster";
 import { APIProvider } from "@/providers/ApiProviders/ApiProviders";
+import LoadingPage from "@/components/Loadings/LoadingPage";
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (

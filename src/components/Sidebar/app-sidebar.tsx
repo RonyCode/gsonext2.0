@@ -69,7 +69,6 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   }, [idCompany, companies]);
 
   useEffect(() => {
-    console.log(session);
     const userImage =
       session?.image || session?.picture || session?.user?.image;
     if (userImage) {
