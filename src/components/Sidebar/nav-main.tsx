@@ -188,15 +188,15 @@ export function NavMain({ compSelected, session }: NavMainProps) {
                         asChild
                         className="h-full w-full border border-foreground/15 py-1"
                       >
-                        <div className="m-0 h-full w-full p-0" id="cardModule">
-                          <Link
-                            href={subItem.url}
-                            className="flex items-center gap-2 text-[.7rem]"
+                        <Link href={subItem.url} className="">
+                          <div
+                            className="m-0 flex h-full w-full items-center gap-2 p-0 text-[.7rem]"
+                            id="cardModule"
                           >
                             <span> {subItem.icon}</span>
                             <span>{subItem.title}</span>
-                          </Link>
-                        </div>
+                          </div>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))}

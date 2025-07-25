@@ -32,7 +32,7 @@ const BannerHome1 = (): ReactElement => {
 
   return (
     <div
-      className={`"transition-all duration-1000 ease-out ${shouldHide ? "pointer-events-none opacity-0" : isVisible ? "opacity-100" : "opacity-30"} fixed h-full w-full bg-[20%_0%] bg-no-repeat brightness-75 md:grid md:w-[80vw] md:grid-cols-2 md:place-content-center md:place-items-center md:bg-cover md:bg-[0%_0%]`}
+      className={`"transition-all duration-1000 ease-out ${shouldHide ? "pointer-events-none opacity-0" : isVisible ? "opacity-100" : "opacity-30"} fixed h-full w-full bg-[20%_0%] bg-no-repeat brightness-75 md:grid md:w-screen md:grid-cols-2 md:place-content-center md:place-items-center md:bg-cover md:bg-[0%_0%]`}
       style={{
         backgroundImage: "url(/images/banner.jpg)",
         transform: shouldHide ? "translateY(-10%)" : "translateY(0)",

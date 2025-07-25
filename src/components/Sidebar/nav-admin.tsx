@@ -58,14 +58,9 @@ export function NavAdmin({ compSelected }: { compSelected: IUnidadeSchema }) {
       icon: Building2Icon,
       items: [
         {
-          title: "Add+ Corporação",
+          title: "Editar Corporação",
           icon: <IconBuildPlus width={32} className="fill-foreground/60" />,
-          url: "/servicos/corporacao/gestor/salvar-organizacao",
-        },
-        {
-          title: "Add+ Unidade Corporação",
-          icon: <IconBuildPlus width={32} className="fill-foreground/60" />,
-          url: "/servicos/corporacao/gestor/salvar-unidade",
+          url: "/servicos/corporacao",
         },
       ],
     },
@@ -77,7 +72,7 @@ export function NavAdmin({ compSelected }: { compSelected: IUnidadeSchema }) {
         {
           title: "Editar Unidade",
           icon: <IconEditSave width={32} className="fill-foreground/60" />,
-          url: `/servicos/corporacao/unidades/${compSelected?.name}-${compSelected?.id}/detalhes`,
+          url: `/servicos/gestor/unidade`,
         },
       ],
     },
@@ -87,14 +82,9 @@ export function NavAdmin({ compSelected }: { compSelected: IUnidadeSchema }) {
       icon: CarIcon,
       items: [
         {
-          title: "Add+ Veículo Corporação",
+          title: "Editar Veículo",
           icon: <IconCarFrontal width={32} className="stroke-foreground/60" />,
-          url: "/servicos/corporacao/gestor/salvar-veiculo",
-        },
-        {
-          title: "Add+ Veículo Unidade",
-          icon: <IconCarFrontal width={32} className="stroke-foreground/60" />,
-          url: `/servicos/corporacao/unidades/${compSelected?.name}-${compSelected?.id}/gestor-unidade/veiculo-unidade-salvar`,
+          url: "/servicos/gestor/veiculo",
         },
       ],
     },
@@ -104,9 +94,9 @@ export function NavAdmin({ compSelected }: { compSelected: IUnidadeSchema }) {
       icon: Calendar,
       items: [
         {
-          title: "Add+ Escala Unidade",
+          title: "Editar Escala Unidade",
           icon: <IconCalendar width={32} className="fill-foreground/60" />,
-          url: `/servicos/corporacao/unidades/${compSelected?.name}-${compSelected?.id}/gestor-unidade/escala-unidade-salvar`,
+          url: `/servicos/gestor/escala`,
         },
       ],
     },
@@ -117,19 +107,9 @@ export function NavAdmin({ compSelected }: { compSelected: IUnidadeSchema }) {
       icon: UserCog2,
       items: [
         {
-          title: "Editar Membro Corporação",
+          title: "Editar Membro",
           icon: <IconEditSave width={28} className="fill-foreground/60" />,
-          url: "/servicos/corporacao/membros/salvar-membro",
-        },
-        {
-          title: "Add+ Membro Corporação",
-          icon: <IconMembers width={32} className="fill-foreground/60" />,
-          url: "/servicos/corporacao/gestor/salvar-membro",
-        },
-        {
-          title: "Add+ Membro Unidade",
-          icon: <IconMembers width={32} className="fill-foreground/60" />,
-          url: `/servicos/corporacao/unidades/${compSelected?.name}-${compSelected?.id}/gestor-unidade/membro-unidade-salvar`,
+          url: "/servicos/gestor/membro",
         },
       ],
     },
@@ -180,15 +160,15 @@ export function NavAdmin({ compSelected }: { compSelected: IUnidadeSchema }) {
                         asChild
                         className="h-full w-full border border-foreground/15 py-1"
                       >
-                        <div className="m-0 h-full w-full p-0" id="cardModule">
-                          <Link
-                            href={subItem.url}
-                            className="flex items-center gap-2 text-[.7rem]"
+                        <Link href={subItem.url} className="">
+                          <div
+                            className="m-0 flex h-full w-full items-center gap-2 p-0 text-[.7rem]"
+                            id="cardModule"
                           >
                             <span> {subItem.icon}</span>
                             <span>{subItem.title}</span>
-                          </Link>
-                        </div>
+                          </div>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))}

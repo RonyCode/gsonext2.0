@@ -5,13 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4de5031-80c2-4cc7-8968-8fb03cd1922c" name="Changes" comment="refatorando">
+      <change afterPath="$PROJECT_DIR$/src/components/Pages/AnimatedSections.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(private)/(modules)/components/EditUserForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(private)/(modules)/components/EditUserForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DataTables/DataTableUsers/data-table-row-actions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataTables/DataTableUsers/data-table-row-actions.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Notification/NotificationToggle.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Notification/NotificationToggle.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Notification/NotiicationsShow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Notification/NotiicationsShow.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Sidebar/app-sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar/app-sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/schemas/AuthUserSchema.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/AuthUserSchema.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(public)/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(public)/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Footer/FooterHomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Footer/FooterHomePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Headers/banner/BannerHome1.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Headers/banner/BannerHome1.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Sidebar/nav-admin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar/nav-admin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Sidebar/nav-dev.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar/nav-dev.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Sidebar/nav-main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar/nav-main.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +69,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
     &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/rony/Sites/gso-next2.0/src/hooks&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/rony/Sites/gso-next2.0/src/app/(private)/(modules)/servicos/corporacao/unidades/[id_company]/membros&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -94,11 +96,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/hooks" />
-      <recent name="$PROJECT_DIR$/src/actions/user" />
-      <recent name="$PROJECT_DIR$/src/schemas" />
-      <recent name="$PROJECT_DIR$/src/app/(auth)/completar-cadastro" />
-      <recent name="$PROJECT_DIR$/src/components/Sidebar" />
+      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao/unidades/[id_company]/membros" />
+      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/conta/corporacao" />
+      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/dashboard" />
+      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/corporacao" />
+      <recent name="$PROJECT_DIR$/src/app/(private)/(modules)/servicos/conta" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/app/(public)/politica-de-privacidade" />
@@ -336,7 +338,10 @@
       <workItem from="1752669044242" duration="78000" />
       <workItem from="1752860725512" duration="6287000" />
       <workItem from="1753103060772" duration="7293000" />
-      <workItem from="1753114042265" duration="2495000" />
+      <workItem from="1753114042265" duration="2767000" />
+      <workItem from="1753355733680" duration="8625000" />
+      <workItem from="1753370575016" duration="9000" />
+      <workItem from="1753377639183" duration="8383000" />
     </task>
     <task id="LOCAL-00001" summary="update google login">
       <option name="closed" value="true" />
@@ -570,7 +575,23 @@
       <option name="project" value="LOCAL" />
       <updated>1752870449523</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="refatorando">
+      <option name="closed" value="true" />
+      <created>1753116944962</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1753116944962</updated>
+    </task>
+    <task id="LOCAL-00031" summary="refatorando">
+      <option name="closed" value="true" />
+      <created>1753371191432</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1753371191432</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

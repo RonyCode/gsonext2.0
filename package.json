@@ -53,6 +53,7 @@
     "cookies-next": "^5.1.0",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
+    "framer-motion": "^12.23.9",
     "fs": "^0.0.1-security",
     "highlight.js": "^11.11.1",
     "jotai": "^2.12.5",

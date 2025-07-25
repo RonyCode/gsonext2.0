@@ -18,7 +18,10 @@ type FooterLayoutProps = {
 const FooterHomePage = ({ className, ...props }: FooterLayoutProps) => {
   return (
     <footer
-      className={cn("bottom-0 z-100 bg-secondary pb-2 pt-4 text-sm", className)}
+      className={cn(
+        "bottom-0 z-100 border-t border-border bg-background p-2 pt-4 text-sm",
+        className,
+      )}
       {...props}
     >
       <div className="container mx-auto px-4">
@@ -149,7 +152,7 @@ const FooterHomePage = ({ className, ...props }: FooterLayoutProps) => {
           </div>
         </div>
         <hr className="my-1 hidden border-foreground/60 md:block" />
-        <div className="flex w-full justify-end text-center">
+        <div className="flex w-full justify-end py-6 text-center">
           <div className="flex w-full items-center justify-center gap-1 self-end text-sm font-semibold text-foreground">
             Copyright ©<span id="get-current-year">2025</span>
             <Link

@@ -46,17 +46,7 @@ export function NavDev({ compSelected }: { compSelected: IUnidadeSchema }) {
       icon: CogIcon,
       items: [
         {
-          title: "Works Logs",
-          icon: <IconManager width={32} className="fill-foreground/60" />,
-          url: "/log",
-        },
-        {
-          title: "Erros Logs",
-          icon: <IconManager width={32} className="fill-foreground/60" />,
-          url: "/log",
-        },
-        {
-          title: "Security Logs",
+          title: "Logs",
           icon: <IconManager width={32} className="fill-foreground/60" />,
           url: "/log",
         },
@@ -68,7 +58,7 @@ export function NavDev({ compSelected }: { compSelected: IUnidadeSchema }) {
       icon: Palette,
       items: [
         {
-          title: "Editar Unidade",
+          title: "Temas",
           icon: <IconEditSave width={32} className="fill-foreground/60" />,
           url: `/servicos/corporacao/unidades/${compSelected?.name}-${compSelected?.id}/detalhes`,
         },
@@ -103,15 +93,15 @@ export function NavDev({ compSelected }: { compSelected: IUnidadeSchema }) {
                         asChild
                         className="h-full w-full border border-foreground/15 py-1"
                       >
-                        <div className="m-0 h-full w-full p-0" id="cardModule">
-                          <Link
-                            href={subItem.url}
-                            className="flex items-center gap-2 text-[.7rem]"
+                        <Link href={subItem.url}>
+                          <div
+                            className="m-0 flex h-full w-full items-center gap-2 p-0 text-[.7rem]"
+                            id="cardModule"
                           >
                             <span> {subItem.icon}</span>
                             <span>{subItem.title}</span>
-                          </Link>
-                        </div>
+                          </div>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))}
